@@ -16,11 +16,12 @@
 #include "polygons/Triangle.h"
 #include "groups/PolygonGroup.h"
 #include "groups/PolygonGroupFactory.h"
-#include "file_io/PolylibConfig.h"
 #include "common/PolylibStat.h"
 #include "common/PolylibCommon.h"
 #include "common/BBox.h"
 #include "common/Vec3.h"
+
+#include "TextParser.h"
 
 namespace PolylibNS {
 
@@ -106,16 +107,17 @@ public:
 		PolygonGroupFactory		*factory = NULL
 	);
 
+
 	///
 	/// PolygoGroup、三角形ポリゴン情報の読み込み。
-	/// 引数で指定された設定ファイルを読み込み、グループツリーを作成する。
+	/// 引数で指定された設定ファイル (TextParser 軽視し) を読み込み、グループツリーを作成する。
 	/// 続いて設定ファイルで指定されたSTLファイルを読み込み、KD木を作成する。
 	///
 	///  @param[in] config_name 設定ファイル名。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT load(
-		std::string			config_name = "polylib_config.xml"
+           std::string			config_name = "polylib_config.tpp"
 	);
 
 	///
@@ -278,22 +280,18 @@ protected:
 
 	///
 	/// グループツリー作成。
-	/// 設定ファイルを管理するPolylibConfigクラスからXMLタグを得て、適切な
+	/// TextParser クラスを使い、
 	/// PolygonGroupを作成し、グループツリーに登録する。
 	///
-	///  @param[in] config	設定ファイル管理クラス
+	///  @param[in] TextParser のインスタンス
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention	オーバーロードメソッドあり。
 	///
-	/// 以下のコメントはDoxygenには出力したくないのだが...
-	/// configに実体を渡すとPolylibConfigのデストラクタが2回(1回目は本関数を
-	/// 抜けるとき、2回目は本関数を呼び出した関数(load_config、make_group_tree)
-	/// から抜けるとき)呼ばれてしまい、結果的にSegmentation Faultで落ちてしま
-	/// う。
 	///
-    POLYLIB_STAT make_group_tree(
-        PolylibConfig	*config
-    );
+
+  POLYLIB_STAT make_group_tree(
+       TextParser *  tp_ptr
+		       );
 
 	///
 	/// 引数の内容でグループ階層構造を構築。
@@ -342,8 +340,8 @@ protected:
 	/// 計算を行う。
 	///
 	///  @param[in] with_id_file	trueならば、三角形ポリゴンIDファイルを読み
-	///								込んでm_idを設定する。
-	///								falseならば、STL読み込み時にm_idを自動生成。
+	///				込んでm_idを設定する。
+	///				falseならば、STL読み込み時にm_idを自動生成。
 	///  @param[in]	id_format		三角形IDファイルの入力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
@@ -362,11 +360,54 @@ protected:
 	///						マット。
 	///  @return	作成した設定ファイルの名称。エラー時はNULLが返る。
 	///
+#if 1
 	char *save_config_file(
 		std::string	rank_no,
 		std::string	extend,
 		std::string	format
 	);
+#endif
+	
+	/// TextParser 内部データから　"filepath" "filepath[*]" というリーフを
+	/// すべて削除する.
+	///
+	/// recursiveの動作の為、引数にtp_ptrが必要
+	///
+	/// @param[in] tp_ptr TextParser　へのポインタ.
+	///  @return	POLYLIB_STATで定義される値が返る。
+
+
+	POLYLIB_STAT clearfilepath(TextParser* tp_ptr);
+
+	/// TextParser 内部データに　saveしたstl ファイルの　"filepath"を書き込む。
+	///
+	///　saveしたSTLファイルとPolygonGroupの階層は、save_stl_file に
+	///　map を渡し保持してもらう。その　map の内容に基づき、TextParser内部のデータを
+	///　変更する.
+	///
+	/// @param[in] stl_fname_map saveしたSTLファイルとその階層のmap型データ
+	/// @return	POLYLIB_STATで定義される値が返る。
+
+	POLYLIB_STAT setfilepath( std::map<std::string,std::string>& stl_fname_map);
+
+
+	///
+	/// 設定ファイルの保存。 PolylibConfig 内部にあったものをここへ。
+	//  暫定措置
+	//  file name を作ってsave
+	///
+	///  @param[in] rank_no	ランク番号
+	///  @param[in] extend	ファイル名に付加する文字列
+	///  @param[in] format	TriMeshIOクラスで定義されているSTLファイルのフォー
+	///						マット。
+	///  @return	作成した設定ファイルの名称。エラー時はNULLが返る。
+	///
+#if 1
+	char * polylib_config_save_file(
+		std::string	rank_no,
+		std::string	extend
+	);
+#endif
 
 	/// PolygoGroupツリー、三角形ポリゴン情報の保存。
 	/// グループツリー情報を設定ファイルへ出力。三角形ポリゴン情報をSTLファイル
@@ -377,7 +418,7 @@ protected:
 	///	 @param[in]	 maxrank		最大ランク番号。
 	///	 @param[in]	 extend			ファイ名に付加される文字列。
 	///	 @param[in]	 stl_format		STLファイルフォーマット指定。
-	///  @param[in]	 id_format		三角形IDファイルの出力形式。
+       	///  @param[in]	 id_format		三角形IDファイルの出力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention	ファイル名命名規約は次の通り。
 	///			定義ファイル : polylib_config_ランク番号_付加文字.xml。
@@ -456,26 +497,6 @@ private:
 		std::vector<PolygonGroup*>	*pg
 	) const;
 
-	///
-	/// XMLタグの作成。
-	/// グループツリーから設定ファイルに出力するXMLタグを作成する。実際のタグ
-	/// 作成はPolylibConfigクラスが受け持つ。
-	/// 
-	///  @param[in,out]	elem		XMLノード
-	///  @param[in]		pg			出力するグループ
-	///  @param[in]		rank_no		ランク番号
-	///  @param[in]		extend		ファイル名に付加する文字列
-	///  @param[in]		format		TriMeshIOクラスで定義されているSTLファイルの
-	///								フォーマット。
-	///  @return	POLYLIB_STATで定義される値が返る。
-	///
-	POLYLIB_STAT mk_xml(
-		xmlNodePtr		elem,
-		PolygonGroup	*pg,
-		std::string		rank_no,
-		std::string		extend,
-		std::string		format
-	);
 
 protected:
 	//=======================================================================
@@ -489,6 +510,11 @@ protected:
 
 	/// ポリゴングループリスト
 	std::vector<PolygonGroup*>	m_pg_list;
+
+
+	// TextParser へのポインタ
+	TextParser* tp;
+
 };
 
 } //namespace PolylibNS

@@ -4,6 +4,7 @@
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *
  */
+#include <string.h>
 #include <string>
 #include "polygons/Triangle.h"
 #include "file_io/TriMeshIO.h"
@@ -67,6 +68,9 @@ POLYLIB_STAT TriMeshIO::save(
 	string						fname, 
 	string						fmt
 ) {
+#ifdef DEBUG
+  //  PL_DBGOS<<__FUNCTION__ << " saving stl file..."<<endl;
+#endif
 	if (tri_list == NULL) {
 		PL_ERROSH << "[ERROR]:TriMeshIO::save():tri_list is NULL." << endl;
 		return PLSTAT_NG;

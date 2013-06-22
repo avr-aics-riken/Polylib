@@ -11,6 +11,8 @@
 #include "common/PolylibStat.h"
 #include "common/PolylibCommon.h"
 
+#include <vector>
+
 namespace PolylibNS {
 
 class BBox;

@@ -183,6 +183,8 @@ MPIPolylib::init_parallel_info(
 }
 
 
+#if 0 
+// old tp version 
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT
 MPIPolylib::load_rank0(
@@ -195,63 +197,181 @@ MPIPolylib::load_rank0(
 	POLYLIB_STAT ret;
 	string       config_contents;
 
+	// for tp
+	try {
+		PolylibConfig base(config_filename);
+		ret = make_group_tree(&base);
+		if( ret != PLSTAT_OK ) return ret;
+	}
+	catch( POLYLIB_STAT e ){
+		return e;
+	}
+
 	if( m_myrank == 0 ) {
 
-		// 設定ファイル読み込み。
-		if( (ret = Polylib::load_config_file( &config_contents, config_filename ))
-																		!= PLSTAT_OK ) {
-			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():Polylib::load_config() faild. returns:"
-					  << PolylibStat2::String(ret) << endl;
-			return ret;
-		}
+	  // for tp
+#if 0
+	  // 設定ファイル読み込み。
+	  if( (ret = Polylib::load_config_file( &config_contents, config_filename ))
+	      != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():Polylib::load_config() faild. returns:"
+		      << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
 
-		// グループ階層構造構築。
-		if( (ret = Polylib::make_group_tree( config_contents )) != PLSTAT_OK ) {
-			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():Polylib::make_group_tree() faild. returns:"
-					  << PolylibStat2::String(ret) << endl;
-			return ret;
-		}
+	  // グループ階層構造構築。
+	  if( (ret = Polylib::make_group_tree( config_contents )) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():Polylib::make_group_tree() faild. returns:"
+		      << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
 
-		// 設定ファイルの内容を他PEへブロードキャストする
-		if( (ret = broadcast_config( config_contents )) != PLSTAT_OK ) {
-			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():broadcast_config() faild. returns:"
-					  << PolylibStat2::String(ret) << endl;
-			return ret;
-		}
+	  // 設定ファイルの内容を他PEへブロードキャストする
+	  if( (ret = broadcast_config( config_contents )) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():broadcast_config() faild. returns:"
+		      << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+#endif
 
-		// ポリゴン情報を構築 (三角形IDファイルは不要なので、第二引数はダミー)
-		if( (ret = load_polygons(false, ID_BIN)) != PLSTAT_OK ) {
-			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():load_polygons() faild. returns:" << PolylibStat2::String(ret) << endl;
-			return ret;
-		}
+	  // ポリゴン情報を構築 (三角形IDファイルは不要なので、第二引数はダミー)
+	  if( (ret = load_polygons(false, ID_BIN)) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():load_polygons() faild. returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
 
-		// ポリゴン情報を他PEへ配信する。
-		if( (ret = send_polygons_to_all()) != PLSTAT_OK ) {
-			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():send_polygons_to_all() faild. returns:" << PolylibStat2::String(ret) << endl;
-			return ret;
-		}
+	  // ポリゴン情報を他PEへ配信する。
+	  if( (ret = send_polygons_to_all()) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():send_polygons_to_all() faild. returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
 
-		// 他PE領域ポリゴン情報を削除して自領域分のみでデータ構造再構築
-		if( (ret = erase_outbounded_polygons()) != PLSTAT_OK ) {
-			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():erase_outbounded_polygons() faild. returns:" << PolylibStat2::String(ret) << endl;
-			return ret;
-		}
+	  // 他PE領域ポリゴン情報を削除して自領域分のみでデータ構造再構築
+	  if( (ret = erase_outbounded_polygons()) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():erase_outbounded_polygons() faild. returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
 	}
 	else {
 
-		// 設定ファイルの内容をrank0から受信する
-		if( (ret = broadcast_config_from_rank0()) != PLSTAT_OK ) {
-			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():broadcast_config_from_rank0() faild. returns:" << PolylibStat2::String(ret) << endl;
-			return ret;
-		}
+	  // for tp
+#if 0
+	  // 設定ファイルの内容をrank0から受信する
+	  if( (ret = broadcast_config_from_rank0()) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():broadcast_config_from_rank0() faild. returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+#endif
 
-		// ポリゴン情報をrank0から受信する。
-		if( (ret = receive_polygons_from_rank0()) != PLSTAT_OK ) {
-			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():receive_polygons_from_rank0() faild. returns:" << PolylibStat2::String(ret) << endl;
-			return ret;
-		}
+	  // ポリゴン情報をrank0から受信する。
+	  if( (ret = receive_polygons_from_rank0()) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():receive_polygons_from_rank0() faild. returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
 	}
 
+	return PLSTAT_OK;
+
+}
+#endif
+
+
+
+// new tp version  without  PolylibConfig
+// public /////////////////////////////////////////////////////////////////////
+POLYLIB_STAT
+MPIPolylib::load_rank0(
+	std::string config_filename
+)
+{
+#ifdef DEBUG
+	PL_DBGOSH << m_myrank << ": " << "MPIPolylib::load_rank0() in. " << endl;
+#endif
+	POLYLIB_STAT ret;
+	string       config_contents;
+
+	// for tp
+	try {
+	  //PolylibConfig base(config_filename);
+		tp->read(config_filename);
+
+		//ret = make_group_tree(&base);
+		// only on rank0 ?
+		ret = make_group_tree(tp);
+		if( ret != PLSTAT_OK ) return ret;
+	}
+	catch( POLYLIB_STAT e ){
+		return e;
+	}
+
+	if( m_myrank == 0 ) {
+
+// for tp
+#if 0
+	  // 設定ファイル読み込み。
+	  if( (ret = Polylib::load_config_file( &config_contents, config_filename ))
+	      != PLSTAT_OK ) {
+	    PL_ERROSH 
+	      << "[ERROR]MPIPolylib::load_rank0():Polylib::load_config() faild."
+	      <<" returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+
+	  // グループ階層構造構築。
+	  if( (ret = Polylib::make_group_tree( config_contents )) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():Polylib::make_group_tree() faild. returns:"
+		      << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+
+	  // 設定ファイルの内容を他PEへブロードキャストする
+	  if( (ret = broadcast_config( config_contents )) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():broadcast_config() faild. returns:"
+		      << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+#endif
+
+	  // ポリゴン情報を構築 (三角形IDファイルは不要なので、第二引数はダミー)
+	  if( (ret = load_polygons(false, ID_BIN)) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():load_polygons() faild."
+		      <<" returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+
+	  // ポリゴン情報を他PEへ配信する。
+	  if( (ret = send_polygons_to_all()) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():send_polygons_to_all()"
+		      <<" faild. returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+
+	  // 他PE領域ポリゴン情報を削除して自領域分のみでデータ構造再構築
+	  if( (ret = erase_outbounded_polygons()) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():erase_outbounded_polygons()"
+		      <<" faild. returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+	} else {
+
+// for tp
+#if 0
+	  // 設定ファイルの内容をrank0から受信する
+	  if( (ret = broadcast_config_from_rank0()) != PLSTAT_OK ) {
+	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():broadcast_config_from_rank0()"
+		      <<" faild. returns:" << PolylibStat2::String(ret) << endl;
+	    return ret;
+	  }
+#endif
+
+	    // ポリゴン情報をrank0から受信する。
+	    if( (ret = receive_polygons_from_rank0()) != PLSTAT_OK ) {
+	      PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():receive_polygons_from_rank0()"
+			<<" faild. returns:" << PolylibStat2::String(ret) << endl;
+	      return ret;
+	    }
+	}
+ 
 	return PLSTAT_OK;
 
 }
@@ -279,7 +399,8 @@ MPIPolylib::load_parallel(
 	return PLSTAT_OK;
 }
 
-
+#if 0 
+// old version
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT
 MPIPolylib::save_rank0(
@@ -303,11 +424,18 @@ MPIPolylib::save_rank0(
 		}
 
 		// グループ階層構造、ポリゴン情報をファイルへ保存
+// for tp
+#if 0
 		if( (ret = Polylib::save( p_config_filename, stl_format, extend )) != PLSTAT_OK ) {
 			PL_ERROSH << "[ERROR]MPIPolylib::save_rank0():Polylib::save() faild. returns:"
 					  << PolylibStat2::String(ret) << endl;
 			return ret;
 		}
+#endif
+
+
+
+
 	}
 	else {
 
@@ -319,6 +447,50 @@ MPIPolylib::save_rank0(
 		}
 	}
 	return PLSTAT_OK;
+}
+#endif
+
+// new version 
+// public /////////////////////////////////////////////////////////////////////
+POLYLIB_STAT
+MPIPolylib::save_rank0(
+		       std::string *p_config_filename,
+		       std::string stl_format,
+		       std::string extend
+		       )
+{
+#ifdef DEBUG
+  PL_DBGOSH << "MPIPolylib::save_rank0() in. " << endl;
+#endif
+  POLYLIB_STAT	ret;
+
+  if( m_myrank == 0 ) {
+    // 他rankからポリゴン情報を受信
+    if( (ret = gather_polygons()) != PLSTAT_OK ) {
+      PL_ERROSH << "[ERROR]MPIPolylib::save_rank0():gather_polygons() faild. returns:"
+		<< PolylibStat2::String(ret) << endl;
+      return ret;
+    }
+    // グループ階層構造、ポリゴン情報をファイルへ保存
+
+    // for tp
+
+    if( (ret = Polylib::save( p_config_filename, stl_format, extend )) != PLSTAT_OK ) {
+      PL_ERROSH << "[ERROR]MPIPolylib::save_rank0():Polylib::save() faild. returns:"
+		<< PolylibStat2::String(ret) << endl;
+      return ret;
+    }
+  }
+  else {
+
+    // rank0へポリゴン情報を送信
+    if( (ret = send_polygons_to_rank0()) != PLSTAT_OK ) {
+      PL_ERROSH << "[ERROR]MPIPolylib::save_rank0():send_polygons_to_rank0() faild."
+		<<" returns:"<< PolylibStat2::String(ret) << endl;
+      return ret;
+    }
+  }
+  return PLSTAT_OK;
 }
 
 
@@ -345,7 +517,7 @@ MPIPolylib::save_parallel(
 }
 
 
-// public /////////////////////////////////////////////////////////////////////
+// public ////////////////////////////////////////////////////////////////////
 POLYLIB_STAT
 MPIPolylib::move(
 	PolylibMoveParams &params

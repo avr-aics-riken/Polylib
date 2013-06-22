@@ -5,6 +5,7 @@
  *
  */
 #include <fstream>
+#include <map>
 #include "Polylib.h"
 
 using namespace std;
@@ -38,23 +39,28 @@ void Polylib::set_factory(
 	m_factory = factory;
 }
 
+/// TextParser
 // public /////////////////////////////////////////////////////////////////////
+// 
 POLYLIB_STAT Polylib::load(
 	string	config_name
 ) {
 #ifdef DEBUG
-	PL_DBGOSH << "Polylib::load() in." << endl;
+	PL_DBGOSH << "Polylib::load_test() in." << endl;
 #endif
+
 	// 設定ファイル読み込み
 	try {
-		PolylibConfig base(config_name);
+	  //PolylibConfig base(config_name);
 
-		// グループツリー作成
-		POLYLIB_STAT stat = make_group_tree(&base);
-		if (stat != PLSTAT_OK)	return stat;
+	  tp->read(config_name);
+	  //  tp->write("tmp.tpp");
+	  // グループツリー作成
+	  POLYLIB_STAT stat = make_group_tree(tp);
+	  if (stat != PLSTAT_OK)	return stat;
 
-		// STLファイル読み込み (三角形IDファイルは不要なので、第二引数はダミー)
-		return load_polygons(false, ID_BIN);
+	  // STLファイル読み込み (三角形IDファイルは不要なので、第二引数はダミー)
+	  return load_polygons(false, ID_BIN);
 	}
 	catch (POLYLIB_STAT e) {
 		return e;
@@ -62,46 +68,72 @@ POLYLIB_STAT Polylib::load(
 }
 
 // public /////////////////////////////////////////////////////////////////////
+//TextParser 版
+
 POLYLIB_STAT Polylib::save(
 	string	*p_config_name,
 	string	stl_format,
 	string	extend
 ) {
-#ifdef DEBUG
+  //#ifdef DEBUG
 	PL_DBGOSH << "Polylib::save() in." << endl;
-#endif
+	//#endif
 	char	my_extend[128];
+	POLYLIB_STAT stat=PLSTAT_OK;
+
 
 	// 拡張文字列がカラであれば、現在時刻から作成
 	if (extend == "") {
-		time_t		timer = time(NULL);
-		struct tm	*date = localtime(&timer);
-		sprintf(my_extend, "%04d%02d%02d%02d%02d%02d",
-			date->tm_year+1900,	date->tm_mon+1,	date->tm_mday,
-			date->tm_hour,		date->tm_min,	date->tm_sec);
+	  time_t timer = time(NULL);
+	  struct tm	*date = localtime(&timer);
+	  sprintf(my_extend, "%04d%02d%02d%02d%02d%02d",
+		  date->tm_year+1900,date->tm_mon+1,date->tm_mday,
+		  date->tm_hour,date->tm_min,date->tm_sec);
 	}
 	else {
-		sprintf(my_extend, "%s", extend.c_str());
+	  sprintf(my_extend, "%s", extend.c_str());
 	}
+	
+	//PL_DBGOSH << __FUNCTION__ << " extend "<< my_extend << endl;
 
-	char	*config_name = save_config_file("", my_extend, stl_format);
-	if (config_name == NULL)	return PLSTAT_NG;
-	else						*p_config_name = string(config_name);
+	map<string,string> stl_fname_map;
 
 	vector<PolygonGroup*>::iterator	it;
 	for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
-		//リーフのみがポリゴン情報を持っている
-		if ((*it)->get_children().empty() == false)	continue;
+	  //リーフのみがポリゴン情報を持っている
+	  if ((*it)->get_children().empty() == false)	continue;
 
-		// ポリゴン数が0ならばファイル出力不要 2010.10.19
-		if ((*it)->get_triangles()->size() == 0)	continue;
+	  // ポリゴン数が0ならばファイル出力不要 2010.10.19
+	  if ((*it)->get_triangles()->size() == 0)	continue;
 
-		// STLファイル保存 (第一引数のランク番号は不要)
-		POLYLIB_STAT stat = (*it)->save_stl_file("", my_extend, stl_format);
-		if (stat != PLSTAT_OK) return stat;
+	  // STLファイル保存 (第一引数のランク番号は不要)
+	  stat = (*it)->save_stl_file("", my_extend, stl_format,
+						   stl_fname_map);
+	  if (stat != PLSTAT_OK) return stat;
+
+	  stat = (*it)->mk_param_tag(tp, "", "", "");
+	  if (stat != PLSTAT_OK) return stat;
 	}
+
+
+	// update stl filepath 
+	// clear file path first
+	stat=clearfilepath(tp);
+	//tp->write("tmp2.tpp");
+	// set filepath
+	stat=setfilepath(stl_fname_map);
+
+	//	string tmp_extend = my_extend;
+	//	char	*config_name = save_config_file("", tmp_extend, stl_format);
+	char	*config_name = save_config_file("", my_extend, stl_format);
+	//	PL_DBGOSH << __FUNCTION__ << " config_name "<< config_name << endl;
+
+	if (config_name == NULL)	return PLSTAT_NG;
+	else	*p_config_name = string(config_name);
 	return PLSTAT_OK;
+	
 }
+
 
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::move(
@@ -318,6 +350,14 @@ Polylib::Polylib()
 	gs_rankno = "";
 	// デフォルトのファクトリークラスを登録する 2010.08.16
 	m_factory = new PolygonGroupFactory();
+
+	
+	//Polylib にTextParser クラスを持たせる。
+	tp = new TextParser;
+	
+	
+	//PL_DBGOS<< __FUNCTION__ <<" m_factory "<< m_factory << " tp " << tp<<std::endl;
+
 }
 
 // protected //////////////////////////////////////////////////////////////////
@@ -332,96 +372,169 @@ PL_DBGOSH << "~Polylib():" << (*it)->get_name() << endl;
 		delete *it;
 		it = m_pg_list.erase(it);
 	}
+	if(tp !=0) delete tp;
+
 }
 
 // protected //////////////////////////////////////////////////////////////////
+// TextParser 版
 POLYLIB_STAT Polylib::make_group_tree(
-	PolylibConfig	*base
+    TextParser* tp
 ) {
 #ifdef DEBUG
-	PL_DBGOSH << "Polylib::make_group_tree() in." << endl;
+	PL_DBGOSH << "Polylib::make_group_tree(TextParser) in." << endl;
 #endif
-	const PolylibCfgElem* root = base->get_root_elem();
-	if (root == NULL) {
-		PL_ERROSH << "[ERROR]Polylib::make_group_tree():Root tag not found." 
-				  << endl;
-		return PLSTAT_CONFIG_ERROR;
+	TextParserError status = TP_NO_ERROR;
+
+	// 念のため階層構造の最上位へ
+	string cur;	
+	tp->currentNode(cur);
+	if(cur != "/Polylib") {
+	  status=tp->changeNode("/Polylib");
+	  tp->currentNode(cur);
+
+	  if(status!=TP_NO_ERROR){
+	    PL_ERROSH << 
+	      "[ERROR]Polylib::make_group_tree(TextParser):Root node not found."
+		      << endl;
+	    return PLSTAT_CONFIG_ERROR;
+	  }
+
 	}
+#if 0 
+	if(cur != "/") {
+	  status=tp->changeNode("/");
+	  tp->currentNode(cur);
 
-	// ルート直下のノード分ループを回す
-	const PolylibCfgElem* elem = root->first_element();
-	if (elem == NULL) {
-		PL_ERROSH << "[ERROR]Polylib::make_group_tree():Elem tag not found." 
-				  << endl;
-		return PLSTAT_CONFIG_ERROR;
+	  if(status!=TP_NO_ERROR){
+	    PL_ERROSH << 
+	      "[ERROR]Polylib::make_group_tree(TextParser):Root node not found."
+		      << endl;
+	    return PLSTAT_CONFIG_ERROR;
+	  }
+
 	}
+#endif
 
-	while (elem != NULL) {
-		const PolylibCfgParam	*param_class;
-		PolygonGroup			*pg;
-		string					class_name;
+	// ノードとリーフのリストを取る
 
-		// paramタグを取得し、PolygonGroupのインスタンスを作成
-		param_class	= elem->first_param(PolygonGroup::ATT_NAME_CLASS);
-		if (param_class == NULL) {
-			PL_ERROSH << "[ERROR]Polylib::make_group_tree():Class name not found."
-					  << endl;
-			return PLSTAT_CONFIG_ERROR;
-		}
-		class_name  = param_class->get_string_data();
-		pg			= m_factory->create_instance(class_name);
-		add_pg_list(pg);	// グループリストに追加
+	//ノードを取得
+	vector<string> nodes;
+	tp->getNodes(nodes);
+	string current_node;
 
-		if (pg == NULL) {
-			PL_ERROSH << "[ERROR]Polylib::make_group_tree():Class name not found."
-					  << endl;
-			return PLSTAT_CONFIG_ERROR;
-		}
 
-		// 配下のタグを取得して、PolygonGroupツリーを作成
-		POLYLIB_STAT res = pg->build_group_tree(this, NULL, elem);
-		if (res != PLSTAT_OK) return res;
+	//	tp->currentNode(current_node);
+	// vector<string> leaves;
+	// tp->getLabels(leaves);
+	// if(nodes.size()==0 && leaves.size()==0){ return PLSTAT_CONFIG_ERROR;}
 
-		// 次ルートノードの取得
-		elem = root->next_element(elem);
-	}
+	// string class_name = "PolygonGroup";
+	// if(leaves.size()!=0){
+	//   vector<string>::iterator leaf_iter=find(leaves.begin(),
+	// 					  leaves.end(),
+	// 					  PolygonGroup::ATT_NAME_CLASS);
+	//   if(leaf_iter != leaves.end()){
+	//     //	    class_name = *leaf_iter;
+	//     string value;
+	//     status=tp->getValue((*leaf_iter),value);
+	//     class_name=value;
+
+	//   }
+	// }
+
+
+	// loop over node recurcively.
+	PolygonGroup *pg;
+	for(vector<string>::iterator nodes_iter = nodes.begin(); 
+	    nodes_iter != nodes.end();
+	    nodes_iter++){
+
+	  status = tp->changeNode(*nodes_iter);
+	  tp->currentNode(current_node);
+#ifdef DEBUG	  
+	  PL_DBGOS<<"current_node "<< current_node <<  endl;
+#endif // DEBUG	  
+	  vector<string> nodes;
+	  vector<string> leaves;
+
+	  tp->getNodes(nodes);
+	  tp->getLabels(leaves);
+	  if(nodes.size()==0 && leaves.size()==0){ return PLSTAT_CONFIG_ERROR;}
+
+	  string class_name = "PolygonGroup"; //default
+
+	  if(leaves.size()!=0){
+	    vector<string>::iterator leaf_iter=find(leaves.begin(),
+						    leaves.end(),
+						    PolygonGroup::ATT_NAME_CLASS);
+	    if(leaf_iter != leaves.end()){
+	      //     class_name = *leaf_iter;
+	      string value;
+	      status=tp->getValue((*leaf_iter),value);
+	      class_name=value;
+	    }
+	  }
+	  pg = m_factory->create_instance(class_name);
+	  add_pg_list(pg);
+	  if (pg == NULL) {
+	    PL_ERROSH << "[ERROR]Polylib::make_group_tree():Class name not found."
+		      << class_name
+		      << endl;
+	    return PLSTAT_CONFIG_ERROR;
+	  }
+
+
+	  // 配下のタグを取得して、PolygonGroupツリーを作成
+	  //	  POLYLIB_STAT res = pg->build_group_tree(this, NULL, elem);
+	  //  
+	  POLYLIB_STAT res = pg->build_group_tree(this, NULL, tp);
+	  if (res != PLSTAT_OK) return res;
+	  status = tp->changeNode("..");
+
+	} 
+	
 
 	return PLSTAT_OK;
 }
 
+//TextParser Version
 // protected //////////////////////////////////////////////////////////////////
+
 POLYLIB_STAT Polylib::make_group_tree(
 	string		config_contents
 ) {
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::make_group_tree() in." << endl;
 #endif
-	POLYLIB_STAT	stat;
-
 	try {
-		PolylibConfig base;
-		stat = base.parse_xml_on_memory(config_contents);
-		if (stat != PLSTAT_OK)	return PLSTAT_NG;
-
-		return make_group_tree(&base);;
+	 tp->read(config_contents);
+	  return make_group_tree(tp);
 	}
 	catch (POLYLIB_STAT e) {
 		return e;
 	}
+	return PLSTAT_NG;
 }
 
+// TextParser 版
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::load_config_file(
 	string		*contents,
 	string		fname
 ) {
 #ifdef DEBUG
-	PL_DBGOSH << "Polylib::load_config_file() in." << endl;
+ 	PL_DBGOSH << "Polylib::load_config_file() in." << endl;
 #endif
 	// 設定ファイルを読み込みstring型で返す
-	return PolylibConfig::load_config_file(contents, fname);
-}
+	//	return PolylibConfig::load_config_file(contents, fname);
+	//	return PolylibConfig::load_config_file(contents, fname);
 
+	// right now just return no error
+	return PLSTAT_OK;
+
+}
+/// textparser 版
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::load_with_idfile(
 	string		config_name,
@@ -431,15 +544,17 @@ POLYLIB_STAT Polylib::load_with_idfile(
 	PL_DBGOSH << "Polylib::load_with_idfile() in." << endl;
 #endif
 	// 設定ファイル読み込み
-	PolylibConfig base(config_name);
+	tp->read_local(config_name);
 
 	// グループツリー作成
-	POLYLIB_STAT stat = make_group_tree(&base);
+	
+	POLYLIB_STAT stat = make_group_tree(tp);
 	if (stat != PLSTAT_OK)	return stat;
 
 	// STLファイルとIDファイル読み込み
 	return load_polygons(true, id_format);
 }
+
 
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::load_polygons(
@@ -469,51 +584,75 @@ POLYLIB_STAT Polylib::load_polygons(
 	return PLSTAT_OK;
 }
 
+
 // protected //////////////////////////////////////////////////////////////////
+//TextPArser 版
 char *Polylib::save_config_file(
 	string	rank_no,
 	string	extend,
 	string	format
 ){
 #ifdef DEBUG
-	PL_DBGOSH << "Polylib::save_config_file() in." << endl;
+  //  PL_DBGOSH << "Polylib::save_config_file() in. " << endl;
 #endif
+
 	vector<PolygonGroup*>::iterator	it;
-	POLYLIB_STAT					stat;
-
-	// DOM作成
-	xmlDocPtr doc = xmlNewDoc((xmlChar *)"1.0");
-	doc->children = PolylibConfig::mk_parameter_tag(doc);
-	if (doc->children == NULL) return NULL;
-
-	for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
-		if ((*it)->get_parent() == NULL) {
-			// Elemタグ作成
-			xmlNodePtr elem = PolylibConfig::mk_elem_tag(doc->children);
-			if (elem == NULL)		return NULL;
-			stat = mk_xml(elem, *it, rank_no, extend, format);
-			if (stat != PLSTAT_OK)	return NULL;
-		}
-	}
+	//POLYLIB_STAT					stat;
 
 	// ファイル出力
 	char	*config_name;
+
 	if (rank_no == "") {
 		// ランク番号不要
-		config_name = PolylibConfig::save_file(doc, "", extend);
+	  config_name = polylib_config_save_file("", extend);
+	  //config_name = PolylibConfig::save_file(doc, "", extend);
 	}
 	else {
-		// 要ランク番号(MPI版)
-		config_name = PolylibConfig::save_file(doc, rank_no, extend);
+	  // 要ランク番号(MPI版)
+	  //	config_name = PolylibConfig::save_file(doc, rank_no, extend);
+	  config_name = polylib_config_save_file(rank_no, extend);
 	}
+
 #ifdef DEBUG
-PL_DBGOSH << "save_config_file():" << config_name << endl;
+	//PL_DBGOSH << "save_config_file(): " << config_name << endl;
 #endif
-	xmlFreeDoc(doc);
+//	xmlFreeDoc(doc);
 
 	return config_name;
 }
 
+/////////////////////////////////////////　　
+// 追加　２０１２ー０８
+//////////////////////////////////
+
+char* Polylib::polylib_config_save_file(
+					string rank_no,
+					string extend){
+
+#define POLYLIB_CONFIG_NAME		"polylib_config"  
+#define POLYLIB_CONFIG_EXT		"tpp"
+
+  //  cout <<__FUNCTION__<<" in "<< rank_no <<" "<< extend << endl;
+
+  static char fname[1024];
+  if (rank_no == ""){
+    sprintf(fname,"%s_%s.%s",POLYLIB_CONFIG_NAME,extend.c_str(),POLYLIB_CONFIG_EXT);
+  } else {
+    sprintf(fname, "%s_%s_%s.%s", POLYLIB_CONFIG_NAME, rank_no.c_str(),
+	    extend.c_str(), POLYLIB_CONFIG_EXT);
+  }
+  string fname_string = fname;
+
+  //config_file の書き込み
+
+  tp->write(fname_string,1);
+
+  return fname;
+
+}
+
+
+//TextParser version 
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::save_with_rankno(
 	string		*p_config_name,
@@ -524,7 +663,7 @@ POLYLIB_STAT Polylib::save_with_rankno(
 	ID_FORMAT	id_format
 ){
 #ifdef DEBUG
-	PL_DBGOSH << "Polylib::save_with_rankno() in." << endl;
+	PL_DBGOSH << "Polylib::save_with_rankno() in. " << endl;
 #endif
 	char	my_extend[128];
 
@@ -545,29 +684,158 @@ POLYLIB_STAT Polylib::save_with_rankno(
 	int		fig = (int)log10((double)maxrank) + 1;
 	sprintf(rank_no, "%0*d", fig, myrank);
 
-	// 定義ファイルの保存
-	char	*config_name = save_config_file(rank_no, my_extend, stl_format);
-	if (config_name == NULL)	return PLSTAT_NG;
-	else						*p_config_name = string(config_name);
+#ifdef DEBUG
+	PL_DBGOSH << "Polylib::save_with_rankno() rank_no" << rank_no<< endl;
+#endif
 
+	map<string,string> stl_fname_map;
 	// STLファイルとIDファイルの保存
 	vector<PolygonGroup*>::iterator	it;
 	for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
 		POLYLIB_STAT	stat;
-
 		//リーフのみがポリゴン情報を持っている
 		if ((*it)->get_children().empty() == false) continue;
 
 		// ポリゴン数が0ならばファイル出力不要 2010.10.19
 		if ((*it)->get_triangles()->size() == 0) continue;
 
-		stat = (*it)->save_stl_file(rank_no, my_extend, stl_format);
+		//stat = (*it)->save_stl_file(rank_no, my_extend, stl_format);
+		stat = (*it)->save_stl_file(rank_no, my_extend, stl_format,stl_fname_map);
 		if (stat != PLSTAT_OK)	return stat;
 		stat = (*it)->save_id_file(rank_no, my_extend, id_format);
 		if (stat != PLSTAT_OK)	return stat;
+		string rank_string,my_extend_string;
+		rank_string=rank_no;
+		my_extend_string = my_extend;
+		stat = (*it)->mk_param_tag(tp, "", "", "");
+		if (stat != PLSTAT_OK) return stat;
+	  
 	}
+	tp->changeNode("/"); //
+	//	cout << "before cleanfilepath" <<endl;
+	clearfilepath(tp); //clear whole file path
+	//	cout << "after cleanfilepath" <<endl;
+
+	//	cout << "before setfilepath" <<endl;
+	setfilepath(stl_fname_map);
+	//cout << "after setfilepath" <<endl;
+
+	// 定義ファイルの保存	
+
+
+	char	*config_name = save_config_file(rank_no, my_extend, stl_format);
+#ifdef DEBUG	
+	PL_DBGOSH << __FUNCTION__ << " config_name "<< config_name << endl;
+#endif 
+#ifdef DEBUG
+	PL_DBGOSH << "Polylib::save_with_rankno() config_name " << config_name << endl;
+#endif
+	if (config_name == NULL)	return PLSTAT_NG;
+	else	*p_config_name = string(config_name);
 	return PLSTAT_OK;
+
 }
+
+/////////////////////////////////////////　　
+// 追加　２０１２ー０８
+//////////////////////////////////
+
+POLYLIB_STAT Polylib::setfilepath(map<string,string>& stl_fname_map){
+
+#ifdef DEBUG
+  PL_DBGOS << "stl_map size " <<  stl_fname_map.size()<<endl;
+#endif //DEBUG
+  //  tp->changeNode("/");
+  tp->changeNode("/Polylib");
+  for(map<string,string>::iterator map_iter=stl_fname_map.begin();
+      map_iter != stl_fname_map.end();
+      map_iter++){
+#ifdef DEBUG
+    PL_DBGOS << "stl_map " <<  map_iter->first <<" "<< map_iter->second<<endl;
+#endif // DEBUG
+    tp->changeNode(map_iter->first); //
+    string cur;
+    tp->currentNode(cur);
+    
+    //    cout << __FUNCTION__ << " " <<  cur << endl;
+    string value = "\"" + map_iter->second + "\"";
+    //    cout << "before leaf createion" <<endl;
+    tp->createLeaf("filepath",value);
+    //    cout << "after leaf createion" <<endl;
+    //check
+    //    vector<string> leaves;
+    //   tp->getLabels(leaves);  //label　の取り直し
+    //    for(vector<string>::iterator leaf_iter=leaves.begin();
+    //	leaf_iter!=leaves.end();
+    //	leaf_iter++){
+    //      cout << __FUNCTION__ << " "  << *leaf_iter << endl;
+    //    }
+    //  	  string value;
+    //    tp->getValue("filepath",value);
+    //    cout << __FUNCTION__ << " " << cur << " "<< value <<endl;
+
+    //    tp->changeNode("/");
+
+    tp->changeNode("/Polylib");
+  }
+  return PLSTAT_OK;
+}
+/////////////////////////////////////////　　
+// 追加　２０１２ー０８
+//////////////////////////////////
+POLYLIB_STAT Polylib::clearfilepath(TextParser* tp_ptr){
+
+  // recursive にするため、TextParserのポインタを引数に取る。
+
+  vector<string> leaves;
+  tp_ptr->getLabels(leaves,1);
+
+  vector<string>::iterator leaf_iter=find(leaves.begin(),leaves.end(),"filepath");
+  if(leaf_iter!=leaves.end()){ // 見つかったら
+    tp_ptr->deleteLeaf("filepath");
+  } 
+  leaves.clear();
+  tp_ptr->getLabels(leaves);
+
+
+  leaf_iter=find(leaves.begin(),leaves.end(),"filepath[0]");
+  if(leaf_iter!=leaves.end()){ // 見つかったら
+
+    int index=0;
+    leaf_iter = leaves.begin();
+    while(leaf_iter != leaves.end()){
+      stringstream ss;
+      string tmpstring="filepath";
+      ss << tmpstring <<"["<<index<<"]";
+      ss >> tmpstring;
+      leaf_iter = find(leaf_iter,leaves.end(),tmpstring);
+      if(leaf_iter == leaves.end()) break;
+      TextParserError tp_error=tp_ptr -> deleteLeaf(tmpstring);
+      if (tp_error!=TP_NO_ERROR) {
+	PL_ERROSH << "[ERROR]Polylib::save() "
+		  << "can not remove leaf = " << tmpstring << endl;
+	return PLSTAT_NG;
+      }
+      index++;
+      leaf_iter++;
+    }
+  }
+
+  vector<string> nodes;
+  tp_ptr->getNodes(nodes);
+  for( vector<string>::iterator node_iter=nodes.begin();
+       node_iter!=nodes.end();
+       node_iter++){
+    tp_ptr->changeNode(*node_iter);
+    clearfilepath(tp_ptr);
+    tp_ptr->changeNode("..");
+  }
+
+  return PLSTAT_OK;
+
+}
+
+
 
 // protected //////////////////////////////////////////////////////////////////
 // 2010.10.20 引数FILE *追加。
@@ -579,20 +847,21 @@ void Polylib::show_group_name(
 	vector<PolygonGroup*>::iterator it;
 
 	// ユーザ定義id出力 2010.10.20
+	// ユーザ定義ラベル出力 2012.08.31
 	if (fp == NULL) {
 		PL_DBGOSH << "Polylib::show_group_name: " << tab ;
 		if (pg->get_parent_path().empty() == true)  PL_DBGOS << "+";
 		PL_DBGOS << pg->get_name() << ":" << pg->acq_file_name() << ":"
-				 << pg->get_id() << endl;
+				 << pg->get_id() << ":" << pg->get_label() << endl;
 
 	}
 	else {
 		// 出力先が指定されていれば、そちらに出力
-		fprintf(fp, "%sPolylib::show_group_name:%s%s%s:%s:%d\n", 
+		fprintf(fp, "%sPolylib::show_group_name:%s%s%s:%s:%d:%s\n", 
 			gs_rankno.c_str(),		tab.c_str(),
 			(pg->get_parent_path().empty() == true) ? "+" : "",
 			pg->get_name().c_str(),	pg->acq_file_name().c_str(),
-			pg->get_id());
+			pg->get_id(), pg->get_label().c_str());
 	}
 
 	tab = tab + "    ";
@@ -721,34 +990,5 @@ void Polylib::search_group(
 		pg->push_back(*it);
 		search_group(*it, pg);
 	}
-}
-
-// private //////////////////////////////////////////////////////////////////
-POLYLIB_STAT Polylib::mk_xml(
-	xmlNodePtr			elem,
-	PolygonGroup		*pg,
-	string				rank_no,
-	string				extend,
-	string				format
-)
-{
-#ifdef DEBUG
-	PL_DBGOSH << "Polylib::mk_xml() in." << endl;
-#endif
-	// Paramタグ作成
-	pg->mk_param_tag(elem, rank_no, extend, format);
-
-	vector<PolygonGroup*>::iterator it;
-	POLYLIB_STAT					stat;
-	for (it = pg->get_children().begin(); it != pg->get_children().end(); it++){
-		// Elemタグ作成
-		xmlNodePtr elem2 = PolylibConfig::mk_elem_tag(elem);
-		if (elem2 == NULL)			return PLSTAT_NG;
-		// Elemタグ配下のParamタグを作成する
-		stat = mk_xml(elem2, *it, rank_no, extend, format);
-		if (stat != PLSTAT_OK)		return stat;
-			
-	}
-	return PLSTAT_OK;
 }
 

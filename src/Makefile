@@ -8,13 +8,6 @@
 # single版、mpi版をまとめて作成	: make
 # includeファイルの依存関係更新 : make depend
 #
-############################################################################
-MPI_DIR		= /usr/lib/openmpi/1.3.2-gcc
-CXX			= g++
-AR			= ar cr
-RANLIB		= ranlib
-TARGET_DIR	= ../lib
-###########################################################################
 # 以下のワーニングを抑制するために-fno-strict-aliasingを追加 2010.10.14
 # warning: type-punning to incomplete type might break strict-aliasing rules
 #
@@ -24,9 +17,65 @@ TARGET_DIR	= ../lib
 # 三角形IDファイルをテキストモードで出力するにはCFLAGSに以下を追加のこと
 # -DSAVE_ID_ASCII
 ###########################################################################
-CFLAGS		= -O2 -Wall -I../include -I$(MPI_DIR)/include \
-			  -I/usr/include -I/usr/include/libxml2 -fno-strict-aliasing \
-			  -DSAVE_ID_ASCII
+
+TARGET_DIR	= ../lib
+
+MPI_INC_DIR	= /opt/openmpi/include
+TP_INC_DIR  = /usr/local/textparser/include
+
+
+#####################################
+# INTEL
+
+#CXX		= g++
+CXX			= icpc
+AR			= ar cru
+RANLIB	= ranlib
+RM      = \rm -f
+
+CFLAGS		= -O3 -Wall \
+            -I../include \
+            -I$(MPI_INC_DIR) \
+            -I$(TP_INC_DIR) \
+            -fno-strict-aliasing \
+#            -I/usr/include \
+#            -DSAVE_ID_ASCII -DDEBUG
+
+
+#####################################
+# FX10
+
+#CXX			= mpiFCCpx
+#AR			  = ar cr
+#RANLIB		= ranlib
+#RM       = \rm -f
+
+#CFLAGS		= -Kfast, simd=2, ocl, preex \
+#		-I../include\
+#		-I/opt/FJSVfxlang/GM-1.2.0-03/include \
+#		-I/opt/FJSVfxlang/GM-1.2.0-03/include/mpi/fujitsu \
+#		-I/usr/include \
+#		-I$(TP_INC_DIR) \
+#		-fno-strict-aliasing
+
+
+#####################################
+# K
+
+#CXX			= mpiFCCpx
+#AR			  = ar cr
+#RANLIB		= ranlib
+#RM       = \rm -f
+
+#CFLAGS	 = -Kfast, simd=2, ocl, preex \
+#   -I../include\
+#   -I/opt/FJSVtclang/GM-1.2.0-07/include \
+#   -I/opt/FJSVtclang/GM-1.2.0-07/include/mpi/fujitsu \
+#   -I/usr/include \
+#   -I$(TP_INC_DIR) \
+#   -fno-strict-aliasing
+
+
 
 #####################################
 # single版マクロ
@@ -37,12 +86,12 @@ GFX_OBJS	= Polylib.o \
 			  polygons/Polygons.o \
 			  polygons/TriMesh.o \
 			  groups/PolygonGroup.o \
-			  file_io/PolylibConfig.o \
 			  file_io/TriMeshIO.o \
 			  file_io/stl.o \
 			  file_io/triangle_id.o \
 			  c_lang/CPolylib.o 
 
+#			  file_io/PolylibConfig.o \
 #####################################
 # MPI版マクロ
 #####################################

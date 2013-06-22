@@ -4,6 +4,7 @@
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *
  */
+#include <string.h>
 #include <fstream>
 #include <vector>
 #include <iomanip>
@@ -183,12 +184,15 @@ POLYLIB_STAT stl_b_load(
 			vertex[j] = _vertex;
 		}
 
+		// ２バイト予備領域
+		tt_read(ifs, &padding, sizeof(ushort), 1, inv);
+
 		PrivateTriangle *tri = new PrivateTriangle(vertex, normal, n_tri);
+		// ２バイト予備領域をユーザ定義IDとして利用(Polylib-2.1より)
+		tri->set_exid( (int)padding );
 		tri_list->push_back(tri);
 		n_tri++;
 
-		// padding 2 bytes
-		tt_read(ifs, &padding, sizeof(ushort), 1, inv);
 	}
 
 	if (!ifs.eof() && ifs.fail()) {
@@ -221,7 +225,6 @@ POLYLIB_STAT stl_b_save(
 	tt_write(ofs, buf, 1, STL_HEAD, inv);
 	tt_write(ofs, &element, sizeof(uint), 1, inv);
 
-	ushort padding=0;
 	vector<PrivateTriangle*>::iterator itr = tri_list->begin();
 	for (uint m = 0; m < element; m++,itr++) {
 		// one plane normal
@@ -232,8 +235,9 @@ POLYLIB_STAT stl_b_save(
 		tt_write(ofs, (*itr)->get_vertex()[1].ptr(), sizeof(float), 3, inv);
 		tt_write(ofs, (*itr)->get_vertex()[2].ptr(), sizeof(float), 3, inv);
 
-		// padding 2 bytes
-		tt_write(ofs, &padding, sizeof(ushort), 1, inv);
+		// ２バイト予備領域にユーザ定義IDを記録(Polylib-2.1より)
+		int exid = (*itr)->get_exid();
+		tt_write(ofs, &exid, sizeof(ushort), 1, inv);
 	}
 
 	if (!ofs.eof() && ofs.fail()) {

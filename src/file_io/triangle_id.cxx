@@ -4,6 +4,8 @@
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *
  */
+#include <stdlib.h>
+#include <string.h>
 #include <fstream>
 #include <vector>
 #include <iomanip>

@@ -8,16 +8,17 @@
 #define polylib_polygongroup_h
 
 #include <map>
-#include <libxml/tree.h>
+//#include <libxml/tree.h>
 #include "polygons/Triangle.h"
 #include "common/PolylibStat.h"
 #include "common/PolylibCommon.h"
+#include "TextParser.h"
 
 namespace PolylibNS {
 
 class Polylib;
 class Polygons;
-class PolylibCfgElem;
+//class PolylibCfgElem;
 class PolylibMoveParams;
 
 ////////////////////////////////////////////////////////////////////////////
@@ -58,13 +59,13 @@ public:
 	///
 	///  @param[in] polylib		Polygonクラスのインスタンス
 	///  @param[in] parent		親グループ
-	///  @param[in] elem		設定ファイルのElemタグ
+	///  @param[in] tp 　　　　　　　　　　　　TextParser のインスタンス
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	virtual POLYLIB_STAT build_group_tree(
 		Polylib					*polylib,
 		PolygonGroup			*parent,
-		const PolylibCfgElem	*elem
+		TextParser* tp
 	);
 
 	///
@@ -110,6 +111,23 @@ public:
 	);
 
 	///
+	/// TriMeshクラスが管理しているポリゴン情報をSTLファイルに出力する。
+	/// TextParser 対応版
+	///  @param[in] rank_no	ファイル名に付加するランク番号。
+	///  @param[in] extend	ファイル名に付加する自由文字列。
+	///  @param[in] format	STLファイルフォーマット。
+	///  @param[in,out] stl_fname_map stl ファイル名とポリゴングループのパス
+	///  @return	POLYLIB_STATで定義される値が返る。
+	///  @attention TriMeshIOクラスのsave()参照。オーバーロードメソッドあり。
+	///
+	POLYLIB_STAT save_stl_file(
+		std::string		rank_no,
+		std::string		extend,
+		std::string		format,
+		std::map<std::string,std::string>& stl_fname_map
+	);
+
+	///
 	/// 三角形ポリゴンIDファイルにポリゴンIDを出力する。IDファイル名は、
 	/// 階層化されたグループ名_ランク番号_自由文字列.id。
 	///
@@ -117,29 +135,34 @@ public:
 	///  @param[in] extend		ファイル名に付加する自由文字列。
 	///  @param[in] id_format	三角形IDファイルの出力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
-	///
+	/// 
 	POLYLIB_STAT save_id_file(
 		std::string 	rank_no,
 		std::string		extend,
 		ID_FORMAT		id_format
 	);
 
+
 	///
-	/// 設定ファイルに出力するparamタグを作成する。
+	/// 設定ファイルに出力するTextParserのリーフを編集する.
+	/// デフォルトでは何もしない。
+	/// CarGroup.cxx の例を参照.
 	///
-	///  @param[in] elem	XMLノード。
+	///  @param[in] pointer to TextParser 
 	///  @param[in] rank_no	ファイル名に付加するランク番号。
 	///  @param[in] extend	ファイル名に付加する自由文字列。
 	///  @param[in] format	STLファイルフォーマット。
 	///  @return	POLYLIB_STATで定義される値が返る。
-	///  @attention 本クラスのmk_basic_tag()参照。
+	///  @attention  do nothing by default
 	///
+
 	virtual POLYLIB_STAT mk_param_tag(
-		xmlNodePtr		elem,
+					  TextParser* pt,
 		std::string		rank_no,
 		std::string		extend,
 		std::string		format
 	);
+
 
 	///
 	/// 三角形ポリゴン移動メソッド。virtual用の関数なので処理はない。
@@ -421,8 +444,18 @@ public:
 	}
 
 	///
+	/// ユーザ定義ラベルを取得。
+	/// 追加 2012.08.31
+	///
+	///  @return ユーザ定義ラベル。
+	///
+	std::string get_label() {
+		return m_label;
+	}
+
+	///
 	/// ユーザ定義IDを取得。
-	/// 処理追加 2010.10.20
+	/// 追加 2010.10.20
 	///
 	///  @return ユーザ定義ID。
 	///
@@ -455,18 +488,24 @@ public:
 	static const char *ATT_NAME_CLASS;
 
 protected:
+
 	///
 	/// 設定ファイルから取得したPolygonGroupの情報をインスタンスにセットする。
+	/// 
+	/// "filepath" に関して、先にfilepathが複数　(filepath[0])が存在するかどうか
+	///  をチェックして、複数ならばその処理を行い、filepath の処理は終了する。
+	///  複数でないことが分かったら、filepath が単体で存在するかをチェックして、
+	///  存在するならば、処理を行う。
 	///
 	///  @param[in] polylib		Polygonクラスのインスタンス。
 	///  @param[in] parent		親グループ。
-	///  @param[in] elem		設定ファイルのElemタグ。
+	///  @param[in] tp              TextParserクラスのインスタンス
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT setup_attribute (
 		Polylib					*polylib,
 		PolygonGroup			*parent,
-		const PolylibCfgElem	*elem
+		TextParser *tp
 	);
 
 	///
@@ -515,22 +554,6 @@ protected:
 		Vec3f pos2
 	);
 
-	///
-	/// PolygonGroupの基本情報を設定ファイルに出力するためのparamタグを作成。
-	///
-	///  @param[in] elem	XMLノード。
-	///  @param[in] rank_no	ファイル名に付加するランク番号。
-	///  @param[in] extend	ファイル名に付加する自由文字列。
-	///  @param[in] format	STLファイルフォーマット。
-	///  @return	POLYLIB_STATで定義される値が返る。
-	///
-	POLYLIB_STAT mk_basic_tag(
-		xmlNodePtr		elem,
-		std::string		rank_no,
-		std::string		extend,
-		std::string		format
-	);
-
 private:
 	///
 	/// STLファイル名を作成。ファイル名は、以下の通り。
@@ -545,6 +568,25 @@ private:
 		std::string		rank_no,
 		std::string		extend,
 		std::string		format
+	);
+
+
+	///
+	/// STLファイル名を作成。ファイル名は、以下の通り。
+	/// グループ名のフルパス_ランク番号_自由文字列.フォーマット文字列。
+	/// TextParser 対応版
+	///
+	///  @param[in] rank_no	ファイル名に付加するランク番号。
+	///  @param[in] extend	ファイル名に付加する自由文字列。
+	///  @param[in] format	STLファイルフォーマット。
+	///  @param[in,out] stl_fname_map stl ファイル名とポリゴングループのパス
+	///  @return	POLYLIB_STATで定義される値が返る。
+	///
+	char *mk_stl_fname(
+		std::string		rank_no,
+		std::string		extend,
+		std::string		format,
+		std::map<std::string,std::string>& stl_fname_map
 	);
 
 	///
@@ -573,10 +615,10 @@ protected:
 	//=======================================================================
 	/// グループID。
 	// メンバー名修正( m_id -> m_internal_id) 2010.10.20
-	int									m_internal_id;
+	int								m_internal_id;
 
 	/// 自グループ名。
-	std::string							m_name;
+	std::string						m_name;
 
 	/// 親グループのパス名。
 	std::string							m_parent_path;
@@ -601,9 +643,13 @@ protected:
 
 	/// move()による移動前三角形一時保存リスト。
 	std::vector<PrivateTriangle*>		*m_trias_before_move;
+	
+	/// ユーザ定義ラベル : (追加 2012.08.31)
+	std::string							m_label;
+
 private:
-	/// ユーザ定義id : 追加 2010.10.20
-	int									m_id;
+	/// ユーザ定義id : (追加 2010.10.20)
+	int							m_id;
 };
 
 } //namespace PolylibNS

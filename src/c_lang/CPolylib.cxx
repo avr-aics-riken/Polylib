@@ -4,6 +4,7 @@
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *
  */
+#include <string.h>
 #include <vector>
 #include <iostream>
 #include "common/PolylibCommon.h"

@@ -127,6 +127,23 @@ public:
 		return m_area;
 	}
 
+	///
+	/// ユーザ定義IDを設定。
+	///
+	///
+	void set_exid( int id ) {
+		m_exid = id;
+	}
+
+	///
+	/// ユーザ定義IDを取得。
+	///
+	/// @return ユーザ定義ID。
+	///
+	int get_exid() const {
+		return m_exid;
+	}
+
 protected:
 	///
 	/// 法線ベクトル算出。
@@ -161,6 +178,9 @@ protected:
 
 	/// 三角形の面積。
 	float	m_area;
+
+	/// 三角形のユーザ定義ID
+	int     m_exid;
 };
 
 ////////////////////////////////////////////////////////////////////////////

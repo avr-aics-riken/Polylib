@@ -4,6 +4,7 @@
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *
  */
+#include <string.h>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -14,7 +15,7 @@
 #include "polygons/Triangle.h"
 #include "polygons/TriMesh.h"
 #include "groups/PolygonGroup.h"
-#include "file_io/PolylibConfig.h"
+//#include "file_io/PolylibConfig.h"
 #include "file_io/TriMeshIO.h"
 #include "file_io/triangle_id.h"
 
@@ -32,11 +33,13 @@ const char *PolygonGroup::ATT_NAME_CLASS = "class_name";
 ///
 /// 本クラス内でのみ使用するXMLタグ
 ///
-#define ATT_NAME_NAME		"name"
+//#define ATT_NAME_NAME		"name"
 #define ATT_NAME_PATH		"filepath"
 #define ATT_NAME_MOVABLE	"movable"
 // ユーザ定義ID追加 2010.10.20
 #define ATT_NAME_ID			"id"
+// ユーザ定義ラベル追加 2012.08.31
+#define ATT_NAME_LABEL		"label"
 
 /************************************************************************
  *
@@ -81,42 +84,83 @@ POLYLIB_STAT PolygonGroup::init(
 	return build_polygon_tree();
 }
 
+//TextParser version
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT PolygonGroup::build_group_tree(
 	Polylib					*polylib,
 	PolygonGroup			*parent,
-	const PolylibCfgElem	*elem
+	TextParser* tp
 ) {
 #ifdef DEBUG
 	PL_DBGOSH << "PolygonGroup::build_group_tree() in." << endl;
 #endif
-	POLYLIB_STAT 	ret = setup_attribute(polylib, parent, elem);
+
+	//current で出来ているPolygonGroupに属性をつける。
+	POLYLIB_STAT 	ret = setup_attribute(polylib, parent, tp);
 	if (ret != PLSTAT_OK)		return ret;
-	
-	const PolylibCfgElem *e = elem->first_element();
-	while (e != NULL) {
-		const PolylibCfgParam	*att_class;
-		PolygonGroup			*pg;
-		string					class_name;
 
-		att_class	= e->first_param(ATT_NAME_CLASS);
-		class_name	= att_class->get_string_data();
-		pg			= polylib->create_polygon_group(class_name);
+	// 元コードの説明
+	// PolylibCfgElem がなくなるまでループ
+	// すでにelem には、情報が読み込まれていて、それを使用する。
+	//
 
-		// グループリストに追加
-		polylib->add_pg_list(pg);	
+	vector<string> nodes;
 
-		if (pg == NULL) {
-			PL_ERROSH << "[ERROR]PolygonGroup::build_group_tree():"
-					  << "Unknown Class name:" << class_name << "." << endl;
-			return PLSTAT_CONFIG_ERROR;
-		}
+	TextParserError error=TP_NO_ERROR;
+	error=tp->getNodes(nodes);
 
-		ret = pg->build_group_tree(polylib, this, e);
-		if (ret != PLSTAT_OK) return ret;		
 
-		e = elem->next_element(e);
-	}	
+	// tp で　情報を読みながら、ループ
+	for(vector<string>::iterator nodes_iter=nodes.begin();
+	    nodes_iter != nodes.end();
+	    nodes_iter++){
+	  
+	  error=tp->changeNode(*nodes_iter);
+	  if(error!=TP_NO_ERROR){
+	    PL_ERROSH << "[ERROR]PolygonGroup::build_group_tree():"
+		      << " TextParser error " 
+		      << tp->TextParserErrorHandler(error,"can not move to ") 
+		      << (*nodes_iter) << endl;
+	    return PLSTAT_CONFIG_ERROR;
+	  }
+	  //属性を読む。
+	  vector<string> leaves;
+	  error=tp->getLeaves(leaves,1);
+	  if(error!=TP_NO_ERROR){
+	    PL_ERROSH << "[ERROR]PolygonGroup::build_group_tree():"
+		      << " TextParser error " 
+		      << tp->TextParserErrorHandler(error,"can not get leaves ") 
+		      << (*nodes_iter) << endl;
+	    return PLSTAT_CONFIG_ERROR;
+	  }
+
+	  // class_name をチェック
+	  string class_name = "PolygonGroup";
+	  vector<string>::iterator leaf_iter=find(leaves.begin(),
+						  leaves.end(),
+						  ATT_NAME_CLASS);
+	  
+	  if(leaf_iter!=leaves.end()){
+	    string value;
+	    error=tp->getValue((*leaf_iter),value);
+	    class_name=value;
+	  }
+	  PolygonGroup* pg;
+	  pg = polylib->create_polygon_group(class_name);
+	  polylib->add_pg_list(pg);	
+	  if (pg == NULL) {
+	    PL_ERROSH << "[ERROR]PolygonGroup::build_group_tree():"
+		      << "Unknown Class name:" << class_name << "." << endl;
+	    return PLSTAT_CONFIG_ERROR;
+	  }
+
+	  ret = pg->build_group_tree(polylib, this, tp);
+
+	  // go up and next
+	  tp->changeNode("..");
+
+	}
+
 	return PLSTAT_OK;
 }
 
@@ -173,7 +217,19 @@ PL_DBGOSH << "PolygonGroup:load_stl_file():IN" << endl;
 POLYLIB_STAT PolygonGroup::load_id_file(
 	ID_FORMAT	id_format
 ) {
+#ifdef DEBUG
+  PL_DBGOSH << "PolygonGroup:load_id_file():IN" << endl;
+#endif
+
+  // no stl file, no id file.
+  if(m_file_name.size() == 0 ){
+    return PLSTAT_OK;	
+  }
+
 	// IDはsave_id()関数で一括して出力されるので、ファイル数は必ず1個
+
+
+
 	if (m_file_name.size() != 1) {
 		PL_ERROSH << "[ERROR]PolygonGroup::load_id_file():Num of files mismatch:" 
 				  << m_file_name.size() << endl;
@@ -199,6 +255,20 @@ POLYLIB_STAT PolygonGroup::save_stl_file(
 	return TriMeshIO::save(m_polygons->get_tri_list(), fname, format);
 }
 
+
+
+// TextParser でのsaveの為、save した stl ファイルを記憶しておく
+/////////////////////////////////////////////////////////////////////
+POLYLIB_STAT PolygonGroup::save_stl_file(
+	string	rank_no,
+	string	extend,
+	string	format,
+	map<string,string>& stl_fname_map
+) {
+  char	*fname = mk_stl_fname(rank_no, extend, format,stl_fname_map);
+	return TriMeshIO::save(m_polygons->get_tri_list(), fname, format);
+}
+
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT PolygonGroup::save_id_file(
 	string		rank_no,
@@ -212,21 +282,19 @@ PL_DBGOSH <<  "save_id_file:" << fname << endl;
 	return save_id(m_polygons->get_tri_list(), fname, id_format);
 }
 
-// public /////////////////////////////////////////////////////////////////////
-POLYLIB_STAT PolygonGroup::mk_param_tag(
-	xmlNodePtr	elem,
-	string		rank_no,
-	string		extend,
-	string		format
-) {
-	POLYLIB_STAT	stat;
 
-	// class_nameタグ
-	stat = PolylibConfig::mk_param_tag(elem, ATT_NAME_CLASS, 
-													get_class_name().c_str());
-	if (stat != PLSTAT_OK)		return stat;
-	return mk_basic_tag(elem, rank_no, extend, format);
+//TextParser 版
+POLYLIB_STAT PolygonGroup::mk_param_tag(
+					TextParser* tp,
+					string	rank_no,
+					string	extend,
+					string	format
+) {
+
+	// virtual用の関数なので中身はない
+	return PLSTAT_OK;
 }
+
 
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT PolygonGroup::move(
@@ -474,80 +542,169 @@ int PolygonGroup::get_group_num_tria( void ) {
 	return (int)tmp_list->size();
 }// add keno 20120331
 
+
+// TextParser Version
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT PolygonGroup::setup_attribute (
 	Polylib					*polylib,
 	PolygonGroup			*parent, 
-	const PolylibCfgElem	*elem
+	TextParser* tp
 ) {
-	const PolylibCfgParam *att_name = elem->first_param(ATT_NAME_NAME);
-	const PolylibCfgParam *att_file = elem->first_param(ATT_NAME_PATH);
-	// ユーザ定義ID追加 2010.10.20
-	const PolylibCfgParam *att_id	= elem->first_param(ATT_NAME_ID);
-	if (att_name == NULL) {
-		PL_ERROSH << "[ERROR]PolygonGroup::setup_attribute():Paramete not found." 
-				  << endl;
-		return PLSTAT_CONFIG_ERROR;
-	}
+#ifdef DEBUG
+  PL_DBGOS << __FUNCTION__ << " in"  <<endl;
+#endif
+  TextParserError tp_error = TP_NO_ERROR;
+  int ierror;
 
-	// moveメソッドにより移動するグループか?
-	if (this->whoami() == this->get_class_name()) {
-		// 基本クラスの場合はmovableの設定は不要
-	}
-	else {
-		const PolylibCfgParam *att_mov = elem->first_param(ATT_NAME_MOVABLE);
-		if (att_mov == NULL) {
-			PL_ERROSH << "[ERROR]PolygonGroup::setup_attribute():Movable not found."
-				 << endl;
-			return PLSTAT_CONFIG_ERROR;
-		}
-		if (att_mov->get_string_data() == "true")   m_movable = true;
-	}
 
-	// グループ名が重複していないか確認
-	string	pg_name = att_name->get_string_data();
-	string	parent_path = "";
-	if (parent != NULL)		parent_path = parent->acq_fullpath();
-	POLYLIB_STAT ret = polylib->check_group_name(pg_name, parent_path);
-	if (ret != PLSTAT_OK)		return ret;
+  //  vector<string> nodes,leaves;
+  vector<string> leaves;
+  //  tp_error=tp->getNodes(nodes);
+  tp_error=tp->getLeaves(leaves,1);
 
-	// STLファイルのファイル名を設定 (リーフ以外はファイル名は未設定)
-	while (att_file != NULL) {
-		string fname = att_file->get_string_data();
-		if (fname == "") {
-			PL_ERROSH << "[ERROR]PolygonGroup::setup_attribute():File name not"
-					  << " found." << endl;
-			return PLSTAT_CONFIG_ERROR;
-		}
 
-		// STLファイルの拡張子をチェック
-		string format = TriMeshIO::input_file_format(fname);
-		if (format.empty()) {
-			PL_ERROSH << "[ERROR]PolygonGroup::setup_attribute():Unknown"
-					  << "extention: fname=" << fname << endl;
-			return PLSTAT_UNKNOWN_STL_FORMAT;
-		}
+  //  class_name search first
+  vector<string>::iterator leaf_iter = find(leaves.begin(),leaves.end(),ATT_NAME_CLASS);
 
-		m_file_name.insert(map<string, string>::value_type(fname, format));
+  //  PL_DBGOS << __FUNCTION__ << " # of nodes: " << nodes.size()
+  //<< " # of leaves: " << leaves.size() << std::endl;
 
-		att_file = elem->next_param(att_file, ATT_NAME_PATH);
-	}
+  string class_name = "";
+  if(leaf_iter!=leaves.end()) {
+    tp_error=tp->getValue((*leaf_iter),class_name);
+    //PL_DBGOS << __FUNCTION__ << " there is a class_name "<< class_name<<endl;
+  }
+
+  // id 
+  string id_string = "";
+  leaf_iter = find(leaves.begin(),leaves.end(),ATT_NAME_ID);
+
+  if(leaf_iter!=leaves.end()) {
+    tp_error=tp->getValue((*leaf_iter),id_string);
+    //PL_DBGOS << __FUNCTION__ << " there is a id number. "<< id_string
+    //<<endl;
+  }
+
+  // label (2012.08.31 追加)
+  string label_string = "";
+  leaf_iter = find(leaves.begin(),leaves.end(),ATT_NAME_LABEL);
+
+  if(leaf_iter!=leaves.end()) {
+    tp_error=tp->getValue((*leaf_iter),label_string);
+    //PL_DBGOS << __FUNCTION__ << " there is a label. "<< label_string
+    //<<endl;
+  }
+
+  // moveメソッドにより移動するグループか?
+  if (this->whoami() == this->get_class_name()) {
+    // 基本クラスの場合はmovableの設定は不要
+  }
+  else {
+    string movable_string;
+    leaf_iter = find(leaves.begin(),leaves.end(),ATT_NAME_MOVABLE);
+
+    if(leaf_iter!=leaves.end()) {
+      tp_error=tp->getValue((*leaf_iter),movable_string);
+
+      m_movable = tp->convertBool(movable_string,&ierror);		
+      //PL_DBGOS << __FUNCTION__ << " is movavle ? true or false  "
+      //<< m_movable <<endl;
+    }
+  }
+
+  // グループ名が重複していないか確認
+  // for tp
+  string current_node;
+  tp->currentNode(current_node);
+
+  //cout << __FUNCTION__ << " current_node = "  << current_node <<endl;
+  string pg_name = current_node;
+
+  string	parent_path = "";
+  if (parent != NULL)		parent_path = parent->acq_fullpath();
+  POLYLIB_STAT ret = polylib->check_group_name(pg_name, parent_path);
+  if (ret != PLSTAT_OK)		return ret;
+
+  string fname = "";
+
+  leaf_iter = find(leaves.begin(),leaves.end(),"filepath[0]");
+  if(leaf_iter != leaves.end()){
+    //filepath が複数の場合
+
+    int index=0;
+ 
+    while(leaf_iter != leaves.end()){ //end　にいかなければ。
+      stringstream ss;
+      string tmpstring=ATT_NAME_PATH;
+
+      ss << tmpstring <<"["<<index<<"]";
+      ss >> tmpstring;
+#ifdef DEBUG      
+      PL_DBGOS << __FUNCTION__<< " multi stl files "<< tmpstring << " "<<*leaf_iter<<endl;
+#endif //DEBUG      
+
+      leaf_iter = find(leaf_iter,leaves.end(),tmpstring);
+      if(leaf_iter == leaves.end()) break;
+      tp_error=tp->getValue((*leaf_iter),fname);
+
+#ifdef DEBUG      
+      PL_DBGOS << __FUNCTION__ << " STLfiles " << index <<" " << fname <<endl;
+#endif //DEBUG      
+
+      string format = TriMeshIO::input_file_format(fname);
+      if (format.empty()) {
+	PL_ERROSH << "[ERROR]PolygonGroup::setup_attribute():Unknown"
+		  << "extention: fname[]=" << fname << endl;
+	return PLSTAT_UNKNOWN_STL_FORMAT;
+      }             
+    
+      m_file_name.insert(map<string, string>::value_type(fname, format));
+      index++;
+      leaf_iter++;
+    }
+   
+  } else { //filepath が単数の場合
+      leaf_iter = find(leaves.begin(),leaves.end(),ATT_NAME_PATH);
+      if(leaf_iter!=leaves.end()) {
+	tp_error=tp->getValue((*leaf_iter),fname);
+
+#ifdef DEBUG
+	PL_DBGOS << __FUNCTION__ << " STLfile "  << fname <<endl;
+#endif // DEBUG
+	string format = TriMeshIO::input_file_format(fname);
+	if (format.empty()) {
+	  PL_ERROSH << "[ERROR]PolygonGroup::setup_attribute():Unknown"
+		    << "extention: fname=" << fname << endl;
+	  return PLSTAT_UNKNOWN_STL_FORMAT;
+	}             
+    
+	m_file_name.insert(map<string, string>::value_type(fname, format));
+      }
+    }
+
 
 	// 親を設定
 	if (parent != NULL)	{
-		m_parent		= parent;
-		m_parent_path	= parent->acq_fullpath();
-		parent->add_children(this);
+	  m_parent		= parent;
+	  m_parent_path	= parent->acq_fullpath();
+	  parent->add_children(this);
 	}
 
 	// その他の属性を設定
-	m_name = att_name->get_string_data();
+	// for tp
+	m_name = pg_name;
+
 	m_internal_id = create_global_id();
+
 	// ユーザ定義ID追加 2010.10.20
-	if (att_id == NULL) m_id = 0;
-	else				m_id = att_id->get_int_data();
-	
+	if (id_string == "") m_id = 0;
+	else	m_id = tp->convertInt(id_string,&ierror);
+
+	// ユーザ定義ラベル追加 2012.08.31
+	m_label = label_string;
+
 	return PLSTAT_OK;
+
 }
 
 // protected //////////////////////////////////////////////////////////////////
@@ -647,41 +804,6 @@ PolygonGroup::is_far(
 	return false;
 }
 // protected //////////////////////////////////////////////////////////////////
-POLYLIB_STAT PolygonGroup::mk_basic_tag(
-	xmlNodePtr	elem,
-	string		rank_no,
-	string		extend,
-	string		format
-) {
-	POLYLIB_STAT	stat;
-
-	// movableタグ (基本クラスじゃなければ作成)
-	if (this->whoami() != this->get_class_name()) {
-		stat = PolylibConfig::mk_param_tag(elem, ATT_NAME_MOVABLE,
-										m_movable == true ? "true" : "false");
-		if (stat != PLSTAT_OK)  return PLSTAT_NG;
-	}
-
-	// nameタグ
-	stat = PolylibConfig::mk_param_tag(elem, ATT_NAME_NAME, m_name.c_str());
-	if (stat != PLSTAT_OK)	return PLSTAT_NG;
-
-	// filepathタグ
-	// リーフの場合であれば、ポリゴン数が0でもファイルは作成する
-	// ポリゴン数が0の場合はファイル未作成に変更 2010.10.19
-	if (this->get_children().size() == 0 && m_polygons->triangles_num() != 0) {
-		// mapの最初にあるファイル名を流用してSTLファイル名を作成
-		char	*fname = mk_stl_fname(rank_no, extend, format);
-		stat = PolylibConfig::mk_param_tag(elem, ATT_NAME_PATH, fname);
-		if (stat != PLSTAT_OK)	return PLSTAT_NG;
-	}
-
-	// cutlib用ID追加 2010.10.20
-	stat = PolylibConfig::mk_param_tag(elem, ATT_NAME_ID, m_id);
-	if (stat != PLSTAT_OK)	return PLSTAT_NG;
-
-	return PLSTAT_OK;
-}
 
 // protected //////////////////////////////////////////////////////////////////
 char *PolygonGroup::mk_stl_fname(
@@ -695,9 +817,59 @@ char *PolygonGroup::mk_stl_fname(
 
 	// グループ名のフルパスを取得して、/を_に置き換え
 	strcpy(fname1, acq_fullpath().c_str());
+
+	//cout << __FUNCTION__ << " acq_fullpath() " <<acq_fullpath()<<endl;
+	
 	for (int i = 0; i < (int)strlen(fname1); i++) {
 		if (fname1[i] == '/')	fname1[i] = '_';
 	}
+#ifdef DEBUG
+	PL_DBGOS << __FUNCTION__ << " fname1 " <<fname1<<endl;
+#endif //  DEBUG
+	if (format == TriMeshIO::FMT_STL_A || format == TriMeshIO::FMT_STL_AA) {
+		prefix = "stla";
+	}
+	else {
+		prefix = "stlb";
+	}
+
+	if (rank_no == "") {
+		sprintf(fname2, "%s_%s.%s", fname1, extend.c_str(), prefix);
+	}
+	else {
+		sprintf(fname2, "%s_%s_%s.%s", fname1, rank_no.c_str(), extend.c_str(), 
+																		prefix);
+	}
+
+#ifdef DEBUG
+	PL_DBGOS << __FUNCTION__ << " fname2 " <<fname2<<endl;
+#endif //DEBUG
+	return fname2;
+}
+
+// protected //////////////////////////////////////////////////////////////////
+char *PolygonGroup::mk_stl_fname(
+	string		rank_no,
+	string		extend,
+	string		format,
+	map<string,string>& stl_fname_map
+) {
+	char		fname1[1024];
+	char		*prefix;
+	static char	fname2[1024];
+
+	// グループ名のフルパスを取得して、/を_に置き換え
+	strcpy(fname1, acq_fullpath().c_str());
+
+	
+
+	//cout << __FUNCTION__ << " acq_fullpath() " <<acq_fullpath()<<endl;
+	
+	for (int i = 0; i < (int)strlen(fname1); i++) {
+		if (fname1[i] == '/')	fname1[i] = '_';
+	}
+
+	//cout << __FUNCTION__ << " fname1 " <<fname1<<endl;
 
 	if (format == TriMeshIO::FMT_STL_A || format == TriMeshIO::FMT_STL_AA) {
 		prefix = "stla";
@@ -713,6 +885,12 @@ char *PolygonGroup::mk_stl_fname(
 		sprintf(fname2, "%s_%s_%s.%s", fname1, rank_no.c_str(), extend.c_str(), 
 																		prefix);
 	}
+
+	//cout << __FUNCTION__ << " fname2 " <<fname2<<endl;
+
+	string tmp_fname = fname2;
+	stl_fname_map.insert(map<string,string>::value_type(acq_fullpath(),tmp_fname));
+
 	return fname2;
 }
 
