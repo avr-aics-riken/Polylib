@@ -83,7 +83,7 @@ public:
 	///  @return POLYLIB_STATで定義される値が返る。
 	///  @attention TriMeshクラスのimport()参照。
 	///
-	POLYLIB_STAT load_stl_file();
+	POLYLIB_STAT load_stl_file(float scale=1.0);
 
 	///
 	/// 三角形ポリゴンIDファイルからポリゴンIDを読み込み、m_internal_idに登録する。
@@ -234,6 +234,16 @@ public:
 		std::vector<PrivateTriangle*>	*tri_list
 	) const;
 
+	/// 
+	/// KD木探索により、指定位置に最も近いポリゴンを検索する。
+	///
+	///  @param[in]     pos     指定位置
+	///  @return    検索されたポリゴン
+	///
+	const PrivateTriangle* search_nearest(
+		const Vec3f&    pos
+	) const;
+
 	///
 	/// PolygonGroupのフルパス名を取得する。
 	///
@@ -295,6 +305,9 @@ public:
   
   /// ポリゴンの面積を積算して返す
   float get_group_area( void );
+
+  /// ポリゴンの縮尺変換＆KD木再構築
+  POLYLIB_STAT rescale_polygons( float scale );
   
 	//=======================================================================
 	// Setter/Getter

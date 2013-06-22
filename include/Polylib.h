@@ -1,7 +1,7 @@
 /*
  * Polylib - Polygon Management Library.
- * Version     : 2.0.3
- * Release date: Nov.29.2010
+ * Version     : 2.2
+ * Release date: Nov.29.2012
  *
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *
@@ -110,14 +110,15 @@ public:
 
 	///
 	/// PolygoGroup、三角形ポリゴン情報の読み込み。
-	/// 引数で指定された設定ファイル (TextParser 軽視し) を読み込み、グループツリーを作成する。
+	/// 引数で指定された設定ファイル (TextParser 形式) を読み込み、グループツリーを作成する。
 	/// 続いて設定ファイルで指定されたSTLファイルを読み込み、KD木を作成する。
 	///
 	///  @param[in] config_name 設定ファイル名。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT load(
-           std::string			config_name = "polylib_config.tpp"
+           std::string			config_name = "polylib_config.tpp",
+			float				scale = 1.0
 	);
 
 	///
@@ -180,6 +181,18 @@ public:
 		Vec3f			min_pos, 
 		Vec3f			max_pos, 
 		bool			every
+	) const;
+
+	///
+	/// 指定した点に最も近い三角形ポリゴンの検索。
+	///
+	///  @param[in] group_name	抽出グループ名。
+	///  @param[in] pos			指定した点。
+	///  @return    検索されたポリゴン
+	///
+	const Triangle* search_nearest_polygon(
+		std::string group_name,
+		const Vec3f&    pos
 	) const;
 
 	///
@@ -330,7 +343,8 @@ protected:
 	///
 	POLYLIB_STAT load_with_idfile(
 		std::string		config_name,
-		ID_FORMAT		id_format
+		ID_FORMAT		id_format,
+		float			scale = 1.0
 	);
 
 	///
@@ -347,7 +361,8 @@ protected:
 	///
 	POLYLIB_STAT load_polygons(
 		bool		with_id_file,
-		ID_FORMAT	id_format
+		ID_FORMAT	id_format,
+		float		scale = 1.0
 	);
 
 	///

@@ -33,7 +33,8 @@ static void	tt_write(ostream& os, const void* _data, int size, int n, int inv);
 POLYLIB_STAT stl_a_load(
 	vector<PrivateTriangle*>	*tri_list, 
 	string 						fname,
-	int							*total
+	int							*total,
+	float						scale
 ) {
 
 	ifstream is(fname.c_str());
@@ -65,7 +66,7 @@ POLYLIB_STAT stl_a_load(
 			Vec3f v;
 			is >> v;
 			if (n_vtx < 3) {
-				vtx[n_vtx] = v;
+				vtx[n_vtx] = v * scale;
 			}
 			n_vtx++;
 		}
@@ -150,7 +151,8 @@ POLYLIB_STAT stl_a_save(
 POLYLIB_STAT stl_b_load(
 	vector<PrivateTriangle*>	*tri_list, 
 	string 						fname,
-	int							*total
+	int							*total,
+	float						scale
 ) {
 	ifstream ifs(fname.c_str(), ios::in | ios::binary);
 	if (ifs.fail()) {
@@ -180,6 +182,9 @@ POLYLIB_STAT stl_b_load(
 		for (int j = 0; j < 3; j++) {
 			float vtx[3];
 			tt_read(ifs, vtx, sizeof(float), 3, inv);
+			vtx[0] = vtx[0] * scale;
+			vtx[1] = vtx[1] * scale;
+			vtx[2] = vtx[2] * scale;
 			Vec3f _vertex(vtx);
 			vertex[j] = _vertex;
 		}

@@ -304,6 +304,64 @@ unsigned int VTree::memory_size() {
 	return size;
 }
 
+// public /////////////////////////////////////////////////////////////////////
+const PrivateTriangle* VTree::search_nearest(
+	const Vec3f&	pos
+) const {
+	if (m_root == 0) {
+		cerr << "Polylib::vtree::Error" << endl;
+		return 0;
+	}
+ 
+		 return search_nearest_recursive(m_root, pos);
+}
+ 
+// public /////////////////////////////////////////////////////////////////////
+const PrivateTriangle* VTree::search_nearest_recursive(
+	VNode		   *vn,
+	const Vec3f&	pos
+) const {
+	if (vn->is_leaf()) {
+		const PrivateTriangle* tri_min = 0;
+		float dist2_min = 0.0;
+ 
+		// ノード内のポリゴンから最も近い物を探す(リニアサーチ)
+		vector<VElement*>::const_iterator itr = vn->get_vlist().begin();
+		for (; itr != vn->get_vlist().end(); itr++) {
+			const PrivateTriangle* tri = (*itr)->get_triangle();
+			const Vec3f *v = tri->get_vertex();
+			Vec3f c((v[0][0]+v[1][0]+v[2][0])/3.0,
+					(v[0][1]+v[1][1]+v[2][1])/3.0,
+					(v[0][2]+v[1][2]+v[2][2])/3.0);
+			float dist2 = (c - pos).lengthSquared();
+			if (tri_min == 0 || dist2 < dist2_min) {
+				tri_min = tri;
+				dist2_min = dist2;
+			}
+		}
+		return tri_min;  // 要素数が0の場合は，0が返る
+	} else {
+		// 基準点が存在する方のサイドから検索
+		VNode *vn1, *vn2;
+		AxisEnum axis = vn->get_axis();
+		if (pos[axis] < (vn->get_left()->get_bbox()).max[axis]) {
+			vn1 = vn->get_left();
+			vn2 = vn->get_right();
+		} else {
+			vn1 = vn->get_right();
+			vn2 = vn->get_left();
+		}
+		const PrivateTriangle* tri = search_nearest_recursive(vn1, pos);
+		if (tri) {
+			// 近い方のサイドにポリゴンがあったら，そのままリターン
+			return tri;
+		} else {
+			// もしなかったら，逆サイドを検索
+			return search_nearest_recursive(vn2, pos);
+		}
+	}
+}
+
 // private ////////////////////////////////////////////////////////////////////
 void VTree::traverse(VNode* vn, VElement* elm, VNode** vnode) const
 {

@@ -281,7 +281,8 @@ MPIPolylib::load_rank0(
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT
 MPIPolylib::load_rank0(
-	std::string config_filename
+	std::string config_filename,
+	float scale
 )
 {
 #ifdef DEBUG
@@ -333,7 +334,7 @@ MPIPolylib::load_rank0(
 #endif
 
 	  // ポリゴン情報を構築 (三角形IDファイルは不要なので、第二引数はダミー)
-	  if( (ret = load_polygons(false, ID_BIN)) != PLSTAT_OK ) {
+	  if( (ret = load_polygons(false, ID_BIN, scale)) != PLSTAT_OK ) {
 	    PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():load_polygons() faild."
 		      <<" returns:" << PolylibStat2::String(ret) << endl;
 	    return ret;

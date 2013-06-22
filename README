@@ -3,12 +3,12 @@
  *
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-2012
  *
- * Polylib version 2.1       31 Aug. 2012
+ * Polylib version 2.2       27 Nov. 2012
  *
- * Functionality Simulation and Information Team
- * VCAD System Research Program
+ * 2010-2011 Functionality Simulation and Information Team, VCAD System Research Program, RIKEN
+ * 2012-     Advanced Visualization Research Team, Advanced Institute for Computational Science, RIKEN
  *
- * Signatured by Kenji Ono (keno@riken.jp)
+ * Correspond Author : Kenji Ono (keno@riken.jp)
  */
 
 ソフトウェア概要
@@ -18,7 +18,7 @@
   以下の機能を備えます。
    ・STL形式によるポリゴンデータのロードとセーブ
    ・ロードされたポリゴンデータの領域範囲指定検索
-   ・XML形式設定ファイルによるポリゴンデータのグルーピング指定
+   ・TextParser形式設定ファイルによるポリゴンデータのグルーピング指定
    ・並列計算環境下におけるポリゴンデータの分散管理
    ・ユーザ定義関数によるポリゴン座標の移動処理
    ・上記移動処理に伴う並列プロセス間のポリゴンデータマイグレーション

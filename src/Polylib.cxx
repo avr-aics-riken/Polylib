@@ -43,7 +43,8 @@ void Polylib::set_factory(
 // public /////////////////////////////////////////////////////////////////////
 // 
 POLYLIB_STAT Polylib::load(
-	string	config_name
+	string	config_name,
+	float	scale
 ) {
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::load_test() in." << endl;
@@ -60,7 +61,7 @@ POLYLIB_STAT Polylib::load(
 	  if (stat != PLSTAT_OK)	return stat;
 
 	  // STLファイル読み込み (三角形IDファイルは不要なので、第二引数はダミー)
-	  return load_polygons(false, ID_BIN);
+	  return load_polygons(false, ID_BIN, scale);
 	}
 	catch (POLYLIB_STAT e) {
 		return e;
@@ -344,6 +345,55 @@ PolygonGroup* Polylib::get_group(string name) const
 	return NULL;
 }
 
+// public /////////////////////////////////////////////////////////////////////
+const Triangle* Polylib::search_nearest_polygon(
+	string	 group_name, 
+	const Vec3f&	pos
+) const {
+
+	PolygonGroup* pg = get_group(group_name);
+	if (pg == 0) {
+		PL_ERROSH << "[ERROR]Polylib::search_polygons():Group not found: " 
+				  << group_name << endl;
+		return 0;
+	}
+
+	vector<PolygonGroup*>* pg_list2 = new vector<PolygonGroup*>;
+
+	//子孫を検索
+	search_group(pg, pg_list2);
+
+	//自身を追加
+	pg_list2->push_back(pg);
+
+		const PrivateTriangle* tri_min = 0;
+		float dist2_min = 0.0;
+
+	//対象ポリゴングループ毎に検索
+	vector<PolygonGroup*>::iterator it;
+	for (it = pg_list2->begin(); it != pg_list2->end(); it++) {
+		//リーフポリゴングループからのみ検索を行う
+		if ((*it)->get_children().size()==0) {
+				const PrivateTriangle* tri = (*it)->search_nearest(pos);
+				if (tri) {
+					Vec3f* v = tri->get_vertex();
+					Vec3f c((v[0][0]+v[1][0]+v[2][0])/3.0,
+							(v[0][1]+v[1][1]+v[2][1])/3.0,
+							(v[0][2]+v[1][2]+v[2][2])/3.0);
+					float dist2 = (c - pos).lengthSquared();
+					if (tri_min == 0 || dist2 < dist2_min) {
+						tri_min = tri;
+						dist2_min = dist2;
+					}
+				}
+			}
+		}
+
+	delete pg_list2;
+
+	return (const Triangle*)tri_min;
+}
+
 // protected //////////////////////////////////////////////////////////////////
 Polylib::Polylib()
 {
@@ -538,7 +588,8 @@ POLYLIB_STAT Polylib::load_config_file(
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::load_with_idfile(
 	string		config_name,
-	ID_FORMAT	id_format
+	ID_FORMAT	id_format,
+	float		scale
 ) {
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::load_with_idfile() in." << endl;
@@ -552,14 +603,15 @@ POLYLIB_STAT Polylib::load_with_idfile(
 	if (stat != PLSTAT_OK)	return stat;
 
 	// STLファイルとIDファイル読み込み
-	return load_polygons(true, id_format);
+	return load_polygons(true, id_format, scale);
 }
 
 
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::load_polygons(
 	bool		with_id_file,
-	ID_FORMAT	id_format
+	ID_FORMAT	id_format,
+	float		scale
 )
 {
 #ifdef DEBUG
@@ -571,7 +623,7 @@ POLYLIB_STAT Polylib::load_polygons(
 		if ((*it)->get_children().empty() == true) {
 
 			//STLファイルを読み込む
-			POLYLIB_STAT ret = (*it)->load_stl_file();
+			POLYLIB_STAT ret = (*it)->load_stl_file(scale);
 			if (ret != PLSTAT_OK)		return ret;
 
 			// 必要であればIDファイルを読み込んでm_idを設定

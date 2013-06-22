@@ -28,7 +28,8 @@ const string TriMeshIO::DEFAULT_FMT = TriMeshIO::FMT_STL_B;
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT TriMeshIO::load(
 	vector<PrivateTriangle*>	*tri_list, 
-	const map<string, string>	&fmap
+	const map<string, string>	&fmap,
+	float scale
 ) {
 	map<string, string>::const_iterator	it;
 	int									total;
@@ -49,10 +50,10 @@ POLYLIB_STAT TriMeshIO::load(
 			ret = PLSTAT_NG;
 		}
 		else if (fmt == FMT_STL_A || fmt == FMT_STL_AA) {
-			ret = stl_a_load(tri_list, fname, &total);
+			ret = stl_a_load(tri_list, fname, &total, scale);
 		}
 		else if (fmt == FMT_STL_B || fmt == FMT_STL_BB) {
-			ret = stl_b_load(tri_list, fname, &total);
+			ret = stl_b_load(tri_list, fname, &total, scale);
 		}
 
 		// 一ファイルでも読み込みに失敗したら戻る

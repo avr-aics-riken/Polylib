@@ -31,7 +31,8 @@ public:
 	///
 	static POLYLIB_STAT load(
 		std::vector<PrivateTriangle*>				*tri_list,
-		const std::map<std::string, std::string>	&fmap
+		const std::map<std::string, std::string>	&fmap,
+		float scale = 1.0
 	);
 
 	///

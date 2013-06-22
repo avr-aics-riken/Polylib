@@ -60,7 +60,8 @@ public:
 	///  @return PLSTAT_OK=成功/false=失敗
 	///
 	POLYLIB_STAT import(
-		const std::map<std::string, std::string> fmap
+		const std::map<std::string, std::string> fmap,
+		float scale = 1.0
 	);
 
 	///
@@ -140,6 +141,16 @@ public:
 		BBox							*q_bbox, 
 		bool							every,
 		std::vector<PrivateTriangle*>	*tri_list
+	) const;
+
+	///
+	/// KD木探索により、指定位置に最も近いポリゴンを検索する。
+	///
+	///  @param[in]     pos     指定位置
+	///  @return 検索されたポリゴン
+	///
+	const PrivateTriangle* search_nearest(
+		const Vec3f&    pos
 	) const;
 
 	//=======================================================================

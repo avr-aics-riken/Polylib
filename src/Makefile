@@ -20,15 +20,15 @@
 
 TARGET_DIR	= ../lib
 
-MPI_INC_DIR	= /opt/openmpi/include
-TP_INC_DIR  = /usr/local/textparser/include
+MPI_INC_DIR	= /usr/include/openmpi-x86_64
+TP_INC_DIR  = /home/tkawanab/TextParser/textparser-1.1-dev_c/include
 
 
 #####################################
 # INTEL
 
 #CXX		= g++
-CXX			= icpc
+CXX			= mpicxx
 AR			= ar cru
 RANLIB	= ranlib
 RM      = \rm -f
@@ -38,8 +38,8 @@ CFLAGS		= -O3 -Wall \
             -I$(MPI_INC_DIR) \
             -I$(TP_INC_DIR) \
             -fno-strict-aliasing \
+            -DSAVE_ID_ASCII -DDEBUG
 #            -I/usr/include \
-#            -DSAVE_ID_ASCII -DDEBUG
 
 
 #####################################

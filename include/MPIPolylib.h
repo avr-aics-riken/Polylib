@@ -95,7 +95,8 @@ public:
 	///
 	POLYLIB_STAT
 	load_rank0(
-		std::string config_filename = ""
+		std::string config_filename = "",
+		float scale = 1.0
 	);
 
 	///

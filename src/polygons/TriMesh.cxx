@@ -108,10 +108,10 @@ TriMesh::add(
 }
 
 // public /////////////////////////////////////////////////////////////////////
-POLYLIB_STAT TriMesh::import(const map<string, string> fmap)
+POLYLIB_STAT TriMesh::import(const map<string, string> fmap, float scale)
 {
 	init_tri_list();
-	return TriMeshIO::load(m_tri_list, fmap);
+	return TriMeshIO::load(m_tri_list, fmap, scale);
 }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -265,6 +265,13 @@ POLYLIB_STAT TriMesh::linear_search(
 #endif
 	}
 	return PLSTAT_OK;
+}
+
+// public /////////////////////////////////////////////////////////////////////
+const PrivateTriangle* TriMesh::search_nearest(
+	const Vec3f&    pos
+) const {
+	return m_vtree->search_nearest(pos);
 }
 
 // private ////////////////////////////////////////////////////////////////////

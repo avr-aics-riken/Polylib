@@ -3,12 +3,12 @@
  *
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-2012
  *
- * Polylib version 2.1       31 Aug. 2012
+ * Polylib version 2.2      27 Nov. 2012
  *
- * Functionality Simulation and Information Team
- * VCAD System Research Program
+ * 2010-2011 Functionality Simulation and Information Team, VCAD System Research Program, RIKEN
+ * 2012-     Advanced Visualization Research Team, Advanced Institute for Computational Science, RIKEN
  *
- * Signatured by Kenji Ono (keno@riken.jp)
+ * Correspond Author : Kenji Ono (keno@riken.jp)
  */
 
 Polylibライブラリのビルドおよびインストール方法

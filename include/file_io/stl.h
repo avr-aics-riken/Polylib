@@ -23,7 +23,8 @@ namespace PolylibNS {
 POLYLIB_STAT stl_a_load(
 	std::vector<PrivateTriangle*>	*tri_list, 
 	std::string 					fname,
-	int								*total
+	int								*total,
+	float							scale=1.0
 );
 
 ///
@@ -50,7 +51,8 @@ POLYLIB_STAT stl_a_save(
 POLYLIB_STAT stl_b_load(
 	std::vector<PrivateTriangle*>	*tri_list, 
 	std::string						fname,
-	int								*total
+	int								*total,
+	float							scale=1.0
 );
 
 ///

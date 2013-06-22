@@ -328,6 +328,28 @@ public:
 	) const;
 
 	///
+	/// KD木探索により、指定位置に最も近いポリゴンを検索する。
+	///
+	///  @param[in]     pos     指定位置
+	///  @return    検索されたポリゴン
+	///
+	const PrivateTriangle* search_nearest(
+		const Vec3f&    pos
+	) const;
+
+	///
+	/// KD木探索により、指定位置に最も近いポリゴンを検索する。
+	///
+	///  @param[in]     vn      検索対象のノードへのポインタ。
+	///  @param[in]     pos     指定位置
+	///  @return    検索されたポリゴン
+	///
+	const PrivateTriangle* search_nearest_recursive(
+		VNode       *vn, 
+		const Vec3f&    pos
+	) const;
+
+	///
 	/// KD木クラスが利用しているメモリ量を返す。
 	///
 	///  @return	利用中のメモリ量(byte)
