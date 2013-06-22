@@ -1,9 +1,9 @@
 /*
  * Polylib - Polygon Management Library
  *
- * Copyright (c) RIKEN, Japan. All right reserved. 2010-2012
+ * Copyright (c) RIKEN, Japan. All right reserved. 2010-2013
  *
- * Polylib version 2.2       27 Nov. 2012
+ * Polylib version 2.3
  *
  * 2010-2011 Functionality Simulation and Information Team, VCAD System Research Program, RIKEN
  * 2012-     Advanced Visualization Research Team, Advanced Institute for Computational Science, RIKEN
@@ -12,6 +12,7 @@
  */
 
 Release News
+  2013.03.26  Version 2.3
   2012.11.27  Version 2.2
   2012.08.31  Version 2.1
   2010.11.29  Version 2.0.3

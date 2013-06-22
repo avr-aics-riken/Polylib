@@ -1,9 +1,9 @@
 /*
  * Polylib - Polygon Management Library
  *
- * Copyright (c) RIKEN, Japan. All right reserved. 2010-2012
+ * Copyright (c) RIKEN, Japan. All right reserved. 2010-2013
  *
- * Polylib version 2.2       27 Nov. 2012
+ * Polylib version 2.3       26 Mar. 2013
  *
  * 2010-2011 Functionality Simulation and Information Team, VCAD System Research Program, RIKEN
  * 2012-     Advanced Visualization Research Team, Advanced Institute for Computational Science, RIKEN
@@ -12,9 +12,7 @@
  */
 
 ソフトウェア概要
-  Polygon Management Library (以下、Polylib)は、V-SphereのソルバークラスCBCか
-  ら呼び出して利用することが可能な、ポリゴンデータを保持・管理するためのクラス
-  ライブラリです。
+  Polygon Management Library (以下、Polylib)は、ポリゴンデータを保持・管理するためのクラスライブラリで、
   以下の機能を備えます。
    ・STL形式によるポリゴンデータのロードとセーブ
    ・ロードされたポリゴンデータの領域範囲指定検索
