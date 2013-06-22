@@ -212,6 +212,14 @@ PL_DBGOSH << "PolygonGroup:load_stl_file():IN" << endl;
 #endif
 	POLYLIB_STAT ret = m_polygons->import(m_file_name, scale);
 	if (ret != PLSTAT_OK) return ret;
+
+	// m_idが指定されていたら、その値で全三角形のm_exidを更新
+	// added by tkawanab 2013.06.17
+	if( m_id_defined ) {
+		ret = m_polygons->set_all_exid( m_id );
+	}
+	if (ret != PLSTAT_OK) return ret;
+
 	return build_polygon_tree();
 }
 
@@ -727,8 +735,15 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 	m_internal_id = create_global_id();
 
 	// ユーザ定義ID追加 2010.10.20
-	if (id_string == "") m_id = 0;
-	else	m_id = tp->convertInt(id_string,&ierror);
+	// m_id_defined追加 2013.06.17
+	if (id_string == "") {
+		m_id = 0;
+		m_id_defined = false;
+	}
+	else {
+		m_id = tp->convertInt(id_string,&ierror);
+		m_id_defined = true;
+	}
 
 	// ユーザ定義ラベル追加 2012.08.31
 	m_label = label_string;
@@ -842,7 +857,7 @@ char *PolygonGroup::mk_stl_fname(
 	string		format
 ) {
 	char		fname1[1024];
-	char		*prefix;
+	string		prefix;
 	static char	fname2[1024];
 
 	// グループ名のフルパスを取得して、/を_に置き換え
@@ -864,11 +879,11 @@ char *PolygonGroup::mk_stl_fname(
 	}
 
 	if (rank_no == "") {
-		sprintf(fname2, "%s_%s.%s", fname1, extend.c_str(), prefix);
+		sprintf(fname2, "%s_%s.%s", fname1, extend.c_str(), prefix.c_str());
 	}
 	else {
 		sprintf(fname2, "%s_%s_%s.%s", fname1, rank_no.c_str(), extend.c_str(), 
-																		prefix);
+																prefix.c_str());
 	}
 
 #ifdef DEBUG
@@ -885,7 +900,7 @@ char *PolygonGroup::mk_stl_fname(
 	map<string,string>& stl_fname_map
 ) {
 	char		fname1[1024];
-	char		*prefix;
+	string		prefix;
 	static char	fname2[1024];
 
 	// グループ名のフルパスを取得して、/を_に置き換え
@@ -909,11 +924,11 @@ char *PolygonGroup::mk_stl_fname(
 	}
 
 	if (rank_no == "") {
-		sprintf(fname2, "%s_%s.%s", fname1, extend.c_str(), prefix);
+		sprintf(fname2, "%s_%s.%s", fname1, extend.c_str(), prefix.c_str());
 	}
 	else {
 		sprintf(fname2, "%s_%s_%s.%s", fname1, rank_no.c_str(), extend.c_str(), 
-																		prefix);
+																prefix.c_str());
 	}
 
 	//cout << __FUNCTION__ << " fname2 " <<fname2<<endl;

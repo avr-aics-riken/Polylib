@@ -144,6 +144,23 @@ public:
 		return m_exid;
 	}
 
+	///
+	/// ユーザ定義状態変数を設定。
+	///
+	///
+	void set_shell( int val ) {
+		m_shell = val;
+	}
+
+	///
+	/// ユーザ定義状態変数を取得。
+	///
+	/// @return ユーザ定義状態変数。
+	///
+	int get_shell() const {
+		return m_shell;
+	}
+
 protected:
 	///
 	/// 法線ベクトル算出。
@@ -183,6 +200,9 @@ protected:
 
 	/// 三角形のユーザ定義ID
 	int     m_exid;
+
+	/// 三角形のユーザ定義状態変数
+	int		m_shell;
 };
 
 ////////////////////////////////////////////////////////////////////////////

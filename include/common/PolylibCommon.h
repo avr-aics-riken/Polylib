@@ -27,9 +27,9 @@ typedef enum {
 ///
 ////////////////////////////////////////////////////////////////////////////
 #define PL_DBGOS    std::cout
-#define PL_DBGOSH   std::cout<<gs_rankno
+#define PL_DBGOSH   std::cout<<gs_rankno<<"PL:"
 #define PL_ERROS    std::cerr
-#define PL_ERROSH   std::cerr<<gs_rankno
+#define PL_ERROSH   std::cerr<<gs_rankno<<"PL:"
 
 ////////////////////////////////////////////////////////////////////////////
 ///

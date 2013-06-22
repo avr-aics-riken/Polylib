@@ -99,7 +99,7 @@ $(MPI_TARGET)	: $(GFX_OBJS) $(MPI_OBJS) $(UTIL_OBJS)
 depend		 : $(HDRS)
 	-@ $(RM) depend.inc
 	-@ for i in $^; do\
-		cpp $(CXXFLAGS) -I../include -MM $$i >> depend.inc;\
+		cpp $(CXXFLAGS) -I../include $(UDEF_INC_PATH) -MM $$i >> depend.inc;\
 	done
 -include depend.inc
 

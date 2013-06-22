@@ -663,6 +663,9 @@ protected:
 private:
 	/// ユーザ定義id : (追加 2010.10.20)
 	int							m_id;
+
+	/// ユーザ定義IDが設定されたか？：（追加 2013.06.17)
+	bool						m_id_defined;
 };
 
 } //namespace PolylibNS

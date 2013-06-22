@@ -274,6 +274,18 @@ const PrivateTriangle* TriMesh::search_nearest(
 	return m_vtree->search_nearest(pos);
 }
 
+// public /////////////////////////////////////////////////////////////////////
+POLYLIB_STAT TriMesh::set_all_exid(
+	const int    id
+) const {
+	// 全ポリゴンのm_exidをidで上書き
+	vector<PrivateTriangle*>::iterator itr;
+	for (itr = m_tri_list->begin(); itr != m_tri_list->end(); itr++) {
+		(*itr)->set_exid( id );
+	}
+	return PLSTAT_OK;
+}
+
 // private ////////////////////////////////////////////////////////////////////
 void TriMesh::init_tri_list()
 {
