@@ -1,7 +1,7 @@
 /*
  * Polylib - Polygon Management Library.
- * Version     : 2.0.1
- * Release date: Oct.29.2010
+ * Version     : 2.0.2
+ * Release date: Nov.09.2010
  *
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *
@@ -73,7 +73,7 @@ public:
 
 	///
 	/// Polylib::load()のオーバライドメソッド。
-	/// @attension 並列環境では利用できません。
+	/// @attention 並列環境では利用できません。
 	///
 	/// @param[in] config_filename	初期化ファイル名。
 	/// @return 常に PLSTAT_NG が返ります。
@@ -102,19 +102,21 @@ public:
 	/// 全rank並列でのデータ構築。
 	/// 指定された設定ファイルを各rankにて読み込み、グループ階層構造の構築、
 	/// およびポリゴンデータの構築を行う。
-	/// @attension 各rankが読み込むファイルに記述されたグループ階層構造が一致している必要がある。
+	/// @attention 各rankが読み込むファイルに記述されたグループ階層構造が一致している必要がある。
 	///
 	/// @param[in] config_filename	初期化ファイル名。未指定時はデフォルトファイルを読む。
+	/// @param[in] id_format		三角形IDファイルの入力形式。
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
 	load_parallel( 
-		std::string config_filename = ""
+		std::string config_filename = "",
+		ID_FORMAT	id_format = ID_BIN
 	);
 
 	///
 	/// Polylib::save()のオーバライドメソッド。
-	/// @attension 並列環境では利用できません。
+	/// @attention 並列環境では利用できません。
 	///
 	/// @param[out] p_config_filename	初期化ファイル名。
 	/// @return 常に PLSTAT_NG が返ります。
@@ -141,7 +143,7 @@ public:
 	///									び出し時の年月日時分秒(YYYYMMDD24hhmmss)
 	///									を用いる。
 	/// @return	POLYLIB_STATで定義される値が返る。
-	/// @attension 出力引数p_config_filenameの返却値はrank0でのみ有効
+	/// @attention 出力引数p_config_filenameの返却値はrank0でのみ有効
 	///
 	POLYLIB_STAT
 	save_rank0(
@@ -165,13 +167,15 @@ public:
 	///									した場合は、付加文字列として本メソッド呼
 	///									び出し時の年月日時分秒(YYYYMMDD24hhmmss)
 	///									を用いる。
+	/// @param[in] id_format	三角形IDファイルの出力形式。
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
 	save_parallel(
 		std::string *p_config_filename,
 		std::string stl_format,
-		std::string extend = ""
+		std::string extend = "",
+		ID_FORMAT	id_format = ID_BIN
 	);
 
 	///

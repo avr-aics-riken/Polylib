@@ -60,12 +60,14 @@ public:
 	);
 
 	/// STLファイルのフォーマット種別
+	///
 	///  @attention STLファイルの拡張子とは異なるので注意すること。
-	static const std::string FMT_STL_A;
-	static const std::string FMT_STL_AA;
-	static const std::string FMT_STL_B;
-	static const std::string FMT_STL_BB;
-	static const std::string DEFAULT_FMT;
+	///
+	static const std::string FMT_STL_A;		///< アスキーファイル
+	static const std::string FMT_STL_AA;	///< アスキーファイル
+	static const std::string FMT_STL_B;		///< バイナリファイル
+	static const std::string FMT_STL_BB;	///< バイナリファイル
+	static const std::string DEFAULT_FMT;	///< TrimeshIO.cxxで定義している値
 };
 
 } //namespace PolylibNS

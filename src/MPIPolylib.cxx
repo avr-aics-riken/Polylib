@@ -219,8 +219,8 @@ MPIPolylib::load_rank0(
 			return ret;
 		}
 
-		// ポリゴン情報を構築
-		if( (ret = load_polygons()) != PLSTAT_OK ) {
+		// ポリゴン情報を構築 (三角形IDファイルは不要なので、第二引数はダミー)
+		if( (ret = load_polygons(false, ID_BIN)) != PLSTAT_OK ) {
 			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():load_polygons() faild. returns:" << PolylibStat2::String(ret) << endl;
 			return ret;
 		}
@@ -260,7 +260,8 @@ MPIPolylib::load_rank0(
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT
 MPIPolylib::load_parallel( 
-	std::string config_filename
+	std::string config_filename,
+	ID_FORMAT	id_format
 )
 {
 #ifdef DEBUG
@@ -270,7 +271,7 @@ MPIPolylib::load_parallel(
 
 	// 設定ファイル読み込み、グループ階層構造構築、ポリゴン情報構築。
 	// MPIPolylib::save_parallel()で保存された設定ファイルであることが前提
-	if( (ret = Polylib::load_with_idfile( config_filename )) != PLSTAT_OK ) {
+	if( (ret = Polylib::load_with_idfile( config_filename, id_format )) != PLSTAT_OK ) {
 		PL_ERROSH << "[ERROR]MPIPolylib::load_parallel():Polylib::load() faild. returns:" << PolylibStat2::String(ret) << endl;
 		return ret;
 	}
@@ -326,7 +327,8 @@ POLYLIB_STAT
 MPIPolylib::save_parallel(
 	std::string *p_config_filename,
 	std::string stl_format,
-	std::string extend
+	std::string extend,
+	ID_FORMAT	id_format
 )
 {
 #ifdef DEBUG
@@ -335,7 +337,7 @@ MPIPolylib::save_parallel(
 	POLYLIB_STAT ret;
 
 	// 各ランク毎に保存
-	if( (ret = Polylib::save_with_rankno( p_config_filename, m_myrank, m_numproc-1, extend, stl_format)) != PLSTAT_OK ) {
+	if( (ret = Polylib::save_with_rankno( p_config_filename, m_myrank, m_numproc-1, extend, stl_format, id_format)) != PLSTAT_OK ) {
 		PL_ERROSH << "[ERROR]MPIPolylib::save_parallel():Polylib::save_with_rankno():failed. returns:" << PolylibStat2::String(ret) << endl;
 		return ret;
 	}

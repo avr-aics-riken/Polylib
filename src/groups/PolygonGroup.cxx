@@ -170,7 +170,9 @@ PL_DBGOSH << "PolygonGroup:load_stl_file():IN" << endl;
 }
 
 // public /////////////////////////////////////////////////////////////////////
-POLYLIB_STAT PolygonGroup::load_id_file() {
+POLYLIB_STAT PolygonGroup::load_id_file(
+	ID_FORMAT	id_format
+) {
 	// IDはsave_id()関数で一括して出力されるので、ファイル数は必ず1個
 	if (m_file_name.size() != 1) {
 		PL_ERROSH << "[ERROR]PolygonGroup::load_id_file():Num of files mismatch:" 
@@ -184,7 +186,7 @@ POLYLIB_STAT PolygonGroup::load_id_file() {
 #ifdef DEBUG
 PL_DBGOSH << "load_id_file:" << fname.c_str() << endl;
 #endif
-	return load_id(m_polygons->get_tri_list(), fname);
+	return load_id(m_polygons->get_tri_list(), fname, id_format);
 }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -199,14 +201,15 @@ POLYLIB_STAT PolygonGroup::save_stl_file(
 
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT PolygonGroup::save_id_file(
-	string	rank_no,
-	string	extend
+	string		rank_no,
+	string		extend,
+	ID_FORMAT	id_format
 ) {
 	char	*fname = mk_id_fname(rank_no, extend);
 #ifdef DEBUG
 PL_DBGOSH <<  "save_id_file:" << fname << endl;
 #endif
-	return save_id(m_polygons->get_tri_list(), fname);
+	return save_id(m_polygons->get_tri_list(), fname, id_format);
 }
 
 // public /////////////////////////////////////////////////////////////////////

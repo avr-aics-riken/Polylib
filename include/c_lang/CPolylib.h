@@ -30,13 +30,10 @@ extern "C" {  // for C++
 /// 三角形ポリゴン情報構造体
 ///
 typedef struct {
-	float m_vertex[9];	// ３頂点座標
-	float m_normal[3];	// 法線ベクトル
-	float m_area;		// 面積
+	float m_vertex[9];	///< ３頂点座標
+	float m_normal[3];	///< 法線ベクトル
+	float m_area;		///< 面積
 } TriangleStruct;
-
-
-
 
 ///
 /// Polylib::loadメソッドのラッパー関数。

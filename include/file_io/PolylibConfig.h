@@ -27,8 +27,8 @@ enum PolylibCfgParamType
 ////////////////////////////////////////////////////////////////////////////
 ///
 /// クラス:PolylibCfgParam
-/// configファイルのParam要素の管理。 Param要素の形式は
-/// <Param name="" dtype="" value="">である。
+///  @attention	定義ファイルのParam要素の管理。 Param要素の形式は
+///				"<Param name="" dtype="" value="">"である。
 ///
 ////////////////////////////////////////////////////////////////////////////
 class PolylibCfgParam {
@@ -112,7 +112,8 @@ private:
 ////////////////////////////////////////////////////////////////////////////
 ///
 /// クラス:PolylibCfgElem
-/// configファイルのElem要素の管理。 Elem要素の形式は<Elem name="">である。
+///  @attention	configファイルのElem要素の管理。 Elem要素の形式は
+///				"<Elem name="">"である。
 ///
 ////////////////////////////////////////////////////////////////////////////
 class PolylibCfgElem {
@@ -186,7 +187,7 @@ public:
 
 	///
 	/// 子要素のElemを追加。
-	///  @param[in] 子要素のElem。
+	///  @param[in] elem 追加するElem要素。
 	///
 	void set_elem(PolylibCfgElem* elem) {
 		m_elem->push_back(elem);
@@ -194,7 +195,7 @@ public:
 
 	///
 	/// 子要素のParamを追加。
-	///  @param[in] 子要素のParam。
+	///  @param[in] param 追加するParam要素。
 	///
 	void set_param(PolylibCfgParam* param) {
 		m_param->push_back(param);
@@ -233,7 +234,6 @@ public:
 	///
 	/// コンストラクタ。
 	///
-	///  @param[in] fname 設定ファイル名。
 	///  @Exception 設定ファイルに不備があった場合は例外PLSTAT_NGを投げる。
 	///  @attention	オーバーロードメソッドあり。
 	///

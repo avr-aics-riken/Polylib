@@ -41,9 +41,21 @@ typedef enum {
 //	PLSTAT_PARAMETER_NOT_FOUND,	///< ConfigファイルにParamタグがない。
 } POLYLIB_STAT;
 
+#ifndef C_LANG // C言語版でも本ヘッダを使用しているため#ifndefを追加 2010.11.04
 namespace PolylibNS {
+////////////////////////////////////////////////////////////////////////////
+///
+/// PolylibStat文字列出力用クラス
+///
+////////////////////////////////////////////////////////////////////////////
 class PolylibStat2 {
 public:
+///
+/// PolylibStat文字列出力。
+///
+///  @param[in] stat	PolylibStat値。
+///  @return    PolylibStat値を文字列化したもの。
+///
 static std::string String(
 	POLYLIB_STAT	stat
 ) {
@@ -69,4 +81,6 @@ static std::string String(
 }
 };
 }
+#endif // C_LANG
+
 #endif // polylib_stat_h

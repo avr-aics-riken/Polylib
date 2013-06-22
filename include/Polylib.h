@@ -1,7 +1,7 @@
 /*
  * Polylib - Polygon Management Library.
- * Version     : 2.0.1
- * Release date: Oct.29.2010
+ * Version     : 2.0.2
+ * Release date: Nov.09.2010
  *
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *
@@ -111,7 +111,7 @@ public:
 	/// 引数で指定された設定ファイルを読み込み、グループツリーを作成する。
 	/// 続いて設定ファイルで指定されたSTLファイルを読み込み、KD木を作成する。
 	///
-	///  @param[in] fname 設定ファイル名。デフォルト値は、polylib_config.xml。
+	///  @param[in] config_name 設定ファイル名。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT load(
@@ -121,29 +121,23 @@ public:
 	///
 	/// PolygoGroupツリー、三角形ポリゴン情報の保存。
 	/// グループツリーの情報を設定ファイルへ出力。三角形ポリゴン情報をSTL
-	///	ファイルへ出力。三角形ポリゴンIDをIDファイルへ出力。
+	///	ファイルへ出力。
 	///
-	///  @param[out]    p_fname	設定ファイル名。
-	///  @param[in]     format	TriMeshIOクラスで定義されているSTLファイルの
-	///							フォーマット。
-	///  @param[in]     extend	ファイル名に付加する文字列。省略可。省略した
-	///							場合は、付加文字列として本メソッド呼び出し時の
-	///							年月日時分秒(YYYYMMDD24hhmmss)を用いる。
-	///  @param[in]     rank_no	ランク番号。省略可。省略した場合は、ファイル名
-	///							にランク番号は付加されない。
+	///	 @param[out] p_config_name	保存した設定ファイル名の返却用。
+	///  @param[in]	 stl_format		TriMeshIOクラスで定義されているSTLファイルの
+	///								フォーマット。
+	///  @param[in]	 extend			ファイル名に付加する文字列。省略可。省略した
+	///								場合は、付加文字列として本メソッド呼び出し時
+	///								の年月日時分秒(YYYYMMDD24hhmmss)を用いる。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention	ファイル名命名規約は次の通り。
 	///			定義ファイル : polylib_config_ランク番号_付加文字.xml。
 	///			STLファイル  : ポリゴングループ名_ランク番号_付加文字.拡張子。
-	///			IDファイル   : ポリゴングループ名_ランク番号_付加文字.ID。
-	///  @attention	extendとrank_noを同時に省略すること、rank_noのみを省略する
-	///				ことはできるが、extendのみを省略することはできない。
 	///
 	POLYLIB_STAT save(
-		std::string			*p_fname,
-		std::string			format,
-		std::string			extend = "",
-		std::string			rank_no = ""
+		std::string			*p_config_name,
+		std::string			stl_format,
+		std::string			extend = ""
 	);
 
 	///
@@ -164,7 +158,7 @@ public:
 	///  @return	最上位ノードのvector。
 	///  @attention 返却したPolygonGroupは、削除不可。vectorは要削除。
 	///
-	std::vector<PolygonGroup *> *get_root_groups();
+	std::vector<PolygonGroup *> *get_root_groups() const;
 
 	///
 	/// 三角形ポリゴンの検索。
@@ -189,8 +183,8 @@ public:
 	///
 	/// 引数のグループ名が既存グループと重複しないかチェック。
 	///
-	///  @param[in] name	グループ名
-	///  @param[in] path	親グループまでのフルパス
+	///  @param[in] pg_name		グループ名
+	///  @param[in] parent_path	親グループまでのフルパス
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention	Polylib内部で使用する関数であり、通常は利用者が用いるもの
 	///				ではない。
@@ -304,7 +298,7 @@ protected:
 	///
 	/// 引数の内容でグループ階層構造を構築。
 	///
-	///  @param[in] contents	設定ファイルの内容(XML形式)。
+	///  @param[in] config_contents	設定ファイルの内容(XML形式)。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention	MPIPolylibクラスがMPI環境で利用することを想定している。
 	///  @attention	オーバーロードメソッドあり。
@@ -331,12 +325,14 @@ protected:
 	/// loadと同様の動作を行う。但し読み込み時には、三角形IDファイルが必要で
 	/// あり、このファイルに記述されているIDを用いてm_idを設定する。
 	///
-	///  @param[in] fname 設定ファイル名。
+	///  @param[in] config_name	設定ファイル名。
+	///  @param[in]	id_format	三角形IDファイルの入力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention	MPIPolylibクラスがMPI環境で利用することを想定している。
 	///
 	POLYLIB_STAT load_with_idfile(
-		std::string		config_name
+		std::string		config_name,
+		ID_FORMAT		id_format
 	);
 
 	///
@@ -348,10 +344,12 @@ protected:
 	///  @param[in] with_id_file	trueならば、三角形ポリゴンIDファイルを読み
 	///								込んでm_idを設定する。
 	///								falseならば、STL読み込み時にm_idを自動生成。
+	///  @param[in]	id_format		三角形IDファイルの入力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT load_polygons(
-		bool		with_id_file = false
+		bool		with_id_file,
+		ID_FORMAT	id_format
 	);
 
 	///
@@ -370,40 +368,29 @@ protected:
 		std::string	format
 	);
 
+	/// PolygoGroupツリー、三角形ポリゴン情報の保存。
+	/// グループツリー情報を設定ファイルへ出力。三角形ポリゴン情報をSTLファイル
+	/// へ出力。ID情報をIDファイルへ出力。ファイル名にランク番号を付加する。
 	///
-	/// STLファイルと三角形ポリゴンIDの保存。
-	/// KD木の内容をSTLファイルとIDファイルに出力する。単一のリーフが複数のSTL
-	/// ファイルで構成されていた場合、それらはすべて一つのファイルとして出力さ
-	/// れる。
-	///
-	///  @param[in] rank_no	ランク番号
-	///  @param[in] extend	ファイル名に付加する文字列
-	///  @param[in] format	TriMeshIOクラスで定義されているSTLファイルのフォー
-	///						マット。
+	///	 @param[out] p_config_name	保存した設定ファイル名の返却用。
+	///	 @param[in]  myrank			自ランク番号。
+	///	 @param[in]	 maxrank		最大ランク番号。
+	///	 @param[in]	 extend			ファイ名に付加される文字列。
+	///	 @param[in]	 stl_format		STLファイルフォーマット指定。
+	///  @param[in]	 id_format		三角形IDファイルの出力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
-	///
-	POLYLIB_STAT save_polygons(
-		std::string	rank_no,
-		std::string	extend,
-		std::string	format
-	);
-
-	/// ファイル名にランク番号をつけて保存する。
-	/// ファイル名にランク番号をつけること以外はPolylib::save()と同じ処理。
-	///
-	///	 @param[in,out] p_config_filename	保存した設定ファイル名の返却用。
-	///	 @param[in]		myrank				自ランク番号。
-	///	 @param[in]		maxrank				最大ランク番号。
-	///	 @param[in]		extend				ファイ名に付加される文字列。
-	///	 @param[in]		stl_format			STLファイルフォーマット指定。
-	///  @return	POLYLIB_STATで定義される値が返る。
+	///  @attention	ファイル名命名規約は次の通り。
+	///			定義ファイル : polylib_config_ランク番号_付加文字.xml。
+	///			STLファイル  : ポリゴングループ名_ランク番号_付加文字.拡張子。
+	///			IDファイル   : ポリゴングループ名_ランク番号_付加文字.ID。
 	///  @attention	MPIPolylibクラスがMPI環境で利用することを想定している。
 	POLYLIB_STAT save_with_rankno(
-		std::string		*p_config_filename,
+		std::string		*p_config_name,
 		int				myrank,
 		int				maxrank,
 		std::string		extend,
-		std::string		stl_format
+		std::string		stl_format,
+		ID_FORMAT		id_format
 	);
 
 	///

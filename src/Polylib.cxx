@@ -53,8 +53,8 @@ POLYLIB_STAT Polylib::load(
 		POLYLIB_STAT stat = make_group_tree(&base);
 		if (stat != PLSTAT_OK)	return stat;
 
-		// STLファイル読み込み
-		return load_polygons(false);
+		// STLファイル読み込み (三角形IDファイルは不要なので、第二引数はダミー)
+		return load_polygons(false, ID_BIN);
 	}
 	catch (POLYLIB_STAT e) {
 		return e;
@@ -63,40 +63,44 @@ POLYLIB_STAT Polylib::load(
 
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::save(
-	string	*p_fname,
-	string	format,
-	string	extend,
-	string	rank_no
+	string	*p_config_name,
+	string	stl_format,
+	string	extend
 ) {
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::save() in." << endl;
 #endif
-	char			*config_name;
-	POLYLIB_STAT	stat;
+	char	my_extend[128];
 
-	// 定義ファイル、STLファイル、IDファイル出力
+	// 拡張文字列がカラであれば、現在時刻から作成
 	if (extend == "") {
-		// 現在時刻からファイル名の一部を作成
 		time_t		timer = time(NULL);
 		struct tm	*date = localtime(&timer);
-		char		now[128];
-		sprintf(now, "%04d%02d%02d%02d%02d%02d",
+		sprintf(my_extend, "%04d%02d%02d%02d%02d%02d",
 			date->tm_year+1900,	date->tm_mon+1,	date->tm_mday,
 			date->tm_hour,		date->tm_min,	date->tm_sec);
-
-		config_name = save_config_file(rank_no, now, format);
-		if (config_name == NULL)	return PLSTAT_NG;
-
-	 	stat = save_polygons(rank_no, now, format);
 	}
 	else {
-		config_name = save_config_file(rank_no, extend, format);
-		if (config_name == NULL)	return PLSTAT_NG;
-
-	 	stat = save_polygons(rank_no, extend, format);
+		sprintf(my_extend, "%s", extend.c_str());
 	}
-	*p_fname = string(config_name);
-	return stat;
+
+	char	*config_name = save_config_file("", my_extend, stl_format);
+	if (config_name == NULL)	return PLSTAT_NG;
+	else						*p_config_name = string(config_name);
+
+	vector<PolygonGroup*>::iterator	it;
+	for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
+		//リーフのみがポリゴン情報を持っている
+		if ((*it)->get_children().empty() == false)	continue;
+
+		// ポリゴン数が0ならばファイル出力不要 2010.10.19
+		if ((*it)->get_triangles()->size() == 0)	continue;
+
+		// STLファイル保存 (第一引数のランク番号は不要)
+		POLYLIB_STAT stat = (*it)->save_stl_file("", my_extend, stl_format);
+		if (stat != PLSTAT_OK) return stat;
+	}
+	return PLSTAT_OK;
 }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -126,12 +130,12 @@ POLYLIB_STAT Polylib::move(
 }
 
 // public /////////////////////////////////////////////////////////////////////
-vector<PolygonGroup *> *Polylib::get_root_groups() {
+vector<PolygonGroup *> *Polylib::get_root_groups() const {
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::get_root_groups() in." << endl;
 #endif
-	vector<PolygonGroup*>			*root = new vector<PolygonGroup*>;
-	vector<PolygonGroup*>::iterator	it;
+	vector<PolygonGroup*>					*root = new vector<PolygonGroup*>;
+	vector<PolygonGroup*>::const_iterator	it;
 
 	for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
 		if (((*it)->get_parent()) == NULL) {
@@ -420,7 +424,8 @@ POLYLIB_STAT Polylib::load_config_file(
 
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::load_with_idfile(
-	string	config_name
+	string		config_name,
+	ID_FORMAT	id_format
 ) {
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::load_with_idfile() in." << endl;
@@ -433,12 +438,13 @@ POLYLIB_STAT Polylib::load_with_idfile(
 	if (stat != PLSTAT_OK)	return stat;
 
 	// STLファイルとIDファイル読み込み
-	return load_polygons(true);
+	return load_polygons(true, id_format);
 }
 
 // protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::load_polygons(
-	bool	with_id_file
+	bool		with_id_file,
+	ID_FORMAT	id_format
 )
 {
 #ifdef DEBUG
@@ -455,7 +461,7 @@ POLYLIB_STAT Polylib::load_polygons(
 
 			// 必要であればIDファイルを読み込んでm_idを設定
 			if (with_id_file == true) {
-				POLYLIB_STAT ret = (*it)->load_id_file();
+				POLYLIB_STAT ret = (*it)->load_id_file(id_format);
 				if (ret != PLSTAT_OK)		return ret;
 			}
 		}
@@ -509,58 +515,44 @@ PL_DBGOSH << "save_config_file():" << config_name << endl;
 }
 
 // protected //////////////////////////////////////////////////////////////////
-POLYLIB_STAT Polylib::save_polygons(
-	string	rank_no,
-	string	extend,
-	string	format
-){
-#ifdef DEBUG
-	PL_DBGOSH << "Polylib::save_polygons() in." << endl;
-#endif
-	vector<PolygonGroup*>::iterator	it;
-	POLYLIB_STAT					ret;
-
-	for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
-		//リーフならばSTLファイルおよびIDファイルに書き込む
-		if ((*it)->get_children().empty() == true) {
-
-			// ポリゴン数が0ならばファイル出力不要 2010.10.19
-			if ((*it)->get_triangles()->size() == 0) continue;
-
-			if (rank_no == "") {
-				// ランク番号不要
-				ret = (*it)->save_stl_file("", extend, format);
-				if (ret != PLSTAT_OK) return ret;
-				ret = (*it)->save_id_file("", extend);
-				if (ret != PLSTAT_OK) return ret;
-			}
-			else {
-				// 要ランク番号(MPI版)
-				ret = (*it)->save_stl_file(rank_no, extend, format);
-				if (ret != PLSTAT_OK) return ret;
-				ret = (*it)->save_id_file(rank_no, extend);
-				if (ret != PLSTAT_OK) return ret;
-			}
-		}
-	}
-	return PLSTAT_OK;
-}
-
-// protected //////////////////////////////////////////////////////////////////
 POLYLIB_STAT Polylib::save_with_rankno(
-	string	*p_config_filename,
-	int		myrank,
-	int 	maxrank,
-	string	extend,
-	string	stl_format
+	string		*p_config_name,
+	int			myrank,
+	int 		maxrank,
+	string		extend,
+	string		stl_format,
+	ID_FORMAT	id_format
 ){
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::save_with_rankno() in." << endl;
 #endif
-	int		fig = (int)log10((double)maxrank) + 1;
+	POLYLIB_STAT	stat;
+
+	// ランク番号の整形
 	char	rank_no[16];
+	int		fig = (int)log10((double)maxrank) + 1;
 	sprintf(rank_no, "%0*d", fig, myrank);
-	return save(p_config_filename, stl_format, extend, rank_no);
+
+	// 定義ファイルの保存
+	char	*config_name = save_config_file(rank_no, extend, stl_format);
+	if (config_name == NULL)	return PLSTAT_NG;
+	else						*p_config_name = string(config_name);
+
+	// STLファイルとIDファイルの保存
+	vector<PolygonGroup*>::iterator	it;
+	for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
+		//リーフのみがポリゴン情報を持っている
+		if ((*it)->get_children().empty() == false) continue;
+
+		// ポリゴン数が0ならばファイル出力不要 2010.10.19
+		if ((*it)->get_triangles()->size() == 0) continue;
+
+		stat = (*it)->save_stl_file(rank_no, extend, stl_format);
+		if (stat != PLSTAT_OK)	return stat;
+		stat = (*it)->save_id_file(rank_no, extend, id_format);
+		if (stat != PLSTAT_OK)	return stat;
+	}
+	return PLSTAT_OK;
 }
 
 // protected //////////////////////////////////////////////////////////////////

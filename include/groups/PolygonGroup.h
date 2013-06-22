@@ -87,9 +87,12 @@ public:
 	///
 	/// 三角形ポリゴンIDファイルからポリゴンIDを読み込み、m_internal_idに登録する。
 	///
+	///  @param[in] id_format	三角形IDファイルの入力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
-	POLYLIB_STAT load_id_file();
+	POLYLIB_STAT load_id_file(
+		ID_FORMAT		id_format
+	);
 
 	///
 	/// TriMeshクラスが管理しているポリゴン情報をSTLファイルに出力する。
@@ -110,13 +113,15 @@ public:
 	/// 三角形ポリゴンIDファイルにポリゴンIDを出力する。IDファイル名は、
 	/// 階層化されたグループ名_ランク番号_自由文字列.id。
 	///
-	///  @param[in] rank_no	ファイル名に付加するランク番号。
-	///  @param[in] extend	ファイル名に付加する自由文字列。
+	///  @param[in] rank_no		ファイル名に付加するランク番号。
+	///  @param[in] extend		ファイル名に付加する自由文字列。
+	///  @param[in] id_format	三角形IDファイルの出力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT save_id_file(
 		std::string 	rank_no,
-		std::string		extend
+		std::string		extend,
+		ID_FORMAT		id_format
 	);
 
 	///
@@ -139,7 +144,7 @@ public:
 	///
 	/// 三角形ポリゴン移動メソッド。virtual用の関数なので処理はない。
 	///
-	///  @param[in] param	Polylib.hで宣言しているパラメタセットクラス。
+	///  @param[in] params	Polylib.hで宣言しているパラメタセットクラス。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	virtual POLYLIB_STAT move(
@@ -267,11 +272,18 @@ public:
 	///
 	/// クラス名を取得。
 	///
-	/// @return クラス名。
-	/// @attention 本クラスを継承する場合、継承後のクラス名を返すように変更す
-	///  ることる。
+	/// @return		クラス名。
+	/// @attention	本クラスを継承する場合、継承後のクラス名を返すように変更す
+	/// 			ることる。
 	///
 	static std::string get_class_name() {return "PolygonGroup";};
+
+	///
+	/// クラス名を取得。
+	///
+	/// @return		クラス名。
+	/// @attention	継承するクラスのクラス名取得関数get_class_name()を呼び出す。
+	///
 	virtual std::string whoami()		{return get_class_name();};
 
 	///
@@ -313,7 +325,7 @@ public:
 	///
 	/// 親グループのフルパス名を設定。
 	///
-	/// @param[in] pname 親グループのフルパス名。
+	/// @param[in] ppath 親グループのフルパス名。
 	///
 	void set_parent_path(std::string ppath){
 		m_parent_path = ppath;
@@ -349,7 +361,7 @@ public:
 	///
 	/// 子グループを設定。
 	///
-	/// @param[in] 子グループのリスト。
+	/// @param[in] p	子グループのリスト。
 	///
 	void set_children(std::vector<PolygonGroup*>& p) {
 		m_children = p;
@@ -367,7 +379,7 @@ public:
 	///
 	/// 子グループを追加。
 	///
-	/// @param[in] 子グループ。
+	/// @param[in] p	子グループ。
 	///
 	void add_children(PolygonGroup* p) {
 		m_children.push_back(p);
@@ -455,8 +467,8 @@ protected:
 	/// を報告（前処理）。
 	///
 	///  @return	POLYLIB_STATで定義される値が返る。
-	///  @attension 本メソッドはデバッグ用です。
-	///  @attension 派生クラスでオーバーライドしたmove()メソッド内で、座標移動
+	///  @attention 本メソッドはデバッグ用です。
+	///  			派生クラスでオーバーライドしたmove()メソッド内で、座標移動
 	///				処理前に呼ぶこと。
 	///
 	POLYLIB_STAT init_check_leaped();
@@ -471,8 +483,8 @@ protected:
 	///  @param[in] origin		計算領域起点座標
 	///  @param[in] cell_size	ボクセルサイズ
 	///  @return	POLYLIB_STATで定義される値が返る。
-	///  @attension	本メソッドはデバッグ用です。
-	///  @attension	派生クラスでオーバーライドしたmove()メソッド内で、座標移動
+	///  @attention	本メソッドはデバッグ用です。
+	///  			派生クラスでオーバーライドしたmove()メソッド内で、座標移動
 	///				処理後に呼ぶこと。
 	///
 	POLYLIB_STAT check_leaped(

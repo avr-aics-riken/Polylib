@@ -84,8 +84,9 @@ public:
 	///
 	/// 頂点を設定。
 	///
-	/// @param[in] calc_normal 法線ベクトルを再計算するか？
-	/// @param[in] calc_area   面積を再計算するか？
+	/// @param[in] vertex		三角形の3頂点。
+	/// @param[in] calc_normal	法線ベクトルを再計算するか？
+	/// @param[in] calc_area	面積を再計算するか？
 	///
 	void set_vertexes(
 		Vec3f	vertex[3], 
@@ -265,7 +266,7 @@ public:
 	///
 	/// 三角形ポリゴンIDを設定。
 	///
-	///  @param[in] 三角形ポリゴンID。
+	///  @param[in] id	三角形ポリゴンID。
 	///
 	void set_id(int id)				{m_id = id;}
 

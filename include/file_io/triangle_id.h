@@ -19,11 +19,13 @@ namespace PolylibNS {
 ///
 ///  @param[in,out] tri_list	三角形ポリゴン情報。
 ///  @param[in]		fname		三角形ポリゴンIDファイル名。
+///  @param[in]		id_format	三角形ポリゴンIDファイルの入力形式。
 ///  @return	POLYLIB_STATで定義される値が返る
 ///
 POLYLIB_STAT load_id(
 	std::vector<PrivateTriangle*>	*tri_list, 
-	std::string 					fname
+	std::string 					fname,
+	ID_FORMAT						id_format
 );
 
 ///
@@ -31,11 +33,13 @@ POLYLIB_STAT load_id(
 ///
 ///  @param[in] tri_list	三角形ポリゴン情報。
 ///  @param[in] fname		三角形ポリゴンIDファイル名。
+///  @param[in]	id_format	三角形ポリゴンIDファイルの出力形式。
 ///  @return	POLYLIB_STATで定義される値が返る
 ///
 POLYLIB_STAT save_id(
 	std::vector<PrivateTriangle*>	*tri_list, 
-	std::string 					fname
+	std::string 					fname,
+	ID_FORMAT						id_format
 );
 
 } //namespace PolylibNS
