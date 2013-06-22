@@ -526,7 +526,19 @@ POLYLIB_STAT Polylib::save_with_rankno(
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::save_with_rankno() in." << endl;
 #endif
-	POLYLIB_STAT	stat;
+	char	my_extend[128];
+
+	// 拡張文字列がカラであれば、現在時刻から作成
+	if (extend == "") {
+		time_t		timer = time(NULL);
+		struct tm	*date = localtime(&timer);
+		sprintf(my_extend, "%04d%02d%02d%02d%02d%02d",
+			date->tm_year+1900, date->tm_mon+1, date->tm_mday,
+			date->tm_hour,      date->tm_min,   date->tm_sec);
+	}
+	else {
+		sprintf(my_extend, "%s", extend.c_str());
+	}
 
 	// ランク番号の整形
 	char	rank_no[16];
@@ -534,22 +546,24 @@ POLYLIB_STAT Polylib::save_with_rankno(
 	sprintf(rank_no, "%0*d", fig, myrank);
 
 	// 定義ファイルの保存
-	char	*config_name = save_config_file(rank_no, extend, stl_format);
+	char	*config_name = save_config_file(rank_no, my_extend, stl_format);
 	if (config_name == NULL)	return PLSTAT_NG;
 	else						*p_config_name = string(config_name);
 
 	// STLファイルとIDファイルの保存
 	vector<PolygonGroup*>::iterator	it;
 	for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
+		POLYLIB_STAT	stat;
+
 		//リーフのみがポリゴン情報を持っている
 		if ((*it)->get_children().empty() == false) continue;
 
 		// ポリゴン数が0ならばファイル出力不要 2010.10.19
 		if ((*it)->get_triangles()->size() == 0) continue;
 
-		stat = (*it)->save_stl_file(rank_no, extend, stl_format);
+		stat = (*it)->save_stl_file(rank_no, my_extend, stl_format);
 		if (stat != PLSTAT_OK)	return stat;
-		stat = (*it)->save_id_file(rank_no, extend, id_format);
+		stat = (*it)->save_id_file(rank_no, my_extend, id_format);
 		if (stat != PLSTAT_OK)	return stat;
 	}
 	return PLSTAT_OK;

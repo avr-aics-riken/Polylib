@@ -1,7 +1,7 @@
 /*
  * Polylib - Polygon Management Library.
- * Version     : 2.0.2
- * Release date: Nov.09.2010
+ * Version     : 2.0.3
+ * Release date: Nov.29.2010
  *
  * Copyright (c) RIKEN, Japan. All right reserved. 2010-
  *

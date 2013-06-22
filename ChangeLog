@@ -1,9 +1,9 @@
 /*
  * Polylib - Polygon Management Library
  *
- * Copyright (c) RIKEN, Japan. All right reserved. 2010
+ * Copyright (c) RIKEN, Japan. All right reserved. 2010-2012
  *
- * Polylib version 2.0.2       17 Nov. 2010
+ * Polylib version 2.0.3       22 Apr. 2012
  *
  * Functionality Simulation and Information Team
  * VCAD System Research Program
@@ -14,10 +14,14 @@
 Polylib　リリースノート Version 1.0.0からの変更分
 
 --------------------------------------------------------------
+Version 2.0.3            29 Nov. 2010
+・MPIPolylib::save_parallel()で引数extendが指定されない場合、
+　出力ファイル名に日付が付与されない不具合を修正
+
+--------------------------------------------------------------
 Version 2.0.2            09 Nov. 2010
 ・MPIPolylib::save_parallel()およびload_parallel()に引数id_format
-　を追加
-  三角形IDファイルの形式をユーザプログラム側で選択可能とした
+　を追加。三角形IDファイルの形式をユーザプログラム側で選択可能とした。
 
 --------------------------------------------------------------
 Version 2.0.1            29 Oct. 2010
