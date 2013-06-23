@@ -1,11 +1,11 @@
 /*
  * Polylib - Polygon Management Library
  *
- * Copyright (c) 2010-2013 RIKEN, Japan. All rights reserved.
- *
- *
- * 2010-2011 Functionality Simulation and Information Team, VCAD System Research Program, RIKEN
- * 2012-2013 Advanced Visualization Research Team, Advanced Institute for Computational Science, RIKEN
+ * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
+ * All rights reserved.
+ * 
+ * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+ * All rights reserved.
  *
  */
 
@@ -16,4 +16,5 @@ First     Last       Contact
 --------  --------   ---------------
 Kenji     Ono        keno@riken.jp
 Tomohiro  Kawanabe   tkawanab@iis.u-tokyo.ac.jp
+Takehiro  Tawara
 

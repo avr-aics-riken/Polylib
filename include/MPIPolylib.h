@@ -1,11 +1,14 @@
 /*
- * Polylib - Polygon Management Library.
- * Version     : 2.0.3
- * Release date: Nov.29.2010
+ * Polylib - Polygon Management Library
  *
- * Copyright (c) RIKEN, Japan. All right reserved. 2010-
+ * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+ * All rights reserved.
+ *
+ * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+ * All rights reserved.
  *
  */
+
 #ifndef MPIPolylib_h
 #define MPIPolylib_h
 

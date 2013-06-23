@@ -1,13 +1,12 @@
 /*
  * Polylib - Polygon Management Library
  *
- * Copyright (c) RIKEN, Japan. All right reserved. 2010-2013
+ * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
+ * All rights reserved.
+ * 
+ * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+ * All rights reserved.
  *
- *
- * 2010-2011 Functionality Simulation and Information Team, VCAD System Research Program, RIKEN
- * 2012-     Advanced Visualization Research Team, Advanced Institute for Computational Science, RIKEN
- *
- * Correspond Author : Kenji Ono (keno@riken.jp)
  */
 
 Polylibライブラリのビルドおよびインストール方法
@@ -25,3 +24,66 @@ Polylibライブラリのビルドおよびインストール方法
 
    libPolylib.a    : 非並列計算用Polylib
    libMPIPolylib.a : MPI版Polylib
+
+
+########################
+# INTEL
+########################
+
+AR          = ar cru
+RANLIB      = ranlib
+RM          = \rm -f
+MPI_DIR	    = /opt/openmpi
+TP_DIR      = /usr/local/TextParser
+OMP_FLAGS   =
+CXX         = icpc
+CXXFLAGS    = -O3 $(OMP_FLAGS) -Wall -fno-strict-aliasing
+UDEF_INC_PATH = -I$(TP_DIR)/include -I$(MPI_DIR)/include
+
+
+########################
+# FX10, K
+########################
+
+AR          = ar cr
+RANLIB      = ranlib
+RM          = \rm -f
+MPI_DIR     =
+TP_DIR      = /usr/local/TextParser
+OMP_FLAGS   =
+CXX         = mpiFCCpx
+CXXFLAGS    = -Kfast,ocl,preex,simd=2,uxsimd,array_private,parallel,openmp,optmsg=2 -V -Nsrc
+UDEF_INC_PATH = -I$(TP_DIR)/include -I$(MPI_DIR)/include
+
+
+########################
+# GNU
+########################
+
+AR          = ar cru
+RANLIB      = ranlib
+RM          = \rm -f
+MPI_DIR	    = /opt/openmpi
+TP_DIR      = /usr/local/TextParser
+OMP_FLAGS   =
+CXX         = mpicxx
+CXXFLAGS    = -O3 $(OMP_FLAGS) 
+UDEF_INC_PATH = -I$(TP_DIR)/include -I$(MPI_DIR)/include
+
+
+########################
+# BG/P
+########################
+
+AR          = ar crv
+RANLIB      = ranlib
+RM          = \rm -f
+MPI_DIR     = /bgsys/drivers/ppcfloor/comm
+TP_DIR      = /usr/local/TextParser
+OMP_FLAGS   =
+CXX         = mpixlcxx_r
+CXXFLAGS    = -O3 -qarch=450d -qtune=450 $(OMP_FLAGS)
+UDEF_INC_PATH = -I$(TP_DIR)/include -I$(MPI_DIR)/include
+UDEF_LIB_PATH_SPEC = -L/soft/apps/ibmcmp/xlf/bg/11.1/bglib
+UDEF_LIBS_SPEC     = -lxlopt -lxl -lxlf90 -lxlfmath
+

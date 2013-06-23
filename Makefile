@@ -1,37 +1,27 @@
-###################################################################
+##############################################################################
 #
-# Polylib - Polygon Management library
+# Polylib - Polygon Management Library
 #
-# Copyright (c) 2013 Advanced Institute for Computational Science, RIKEN.
-# All right reserved.
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
+# All rights reserved.
+# 
+# Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+# All rights reserved.
 #
-###################################################################
+##############################################################################
 #
-#  At first, edit a make_setting.* file, then make
-#  If Polylib is placed inside the directory of FFVC solver, this makefile is ignored.
+#  At first, edit MACRO, then make
 
 
-# Default environment
-MACHINE=intel
-
-
-### compiler detection
-
-ifeq ($(MACHINE),gnu)
-include make_setting.gnu
-endif
-
-ifeq ($(MACHINE),fx)
-include make_setting.fx
-endif
-
-ifeq ($(MACHINE),ibm)
-include make_setting.ibm
-endif
-
-ifeq ($(MACHINE),intel)
-include make_setting.intel
-endif
+AR          = ar cru
+RANLIB      = ranlib
+RM          = \rm -f
+MPI_DIR	    = /opt/openmpi
+TP_DIR      = /usr/local/TextParser
+OMP_FLAGS   =
+CXX         = icpc
+CXXFLAGS    = -O3 $(OMP_FLAGS) -Wall -fno-strict-aliasing
+UDEF_INC_PATH = -I$(TP_DIR)/include -I$(MPI_DIR)/include
 
 
 
