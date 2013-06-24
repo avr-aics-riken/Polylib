@@ -9,22 +9,118 @@
  *
  */
 
-Polylibライブラリのビルドおよびインストール方法
 
-1) 以下の手順でライブラリのビルドを行います。
+Prerequisite
+============
+- MPI library
+- Text parsing library
 
-	> make all
 
-   Makefile内で利用しているC++コンパイラはg++です。
-   必要に応じてMakefileを編集しコンパイラを変更して下さい。
 
-2) ビルドされたライブラリファイルは lib/に配置されます。
-   ライブラリファイルは以下の2つです。利用するユーザプロ
-   グラムに応じて使い分けてください。
+How to compile
+==============
 
-   libPolylib.a    : 非並列計算用Polylib
-   libMPIPolylib.a : MPI版Polylib
+1. with configure
 
+$ ./configure [options]
+$ make
+# make install
+
+
+Generated archives are;
+   libPolylib.a    : serial version
+   libMPIPolylib.a : MPI version
+
+
+
+Configure options:
+
+ --prefix=INSTALL_DIR
+    Specify a directory to be installed. The default directory is /usr/local/Polylib.
+
+ --with-mpich=MPICH_DIR
+    If you will use a MPICH library, specify the directory that MPICH library is installed.
+    Either --with-mpich of --with-ompi option will be required except. If the wrapper compiler,
+    e.g., mpic++ or mpicxx is used to compile, both options can be eliminated.
+
+ --with-ompi=OPENMPI_DIR
+    If you will use an OpenMPI library, specify the directory path of OpenMPI.
+
+ --with-comp=(INTEL|FJ)
+    If Intel compiler is used, choose INTEL, and if Fujitsu compiler, specify FJ. This option 
+    is mandatory when using both compilers.
+
+ --with-parser=TEXTPARSER_PATH
+    Specify the directory path that is installed TextParser library.
+
+ --with-f90example=(yes|no)
+    Specify building f90 example. The default is yes and is required to specify F90, F90FLAGS and LDFLAGS.
+
+ --host=hostname
+    Specify in case of cross-compilation.
+
+
+
+ CXX=CXX_COMPILER
+    Specify a C++ compiler, e.g., g++, icpc, xlc++ or others.
+
+ CXXFLAGS=CXX_OPTIONS
+    Specify compiler options.
+
+
+
+Here is some examples;
+
+
+##
+ Intel compiler and MPICH
+##
+
+$.configure --prefix=/usr/local/Polylib \
+            --with-comp=INTEL \
+            --with-mpich=/usr/local/mpich \
+            --with-parser=/usr/local/TextParser \
+            CXX=/opt/intel/composerxe/bin/icpc \
+            CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
+
+
+##
+ Intel compiler and OpenMPI
+##
+
+$.configure \
+            --with-comp=INTEL \
+            --with-ompi=/opt/openmpi \
+            --with-parser=/usr/local/TextParser \
+            CXX=icpc \
+            CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
+
+
+##
+ K-computer
+##
+
+$./configure --prefix=$1 \
+             --with-comp=FJ \
+             --with-parser=/usr/local/TextParser \
+             --host=sparc64-unknown-linux-gnu \
+             CXX=mpiFCCpx \
+             CXXFLAGS=-Kfast
+
+
+
+
+2. Hand compile
+
+If a provided configure does not work, use Makefile_hand to build this library. At first,
+edit MACRO to tell your machine environment.
+
+
+
+
+
+
+Here after, there are samples for environment variables for each platform.
 
 ########################
 # INTEL
