@@ -1,3 +1,14 @@
+/*
+ * Polylib - Polygon Management Library
+ *
+ * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+ * All rights reserved.
+ *
+ * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+ * All rights reserved.
+ *
+ */
+
 #include <iostream>
 #include "mpi.h"
 #include "Polylib.h"
@@ -16,11 +27,11 @@ struct MyParallelInfo {
   float dx[3]; //size of voxel
 };
 
-static MyParallelInfo myParaInfos[4] {
+static MyParallelInfo myParaInfos[4] = {
   {{-1100, -1800,-1800,}, {18,18,18,}, {1, 1,1,}, {100,100,100} },
   {{-1100,     0,-1800,}, {18,18,18,}, {1, 1,1,}, {100,100,100} },
   {{-1100, -1800,    0,}, {18,18,18,}, {1, 1,1,}, {100,100,100} },
-  {{-1100,     0,    0,}, {18,18,18,}, {1, 1,1,}, {100,100,100} },
+  {{-1100,     0,    0,}, {18,18,18,}, {1, 1,1,}, {100,100,100} }
 };
 
 int main(int argc, char** argv ){

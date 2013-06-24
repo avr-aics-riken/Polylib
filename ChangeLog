@@ -14,7 +14,8 @@ UPDATE HISTORY
 
 --------------------------------------------------------------
 Version 2.6    2013-06-24
-・autotools version, only MPIPOLY
+・autotools version
+・examples/test_mpi?.cxxのバグを修正
 
 --------------------------------------------------------------
 Version 2.5    2013-06-17

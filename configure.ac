@@ -23,7 +23,7 @@ AC_CONFIG_HEADERS([config.h])
 #
 # revision No.
 #
-PL_REVISION="20130624_2000"
+PL_REVISION="20130624_2300"
 AC_SUBST(PL_REVISION)
 
 
@@ -141,6 +141,12 @@ fi
 
 
 #
+# example
+#
+AC_ARG_WITH(example, [AC_HELP_STRING([--with-example=(yes|no)],[make example [yes]])], , with_example=yes)
+
+
+#
 # Polylib special flags
 #
 PL_CFLAGS="-I$PL_INST_DIR/include"
@@ -149,7 +155,7 @@ AC_SUBST(PL_CFLAGS)
 PL_LDFLAGS="-L$PL_INST_DIR/lib"
 AC_SUBST(PL_LDFLAGS)
 
-PL_LIBS="libMPIPOLY.a"
+PL_LIBS="libMPIPOLY.a libPOLY.a"
 AC_SUBST(PL_LIBS)
 
 PL_CXX="$CXX"
@@ -174,6 +180,9 @@ AC_SUBST(PL_FC_LD)
 AC_SUBST(MAKE_SUB_DIRS)
 MAKE_SUB_DIRS="src docs"
 
+if test "$with_example" = "yes" ; then
+  MAKE_SUB_DIRS="$MAKE_SUB_DIRS"" examples"
+fi
 
 
 #
@@ -217,6 +226,7 @@ AC_CHECK_FUNCS([gettimeofday memset strchr strstr])
 AC_CONFIG_FILES([Makefile \
                  docs/Makefile \
                  src/Makefile \
+                 examples/Makefile \
                  polylib-config ])
 AC_OUTPUT
 

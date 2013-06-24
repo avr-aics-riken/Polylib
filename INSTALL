@@ -53,8 +53,8 @@ Configure options:
  --with-parser=TEXTPARSER_PATH
     Specify the directory path that is installed TextParser library.
 
- --with-f90example=(yes|no)
-    Specify building f90 example. The default is yes and is required to specify F90, F90FLAGS and LDFLAGS.
+ --with-example=(yes|no)
+    Specify building example. The default is 'yes'.
 
  --host=hostname
     Specify in case of cross-compilation.

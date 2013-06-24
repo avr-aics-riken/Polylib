@@ -741,6 +741,7 @@ with_comp
 with_mpich
 with_ompi
 with_parser
+with_example
 enable_dependency_tracking
 '
       ac_precious_vars='build_alias
@@ -1381,6 +1382,7 @@ Optional Packages:
   --with-mpich=dir        Specify MPICH install directory
   --with-ompi=dir         Specify OpenMPI install directory
   --with-parser=dir       Specify TextParser install directory
+  --with-example=(yes|no) make example [yes]
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -2799,7 +2801,7 @@ ac_config_headers="$ac_config_headers config.h"
 #
 # revision No.
 #
-PL_REVISION="20130624_2000"
+PL_REVISION="20130624_2300"
 
 
 
@@ -2945,6 +2947,19 @@ fi
 
 
 #
+# example
+#
+
+# Check whether --with-example was given.
+if test "${with_example+set}" = set; then :
+  withval=$with_example;
+else
+  with_example=yes
+fi
+
+
+
+#
 # Polylib special flags
 #
 PL_CFLAGS="-I$PL_INST_DIR/include"
@@ -2953,7 +2968,7 @@ PL_CFLAGS="-I$PL_INST_DIR/include"
 PL_LDFLAGS="-L$PL_INST_DIR/lib"
 
 
-PL_LIBS="libMPIPOLY.a"
+PL_LIBS="libMPIPOLY.a libPOLY.a"
 
 
 PL_CXX="$CXX"
@@ -2978,6 +2993,9 @@ fi
 
 MAKE_SUB_DIRS="src docs"
 
+if test "$with_example" = "yes" ; then
+  MAKE_SUB_DIRS="$MAKE_SUB_DIRS"" examples"
+fi
 
 
 #
@@ -5171,7 +5189,7 @@ done
 
 
 
-ac_config_files="$ac_config_files Makefile docs/Makefile src/Makefile polylib-config"
+ac_config_files="$ac_config_files Makefile docs/Makefile src/Makefile examples/Makefile polylib-config"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5907,6 +5925,7 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "docs/Makefile") CONFIG_FILES="$CONFIG_FILES docs/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+    "examples/Makefile") CONFIG_FILES="$CONFIG_FILES examples/Makefile" ;;
     "polylib-config") CONFIG_FILES="$CONFIG_FILES polylib-config" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
