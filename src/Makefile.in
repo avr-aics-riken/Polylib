@@ -115,6 +115,15 @@ am_libMPIPOLY_a_OBJECTS = libMPIPOLY_a-MPIPolylib.$(OBJEXT) \
 	libMPIPOLY_a-Polygons.$(OBJEXT) libMPIPOLY_a-TriMesh.$(OBJEXT) \
 	libMPIPOLY_a-VTree.$(OBJEXT) libMPIPOLY_a-time.$(OBJEXT)
 libMPIPOLY_a_OBJECTS = $(am_libMPIPOLY_a_OBJECTS)
+libPOLY_a_AR = $(AR) $(ARFLAGS)
+libPOLY_a_LIBADD =
+am_libPOLY_a_OBJECTS = libPOLY_a-Polylib.$(OBJEXT) \
+	libPOLY_a-CPolylib.$(OBJEXT) libPOLY_a-stl.$(OBJEXT) \
+	libPOLY_a-triangle_id.$(OBJEXT) libPOLY_a-TriMeshIO.$(OBJEXT) \
+	libPOLY_a-PolygonGroup.$(OBJEXT) libPOLY_a-Polygons.$(OBJEXT) \
+	libPOLY_a-TriMesh.$(OBJEXT) libPOLY_a-VTree.$(OBJEXT) \
+	libPOLY_a-time.$(OBJEXT)
+libPOLY_a_OBJECTS = $(am_libPOLY_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -124,8 +133,8 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-SOURCES = $(libMPIPOLY_a_SOURCES)
-DIST_SOURCES = $(libMPIPOLY_a_SOURCES)
+SOURCES = $(libMPIPOLY_a_SOURCES) $(libPOLY_a_SOURCES)
+DIST_SOURCES = $(libMPIPOLY_a_SOURCES) $(libPOLY_a_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -245,8 +254,13 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-lib_LIBRARIES = libMPIPOLY.a
+lib_LIBRARIES = libMPIPOLY.a libPOLY.a
 libMPIPOLY_a_CXXFLAGS = \
+  @MPICH_CFLAGS@ \
+  @TP_CFLAGS@ \
+  -I$(top_builddir)/include
+
+libPOLY_a_CXXFLAGS = \
   @MPICH_CFLAGS@ \
   @TP_CFLAGS@ \
   -I$(top_builddir)/include
@@ -255,6 +269,18 @@ libMPIPOLY_a_SOURCES = \
   MPIPolylib.cxx \
   Polylib.cxx \
   c_lang/CMPIPolylib.cxx \
+  c_lang/CPolylib.cxx \
+  file_io/stl.cxx \
+  file_io/triangle_id.cxx \
+  file_io/TriMeshIO.cxx \
+  groups/PolygonGroup.cxx \
+  polygons/Polygons.cxx \
+  polygons/TriMesh.cxx \
+  polygons/VTree.cxx \
+  util/time.cxx
+
+libPOLY_a_SOURCES = \
+  Polylib.cxx \
   c_lang/CPolylib.cxx \
   file_io/stl.cxx \
   file_io/triangle_id.cxx \
@@ -359,6 +385,10 @@ libMPIPOLY.a: $(libMPIPOLY_a_OBJECTS) $(libMPIPOLY_a_DEPENDENCIES) $(EXTRA_libMP
 	-rm -f libMPIPOLY.a
 	$(libMPIPOLY_a_AR) libMPIPOLY.a $(libMPIPOLY_a_OBJECTS) $(libMPIPOLY_a_LIBADD)
 	$(RANLIB) libMPIPOLY.a
+libPOLY.a: $(libPOLY_a_OBJECTS) $(libPOLY_a_DEPENDENCIES) $(EXTRA_libPOLY_a_DEPENDENCIES) 
+	-rm -f libPOLY.a
+	$(libPOLY_a_AR) libPOLY.a $(libPOLY_a_OBJECTS) $(libPOLY_a_LIBADD)
+	$(RANLIB) libPOLY.a
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -378,6 +408,16 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libMPIPOLY_a-stl.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libMPIPOLY_a-time.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libMPIPOLY_a-triangle_id.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-CPolylib.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-PolygonGroup.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-Polygons.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-Polylib.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-TriMesh.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-TriMeshIO.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-VTree.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-stl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-time.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_a-triangle_id.Po@am__quote@
 
 .cxx.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -560,6 +600,146 @@ libMPIPOLY_a-time.obj: util/time.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/time.cxx' object='libMPIPOLY_a-time.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libMPIPOLY_a-time.obj `if test -f 'util/time.cxx'; then $(CYGPATH_W) 'util/time.cxx'; else $(CYGPATH_W) '$(srcdir)/util/time.cxx'; fi`
+
+libPOLY_a-Polylib.o: Polylib.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-Polylib.o -MD -MP -MF $(DEPDIR)/libPOLY_a-Polylib.Tpo -c -o libPOLY_a-Polylib.o `test -f 'Polylib.cxx' || echo '$(srcdir)/'`Polylib.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-Polylib.Tpo $(DEPDIR)/libPOLY_a-Polylib.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Polylib.cxx' object='libPOLY_a-Polylib.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-Polylib.o `test -f 'Polylib.cxx' || echo '$(srcdir)/'`Polylib.cxx
+
+libPOLY_a-Polylib.obj: Polylib.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-Polylib.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-Polylib.Tpo -c -o libPOLY_a-Polylib.obj `if test -f 'Polylib.cxx'; then $(CYGPATH_W) 'Polylib.cxx'; else $(CYGPATH_W) '$(srcdir)/Polylib.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-Polylib.Tpo $(DEPDIR)/libPOLY_a-Polylib.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Polylib.cxx' object='libPOLY_a-Polylib.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-Polylib.obj `if test -f 'Polylib.cxx'; then $(CYGPATH_W) 'Polylib.cxx'; else $(CYGPATH_W) '$(srcdir)/Polylib.cxx'; fi`
+
+libPOLY_a-CPolylib.o: c_lang/CPolylib.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-CPolylib.o -MD -MP -MF $(DEPDIR)/libPOLY_a-CPolylib.Tpo -c -o libPOLY_a-CPolylib.o `test -f 'c_lang/CPolylib.cxx' || echo '$(srcdir)/'`c_lang/CPolylib.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-CPolylib.Tpo $(DEPDIR)/libPOLY_a-CPolylib.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='c_lang/CPolylib.cxx' object='libPOLY_a-CPolylib.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-CPolylib.o `test -f 'c_lang/CPolylib.cxx' || echo '$(srcdir)/'`c_lang/CPolylib.cxx
+
+libPOLY_a-CPolylib.obj: c_lang/CPolylib.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-CPolylib.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-CPolylib.Tpo -c -o libPOLY_a-CPolylib.obj `if test -f 'c_lang/CPolylib.cxx'; then $(CYGPATH_W) 'c_lang/CPolylib.cxx'; else $(CYGPATH_W) '$(srcdir)/c_lang/CPolylib.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-CPolylib.Tpo $(DEPDIR)/libPOLY_a-CPolylib.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='c_lang/CPolylib.cxx' object='libPOLY_a-CPolylib.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-CPolylib.obj `if test -f 'c_lang/CPolylib.cxx'; then $(CYGPATH_W) 'c_lang/CPolylib.cxx'; else $(CYGPATH_W) '$(srcdir)/c_lang/CPolylib.cxx'; fi`
+
+libPOLY_a-stl.o: file_io/stl.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-stl.o -MD -MP -MF $(DEPDIR)/libPOLY_a-stl.Tpo -c -o libPOLY_a-stl.o `test -f 'file_io/stl.cxx' || echo '$(srcdir)/'`file_io/stl.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-stl.Tpo $(DEPDIR)/libPOLY_a-stl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='file_io/stl.cxx' object='libPOLY_a-stl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-stl.o `test -f 'file_io/stl.cxx' || echo '$(srcdir)/'`file_io/stl.cxx
+
+libPOLY_a-stl.obj: file_io/stl.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-stl.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-stl.Tpo -c -o libPOLY_a-stl.obj `if test -f 'file_io/stl.cxx'; then $(CYGPATH_W) 'file_io/stl.cxx'; else $(CYGPATH_W) '$(srcdir)/file_io/stl.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-stl.Tpo $(DEPDIR)/libPOLY_a-stl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='file_io/stl.cxx' object='libPOLY_a-stl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-stl.obj `if test -f 'file_io/stl.cxx'; then $(CYGPATH_W) 'file_io/stl.cxx'; else $(CYGPATH_W) '$(srcdir)/file_io/stl.cxx'; fi`
+
+libPOLY_a-triangle_id.o: file_io/triangle_id.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-triangle_id.o -MD -MP -MF $(DEPDIR)/libPOLY_a-triangle_id.Tpo -c -o libPOLY_a-triangle_id.o `test -f 'file_io/triangle_id.cxx' || echo '$(srcdir)/'`file_io/triangle_id.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-triangle_id.Tpo $(DEPDIR)/libPOLY_a-triangle_id.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='file_io/triangle_id.cxx' object='libPOLY_a-triangle_id.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-triangle_id.o `test -f 'file_io/triangle_id.cxx' || echo '$(srcdir)/'`file_io/triangle_id.cxx
+
+libPOLY_a-triangle_id.obj: file_io/triangle_id.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-triangle_id.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-triangle_id.Tpo -c -o libPOLY_a-triangle_id.obj `if test -f 'file_io/triangle_id.cxx'; then $(CYGPATH_W) 'file_io/triangle_id.cxx'; else $(CYGPATH_W) '$(srcdir)/file_io/triangle_id.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-triangle_id.Tpo $(DEPDIR)/libPOLY_a-triangle_id.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='file_io/triangle_id.cxx' object='libPOLY_a-triangle_id.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-triangle_id.obj `if test -f 'file_io/triangle_id.cxx'; then $(CYGPATH_W) 'file_io/triangle_id.cxx'; else $(CYGPATH_W) '$(srcdir)/file_io/triangle_id.cxx'; fi`
+
+libPOLY_a-TriMeshIO.o: file_io/TriMeshIO.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-TriMeshIO.o -MD -MP -MF $(DEPDIR)/libPOLY_a-TriMeshIO.Tpo -c -o libPOLY_a-TriMeshIO.o `test -f 'file_io/TriMeshIO.cxx' || echo '$(srcdir)/'`file_io/TriMeshIO.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-TriMeshIO.Tpo $(DEPDIR)/libPOLY_a-TriMeshIO.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='file_io/TriMeshIO.cxx' object='libPOLY_a-TriMeshIO.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-TriMeshIO.o `test -f 'file_io/TriMeshIO.cxx' || echo '$(srcdir)/'`file_io/TriMeshIO.cxx
+
+libPOLY_a-TriMeshIO.obj: file_io/TriMeshIO.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-TriMeshIO.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-TriMeshIO.Tpo -c -o libPOLY_a-TriMeshIO.obj `if test -f 'file_io/TriMeshIO.cxx'; then $(CYGPATH_W) 'file_io/TriMeshIO.cxx'; else $(CYGPATH_W) '$(srcdir)/file_io/TriMeshIO.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-TriMeshIO.Tpo $(DEPDIR)/libPOLY_a-TriMeshIO.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='file_io/TriMeshIO.cxx' object='libPOLY_a-TriMeshIO.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-TriMeshIO.obj `if test -f 'file_io/TriMeshIO.cxx'; then $(CYGPATH_W) 'file_io/TriMeshIO.cxx'; else $(CYGPATH_W) '$(srcdir)/file_io/TriMeshIO.cxx'; fi`
+
+libPOLY_a-PolygonGroup.o: groups/PolygonGroup.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-PolygonGroup.o -MD -MP -MF $(DEPDIR)/libPOLY_a-PolygonGroup.Tpo -c -o libPOLY_a-PolygonGroup.o `test -f 'groups/PolygonGroup.cxx' || echo '$(srcdir)/'`groups/PolygonGroup.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-PolygonGroup.Tpo $(DEPDIR)/libPOLY_a-PolygonGroup.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='groups/PolygonGroup.cxx' object='libPOLY_a-PolygonGroup.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-PolygonGroup.o `test -f 'groups/PolygonGroup.cxx' || echo '$(srcdir)/'`groups/PolygonGroup.cxx
+
+libPOLY_a-PolygonGroup.obj: groups/PolygonGroup.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-PolygonGroup.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-PolygonGroup.Tpo -c -o libPOLY_a-PolygonGroup.obj `if test -f 'groups/PolygonGroup.cxx'; then $(CYGPATH_W) 'groups/PolygonGroup.cxx'; else $(CYGPATH_W) '$(srcdir)/groups/PolygonGroup.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-PolygonGroup.Tpo $(DEPDIR)/libPOLY_a-PolygonGroup.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='groups/PolygonGroup.cxx' object='libPOLY_a-PolygonGroup.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-PolygonGroup.obj `if test -f 'groups/PolygonGroup.cxx'; then $(CYGPATH_W) 'groups/PolygonGroup.cxx'; else $(CYGPATH_W) '$(srcdir)/groups/PolygonGroup.cxx'; fi`
+
+libPOLY_a-Polygons.o: polygons/Polygons.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-Polygons.o -MD -MP -MF $(DEPDIR)/libPOLY_a-Polygons.Tpo -c -o libPOLY_a-Polygons.o `test -f 'polygons/Polygons.cxx' || echo '$(srcdir)/'`polygons/Polygons.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-Polygons.Tpo $(DEPDIR)/libPOLY_a-Polygons.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='polygons/Polygons.cxx' object='libPOLY_a-Polygons.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-Polygons.o `test -f 'polygons/Polygons.cxx' || echo '$(srcdir)/'`polygons/Polygons.cxx
+
+libPOLY_a-Polygons.obj: polygons/Polygons.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-Polygons.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-Polygons.Tpo -c -o libPOLY_a-Polygons.obj `if test -f 'polygons/Polygons.cxx'; then $(CYGPATH_W) 'polygons/Polygons.cxx'; else $(CYGPATH_W) '$(srcdir)/polygons/Polygons.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-Polygons.Tpo $(DEPDIR)/libPOLY_a-Polygons.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='polygons/Polygons.cxx' object='libPOLY_a-Polygons.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-Polygons.obj `if test -f 'polygons/Polygons.cxx'; then $(CYGPATH_W) 'polygons/Polygons.cxx'; else $(CYGPATH_W) '$(srcdir)/polygons/Polygons.cxx'; fi`
+
+libPOLY_a-TriMesh.o: polygons/TriMesh.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-TriMesh.o -MD -MP -MF $(DEPDIR)/libPOLY_a-TriMesh.Tpo -c -o libPOLY_a-TriMesh.o `test -f 'polygons/TriMesh.cxx' || echo '$(srcdir)/'`polygons/TriMesh.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-TriMesh.Tpo $(DEPDIR)/libPOLY_a-TriMesh.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='polygons/TriMesh.cxx' object='libPOLY_a-TriMesh.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-TriMesh.o `test -f 'polygons/TriMesh.cxx' || echo '$(srcdir)/'`polygons/TriMesh.cxx
+
+libPOLY_a-TriMesh.obj: polygons/TriMesh.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-TriMesh.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-TriMesh.Tpo -c -o libPOLY_a-TriMesh.obj `if test -f 'polygons/TriMesh.cxx'; then $(CYGPATH_W) 'polygons/TriMesh.cxx'; else $(CYGPATH_W) '$(srcdir)/polygons/TriMesh.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-TriMesh.Tpo $(DEPDIR)/libPOLY_a-TriMesh.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='polygons/TriMesh.cxx' object='libPOLY_a-TriMesh.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-TriMesh.obj `if test -f 'polygons/TriMesh.cxx'; then $(CYGPATH_W) 'polygons/TriMesh.cxx'; else $(CYGPATH_W) '$(srcdir)/polygons/TriMesh.cxx'; fi`
+
+libPOLY_a-VTree.o: polygons/VTree.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-VTree.o -MD -MP -MF $(DEPDIR)/libPOLY_a-VTree.Tpo -c -o libPOLY_a-VTree.o `test -f 'polygons/VTree.cxx' || echo '$(srcdir)/'`polygons/VTree.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-VTree.Tpo $(DEPDIR)/libPOLY_a-VTree.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='polygons/VTree.cxx' object='libPOLY_a-VTree.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-VTree.o `test -f 'polygons/VTree.cxx' || echo '$(srcdir)/'`polygons/VTree.cxx
+
+libPOLY_a-VTree.obj: polygons/VTree.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-VTree.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-VTree.Tpo -c -o libPOLY_a-VTree.obj `if test -f 'polygons/VTree.cxx'; then $(CYGPATH_W) 'polygons/VTree.cxx'; else $(CYGPATH_W) '$(srcdir)/polygons/VTree.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-VTree.Tpo $(DEPDIR)/libPOLY_a-VTree.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='polygons/VTree.cxx' object='libPOLY_a-VTree.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-VTree.obj `if test -f 'polygons/VTree.cxx'; then $(CYGPATH_W) 'polygons/VTree.cxx'; else $(CYGPATH_W) '$(srcdir)/polygons/VTree.cxx'; fi`
+
+libPOLY_a-time.o: util/time.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-time.o -MD -MP -MF $(DEPDIR)/libPOLY_a-time.Tpo -c -o libPOLY_a-time.o `test -f 'util/time.cxx' || echo '$(srcdir)/'`util/time.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-time.Tpo $(DEPDIR)/libPOLY_a-time.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/time.cxx' object='libPOLY_a-time.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-time.o `test -f 'util/time.cxx' || echo '$(srcdir)/'`util/time.cxx
+
+libPOLY_a-time.obj: util/time.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_a-time.obj -MD -MP -MF $(DEPDIR)/libPOLY_a-time.Tpo -c -o libPOLY_a-time.obj `if test -f 'util/time.cxx'; then $(CYGPATH_W) 'util/time.cxx'; else $(CYGPATH_W) '$(srcdir)/util/time.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libPOLY_a-time.Tpo $(DEPDIR)/libPOLY_a-time.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/time.cxx' object='libPOLY_a-time.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_a_CXXFLAGS) $(CXXFLAGS) -c -o libPOLY_a-time.obj `if test -f 'util/time.cxx'; then $(CYGPATH_W) 'util/time.cxx'; else $(CYGPATH_W) '$(srcdir)/util/time.cxx'; fi`
 install-nobase_includeHEADERS: $(nobase_include_HEADERS)
 	@$(NORMAL_INSTALL)
 	@list='$(nobase_include_HEADERS)'; test -n "$(includedir)" || list=; \

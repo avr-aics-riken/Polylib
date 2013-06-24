@@ -10,7 +10,7 @@
 #
 ##############################################################################
 
-lib_LIBRARIES = libMPIPOLY.a
+lib_LIBRARIES = libMPIPOLY.a libPOLY.a
 
 
 libMPIPOLY_a_CXXFLAGS = \
@@ -18,6 +18,10 @@ libMPIPOLY_a_CXXFLAGS = \
   @TP_CFLAGS@ \
   -I$(top_builddir)/include
 
+libPOLY_a_CXXFLAGS = \
+  @MPICH_CFLAGS@ \
+  @TP_CFLAGS@ \
+  -I$(top_builddir)/include
 
 libMPIPOLY_a_SOURCES = \
   MPIPolylib.cxx \
@@ -33,6 +37,18 @@ libMPIPOLY_a_SOURCES = \
   polygons/VTree.cxx \
   util/time.cxx
 
+libPOLY_a_SOURCES = \
+  Polylib.cxx \
+  c_lang/CPolylib.cxx \
+  file_io/stl.cxx \
+  file_io/triangle_id.cxx \
+  file_io/TriMeshIO.cxx \
+  groups/PolygonGroup.cxx \
+  polygons/Polygons.cxx \
+  polygons/TriMesh.cxx \
+  polygons/VTree.cxx \
+  util/time.cxx
+  
 
 nobase_include_HEADERS = \
   $(top_builddir)/include/MPIPolylib.h \
