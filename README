@@ -9,15 +9,16 @@
  *
  */
 
-ソフトウェア概要
-  Polygon Management Library (以下、Polylib)は、ポリゴンデータを保持・管理するためのクラスライブラリで、
-  以下の機能を備えます。
-   ・STL形式によるポリゴンデータのロードとセーブ
-   ・ロードされたポリゴンデータの領域範囲指定検索
-   ・TextParser形式設定ファイルによるポリゴンデータのグルーピング指定
-   ・並列計算環境下におけるポリゴンデータの分散管理
-   ・ユーザ定義関数によるポリゴン座標の移動処理
-   ・上記移動処理に伴う並列プロセス間のポリゴンデータマイグレーション
+
+Outline
+=======
+Polylib is a C++ class library to keep and to manage polygon data, and has following functions.
+
+- load and save polygon data. The file format is STL.
+- management of polygon data on distributed parallel environment. 
+- search and retrieve polygon data
+- grouping by input parameter file (text parser format).
+- data movement and migration between subdomains.
 
 
 
