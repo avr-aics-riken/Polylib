@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([Polylib], [2.6], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [2.6.1], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -23,7 +23,7 @@ AC_CONFIG_HEADERS([config.h])
 #
 # revision No.
 #
-PL_REVISION="20130624_2300"
+PL_REVISION="20130625_1100"
 AC_SUBST(PL_REVISION)
 
 
