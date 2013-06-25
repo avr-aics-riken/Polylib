@@ -21,6 +21,11 @@ Polylib is a C++ class library to keep and to manage polygon data, and has follo
 - data movement and migration between subdomains.
 
 
+Prerequisite
+============
+- MPI library
+- Text parsing library
+
 
 Note
 ====
