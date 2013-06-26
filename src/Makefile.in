@@ -105,24 +105,41 @@ AR = ar
 ARFLAGS = cru
 libMPIPOLY_a_AR = $(AR) $(ARFLAGS)
 libMPIPOLY_a_LIBADD =
-am_libMPIPOLY_a_OBJECTS = libMPIPOLY_a-MPIPolylib.$(OBJEXT) \
-	libMPIPOLY_a-Polylib.$(OBJEXT) \
-	libMPIPOLY_a-CMPIPolylib.$(OBJEXT) \
-	libMPIPOLY_a-CPolylib.$(OBJEXT) libMPIPOLY_a-stl.$(OBJEXT) \
-	libMPIPOLY_a-triangle_id.$(OBJEXT) \
-	libMPIPOLY_a-TriMeshIO.$(OBJEXT) \
-	libMPIPOLY_a-PolygonGroup.$(OBJEXT) \
-	libMPIPOLY_a-Polygons.$(OBJEXT) libMPIPOLY_a-TriMesh.$(OBJEXT) \
-	libMPIPOLY_a-VTree.$(OBJEXT) libMPIPOLY_a-time.$(OBJEXT)
+am__libMPIPOLY_a_SOURCES_DIST = MPIPolylib.cxx Polylib.cxx \
+	c_lang/CMPIPolylib.cxx c_lang/CPolylib.cxx file_io/stl.cxx \
+	file_io/triangle_id.cxx file_io/TriMeshIO.cxx \
+	groups/PolygonGroup.cxx polygons/Polygons.cxx \
+	polygons/TriMesh.cxx polygons/VTree.cxx util/time.cxx
+@SERIALTARGET_FALSE@am_libMPIPOLY_a_OBJECTS =  \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-MPIPolylib.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-Polylib.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-CMPIPolylib.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-CPolylib.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-stl.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-triangle_id.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-TriMeshIO.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-PolygonGroup.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-Polygons.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-TriMesh.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-VTree.$(OBJEXT) \
+@SERIALTARGET_FALSE@	libMPIPOLY_a-time.$(OBJEXT)
 libMPIPOLY_a_OBJECTS = $(am_libMPIPOLY_a_OBJECTS)
 libPOLY_a_AR = $(AR) $(ARFLAGS)
 libPOLY_a_LIBADD =
-am_libPOLY_a_OBJECTS = libPOLY_a-Polylib.$(OBJEXT) \
-	libPOLY_a-CPolylib.$(OBJEXT) libPOLY_a-stl.$(OBJEXT) \
-	libPOLY_a-triangle_id.$(OBJEXT) libPOLY_a-TriMeshIO.$(OBJEXT) \
-	libPOLY_a-PolygonGroup.$(OBJEXT) libPOLY_a-Polygons.$(OBJEXT) \
-	libPOLY_a-TriMesh.$(OBJEXT) libPOLY_a-VTree.$(OBJEXT) \
-	libPOLY_a-time.$(OBJEXT)
+am__libPOLY_a_SOURCES_DIST = Polylib.cxx c_lang/CPolylib.cxx \
+	file_io/stl.cxx file_io/triangle_id.cxx file_io/TriMeshIO.cxx \
+	groups/PolygonGroup.cxx polygons/Polygons.cxx \
+	polygons/TriMesh.cxx polygons/VTree.cxx util/time.cxx
+@SERIALTARGET_TRUE@am_libPOLY_a_OBJECTS = libPOLY_a-Polylib.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-CPolylib.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-stl.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-triangle_id.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-TriMeshIO.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-PolygonGroup.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-Polygons.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-TriMesh.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-VTree.$(OBJEXT) \
+@SERIALTARGET_TRUE@	libPOLY_a-time.$(OBJEXT)
 libPOLY_a_OBJECTS = $(am_libPOLY_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -134,7 +151,8 @@ CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 SOURCES = $(libMPIPOLY_a_SOURCES) $(libPOLY_a_SOURCES)
-DIST_SOURCES = $(libMPIPOLY_a_SOURCES) $(libPOLY_a_SOURCES)
+DIST_SOURCES = $(am__libMPIPOLY_a_SOURCES_DIST) \
+	$(am__libPOLY_a_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -153,7 +171,6 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COMPILER_LIBS = @COMPILER_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -180,11 +197,10 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MAKE_SUB_DIRS = @MAKE_SUB_DIRS@
 MKDIR_P = @MKDIR_P@
-MPICH_CFLAGS = @MPICH_CFLAGS@
-MPICH_DIR = @MPICH_DIR@
-MPICH_FCLIBS = @MPICH_FCLIBS@
-MPICH_LDFLAGS = @MPICH_LDFLAGS@
-MPICH_LIBS = @MPICH_LIBS@
+MPI_CFLAGS = @MPI_CFLAGS@
+MPI_DIR = @MPI_DIR@
+MPI_LDFLAGS = @MPI_LDFLAGS@
+MPI_LIBS = @MPI_LIBS@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -197,8 +213,6 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PL_CFLAGS = @PL_CFLAGS@
 PL_CXX = @PL_CXX@
 PL_DEVICE = @PL_DEVICE@
-PL_FC = @PL_FC@
-PL_FC_LD = @PL_FC_LD@
 PL_LDFLAGS = @PL_LDFLAGS@
 PL_LIBS = @PL_LIBS@
 PL_REVISION = @PL_REVISION@
@@ -254,42 +268,35 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-lib_LIBRARIES = libMPIPOLY.a libPOLY.a
-libMPIPOLY_a_CXXFLAGS = \
-  @MPICH_CFLAGS@ \
-  @TP_CFLAGS@ \
-  -I$(top_builddir)/include
+@SERIALTARGET_FALSE@lib_LIBRARIES = libMPIPOLY.a
+@SERIALTARGET_TRUE@lib_LIBRARIES = libPOLY.a
+@SERIALTARGET_TRUE@libPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+@SERIALTARGET_TRUE@libPOLY_a_SOURCES = \
+@SERIALTARGET_TRUE@     Polylib.cxx \
+@SERIALTARGET_TRUE@     c_lang/CPolylib.cxx \
+@SERIALTARGET_TRUE@     file_io/stl.cxx \
+@SERIALTARGET_TRUE@     file_io/triangle_id.cxx \
+@SERIALTARGET_TRUE@     file_io/TriMeshIO.cxx \
+@SERIALTARGET_TRUE@     groups/PolygonGroup.cxx \
+@SERIALTARGET_TRUE@     polygons/Polygons.cxx \
+@SERIALTARGET_TRUE@     polygons/TriMesh.cxx \
+@SERIALTARGET_TRUE@     polygons/VTree.cxx \
+@SERIALTARGET_TRUE@     util/time.cxx
 
-libPOLY_a_CXXFLAGS = \
-  @MPICH_CFLAGS@ \
-  @TP_CFLAGS@ \
-  -I$(top_builddir)/include
-
-libMPIPOLY_a_SOURCES = \
-  MPIPolylib.cxx \
-  Polylib.cxx \
-  c_lang/CMPIPolylib.cxx \
-  c_lang/CPolylib.cxx \
-  file_io/stl.cxx \
-  file_io/triangle_id.cxx \
-  file_io/TriMeshIO.cxx \
-  groups/PolygonGroup.cxx \
-  polygons/Polygons.cxx \
-  polygons/TriMesh.cxx \
-  polygons/VTree.cxx \
-  util/time.cxx
-
-libPOLY_a_SOURCES = \
-  Polylib.cxx \
-  c_lang/CPolylib.cxx \
-  file_io/stl.cxx \
-  file_io/triangle_id.cxx \
-  file_io/TriMeshIO.cxx \
-  groups/PolygonGroup.cxx \
-  polygons/Polygons.cxx \
-  polygons/TriMesh.cxx \
-  polygons/VTree.cxx \
-  util/time.cxx
+@SERIALTARGET_FALSE@libMPIPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+@SERIALTARGET_FALSE@libMPIPOLY_a_SOURCES = \
+@SERIALTARGET_FALSE@     MPIPolylib.cxx \
+@SERIALTARGET_FALSE@     Polylib.cxx \
+@SERIALTARGET_FALSE@     c_lang/CMPIPolylib.cxx \
+@SERIALTARGET_FALSE@     c_lang/CPolylib.cxx \
+@SERIALTARGET_FALSE@     file_io/stl.cxx \
+@SERIALTARGET_FALSE@     file_io/triangle_id.cxx \
+@SERIALTARGET_FALSE@     file_io/TriMeshIO.cxx \
+@SERIALTARGET_FALSE@     groups/PolygonGroup.cxx \
+@SERIALTARGET_FALSE@     polygons/Polygons.cxx \
+@SERIALTARGET_FALSE@     polygons/TriMesh.cxx \
+@SERIALTARGET_FALSE@     polygons/VTree.cxx \
+@SERIALTARGET_FALSE@     util/time.cxx
 
 nobase_include_HEADERS = \
   $(top_builddir)/include/MPIPolylib.h \

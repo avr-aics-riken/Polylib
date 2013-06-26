@@ -10,7 +10,7 @@
 #
 ##############################################################################
 
-doc_includedir = $(prefix)/docs
+doc_includedir = $(prefix)/doc
 doc_include_HEADERS = \
-    $(top_builddir)/docs/refman.pdf \
-    $(top_builddir)/docs/Polylib_UG.pdf
+    $(top_builddir)/doc/refman.pdf \
+    $(top_builddir)/doc/Polylib_UG.pdf

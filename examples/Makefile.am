@@ -10,7 +10,11 @@
 #
 ##############################################################################
 
-noinst_PROGRAMS = test test2 test_mpi test_mpi2 test_mpi3
+if SERIALTARGET
+  noinst_PROGRAMS = test test2
+else
+  noinst_PROGRAMS = test_mpi test_mpi2 test_mpi3
+endif
 
 DISTCLEANFILES=*~
 CLEANFILES=data/*.log
@@ -35,10 +39,10 @@ test2_SOURCES  = test2.cxx
 test2_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ 
 
 test_mpi_SOURCES  = test_mpi.cxx
-test_mpi_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPICH_CFLAGS@
+test_mpi_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
 
 test_mpi2_SOURCES  = test_mpi2.cxx
-test_mpi2_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPICH_CFLAGS@
+test_mpi2_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
 
 test_mpi3_SOURCES  = \
   test_mpi3.cxx \
@@ -46,40 +50,40 @@ test_mpi3_SOURCES  = \
   MyGroupFactory.cxx \
   CarGroup.h \
   MyGroupFactory.h
-test_mpi3_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPICH_CFLAGS@
+test_mpi3_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
 
 test_LDADD = \
     -L$(top_builddir)/src -lPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
 test2_LDADD = \
     -L$(top_builddir)/src -lPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
 test_mpi_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
 test_mpi2_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
 test_mpi3_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 

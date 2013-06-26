@@ -38,7 +38,7 @@ LICENSE        License of Polylib
 NEWS           Release note
 README         This document
 README.md      Readme file of Github
-docs/          Documents
+doc/           Documents
 include/       Header files
 src/           Source files
 examples/

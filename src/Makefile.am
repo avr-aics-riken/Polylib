@@ -10,44 +10,38 @@
 #
 ##############################################################################
 
-lib_LIBRARIES = libMPIPOLY.a libPOLY.a
 
-
-libMPIPOLY_a_CXXFLAGS = \
-  @MPICH_CFLAGS@ \
-  @TP_CFLAGS@ \
-  -I$(top_builddir)/include
-
-libPOLY_a_CXXFLAGS = \
-  @MPICH_CFLAGS@ \
-  @TP_CFLAGS@ \
-  -I$(top_builddir)/include
-
-libMPIPOLY_a_SOURCES = \
-  MPIPolylib.cxx \
-  Polylib.cxx \
-  c_lang/CMPIPolylib.cxx \
-  c_lang/CPolylib.cxx \
-  file_io/stl.cxx \
-  file_io/triangle_id.cxx \
-  file_io/TriMeshIO.cxx \
-  groups/PolygonGroup.cxx \
-  polygons/Polygons.cxx \
-  polygons/TriMesh.cxx \
-  polygons/VTree.cxx \
-  util/time.cxx
-
-libPOLY_a_SOURCES = \
-  Polylib.cxx \
-  c_lang/CPolylib.cxx \
-  file_io/stl.cxx \
-  file_io/triangle_id.cxx \
-  file_io/TriMeshIO.cxx \
-  groups/PolygonGroup.cxx \
-  polygons/Polygons.cxx \
-  polygons/TriMesh.cxx \
-  polygons/VTree.cxx \
-  util/time.cxx
+if SERIALTARGET
+  lib_LIBRARIES = libPOLY.a
+  libPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+  libPOLY_a_SOURCES = \
+     Polylib.cxx \
+     c_lang/CPolylib.cxx \
+     file_io/stl.cxx \
+     file_io/triangle_id.cxx \
+     file_io/TriMeshIO.cxx \
+     groups/PolygonGroup.cxx \
+     polygons/Polygons.cxx \
+     polygons/TriMesh.cxx \
+     polygons/VTree.cxx \
+     util/time.cxx
+else
+  lib_LIBRARIES = libMPIPOLY.a
+  libMPIPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+  libMPIPOLY_a_SOURCES = \
+     MPIPolylib.cxx \
+     Polylib.cxx \
+     c_lang/CMPIPolylib.cxx \
+     c_lang/CPolylib.cxx \
+     file_io/stl.cxx \
+     file_io/triangle_id.cxx \
+     file_io/TriMeshIO.cxx \
+     groups/PolygonGroup.cxx \
+     polygons/Polygons.cxx \
+     polygons/TriMesh.cxx \
+     polygons/VTree.cxx \
+     util/time.cxx
+endif
   
 
 nobase_include_HEADERS = \

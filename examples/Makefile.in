@@ -61,8 +61,9 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = test$(EXEEXT) test2$(EXEEXT) test_mpi$(EXEEXT) \
-	test_mpi2$(EXEEXT) test_mpi3$(EXEEXT)
+@SERIALTARGET_FALSE@noinst_PROGRAMS = test_mpi$(EXEEXT) \
+@SERIALTARGET_FALSE@	test_mpi2$(EXEEXT) test_mpi3$(EXEEXT)
+@SERIALTARGET_TRUE@noinst_PROGRAMS = test$(EXEEXT) test2$(EXEEXT)
 subdir = examples
 DIST_COMMON = README $(dist_noinst_DATA) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/depcomp
@@ -137,7 +138,6 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COMPILER_LIBS = @COMPILER_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -164,11 +164,10 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MAKE_SUB_DIRS = @MAKE_SUB_DIRS@
 MKDIR_P = @MKDIR_P@
-MPICH_CFLAGS = @MPICH_CFLAGS@
-MPICH_DIR = @MPICH_DIR@
-MPICH_FCLIBS = @MPICH_FCLIBS@
-MPICH_LDFLAGS = @MPICH_LDFLAGS@
-MPICH_LIBS = @MPICH_LIBS@
+MPI_CFLAGS = @MPI_CFLAGS@
+MPI_DIR = @MPI_DIR@
+MPI_LDFLAGS = @MPI_LDFLAGS@
+MPI_LIBS = @MPI_LIBS@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -181,8 +180,6 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PL_CFLAGS = @PL_CFLAGS@
 PL_CXX = @PL_CXX@
 PL_DEVICE = @PL_DEVICE@
-PL_FC = @PL_FC@
-PL_FC_LD = @PL_FC_LD@
 PL_LDFLAGS = @PL_LDFLAGS@
 PL_LIBS = @PL_LIBS@
 PL_REVISION = @PL_REVISION@
@@ -258,9 +255,9 @@ test_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@
 test2_SOURCES = test2.cxx
 test2_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ 
 test_mpi_SOURCES = test_mpi.cxx
-test_mpi_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPICH_CFLAGS@
+test_mpi_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
 test_mpi2_SOURCES = test_mpi2.cxx
-test_mpi2_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPICH_CFLAGS@
+test_mpi2_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
 test_mpi3_SOURCES = \
   test_mpi3.cxx \
   CarGroup.cxx \
@@ -268,39 +265,39 @@ test_mpi3_SOURCES = \
   CarGroup.h \
   MyGroupFactory.h
 
-test_mpi3_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPICH_CFLAGS@
+test_mpi3_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
 test_LDADD = \
     -L$(top_builddir)/src -lPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
 test2_LDADD = \
     -L$(top_builddir)/src -lPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
 test_mpi_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
 test_mpi2_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
 test_mpi3_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
-    @MPICH_LDFLAGS@ \
-    @MPICH_LIBS@ \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
     @TP_LDFLAGS@ \
     @TP_LIBS@
 
