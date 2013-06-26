@@ -98,7 +98,6 @@ if test "$with_parser" != "none" ; then
   TP_CFLAGS=-I$TP_DIR/include
   TP_LDFLAGS=-L$TP_DIR/lib
   TP_LIBS=-lTP
-#  TP_LIBS=$TP_DIR/lib/libTP.a
 else
   echo "  Error: TextParser library is not specified."
   echo "         Specify --with-parser option."
@@ -124,7 +123,7 @@ AC_SUBST(PL_LDFLAGS)
 PL_CXX="$CXX"
 AC_SUBST(PL_CXX)
 
-if test "$enable_mpi" != "none" ; then
+if test "$enable_mpi" = "none" ; then
   PL_LIBS="-lPOLY"
 else
   PL_LIBS="-lMPIPOLY"
@@ -133,7 +132,7 @@ fi
 AC_SUBST(PL_LIBS)
 
 # SERIALTARGET = true, if serial
-AM_CONDITIONAL([SERIALTARGET], [test "$enable_mpi" != "none"])
+AM_CONDITIONAL([SERIALTARGET], [test "$enable_mpi" = "none"])
 
 #
 # MAKE_SUB_DIRS
