@@ -84,7 +84,7 @@ $.configure --prefix=/usr/local/Polylib \
  OpenMPI with wrapper compiler
 ##
 
-$.configure --with-parser=/usr/local/TextParser \
+$.configure --with-parser=/usr/local/Polylib \
             CXX=mpicxx \
             CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 
@@ -94,7 +94,7 @@ $.configure --with-parser=/usr/local/TextParser \
 ##
 
 $./configure --prefix=$1 \
-             --with-parser=/usr/local/TextParser \
+             --with-parser=/usr/local/Polylib \
              --host=sparc64-unknown-linux-gnu \
              CXX=mpiFCCpx \
              CXXFLAGS="-Kfast,ocl,preex,simd=2,uxsimd,array_private,parallel,openmp,optmsg=2"
