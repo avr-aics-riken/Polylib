@@ -66,7 +66,7 @@ EOF
       ;;
 
     --libs)
-      echo @PL_LDFLAGS@ @PL_LIBS@ @MPI_LDFLAGS@ @MPI_LIBS@ @TP_LDFLAGS@ @TP_LIBS@
+      echo @PL_LDFLAGS@ @PL_LIBS@ @MPI_LDFLAGS@ @MPI_LIBS@ @TP_LDFLAGS@
       ;;
 
     *)

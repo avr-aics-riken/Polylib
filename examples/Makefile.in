@@ -190,7 +190,6 @@ STRIP = @STRIP@
 TP_CFLAGS = @TP_CFLAGS@
 TP_DIR = @TP_DIR@
 TP_LDFLAGS = @TP_LDFLAGS@
-TP_LIBS = @TP_LIBS@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
@@ -270,36 +269,31 @@ test_LDADD = \
     -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@ \
-    @TP_LIBS@
+    @TP_LDFLAGS@
 
 test2_LDADD = \
     -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@ \
-    @TP_LIBS@
+    @TP_LDFLAGS@
 
 test_mpi_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@ \
-    @TP_LIBS@
+    @TP_LDFLAGS@
 
 test_mpi2_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@ \
-    @TP_LIBS@
+    @TP_LDFLAGS@
 
 test_mpi3_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@ \
-    @TP_LIBS@
+    @TP_LDFLAGS@
 
 dist_noinst_DATA = 
 all: all-am

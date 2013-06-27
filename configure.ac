@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([Polylib], [2.6.3], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [2.6.4], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -23,7 +23,7 @@ AC_CONFIG_HEADERS([config.h])
 #
 # revision No.
 #
-PL_REVISION="20130627_1400"
+PL_REVISION="20130627_2359"
 AC_SUBST(PL_REVISION)
 
 
@@ -92,12 +92,11 @@ AC_ARG_WITH(parser, [AC_HELP_STRING([--with-parser=dir],[Specify TextParser inst
 AC_SUBST(TP_DIR)
 AC_SUBST(TP_CFLAGS)
 AC_SUBST(TP_LDFLAGS)
-AC_SUBST(TP_LIBS)
+
 if test "$with_parser" != "none" ; then
   TP_DIR=$with_parser;
-  TP_CFLAGS=-I$TP_DIR/include
-  TP_LDFLAGS=-L$TP_DIR/lib
-  TP_LIBS=-lTP
+  TP_CFLAGS=`$TP_DIR/bin/tp-config --cflags`
+  TP_LDFLAGS=`$TP_DIR/bin/tp-config --libs`
 else
   echo "  Error: TextParser library is not specified."
   echo "         Specify --with-parser option."
