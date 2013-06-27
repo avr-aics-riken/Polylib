@@ -41,7 +41,7 @@ while test $# -gt 0; do
     --version)
 cat <<EOF
 
-Polylib - Polygon Management Library @VERSION@ @PL_REVISION@
+Polylib - Polygon Management Library  Ver. @VERSION@  (@PL_REVISION@)
 
 Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
 All rights reserved.

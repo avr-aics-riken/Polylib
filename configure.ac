@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([Polylib], [2.6.2], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [2.6.3], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -23,7 +23,7 @@ AC_CONFIG_HEADERS([config.h])
 #
 # revision No.
 #
-PL_REVISION="20130626_1700"
+PL_REVISION="20130627_1400"
 AC_SUBST(PL_REVISION)
 
 
@@ -114,14 +114,21 @@ AC_ARG_WITH(example, [AC_HELP_STRING([--with-example=(yes|no)],[make example [ye
 #
 # Polylib special flags
 #
-PL_CFLAGS="-I$PL_INST_DIR/include"
-AC_SUBST(PL_CFLAGS)
-
-PL_LDFLAGS="-L$PL_INST_DIR/lib"
-AC_SUBST(PL_LDFLAGS)
 
 PL_CXX="$CXX"
 AC_SUBST(PL_CXX)
+
+# if a wrapper compiler is used, "enable_mpi" is empty, but parallel.
+# wrappers like mpicxx, mpicc, mpiCC, mpic++, mpiFCCpx are taking into consideration, if not add in case.
+
+case "$PL_CXX" in
+  mpicxx)   enable_mpi="mpi" ;;
+  mpicc)    enable_mpi="mpi" ;;
+  mpiCC)    enable_mpi="mpi" ;;
+  mpic++)   enable_mpi="mpi" ;;
+  mpiFCCpx) enable_mpi="mpi" ;;
+esac
+
 
 if test "$enable_mpi" = "none" ; then
   PL_LIBS="-lPOLY"
@@ -133,6 +140,15 @@ AC_SUBST(PL_LIBS)
 
 # SERIALTARGET = true, if serial
 AM_CONDITIONAL([SERIALTARGET], [test "$enable_mpi" = "none"])
+
+
+PL_CFLAGS="-I$PL_INST_DIR/include"
+AC_SUBST(PL_CFLAGS)
+
+PL_LDFLAGS="-L$PL_INST_DIR/lib"
+AC_SUBST(PL_LDFLAGS)
+
+
 
 #
 # MAKE_SUB_DIRS
@@ -158,7 +174,7 @@ AC_PROG_RANLIB
 #
 # Checks for libraries.
 #
-AC_CHECK_LIB([TextParser], [TextParser::TextParser()])
+AC_CHECK_LIB([TP], [TextParser::TextParser()])
 
 
 #

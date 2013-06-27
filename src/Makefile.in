@@ -270,7 +270,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @SERIALTARGET_FALSE@lib_LIBRARIES = libMPIPOLY.a
 @SERIALTARGET_TRUE@lib_LIBRARIES = libPOLY.a
-@SERIALTARGET_TRUE@libPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+@SERIALTARGET_TRUE@libPOLY_a_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include
 @SERIALTARGET_TRUE@libPOLY_a_SOURCES = \
 @SERIALTARGET_TRUE@     Polylib.cxx \
 @SERIALTARGET_TRUE@     c_lang/CPolylib.cxx \

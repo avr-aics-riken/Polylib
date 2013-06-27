@@ -13,7 +13,7 @@
 
 if SERIALTARGET
   lib_LIBRARIES = libPOLY.a
-  libPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+  libPOLY_a_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include
   libPOLY_a_SOURCES = \
      Polylib.cxx \
      c_lang/CPolylib.cxx \
