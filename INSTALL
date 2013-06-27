@@ -69,10 +69,8 @@ Configure options:
 Here is some examples;
 
 
-##
- Intel compiler and MPICH
-##
-
+## Intel compiler and MPICH
+ 
 $.configure --prefix=/usr/local/Polylib \
             --with-mpich=/usr/local/mpich \
             --with-parser=/usr/local/TextParser \
@@ -80,21 +78,17 @@ $.configure --prefix=/usr/local/Polylib \
             CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 
 
-##
- OpenMPI with wrapper compiler
-##
+## OpenMPI with wrapper compiler
 
-$.configure --with-parser=/usr/local/Polylib \
+$.configure --with-parser=/usr/local/TextParser \
             CXX=mpicxx \
             CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 
 
-##
- K-computer
-##
+## K-computer
 
 $./configure --prefix=$1 \
-             --with-parser=/usr/local/Polylib \
+             --with-parser=/usr/local/TextParser \
              --host=sparc64-unknown-linux-gnu \
              CXX=mpiFCCpx \
              CXXFLAGS="-Kfast,ocl,preex,simd=2,uxsimd,array_private,parallel,openmp,optmsg=2"
