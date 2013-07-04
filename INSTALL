@@ -10,14 +10,14 @@
  */
 
 
-Prerequisite
+PREREQUISITE
 ============
 - MPI library
 - Text parsing library
 
 
 
-How to compile
+HOW TO COMPILE
 ==============
 
 1. with configure
@@ -35,8 +35,14 @@ Generated archives are;
 
 Configure options:
 
+ --host=hostname
+    Specify in case of cross-compilation.
+
  --prefix=INSTALL_DIR
     Specify a directory to be installed. The default directory is /usr/local/Polylib.
+
+ --with-example=(yes|no)
+    Specify building example. The default is 'yes'.
 
  --with-mpich=MPICH_DIR
     If you will use the MPICH library, specify the directory that MPICH library is
@@ -49,13 +55,6 @@ Configure options:
 
  --with-parser=TEXTPARSER_PATH
     Specify the directory path that is installed TextParser library.
-
- --with-example=(yes|no)
-    Specify building example. The default is 'yes'.
-
- --host=hostname
-    Specify in case of cross-compilation.
-
 
 
  CXX=CXX_COMPILER
