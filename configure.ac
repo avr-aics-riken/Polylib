@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([Polylib], [2.6.4], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [2.6.5], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -23,21 +23,30 @@ AC_CONFIG_HEADERS([config.h])
 #
 # revision No.
 #
-PL_REVISION="20130627_2359"
+PL_REVISION="20130715_1100"
 AC_SUBST(PL_REVISION)
+
 
+PL_CXX="$CXX"
+AC_SUBST(PL_CXX)
 
-#
-# platform
-#
-PL_DEVICE="$($SHELL ./polylib-uname)"
-AC_SUBST(PL_DEVICE)
+enable_mpi="none"
+
+# if a wrapper compiler is used, "enable_mpi" is empty, but parallel.
+# wrappers like mpicxx, mpicc, mpiCC, mpic++, mpiFCCpx are taking into consideration, if not add in case.
+
+case "$PL_CXX" in
+  mpicxx)   enable_mpi="mpi" ;;
+  mpicc)    enable_mpi="mpi" ;;
+  mpiCC)    enable_mpi="mpi" ;;
+  mpic++)   enable_mpi="mpi" ;;
+  mpiFCCpx) enable_mpi="mpi" ;;
+esac
+
 
 #
 # MPI environment
 #
-enable_mpi="none"
-
 AC_SUBST(MPI_DIR)
 AC_SUBST(MPI_CFLAGS)
 AC_SUBST(MPI_LDFLAGS)
@@ -104,29 +113,18 @@ else
 fi
 
 
+
 #
 # example
 #
-AC_ARG_WITH(example, [AC_HELP_STRING([--with-example=(yes|no)],[make example [yes]])], , with_example=yes)
+AC_ARG_WITH(example, [AC_HELP_STRING([--with-example=(no|yes)],[make example [no]])], , with_example=no)
+
 
 
 #
 # Polylib special flags
 #
 
-PL_CXX="$CXX"
-AC_SUBST(PL_CXX)
-
-# if a wrapper compiler is used, "enable_mpi" is empty, but parallel.
-# wrappers like mpicxx, mpicc, mpiCC, mpic++, mpiFCCpx are taking into consideration, if not add in case.
-
-case "$PL_CXX" in
-  mpicxx)   enable_mpi="mpi" ;;
-  mpicc)    enable_mpi="mpi" ;;
-  mpiCC)    enable_mpi="mpi" ;;
-  mpic++)   enable_mpi="mpi" ;;
-  mpiFCCpx) enable_mpi="mpi" ;;
-esac
 
 
 if test "$enable_mpi" = "none" ; then
@@ -136,6 +134,7 @@ else
 fi
 
 AC_SUBST(PL_LIBS)
+
 
 # SERIALTARGET = true, if serial
 AM_CONDITIONAL([SERIALTARGET], [test "$enable_mpi" = "none"])
@@ -154,7 +153,6 @@ AC_SUBST(PL_LDFLAGS)
 #
 AC_SUBST(MAKE_SUB_DIRS)
 MAKE_SUB_DIRS="src doc"
-
 if test "$with_example" = "yes" ; then
   MAKE_SUB_DIRS="$MAKE_SUB_DIRS"" examples"
 fi
@@ -173,7 +171,6 @@ AC_PROG_RANLIB
 #
 # Checks for libraries.
 #
-AC_CHECK_LIB([TP], [TextParser::TextParser()])
 
 
 #

@@ -62,11 +62,11 @@ EOF
       ;;
 
     --cflags)
-      echo @PL_CFLAGS@ @MPI_CFLAGS@ @TP_CFLAGS@
+      echo @PL_CFLAGS@
       ;;
 
     --libs)
-      echo @PL_LDFLAGS@ @PL_LIBS@ @MPI_LDFLAGS@ @MPI_LIBS@ @TP_LDFLAGS@
+      echo @PL_LDFLAGS@ @PL_LIBS@
       ;;
 
     *)

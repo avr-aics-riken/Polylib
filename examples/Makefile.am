@@ -33,16 +33,17 @@ test_SOURCES  = \
   README \
   sphere.stl \
   tower.stl
-test_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ 
+
+test_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
 
 test2_SOURCES  = test2.cxx
-test2_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ 
+test2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
 
 test_mpi_SOURCES  = test_mpi.cxx
-test_mpi_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 test_mpi2_SOURCES  = test_mpi2.cxx
-test_mpi2_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 test_mpi3_SOURCES  = \
   test_mpi3.cxx \
@@ -50,37 +51,37 @@ test_mpi3_SOURCES  = \
   MyGroupFactory.cxx \
   CarGroup.h \
   MyGroupFactory.h
-test_mpi3_CXXFLAGS = -I$(top_builddir)/include -lstdc++ @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi3_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 test_LDADD = \
     -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@
+    @TP_LDFLAGS@ -lstdc++
 
 test2_LDADD = \
     -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@
+    @TP_LDFLAGS@ -lstdc++
 
 test_mpi_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@
+    @TP_LDFLAGS@ -lstdc++
 
 test_mpi2_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@
+    @TP_LDFLAGS@ -lstdc++
 
 test_mpi3_LDADD = \
     -L$(top_builddir)/src -lMPIPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
-    @TP_LDFLAGS@
+    @TP_LDFLAGS@ -lstdc++
 
 dist_noinst_DATA=
 

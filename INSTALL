@@ -10,8 +10,8 @@
  */
 
 
-PREREQUISITE
-============
+SOFTWARE REQUIREMENT
+====================
 - MPI library
 - Text parsing library
 
@@ -41,8 +41,8 @@ Configure options:
  --prefix=INSTALL_DIR
     Specify a directory to be installed. The default directory is /usr/local/Polylib.
 
- --with-example=(yes|no)
-    Specify building example. The default is 'yes'.
+ --with-example=(no|yes)
+    Specify building example. The default is 'no'.
 
  --with-mpich=MPICH_DIR
     If you will use the MPICH library, specify the directory that MPICH library is
@@ -68,16 +68,17 @@ Configure options:
 Here is some examples;
 
 
-## Intel compiler and MPICH
+## Intel compiler and MPICH, and with example
  
   $ ./configure --prefix=/usr/local/Polylib \
                 --with-mpich=/usr/local/mpich \
                 --with-parser=/usr/local/TextParser \
+                --with-example=yes \
                 CXX=/opt/intel/composerxe/bin/icpc \
                 CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 
 
-## OpenMPI with wrapper compiler
+## OpenMPI with wrapper compiler, default install directory, /wo example
 
   $ ./configure --with-parser=/usr/local/TextParser \
                 CXX=mpicxx \
@@ -99,23 +100,4 @@ Here is some examples;
 
 If a provided configure does not work, use Makefile_hand to build this library. At first,
 edit MACRO to tell your machine environment.
-
-
-
-
-########################
-# BG/P
-########################
-
-AR          = ar crv
-RANLIB      = ranlib
-RM          = \rm -f
-MPI_DIR     = /bgsys/drivers/ppcfloor/comm
-TP_DIR      = /usr/local/TextParser
-OMP_FLAGS   =
-CXX         = mpixlcxx_r
-CXXFLAGS    = -O3 -qarch=450d -qtune=450 $(OMP_FLAGS)
-UDEF_INC_PATH = -I$(TP_DIR)/include -I$(MPI_DIR)/include
-UDEF_LIB_PATH_SPEC = -L/soft/apps/ibmcmp/xlf/bg/11.1/bglib
-UDEF_LIBS_SPEC     = -lxlopt -lxl -lxlf90 -lxlfmath
 

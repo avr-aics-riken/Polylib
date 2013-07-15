@@ -16,7 +16,7 @@ SUBDIRS = @MAKE_SUB_DIRS@
 bin_SCRIPTS    = polylib-config
 CLEANFILES     = $(bin_SCRIPTS)
 EXTRA_DIST     = polylib-config.in LICENSE Makefile_hand src/Makefile_hand \
-                 src/depend.inc polylib-uname doc/doxygen/Doxyfile
+                 src/depend.inc doc/doxygen/Doxyfile examples
 dist_data_DATA = AUTHORS COPYING ChangeLog README LICENSE
 
 clean-local:
