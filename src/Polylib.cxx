@@ -905,20 +905,22 @@ void Polylib::show_group_name(
 
 	// ユーザ定義id出力 2010.10.20
 	// ユーザ定義ラベル出力 2012.08.31
+	// ユーザ定義タイプ出力 2013.07.17
 	if (fp == NULL) {
 		PL_DBGOSH << "Polylib::show_group_name: " << tab ;
 		if (pg->get_parent_path().empty() == true)  PL_DBGOS << "+";
 		PL_DBGOS << pg->get_name() << ":" << pg->acq_file_name() << ":"
-				 << pg->get_id() << ":" << pg->get_label() << endl;
+				 << pg->get_id() << ":" << pg->get_label() << ":"
+				 << pg->get_type() << endl;
 
 	}
 	else {
 		// 出力先が指定されていれば、そちらに出力
-		fprintf(fp, "%sPolylib::show_group_name:%s%s%s:%s:%d:%s\n", 
+		fprintf(fp, "%sPolylib::show_group_name:%s%s%s:%s:%d:%s:%s\n", 
 			gs_rankno.c_str(),		tab.c_str(),
 			(pg->get_parent_path().empty() == true) ? "+" : "",
 			pg->get_name().c_str(),	pg->acq_file_name().c_str(),
-			pg->get_id(), pg->get_label().c_str());
+			pg->get_id(), pg->get_label().c_str(), pg->get_type().c_str());
 	}
 
 	tab = tab + "    ";

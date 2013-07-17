@@ -46,6 +46,8 @@ const char *PolygonGroup::ATT_NAME_CLASS = "class_name";
 #define ATT_NAME_ID			"id"
 // ユーザ定義ラベル追加 2012.08.31
 #define ATT_NAME_LABEL		"label"
+// ユーザ定義タイプ追加 2013.07.17
+#define ATT_NAME_TYPE		"type"
 
 /************************************************************************
  *
@@ -579,6 +581,12 @@ POLYLIB_STAT PolygonGroup::rescale_polygons( float scale )
 }
 
 // public /////////////////////////////////////////////////////////////////////
+POLYLIB_STAT PolygonGroup::set_all_exid_of_trias( int id )
+{
+	return m_polygons->set_all_exid( id );
+}
+
+// public /////////////////////////////////////////////////////////////////////
 const PrivateTriangle* PolygonGroup::search_nearest(
 	const Vec3f&    pos
 ) const {
@@ -634,6 +642,16 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
   if(leaf_iter!=leaves.end()) {
     tp_error=tp->getValue((*leaf_iter),label_string);
     //PL_DBGOS << __FUNCTION__ << " there is a label. "<< label_string
+    //<<endl;
+  }
+
+  // type (2013.07.17 追加)
+  string type_string = "";
+  leaf_iter = find(leaves.begin(),leaves.end(),ATT_NAME_TYPE);
+
+  if(leaf_iter!=leaves.end()) {
+    tp_error=tp->getValue((*leaf_iter),type_string);
+    //PL_DBGOS << __FUNCTION__ << " there is a type. "<< type_string
     //<<endl;
   }
 
@@ -751,6 +769,9 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 
 	// ユーザ定義ラベル追加 2012.08.31
 	m_label = label_string;
+
+	// ユーザ定義タイプ追加 2013.07.17
+	m_type = type_string;
 
 	return PLSTAT_OK;
 
