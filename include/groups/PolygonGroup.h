@@ -313,7 +313,17 @@ public:
 
   /// ポリゴンの縮尺変換＆KD木再構築
   POLYLIB_STAT rescale_polygons( float scale );
-  
+
+	///
+	/// グループ配下の全Triangleオブジェクトのm_exidを更新する。
+	///
+	/// @param[in] id 更新するID番号。
+	/// @return    ステータスコード。
+	///
+	POLYLIB_STAT set_all_exid_of_trias(
+		int id
+	);
+
 	//=======================================================================
 	// Setter/Getter
 	//=======================================================================
@@ -469,6 +479,16 @@ public:
 	///
 	std::string get_label() {
 		return m_label;
+	}
+
+	///
+	/// ユーザ定義タイプを取得。
+	/// 追加 2013.07.17
+	///
+	///  @return ユーザ定義タイプ。
+	///
+	std::string get_type() {
+		return m_type;
 	}
 
 	///
@@ -664,6 +684,9 @@ protected:
 	
 	/// ユーザ定義ラベル : (追加 2012.08.31)
 	std::string							m_label;
+
+	/// ユーザ定義タイプ : (追加 2013.07.17)
+	std::string							m_type;
 
 private:
 	/// ユーザ定義id : (追加 2010.10.20)
