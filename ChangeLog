@@ -13,15 +13,54 @@
 REVISION HISTORY
 ================
 
+------------------
+2013-07-17
+
+ r27 Merge [ver 2.6.6] 
+    - add PolygonGroup::m_type. and  PolygonGroup::set_all_exid_of_trias()
 
 ------------------
 2013-07-15
 
- r15 update release style [ver 2.6.5]
+ r26 update release style [ver 2.6.5]
     - with-example=no (default)
 
 ------------------
+2013-07-04
+
+ r25 update INSTALL & README
+
+------------------
+2013-06-27
+
+ r24 update configure [ver 2.6.4]
+
+ r23 update configure option [ver 2.6.3]
+
+ r22 update INSTALL again
+
+ r21 update INSTALL
+
+------------------
+2013-06-26
+
+ r20 bug fix configure.ac
+
+ r19 change configure option
+
+------------------
+2013-06-25
+
+ r18 update README
+
+ r17 ver 2.6.1
+
+ r16 update README
+
+------------------
 2013-06-24
+
+ r15 ver 2.6 autotools version
 
  r14 make libMPIPOLY.a and libPOLY.a
 
