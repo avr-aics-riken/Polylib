@@ -14,6 +14,11 @@ RELEASE
 =======
 
 -------------------------
+Version 2.6.7  2013-07-20
+
+ - Introduce Version.h and getVersionInfo()
+
+-------------------------
 Version 2.6.6  2013-07-17
 
  - PolygonGroup::m_type. and  PolygonGroup::set_all_exid_of_trias()

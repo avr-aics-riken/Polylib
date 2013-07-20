@@ -25,6 +25,7 @@
 #include "common/Vec3.h"
 
 #include "TextParser.h"
+#include "Version.h"
 
 namespace PolylibNS {
 
@@ -279,6 +280,16 @@ public:
 	PolygonGroup* get_group(
 		std::string		name
 	) const;
+  
+  /**
+   * @brief バージョン番号の文字列を返す
+   */
+  std::string getVersionInfo()
+  {
+    std::string str(PL_VERSION_NO);
+    return str;
+  }
+  
 
 protected:
 	///

@@ -14,16 +14,21 @@ REVISION HISTORY
 ================
 
 ------------------
+2013-07-20
+ r28 Introduce getVersionInfo() [ver 2.6.7]
+   - add Version.h.in
+
+------------------
 2013-07-17
 
  r27 Merge [ver 2.6.6] 
-    - add PolygonGroup::m_type. and  PolygonGroup::set_all_exid_of_trias()
+   - add PolygonGroup::m_type. and  PolygonGroup::set_all_exid_of_trias()
 
 ------------------
 2013-07-15
 
  r26 update release style [ver 2.6.5]
-    - with-example=no (default)
+   - with-example=no (default)
 
 ------------------
 2013-07-04

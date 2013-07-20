@@ -67,4 +67,7 @@ nobase_include_HEADERS = \
   $(top_builddir)/include/polygons/Triangle.h \
   $(top_builddir)/include/polygons/TriMesh.h \
   $(top_builddir)/include/polygons/VTree.h \
-  $(top_builddir)/include/util/time.h
+  $(top_builddir)/include/util/time.h \
+  $(top_builddir)/include/Version.h
+
+EXTRA_DIST = Makefile_hand depend.inc

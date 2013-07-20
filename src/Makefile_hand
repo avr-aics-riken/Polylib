@@ -26,6 +26,14 @@
 #
 # 三角形IDファイルをテキストモードで出力するにはCXXFLAGSに以下を追加のこと
 # -DSAVE_ID_ASCII
+
+
+# Copy 'Version.h' to include directory.
+# If you don't have the file, do configure on other environment and copy generated one.
+#
+# $ make -f Makefile_hand
+
+
 ###########################################################################
 
 TARGET_DIR	= ../lib
