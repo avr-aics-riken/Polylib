@@ -27,6 +27,6 @@ using namespace std;
 /// デストラクタ
 ///  @attention 継承しているクラスから呼び出されるために必要。
 ///
-Polygons::~Polygons() {}
+//Polygons::~Polygons() {}
 
 } //namespace PolylibNS

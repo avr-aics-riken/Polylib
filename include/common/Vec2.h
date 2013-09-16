@@ -99,10 +99,10 @@ public:
 	static Vec2<T> xaxis() { return Vec2<T>(1, 0); }
 	static Vec2<T> yaxis() { return Vec2<T>(0, 1); }
 
-	float lengthSquared() const { return x*x + y*y; }
-	float length() const { return sqrtf(lengthSquared()); }
+	T lengthSquared() const { return x*x + y*y; }
+	T length() const { return sqrtf(lengthSquared()); }
 	Vec2<T>& normalize() {
-		float len = length();
+		T len = length();
 		if (len != 0) {
 			return *this /= len;
 		}
@@ -110,7 +110,7 @@ public:
 			return *this;
 		}
 	}
-	Vec2<T>& normalize(float* len) {
+	Vec2<T>& normalize(T* len) {
 		*len = length();
 		if (*len != 0) {
 			return *this /= *len;
@@ -119,7 +119,7 @@ public:
 			return *this;
 		}
 	}
-	float average() const { return (x + y)/2.f; }
+	T average() const { return (x + y)/2.f; }
 
 	T x, y;
 };
@@ -134,16 +134,37 @@ typedef Vec2<float>			Vec2f;
 //=========================================================================
 // inline
 //=========================================================================
-inline Vec2f operator*(float s, const Vec2f& v) {
-	return Vec2f(s*v.x, s*v.y);
+
+template <typename T>
+inline Vec2<T> operator*(T s, const Vec2<T>& v) {
+	return Vec2<T>(s*v.x, s*v.y);
 }
 
-inline float distanceSquared(const Vec2f& a, const Vec2f& b) {
+template <typename T>
+inline T distanceSquared(const Vec2<T>& a, const Vec2<T>& b) {
 	return (a - b).lengthSquared();
 }
-inline float distance(const Vec2f& a, const Vec2f& b) {
+template <typename T>
+inline T distance(const Vec2<T>& a, const Vec2<T>& b) {
 	return (a - b).length();
 }
+template <typename T>
+inline bool lessVec2(const Vec2<T>& a, const Vec2<T>& b) {
+	return (a.lengthSquared() < b.lengthSquared()) ? true : false;
+}
+
+
+/* inline Vec2f operator*(float s, const Vec2f& v) { */
+/* 	return Vec2f(s*v.x, s*v.y); */
+/* } */
+
+/* inline float distanceSquared(const Vec2f& a, const Vec2f& b) { */
+/* 	return (a - b).lengthSquared(); */
+/* } */
+/* inline float distance(const Vec2f& a, const Vec2f& b) { */
+/* 	return (a - b).length(); */
+/* } */
+
 
 template<typename T>
 inline std::istream& operator>>(std::istream& is, Vec2<T>& v) {

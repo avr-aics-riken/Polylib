@@ -14,8 +14,13 @@
 
 #include <vector>
 #include <map>
+#include <iomanip>
 #include "polygons/VTree.h"
+#include "polygons/Vertex.h"
+#include "polygons/VertexList.h"
+#include "polygons/Triangle.h"
 #include "common/tt.h"
+#include "common/axis.h"
 #include "common/Vec3.h"
 #include "common/BBox.h"
 #include "common/PolylibStat.h"
@@ -23,8 +28,8 @@
 
 namespace PolylibNS {
 
-class Triangle;
-class PrivateTriangle;
+template <typename T> class Triangle;
+template <typename T> class PrivateTriangle;
 
 ////////////////////////////////////////////////////////////////////////////
 ///
@@ -32,6 +37,7 @@ class PrivateTriangle;
 /// 三角形ポリゴン集合を管理する純粋仮想クラスです。
 ///
 ////////////////////////////////////////////////////////////////////////////
+template <typename T>
 class Polygons {
 public:
 	///
@@ -46,13 +52,31 @@ public:
 
 	///
 	/// 引数で与えられる三角形ポリゴンリストの複製を設定する。
-	///
-	///  @param[in] trias 設定する三角形ポリゴンリスト。
-	///  @attention オーバーロードメソッドあり。
+	/// @param[in] trias 設定する三角形ポリゴンリスト。
+	/// @attention オーバーロードメソッドあり。
 	///
 	virtual void init(
-		const std::vector<PrivateTriangle*>	*trias
+		const std::vector<PrivateTriangle<T>*>	*trias
 	) = 0;
+
+  /// 三角形ポリゴンリストを初期化し、引数で与えら
+  /// れる三角形ポリゴンリストを設定する。
+  /// 三角形ポリゴン用のメモリ領域は、TriMesh 内で新たに確保する。
+  ///
+  ///  @param[in] vertlist 設定する三角形ポリゴン頂点リスト。
+  ///  @param[in] idlist 三角形のid。
+  ///  @param[in] n_start_tri vertlistの頂点開始位置
+  ///  @param[in] n_start_id idlistのid開始位置
+  ///  @param[in] n_tri 加える三角形の数
+
+  virtual void init(const T* vertlist,
+		    const int* idlist,
+		    const int n_start_tri,
+		    const int n_start_id,
+		    const unsigned int n_tri)=0;
+
+
+
 
 	///
 	/// 三角形ポリゴンリストに引数で与えられる三角形を追加する。
@@ -60,8 +84,22 @@ public:
 	///  @param[in] trias 設定する三角形ポリゴンリスト。
 	///
 	virtual void add(
-		const std::vector<PrivateTriangle*>		*trias
+		const std::vector<PrivateTriangle<T>*>		*trias
 	) = 0;
+
+
+  /// 三角形ポリゴンリストに引数で与えられる三角形を追加する。
+  ///  @param[in] vertlist 設定する三角形ポリゴン頂点リスト。
+  ///  @param[in] idlist 三角形のid。
+  ///  @param[in] n_start_tri vertlistの頂点開始位置
+  ///  @param[in] n_start_id idlistのid開始位置
+  ///  @param[in] n_tri 加える三角形の数
+
+  virtual void add(const T* vertlist,
+		    const int* idlist,
+		    const int n_start_tri,
+		    const int n_start_id,
+		    const unsigned int n_tri)=0;
 
 	///
 	/// STLファイルを読み込みデータの初期化。
@@ -71,7 +109,7 @@ public:
 	///
 	virtual POLYLIB_STAT import(
 		const std::map<std::string, std::string>	fname,
-		float scale = 1.0
+		T scale = 1.0
 	) = 0;
 
 	///
@@ -98,8 +136,8 @@ public:
 	///  @attention MPIPolylib内でのみ利用するため、ユーザは使用しないで下さい。
 	///  @attention オーバーロードメソッドあり。
 	///
-	virtual const std::vector<PrivateTriangle*>* search(
-		BBox	*bbox, 
+	virtual const std::vector<PrivateTriangle<T>*>* search(
+	       BBox<T>	*bbox, 
 		bool	every
 	) const = 0;
 
@@ -114,9 +152,9 @@ public:
 	///  @attention オーバーロードメソッドあり。
 	///
 	virtual POLYLIB_STAT search(
-		BBox							*bbox, 
+		BBox<T>							*bbox, 
 		bool							every, 
-		std::vector<PrivateTriangle*>	*tri_list
+		std::vector<PrivateTriangle<T>*>	*tri_list
 	) const = 0;
 
 	///
@@ -129,8 +167,8 @@ public:
 	///  @attention MPIPolylib内でのみ利用するため、ユーザは使用しないで下さい。
 	///  @attention オーバーロードメソッドあり。
 	///
-	virtual const std::vector<PrivateTriangle*>* linear_search(
-		BBox	*bbox, 
+	virtual const std::vector<PrivateTriangle<T>*>* linear_search(
+		BBox<T>	*bbox, 
 		bool	every
 	) const = 0;
 
@@ -145,9 +183,9 @@ public:
 	///  @attention オーバーロードメソッドあり。
 	///
 	virtual POLYLIB_STAT linear_search(
-		BBox							*bbox, 
+		BBox<T>							*bbox, 
 		bool							every, 
-		std::vector<PrivateTriangle*>	*tri_list
+		std::vector<PrivateTriangle<T>*>	*tri_list
 	) const = 0;
 
 	///
@@ -156,8 +194,8 @@ public:
 	///  @param[in]     pos     指定位置
 	///  @return    検索されたポリゴン
 	///
-	virtual const PrivateTriangle* search_nearest(
-		const Vec3f&    pos
+	virtual const PrivateTriangle<T>* search_nearest(
+		const Vec3<T>&    pos
 	) const = 0;
 
 	///
@@ -177,16 +215,54 @@ public:
 	///
 	/// @return 三角形ポリゴンのリスト。
 	///
-	std::vector<PrivateTriangle*> *get_tri_list() const {
+	std::vector<PrivateTriangle<T>*> *get_tri_list() const {
 		return m_tri_list;
 	}
+
+	/// VertexListを取得。
+	///
+	/// @return VertexList 頂点リストクラス
+	///
+	VertexList<T>* get_vtx_list() const {
+		return m_vertex_list;
+	}
+
+
 
 	///
 	/// KD木クラスを取得。
 	///
 	/// @return KD木クラス。
 	///
-	virtual VTree *get_vtree() const = 0;
+	virtual VTree<T> *get_vtree() const = 0;
+
+
+	/// print_vertex
+	/// test function for Vertex Class
+	///
+	virtual void print_vertex(){
+	  
+	  //  std::cout << __func__ << " begin"<<std::endl;
+	  /// codes for VertexList
+	  const std::vector<Vertex<T>*>* vl_ptr=m_vertex_list->get_vertex_lists();
+
+	  for(int i=0;i<vl_ptr->size();++i){
+	    //	  std::cout << __func__ << " begin"<<std::endl;
+	    Vertex<T> test=*((*vl_ptr)[i]);
+	    //	  std::cout << __func__ << " begin"<<std::endl;
+ 	    PL_DBGOS << __func__ <<" VertexList "<<i 
+		     << " "<<test[AXIS_X] 
+		     << " "<<test[AXIS_Y] 
+		     << " "<<test[AXIS_Z] <<std::endl;;
+	  }
+
+	}
+
+    ///
+    /// TriMeshクラスが管理しているBoundingBoxを返す。
+    ///
+  virtual BBox<T> get_bbox() const=0;
+
 
 private:
 	///
@@ -199,8 +275,19 @@ protected:
 	// クラス変数
 	//=======================================================================
 	/// 三角形ポリゴンのリスト。
-	std::vector<PrivateTriangle*>	*m_tri_list;
+	std::vector<PrivateTriangle<T>*>	*m_tri_list;
+  //	std::vector<Vertex<T>*>	*m_vtx_list;
+	VertexList<T>	*m_vertex_list;
+	T tolerance;
 };
+
+///
+/// デストラクタ
+///  @attention 継承しているクラスから呼び出されるために必要。
+///
+template <typename T>
+Polygons<T>::~Polygons() {}
+
 
 } //namespace PolylibNS
 

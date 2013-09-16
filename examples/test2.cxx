@@ -14,21 +14,20 @@
 using namespace std;
 using namespace PolylibNS;
 
-
+#define PL_REAL float
+//#define PL_REAL double
 int main(){
 
-  Polylib* pl_instance = Polylib::get_instance();
+  Polylib<PL_REAL>* pl_instance = Polylib<PL_REAL>::get_instance();
 
   //  pl_instance->load();
-  pl_instance->load("polylib_config-multi.tpp");
+  pl_instance->load("polylib_config-multi.tp");
   pl_instance->show_group_hierarchy();
   //  pl_instance->show_group_info("car"); // not working??
   string fname="";
   string stl="stl_a";
   string extend="";
   pl_instance->save(&fname,stl,extend);
-
-
   
   return 0;
 

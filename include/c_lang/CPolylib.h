@@ -1,3 +1,4 @@
+/* -*- Mode: c++ -*- */
 /*
  * Polylib - Polygon Management Library
  *
@@ -19,6 +20,12 @@ extern "C" {  // for C++
 
 #include "common/PolylibStat.h"
 
+//#define PL_REAL double
+
+// #ifdef HAVE_CONFIG_H
+// #include "config.h"
+// #endif 
+
 ///
 /// C言語用Polylib（単一プロセス版）
 ///
@@ -35,9 +42,9 @@ extern "C" {  // for C++
 /// 三角形ポリゴン情報構造体
 ///
 typedef struct {
-	float m_vertex[9];	///< ３頂点座標
-	float m_normal[3];	///< 法線ベクトル
-	float m_area;		///< 面積
+	PL_REAL m_vertex[9];	///< ３頂点座標
+	PL_REAL m_normal[3];	///< 法線ベクトル
+	PL_REAL m_area;		///< 面積
 } TriangleStruct;
 
 ///
@@ -92,8 +99,8 @@ POLYLIB_STAT polylib_save(
 ///
 TriangleStruct** polylib_search_polygons(
 	char* group_name,
-	float min_pos[3],
-	float max_pos[3],
+	PL_REAL min_pos[3],
+	PL_REAL max_pos[3],
 	int every, 
 	int *num_tri,
 	POLYLIB_STAT *err);
