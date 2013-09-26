@@ -1,0 +1,10 @@
+Polylib {
+	tolerance=1.0e-12
+	tmp{
+	tolerance=1.0e-9
+	 sphere{
+		filepath="sphere.stl"
+		
+                }		
+         }
+} // end of Polylib

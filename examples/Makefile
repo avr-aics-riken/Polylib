@@ -61,9 +61,20 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
+build_triplet = x86_64-apple-darwin12.4.0
+host_triplet = x86_64-apple-darwin12.4.0
 noinst_PROGRAMS = test_mpi$(EXEEXT) \
-	test_mpi2$(EXEEXT) test_mpi3$(EXEEXT)
-#noinst_PROGRAMS = test$(EXEEXT) test2$(EXEEXT)
+	test_mpi2$(EXEEXT) test_mpi3$(EXEEXT) \
+	test_mpi_xyzrgb1$(EXEEXT) \
+	test_mpi_xyzrgb2$(EXEEXT) \
+	test_mpi_xyzrgb4$(EXEEXT) \
+	test_mpi_xyzrgb8$(EXEEXT)
+#noinst_PROGRAMS = test$(EXEEXT) test2$(EXEEXT) \
+#	test_vtx$(EXEEXT) test_vtx_float$(EXEEXT) \
+#	test_obj$(EXEEXT) \
+#	test_xyzrgb_statuette_stl$(EXEEXT) \
+#	test_obj2$(EXEEXT) test_obj3$(EXEEXT) \
+#	test_obj4$(EXEEXT)
 subdir = examples
 DIST_COMMON = README $(dist_noinst_DATA) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/depcomp
@@ -79,29 +90,112 @@ PROGRAMS = $(noinst_PROGRAMS)
 am_test_OBJECTS = test-test.$(OBJEXT)
 test_OBJECTS = $(am_test_OBJECTS)
 test_DEPENDENCIES =
-test_LINK = $(CXXLD) $(test_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+test_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CXXLD) $(test_CXXFLAGS) $(CXXFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_test2_OBJECTS = test2-test2.$(OBJEXT)
 test2_OBJECTS = $(am_test2_OBJECTS)
 test2_DEPENDENCIES =
-test2_LINK = $(CXXLD) $(test2_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+test2_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CXXLD) $(test2_CXXFLAGS) $(CXXFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_test_mpi_OBJECTS = test_mpi-test_mpi.$(OBJEXT)
 test_mpi_OBJECTS = $(am_test_mpi_OBJECTS)
 test_mpi_DEPENDENCIES =
-test_mpi_LINK = $(CXXLD) $(test_mpi_CXXFLAGS) $(CXXFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+test_mpi_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(test_mpi_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_test_mpi2_OBJECTS = test_mpi2-test_mpi2.$(OBJEXT)
 test_mpi2_OBJECTS = $(am_test_mpi2_OBJECTS)
 test_mpi2_DEPENDENCIES =
-test_mpi2_LINK = $(CXXLD) $(test_mpi2_CXXFLAGS) $(CXXFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+test_mpi2_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(test_mpi2_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_test_mpi3_OBJECTS = test_mpi3-test_mpi3.$(OBJEXT) \
 	test_mpi3-CarGroup.$(OBJEXT) \
 	test_mpi3-MyGroupFactory.$(OBJEXT)
 test_mpi3_OBJECTS = $(am_test_mpi3_OBJECTS)
 test_mpi3_DEPENDENCIES =
-test_mpi3_LINK = $(CXXLD) $(test_mpi3_CXXFLAGS) $(CXXFLAGS) \
+test_mpi3_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(test_mpi3_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_test_mpi_xyzrgb1_OBJECTS =  \
+	test_mpi_xyzrgb1-test_mpi_xyzrgb1.$(OBJEXT)
+test_mpi_xyzrgb1_OBJECTS = $(am_test_mpi_xyzrgb1_OBJECTS)
+test_mpi_xyzrgb1_DEPENDENCIES =
+test_mpi_xyzrgb1_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(test_mpi_xyzrgb1_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_test_mpi_xyzrgb2_OBJECTS =  \
+	test_mpi_xyzrgb2-test_mpi_xyzrgb2.$(OBJEXT)
+test_mpi_xyzrgb2_OBJECTS = $(am_test_mpi_xyzrgb2_OBJECTS)
+test_mpi_xyzrgb2_DEPENDENCIES =
+test_mpi_xyzrgb2_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(test_mpi_xyzrgb2_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_test_mpi_xyzrgb4_OBJECTS =  \
+	test_mpi_xyzrgb4-test_mpi_xyzrgb4.$(OBJEXT)
+test_mpi_xyzrgb4_OBJECTS = $(am_test_mpi_xyzrgb4_OBJECTS)
+test_mpi_xyzrgb4_DEPENDENCIES =
+test_mpi_xyzrgb4_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(test_mpi_xyzrgb4_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_test_mpi_xyzrgb8_OBJECTS =  \
+	test_mpi_xyzrgb8-test_mpi_xyzrgb8.$(OBJEXT)
+test_mpi_xyzrgb8_OBJECTS = $(am_test_mpi_xyzrgb8_OBJECTS)
+test_mpi_xyzrgb8_DEPENDENCIES =
+test_mpi_xyzrgb8_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(test_mpi_xyzrgb8_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_test_obj_OBJECTS = test_obj-test_obj.$(OBJEXT)
+test_obj_OBJECTS = $(am_test_obj_OBJECTS)
+test_obj_DEPENDENCIES =
+test_obj_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(test_obj_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_test_obj2_OBJECTS = test_obj2-test_obj2.$(OBJEXT)
+test_obj2_OBJECTS = $(am_test_obj2_OBJECTS)
+test_obj2_DEPENDENCIES =
+test_obj2_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(test_obj2_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_test_obj3_OBJECTS = test_obj3-test_obj3.$(OBJEXT)
+test_obj3_OBJECTS = $(am_test_obj3_OBJECTS)
+test_obj3_DEPENDENCIES =
+test_obj3_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(test_obj3_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_test_obj4_OBJECTS = test_obj4-test_obj4.$(OBJEXT)
+test_obj4_OBJECTS = $(am_test_obj4_OBJECTS)
+test_obj4_DEPENDENCIES =
+test_obj4_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(test_obj4_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_test_vtx_OBJECTS = test_vtx-test_vtx.$(OBJEXT)
+test_vtx_OBJECTS = $(am_test_vtx_OBJECTS)
+test_vtx_DEPENDENCIES =
+test_vtx_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(test_vtx_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_test_vtx_float_OBJECTS = test_vtx_float-test_vtx_float.$(OBJEXT)
+test_vtx_float_OBJECTS = $(am_test_vtx_float_OBJECTS)
+test_vtx_float_DEPENDENCIES =
+test_vtx_float_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(test_vtx_float_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_test_xyzrgb_statuette_stl_OBJECTS =  \
+	test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.$(OBJEXT)
+test_xyzrgb_statuette_stl_OBJECTS =  \
+	$(am_test_xyzrgb_statuette_stl_OBJECTS)
+test_xyzrgb_statuette_stl_DEPENDENCIES =
+test_xyzrgb_statuette_stl_LINK = $(LIBTOOL) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(test_xyzrgb_statuette_stl_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -109,17 +203,36 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
-CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
-	-o $@
+CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 SOURCES = $(test_SOURCES) $(test2_SOURCES) $(test_mpi_SOURCES) \
-	$(test_mpi2_SOURCES) $(test_mpi3_SOURCES)
+	$(test_mpi2_SOURCES) $(test_mpi3_SOURCES) \
+	$(test_mpi_xyzrgb1_SOURCES) $(test_mpi_xyzrgb2_SOURCES) \
+	$(test_mpi_xyzrgb4_SOURCES) $(test_mpi_xyzrgb8_SOURCES) \
+	$(test_obj_SOURCES) $(test_obj2_SOURCES) $(test_obj3_SOURCES) \
+	$(test_obj4_SOURCES) $(test_vtx_SOURCES) \
+	$(test_vtx_float_SOURCES) $(test_xyzrgb_statuette_stl_SOURCES)
 DIST_SOURCES = $(test_SOURCES) $(test2_SOURCES) $(test_mpi_SOURCES) \
-	$(test_mpi2_SOURCES) $(test_mpi3_SOURCES)
+	$(test_mpi2_SOURCES) $(test_mpi3_SOURCES) \
+	$(test_mpi_xyzrgb1_SOURCES) $(test_mpi_xyzrgb2_SOURCES) \
+	$(test_mpi_xyzrgb4_SOURCES) $(test_mpi_xyzrgb8_SOURCES) \
+	$(test_obj_SOURCES) $(test_obj2_SOURCES) $(test_obj3_SOURCES) \
+	$(test_obj4_SOURCES) $(test_vtx_SOURCES) \
+	$(test_vtx_float_SOURCES) $(test_xyzrgb_statuette_stl_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -129,11 +242,12 @@ DATA = $(dist_noinst_DATA)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8/missing --run aclocal-1.12
+ACLOCAL = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0/missing --run aclocal-1.12
 AMTAR = $${TAR-tar}
-AUTOCONF = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8/missing --run autoconf
-AUTOHEADER = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8/missing --run autoheader
-AUTOMAKE = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8/missing --run automake-1.12
+AR = ar
+AUTOCONF = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0/missing --run autoconf
+AUTOHEADER = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0/missing --run autoheader
+AUTOMAKE = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0/missing --run automake-1.12
 AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -141,79 +255,107 @@ CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
 CXX = mpicxx
+CXXCPP = mpicxx -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -O3 -Wall -fno-strict-aliasing
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
+DLLTOOL = false
+DSYMUTIL = dsymutil
+DUMPBIN = 
 ECHO_C = \c
 ECHO_N = 
 ECHO_T = 
 EGREP = /usr/bin/grep -E
 EXEEXT = 
+FGREP = /usr/bin/grep -F
 GREP = /usr/bin/grep
 INSTALL = /usr/local/bin/ginstall -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
+LD = /usr/llvm-gcc-4.2/libexec/gcc/i686-apple-darwin11/4.2.1/ld
 LDFLAGS = 
 LIBOBJS = 
 LIBS = 
+LIBTOOL = $(SHELL) $(top_builddir)/libtool
+LIBTOOL_DEPS = ./ltmain.sh
+LIPO = lipo
+LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8/missing --run makeinfo
+MAKEINFO = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0/missing --run makeinfo
 MAKE_SUB_DIRS = src doc
+MANIFEST_TOOL = :
 MKDIR_P = /usr/local/bin/gmkdir -p
 MPI_CFLAGS = 
 MPI_DIR = 
 MPI_LDFLAGS = 
 MPI_LIBS = 
+NM = /usr/bin/nm
+NMEDIT = nmedit
+OBJDUMP = false
 OBJEXT = o
+OTOOL = otool
+OTOOL64 = :
 PACKAGE = Polylib
 PACKAGE_BUGREPORT = keno@riken.jp
 PACKAGE_NAME = Polylib
-PACKAGE_STRING = Polylib 2.6.8
+PACKAGE_STRING = Polylib 3.0.0
 PACKAGE_TARNAME = Polylib
 PACKAGE_URL = 
-PACKAGE_VERSION = 2.6.8
+PACKAGE_VERSION = 3.0.0
 PATH_SEPARATOR = :
 PL_CFLAGS = -I/usr/local/Polylib/include
 PL_CXX = mpicxx
 PL_LDFLAGS = -L/usr/local/Polylib/lib
 PL_LIBS = -lMPIPOLY
-PL_REVISION = 20130720_1700
+PL_REVISION = 20130916_1500
 RANLIB = ranlib
+SED = /usr/bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
-STRIP = 
+STRIP = strip
 TP_CFLAGS = -I/usr/local/TextParser/include
 TP_DIR = /usr/local/TextParser
 TP_LDFLAGS = -L/usr/local/TextParser/lib -lMPITP
-VERSION = 2.6.8
-abs_builddir = /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8/examples
-abs_srcdir = /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8/examples
-abs_top_builddir = /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8
-abs_top_srcdir = /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8
+TP_MPI_LDFLAGS = 
+VERSION = 3.0.0
+abs_builddir = /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0/examples
+abs_srcdir = /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0/examples
+abs_top_builddir = /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0
+abs_top_srcdir = /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0
+ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = 
+ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
+build = x86_64-apple-darwin12.4.0
 build_alias = 
+build_cpu = x86_64
+build_os = darwin12.4.0
+build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
+host = x86_64-apple-darwin12.4.0
 host_alias = 
+host_cpu = x86_64
+host_os = darwin12.4.0
+host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-2.6.8/install-sh
+install_sh = ${SHELL} /Volumes/MRaid/Daily/Development/SphDev/Module/Polylib/Polylib-3.0.0/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -247,11 +389,26 @@ test_SOURCES = \
   polylib_config2.tpp \
   README \
   sphere.stl \
-  tower.stl
+  tower.stl \
+  cube.obj 		
 
 test_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
 test2_SOURCES = test2.cxx
 test2_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
+test_vtx_SOURCES = test_vtx.cxx
+test_vtx_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
+test_obj_SOURCES = test_obj.cxx
+test_obj_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
+test_obj2_SOURCES = test_obj2.cxx
+test_obj2_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
+test_obj3_SOURCES = test_obj3.cxx
+test_obj3_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
+test_obj4_SOURCES = test_obj4.cxx
+test_obj4_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
+test_vtx_float_SOURCES = test_vtx_float.cxx
+test_vtx_float_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
+test_xyzrgb_statuette_stl_SOURCES = test_xyzrgb_statuette_stl.cxx
+test_xyzrgb_statuette_stl_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include
 test_mpi_SOURCES = test_mpi.cxx
 test_mpi_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include 
 test_mpi2_SOURCES = test_mpi2.cxx
@@ -264,32 +421,118 @@ test_mpi3_SOURCES = \
   MyGroupFactory.h
 
 test_mpi3_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include 
+test_mpi_xyzrgb1_SOURCES = test_mpi_xyzrgb1.cxx
+test_mpi_xyzrgb1_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include 
+test_mpi_xyzrgb2_SOURCES = test_mpi_xyzrgb2.cxx
+test_mpi_xyzrgb2_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include 
+test_mpi_xyzrgb4_SOURCES = test_mpi_xyzrgb4.cxx
+test_mpi_xyzrgb4_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include 
+test_mpi_xyzrgb8_SOURCES = test_mpi_xyzrgb8.cxx
+test_mpi_xyzrgb8_CXXFLAGS = -I$(top_builddir)/include -I/usr/local/TextParser/include 
 test_LDADD = \
-    -L$(top_builddir)/src -lPOLY \
+    -L$(top_builddir)/src/.libs -lPOLY \
      \
      \
     -L/usr/local/TextParser/lib -lMPITP -lstdc++
 
+
+# test_LDADD = \
+#     -L$(top_builddir)/src -lPOLY \
+#      \
+#      \
+#     -L/usr/local/TextParser/lib -lMPITP
 test2_LDADD = \
-    -L$(top_builddir)/src -lPOLY \
+    -L$(top_builddir)/src/.libs -lPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_vtx_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_obj_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_obj2_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_obj3_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_obj4_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_vtx_float_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_xyzrgb_statuette_stl_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
      \
      \
     -L/usr/local/TextParser/lib -lMPITP -lstdc++
 
 test_mpi_LDADD = \
-    -L$(top_builddir)/src -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
      \
      \
     -L/usr/local/TextParser/lib -lMPITP -lstdc++
 
+
+#     -lstdc++
 test_mpi2_LDADD = \
-    -L$(top_builddir)/src -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
      \
      \
     -L/usr/local/TextParser/lib -lMPITP -lstdc++
 
+
+#     -lstdc++
 test_mpi3_LDADD = \
-    -L$(top_builddir)/src -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+
+#     -lstdc++
+test_mpi_xyzrgb1_LDADD = \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_mpi_xyzrgb2_LDADD = \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_mpi_xyzrgb4_LDADD = \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
+     \
+     \
+    -L/usr/local/TextParser/lib -lMPITP -lstdc++
+
+test_mpi_xyzrgb8_LDADD = \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
      \
      \
     -L/usr/local/TextParser/lib -lMPITP -lstdc++
@@ -298,7 +541,7 @@ dist_noinst_DATA =
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cxx .o .obj
+.SUFFIXES: .cxx .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -331,7 +574,13 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 $(am__aclocal_m4_deps):
 
 clean-noinstPROGRAMS:
-	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
+	@list='$(noinst_PROGRAMS)'; test -n "$$list" || exit 0; \
+	echo " rm -f" $$list; \
+	rm -f $$list || exit $$?; \
+	test -n "$(EXEEXT)" || exit 0; \
+	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
+	echo " rm -f" $$list; \
+	rm -f $$list
 test$(EXEEXT): $(test_OBJECTS) $(test_DEPENDENCIES) $(EXTRA_test_DEPENDENCIES) 
 	@rm -f test$(EXEEXT)
 	$(test_LINK) $(test_OBJECTS) $(test_LDADD) $(LIBS)
@@ -347,6 +596,39 @@ test_mpi2$(EXEEXT): $(test_mpi2_OBJECTS) $(test_mpi2_DEPENDENCIES) $(EXTRA_test_
 test_mpi3$(EXEEXT): $(test_mpi3_OBJECTS) $(test_mpi3_DEPENDENCIES) $(EXTRA_test_mpi3_DEPENDENCIES) 
 	@rm -f test_mpi3$(EXEEXT)
 	$(test_mpi3_LINK) $(test_mpi3_OBJECTS) $(test_mpi3_LDADD) $(LIBS)
+test_mpi_xyzrgb1$(EXEEXT): $(test_mpi_xyzrgb1_OBJECTS) $(test_mpi_xyzrgb1_DEPENDENCIES) $(EXTRA_test_mpi_xyzrgb1_DEPENDENCIES) 
+	@rm -f test_mpi_xyzrgb1$(EXEEXT)
+	$(test_mpi_xyzrgb1_LINK) $(test_mpi_xyzrgb1_OBJECTS) $(test_mpi_xyzrgb1_LDADD) $(LIBS)
+test_mpi_xyzrgb2$(EXEEXT): $(test_mpi_xyzrgb2_OBJECTS) $(test_mpi_xyzrgb2_DEPENDENCIES) $(EXTRA_test_mpi_xyzrgb2_DEPENDENCIES) 
+	@rm -f test_mpi_xyzrgb2$(EXEEXT)
+	$(test_mpi_xyzrgb2_LINK) $(test_mpi_xyzrgb2_OBJECTS) $(test_mpi_xyzrgb2_LDADD) $(LIBS)
+test_mpi_xyzrgb4$(EXEEXT): $(test_mpi_xyzrgb4_OBJECTS) $(test_mpi_xyzrgb4_DEPENDENCIES) $(EXTRA_test_mpi_xyzrgb4_DEPENDENCIES) 
+	@rm -f test_mpi_xyzrgb4$(EXEEXT)
+	$(test_mpi_xyzrgb4_LINK) $(test_mpi_xyzrgb4_OBJECTS) $(test_mpi_xyzrgb4_LDADD) $(LIBS)
+test_mpi_xyzrgb8$(EXEEXT): $(test_mpi_xyzrgb8_OBJECTS) $(test_mpi_xyzrgb8_DEPENDENCIES) $(EXTRA_test_mpi_xyzrgb8_DEPENDENCIES) 
+	@rm -f test_mpi_xyzrgb8$(EXEEXT)
+	$(test_mpi_xyzrgb8_LINK) $(test_mpi_xyzrgb8_OBJECTS) $(test_mpi_xyzrgb8_LDADD) $(LIBS)
+test_obj$(EXEEXT): $(test_obj_OBJECTS) $(test_obj_DEPENDENCIES) $(EXTRA_test_obj_DEPENDENCIES) 
+	@rm -f test_obj$(EXEEXT)
+	$(test_obj_LINK) $(test_obj_OBJECTS) $(test_obj_LDADD) $(LIBS)
+test_obj2$(EXEEXT): $(test_obj2_OBJECTS) $(test_obj2_DEPENDENCIES) $(EXTRA_test_obj2_DEPENDENCIES) 
+	@rm -f test_obj2$(EXEEXT)
+	$(test_obj2_LINK) $(test_obj2_OBJECTS) $(test_obj2_LDADD) $(LIBS)
+test_obj3$(EXEEXT): $(test_obj3_OBJECTS) $(test_obj3_DEPENDENCIES) $(EXTRA_test_obj3_DEPENDENCIES) 
+	@rm -f test_obj3$(EXEEXT)
+	$(test_obj3_LINK) $(test_obj3_OBJECTS) $(test_obj3_LDADD) $(LIBS)
+test_obj4$(EXEEXT): $(test_obj4_OBJECTS) $(test_obj4_DEPENDENCIES) $(EXTRA_test_obj4_DEPENDENCIES) 
+	@rm -f test_obj4$(EXEEXT)
+	$(test_obj4_LINK) $(test_obj4_OBJECTS) $(test_obj4_LDADD) $(LIBS)
+test_vtx$(EXEEXT): $(test_vtx_OBJECTS) $(test_vtx_DEPENDENCIES) $(EXTRA_test_vtx_DEPENDENCIES) 
+	@rm -f test_vtx$(EXEEXT)
+	$(test_vtx_LINK) $(test_vtx_OBJECTS) $(test_vtx_LDADD) $(LIBS)
+test_vtx_float$(EXEEXT): $(test_vtx_float_OBJECTS) $(test_vtx_float_DEPENDENCIES) $(EXTRA_test_vtx_float_DEPENDENCIES) 
+	@rm -f test_vtx_float$(EXEEXT)
+	$(test_vtx_float_LINK) $(test_vtx_float_OBJECTS) $(test_vtx_float_LDADD) $(LIBS)
+test_xyzrgb_statuette_stl$(EXEEXT): $(test_xyzrgb_statuette_stl_OBJECTS) $(test_xyzrgb_statuette_stl_DEPENDENCIES) $(EXTRA_test_xyzrgb_statuette_stl_DEPENDENCIES) 
+	@rm -f test_xyzrgb_statuette_stl$(EXEEXT)
+	$(test_xyzrgb_statuette_stl_LINK) $(test_xyzrgb_statuette_stl_OBJECTS) $(test_xyzrgb_statuette_stl_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -361,6 +643,17 @@ include ./$(DEPDIR)/test_mpi2-test_mpi2.Po
 include ./$(DEPDIR)/test_mpi3-CarGroup.Po
 include ./$(DEPDIR)/test_mpi3-MyGroupFactory.Po
 include ./$(DEPDIR)/test_mpi3-test_mpi3.Po
+include ./$(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Po
+include ./$(DEPDIR)/test_mpi_xyzrgb2-test_mpi_xyzrgb2.Po
+include ./$(DEPDIR)/test_mpi_xyzrgb4-test_mpi_xyzrgb4.Po
+include ./$(DEPDIR)/test_mpi_xyzrgb8-test_mpi_xyzrgb8.Po
+include ./$(DEPDIR)/test_obj-test_obj.Po
+include ./$(DEPDIR)/test_obj2-test_obj2.Po
+include ./$(DEPDIR)/test_obj3-test_obj3.Po
+include ./$(DEPDIR)/test_obj4-test_obj4.Po
+include ./$(DEPDIR)/test_vtx-test_vtx.Po
+include ./$(DEPDIR)/test_vtx_float-test_vtx_float.Po
+include ./$(DEPDIR)/test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.Po
 
 .cxx.o:
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -375,6 +668,13 @@ include ./$(DEPDIR)/test_mpi3-test_mpi3.Po
 #	source='$<' object='$@' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.cxx.lo:
+	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+#	source='$<' object='$@' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(LTCXXCOMPILE) -c -o $@ $<
 
 test-test.o: test.cxx
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_CXXFLAGS) $(CXXFLAGS) -MT test-test.o -MD -MP -MF $(DEPDIR)/test-test.Tpo -c -o test-test.o `test -f 'test.cxx' || echo '$(srcdir)/'`test.cxx
@@ -473,6 +773,166 @@ test_mpi3-MyGroupFactory.obj: MyGroupFactory.cxx
 #	source='MyGroupFactory.cxx' object='test_mpi3-MyGroupFactory.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi3_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi3-MyGroupFactory.obj `if test -f 'MyGroupFactory.cxx'; then $(CYGPATH_W) 'MyGroupFactory.cxx'; else $(CYGPATH_W) '$(srcdir)/MyGroupFactory.cxx'; fi`
+
+test_mpi_xyzrgb1-test_mpi_xyzrgb1.o: test_mpi_xyzrgb1.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb1_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb1-test_mpi_xyzrgb1.o -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Tpo -c -o test_mpi_xyzrgb1-test_mpi_xyzrgb1.o `test -f 'test_mpi_xyzrgb1.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb1.cxx
+	$(am__mv) $(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Tpo $(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Po
+#	source='test_mpi_xyzrgb1.cxx' object='test_mpi_xyzrgb1-test_mpi_xyzrgb1.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb1_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_xyzrgb1-test_mpi_xyzrgb1.o `test -f 'test_mpi_xyzrgb1.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb1.cxx
+
+test_mpi_xyzrgb1-test_mpi_xyzrgb1.obj: test_mpi_xyzrgb1.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb1_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb1-test_mpi_xyzrgb1.obj -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Tpo -c -o test_mpi_xyzrgb1-test_mpi_xyzrgb1.obj `if test -f 'test_mpi_xyzrgb1.cxx'; then $(CYGPATH_W) 'test_mpi_xyzrgb1.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_xyzrgb1.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Tpo $(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Po
+#	source='test_mpi_xyzrgb1.cxx' object='test_mpi_xyzrgb1-test_mpi_xyzrgb1.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb1_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_xyzrgb1-test_mpi_xyzrgb1.obj `if test -f 'test_mpi_xyzrgb1.cxx'; then $(CYGPATH_W) 'test_mpi_xyzrgb1.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_xyzrgb1.cxx'; fi`
+
+test_mpi_xyzrgb2-test_mpi_xyzrgb2.o: test_mpi_xyzrgb2.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb2_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb2-test_mpi_xyzrgb2.o -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb2-test_mpi_xyzrgb2.Tpo -c -o test_mpi_xyzrgb2-test_mpi_xyzrgb2.o `test -f 'test_mpi_xyzrgb2.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb2.cxx
+	$(am__mv) $(DEPDIR)/test_mpi_xyzrgb2-test_mpi_xyzrgb2.Tpo $(DEPDIR)/test_mpi_xyzrgb2-test_mpi_xyzrgb2.Po
+#	source='test_mpi_xyzrgb2.cxx' object='test_mpi_xyzrgb2-test_mpi_xyzrgb2.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb2_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_xyzrgb2-test_mpi_xyzrgb2.o `test -f 'test_mpi_xyzrgb2.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb2.cxx
+
+test_mpi_xyzrgb2-test_mpi_xyzrgb2.obj: test_mpi_xyzrgb2.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb2_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb2-test_mpi_xyzrgb2.obj -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb2-test_mpi_xyzrgb2.Tpo -c -o test_mpi_xyzrgb2-test_mpi_xyzrgb2.obj `if test -f 'test_mpi_xyzrgb2.cxx'; then $(CYGPATH_W) 'test_mpi_xyzrgb2.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_xyzrgb2.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_mpi_xyzrgb2-test_mpi_xyzrgb2.Tpo $(DEPDIR)/test_mpi_xyzrgb2-test_mpi_xyzrgb2.Po
+#	source='test_mpi_xyzrgb2.cxx' object='test_mpi_xyzrgb2-test_mpi_xyzrgb2.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb2_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_xyzrgb2-test_mpi_xyzrgb2.obj `if test -f 'test_mpi_xyzrgb2.cxx'; then $(CYGPATH_W) 'test_mpi_xyzrgb2.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_xyzrgb2.cxx'; fi`
+
+test_mpi_xyzrgb4-test_mpi_xyzrgb4.o: test_mpi_xyzrgb4.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb4_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb4-test_mpi_xyzrgb4.o -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb4-test_mpi_xyzrgb4.Tpo -c -o test_mpi_xyzrgb4-test_mpi_xyzrgb4.o `test -f 'test_mpi_xyzrgb4.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb4.cxx
+	$(am__mv) $(DEPDIR)/test_mpi_xyzrgb4-test_mpi_xyzrgb4.Tpo $(DEPDIR)/test_mpi_xyzrgb4-test_mpi_xyzrgb4.Po
+#	source='test_mpi_xyzrgb4.cxx' object='test_mpi_xyzrgb4-test_mpi_xyzrgb4.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb4_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_xyzrgb4-test_mpi_xyzrgb4.o `test -f 'test_mpi_xyzrgb4.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb4.cxx
+
+test_mpi_xyzrgb4-test_mpi_xyzrgb4.obj: test_mpi_xyzrgb4.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb4_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb4-test_mpi_xyzrgb4.obj -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb4-test_mpi_xyzrgb4.Tpo -c -o test_mpi_xyzrgb4-test_mpi_xyzrgb4.obj `if test -f 'test_mpi_xyzrgb4.cxx'; then $(CYGPATH_W) 'test_mpi_xyzrgb4.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_xyzrgb4.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_mpi_xyzrgb4-test_mpi_xyzrgb4.Tpo $(DEPDIR)/test_mpi_xyzrgb4-test_mpi_xyzrgb4.Po
+#	source='test_mpi_xyzrgb4.cxx' object='test_mpi_xyzrgb4-test_mpi_xyzrgb4.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb4_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_xyzrgb4-test_mpi_xyzrgb4.obj `if test -f 'test_mpi_xyzrgb4.cxx'; then $(CYGPATH_W) 'test_mpi_xyzrgb4.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_xyzrgb4.cxx'; fi`
+
+test_mpi_xyzrgb8-test_mpi_xyzrgb8.o: test_mpi_xyzrgb8.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb8_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb8-test_mpi_xyzrgb8.o -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb8-test_mpi_xyzrgb8.Tpo -c -o test_mpi_xyzrgb8-test_mpi_xyzrgb8.o `test -f 'test_mpi_xyzrgb8.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb8.cxx
+	$(am__mv) $(DEPDIR)/test_mpi_xyzrgb8-test_mpi_xyzrgb8.Tpo $(DEPDIR)/test_mpi_xyzrgb8-test_mpi_xyzrgb8.Po
+#	source='test_mpi_xyzrgb8.cxx' object='test_mpi_xyzrgb8-test_mpi_xyzrgb8.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb8_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_xyzrgb8-test_mpi_xyzrgb8.o `test -f 'test_mpi_xyzrgb8.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb8.cxx
+
+test_mpi_xyzrgb8-test_mpi_xyzrgb8.obj: test_mpi_xyzrgb8.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb8_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb8-test_mpi_xyzrgb8.obj -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb8-test_mpi_xyzrgb8.Tpo -c -o test_mpi_xyzrgb8-test_mpi_xyzrgb8.obj `if test -f 'test_mpi_xyzrgb8.cxx'; then $(CYGPATH_W) 'test_mpi_xyzrgb8.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_xyzrgb8.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_mpi_xyzrgb8-test_mpi_xyzrgb8.Tpo $(DEPDIR)/test_mpi_xyzrgb8-test_mpi_xyzrgb8.Po
+#	source='test_mpi_xyzrgb8.cxx' object='test_mpi_xyzrgb8-test_mpi_xyzrgb8.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb8_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_xyzrgb8-test_mpi_xyzrgb8.obj `if test -f 'test_mpi_xyzrgb8.cxx'; then $(CYGPATH_W) 'test_mpi_xyzrgb8.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_xyzrgb8.cxx'; fi`
+
+test_obj-test_obj.o: test_obj.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj_CXXFLAGS) $(CXXFLAGS) -MT test_obj-test_obj.o -MD -MP -MF $(DEPDIR)/test_obj-test_obj.Tpo -c -o test_obj-test_obj.o `test -f 'test_obj.cxx' || echo '$(srcdir)/'`test_obj.cxx
+	$(am__mv) $(DEPDIR)/test_obj-test_obj.Tpo $(DEPDIR)/test_obj-test_obj.Po
+#	source='test_obj.cxx' object='test_obj-test_obj.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj_CXXFLAGS) $(CXXFLAGS) -c -o test_obj-test_obj.o `test -f 'test_obj.cxx' || echo '$(srcdir)/'`test_obj.cxx
+
+test_obj-test_obj.obj: test_obj.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj_CXXFLAGS) $(CXXFLAGS) -MT test_obj-test_obj.obj -MD -MP -MF $(DEPDIR)/test_obj-test_obj.Tpo -c -o test_obj-test_obj.obj `if test -f 'test_obj.cxx'; then $(CYGPATH_W) 'test_obj.cxx'; else $(CYGPATH_W) '$(srcdir)/test_obj.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_obj-test_obj.Tpo $(DEPDIR)/test_obj-test_obj.Po
+#	source='test_obj.cxx' object='test_obj-test_obj.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj_CXXFLAGS) $(CXXFLAGS) -c -o test_obj-test_obj.obj `if test -f 'test_obj.cxx'; then $(CYGPATH_W) 'test_obj.cxx'; else $(CYGPATH_W) '$(srcdir)/test_obj.cxx'; fi`
+
+test_obj2-test_obj2.o: test_obj2.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj2_CXXFLAGS) $(CXXFLAGS) -MT test_obj2-test_obj2.o -MD -MP -MF $(DEPDIR)/test_obj2-test_obj2.Tpo -c -o test_obj2-test_obj2.o `test -f 'test_obj2.cxx' || echo '$(srcdir)/'`test_obj2.cxx
+	$(am__mv) $(DEPDIR)/test_obj2-test_obj2.Tpo $(DEPDIR)/test_obj2-test_obj2.Po
+#	source='test_obj2.cxx' object='test_obj2-test_obj2.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj2_CXXFLAGS) $(CXXFLAGS) -c -o test_obj2-test_obj2.o `test -f 'test_obj2.cxx' || echo '$(srcdir)/'`test_obj2.cxx
+
+test_obj2-test_obj2.obj: test_obj2.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj2_CXXFLAGS) $(CXXFLAGS) -MT test_obj2-test_obj2.obj -MD -MP -MF $(DEPDIR)/test_obj2-test_obj2.Tpo -c -o test_obj2-test_obj2.obj `if test -f 'test_obj2.cxx'; then $(CYGPATH_W) 'test_obj2.cxx'; else $(CYGPATH_W) '$(srcdir)/test_obj2.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_obj2-test_obj2.Tpo $(DEPDIR)/test_obj2-test_obj2.Po
+#	source='test_obj2.cxx' object='test_obj2-test_obj2.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj2_CXXFLAGS) $(CXXFLAGS) -c -o test_obj2-test_obj2.obj `if test -f 'test_obj2.cxx'; then $(CYGPATH_W) 'test_obj2.cxx'; else $(CYGPATH_W) '$(srcdir)/test_obj2.cxx'; fi`
+
+test_obj3-test_obj3.o: test_obj3.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj3_CXXFLAGS) $(CXXFLAGS) -MT test_obj3-test_obj3.o -MD -MP -MF $(DEPDIR)/test_obj3-test_obj3.Tpo -c -o test_obj3-test_obj3.o `test -f 'test_obj3.cxx' || echo '$(srcdir)/'`test_obj3.cxx
+	$(am__mv) $(DEPDIR)/test_obj3-test_obj3.Tpo $(DEPDIR)/test_obj3-test_obj3.Po
+#	source='test_obj3.cxx' object='test_obj3-test_obj3.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj3_CXXFLAGS) $(CXXFLAGS) -c -o test_obj3-test_obj3.o `test -f 'test_obj3.cxx' || echo '$(srcdir)/'`test_obj3.cxx
+
+test_obj3-test_obj3.obj: test_obj3.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj3_CXXFLAGS) $(CXXFLAGS) -MT test_obj3-test_obj3.obj -MD -MP -MF $(DEPDIR)/test_obj3-test_obj3.Tpo -c -o test_obj3-test_obj3.obj `if test -f 'test_obj3.cxx'; then $(CYGPATH_W) 'test_obj3.cxx'; else $(CYGPATH_W) '$(srcdir)/test_obj3.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_obj3-test_obj3.Tpo $(DEPDIR)/test_obj3-test_obj3.Po
+#	source='test_obj3.cxx' object='test_obj3-test_obj3.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj3_CXXFLAGS) $(CXXFLAGS) -c -o test_obj3-test_obj3.obj `if test -f 'test_obj3.cxx'; then $(CYGPATH_W) 'test_obj3.cxx'; else $(CYGPATH_W) '$(srcdir)/test_obj3.cxx'; fi`
+
+test_obj4-test_obj4.o: test_obj4.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj4_CXXFLAGS) $(CXXFLAGS) -MT test_obj4-test_obj4.o -MD -MP -MF $(DEPDIR)/test_obj4-test_obj4.Tpo -c -o test_obj4-test_obj4.o `test -f 'test_obj4.cxx' || echo '$(srcdir)/'`test_obj4.cxx
+	$(am__mv) $(DEPDIR)/test_obj4-test_obj4.Tpo $(DEPDIR)/test_obj4-test_obj4.Po
+#	source='test_obj4.cxx' object='test_obj4-test_obj4.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj4_CXXFLAGS) $(CXXFLAGS) -c -o test_obj4-test_obj4.o `test -f 'test_obj4.cxx' || echo '$(srcdir)/'`test_obj4.cxx
+
+test_obj4-test_obj4.obj: test_obj4.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj4_CXXFLAGS) $(CXXFLAGS) -MT test_obj4-test_obj4.obj -MD -MP -MF $(DEPDIR)/test_obj4-test_obj4.Tpo -c -o test_obj4-test_obj4.obj `if test -f 'test_obj4.cxx'; then $(CYGPATH_W) 'test_obj4.cxx'; else $(CYGPATH_W) '$(srcdir)/test_obj4.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_obj4-test_obj4.Tpo $(DEPDIR)/test_obj4-test_obj4.Po
+#	source='test_obj4.cxx' object='test_obj4-test_obj4.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_obj4_CXXFLAGS) $(CXXFLAGS) -c -o test_obj4-test_obj4.obj `if test -f 'test_obj4.cxx'; then $(CYGPATH_W) 'test_obj4.cxx'; else $(CYGPATH_W) '$(srcdir)/test_obj4.cxx'; fi`
+
+test_vtx-test_vtx.o: test_vtx.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_vtx_CXXFLAGS) $(CXXFLAGS) -MT test_vtx-test_vtx.o -MD -MP -MF $(DEPDIR)/test_vtx-test_vtx.Tpo -c -o test_vtx-test_vtx.o `test -f 'test_vtx.cxx' || echo '$(srcdir)/'`test_vtx.cxx
+	$(am__mv) $(DEPDIR)/test_vtx-test_vtx.Tpo $(DEPDIR)/test_vtx-test_vtx.Po
+#	source='test_vtx.cxx' object='test_vtx-test_vtx.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_vtx_CXXFLAGS) $(CXXFLAGS) -c -o test_vtx-test_vtx.o `test -f 'test_vtx.cxx' || echo '$(srcdir)/'`test_vtx.cxx
+
+test_vtx-test_vtx.obj: test_vtx.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_vtx_CXXFLAGS) $(CXXFLAGS) -MT test_vtx-test_vtx.obj -MD -MP -MF $(DEPDIR)/test_vtx-test_vtx.Tpo -c -o test_vtx-test_vtx.obj `if test -f 'test_vtx.cxx'; then $(CYGPATH_W) 'test_vtx.cxx'; else $(CYGPATH_W) '$(srcdir)/test_vtx.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_vtx-test_vtx.Tpo $(DEPDIR)/test_vtx-test_vtx.Po
+#	source='test_vtx.cxx' object='test_vtx-test_vtx.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_vtx_CXXFLAGS) $(CXXFLAGS) -c -o test_vtx-test_vtx.obj `if test -f 'test_vtx.cxx'; then $(CYGPATH_W) 'test_vtx.cxx'; else $(CYGPATH_W) '$(srcdir)/test_vtx.cxx'; fi`
+
+test_vtx_float-test_vtx_float.o: test_vtx_float.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_vtx_float_CXXFLAGS) $(CXXFLAGS) -MT test_vtx_float-test_vtx_float.o -MD -MP -MF $(DEPDIR)/test_vtx_float-test_vtx_float.Tpo -c -o test_vtx_float-test_vtx_float.o `test -f 'test_vtx_float.cxx' || echo '$(srcdir)/'`test_vtx_float.cxx
+	$(am__mv) $(DEPDIR)/test_vtx_float-test_vtx_float.Tpo $(DEPDIR)/test_vtx_float-test_vtx_float.Po
+#	source='test_vtx_float.cxx' object='test_vtx_float-test_vtx_float.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_vtx_float_CXXFLAGS) $(CXXFLAGS) -c -o test_vtx_float-test_vtx_float.o `test -f 'test_vtx_float.cxx' || echo '$(srcdir)/'`test_vtx_float.cxx
+
+test_vtx_float-test_vtx_float.obj: test_vtx_float.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_vtx_float_CXXFLAGS) $(CXXFLAGS) -MT test_vtx_float-test_vtx_float.obj -MD -MP -MF $(DEPDIR)/test_vtx_float-test_vtx_float.Tpo -c -o test_vtx_float-test_vtx_float.obj `if test -f 'test_vtx_float.cxx'; then $(CYGPATH_W) 'test_vtx_float.cxx'; else $(CYGPATH_W) '$(srcdir)/test_vtx_float.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_vtx_float-test_vtx_float.Tpo $(DEPDIR)/test_vtx_float-test_vtx_float.Po
+#	source='test_vtx_float.cxx' object='test_vtx_float-test_vtx_float.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_vtx_float_CXXFLAGS) $(CXXFLAGS) -c -o test_vtx_float-test_vtx_float.obj `if test -f 'test_vtx_float.cxx'; then $(CYGPATH_W) 'test_vtx_float.cxx'; else $(CYGPATH_W) '$(srcdir)/test_vtx_float.cxx'; fi`
+
+test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.o: test_xyzrgb_statuette_stl.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_xyzrgb_statuette_stl_CXXFLAGS) $(CXXFLAGS) -MT test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.o -MD -MP -MF $(DEPDIR)/test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.Tpo -c -o test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.o `test -f 'test_xyzrgb_statuette_stl.cxx' || echo '$(srcdir)/'`test_xyzrgb_statuette_stl.cxx
+	$(am__mv) $(DEPDIR)/test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.Tpo $(DEPDIR)/test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.Po
+#	source='test_xyzrgb_statuette_stl.cxx' object='test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_xyzrgb_statuette_stl_CXXFLAGS) $(CXXFLAGS) -c -o test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.o `test -f 'test_xyzrgb_statuette_stl.cxx' || echo '$(srcdir)/'`test_xyzrgb_statuette_stl.cxx
+
+test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.obj: test_xyzrgb_statuette_stl.cxx
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_xyzrgb_statuette_stl_CXXFLAGS) $(CXXFLAGS) -MT test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.obj -MD -MP -MF $(DEPDIR)/test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.Tpo -c -o test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.obj `if test -f 'test_xyzrgb_statuette_stl.cxx'; then $(CYGPATH_W) 'test_xyzrgb_statuette_stl.cxx'; else $(CYGPATH_W) '$(srcdir)/test_xyzrgb_statuette_stl.cxx'; fi`
+	$(am__mv) $(DEPDIR)/test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.Tpo $(DEPDIR)/test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.Po
+#	source='test_xyzrgb_statuette_stl.cxx' object='test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_xyzrgb_statuette_stl_CXXFLAGS) $(CXXFLAGS) -c -o test_xyzrgb_statuette_stl-test_xyzrgb_statuette_stl.obj `if test -f 'test_xyzrgb_statuette_stl.cxx'; then $(CYGPATH_W) 'test_xyzrgb_statuette_stl.cxx'; else $(CYGPATH_W) '$(srcdir)/test_xyzrgb_statuette_stl.cxx'; fi`
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -608,7 +1068,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-noinstPROGRAMS mostlyclean-am
+clean-am: clean-generic clean-libtool clean-noinstPROGRAMS \
+	mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -663,7 +1124,8 @@ maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-am
 
-mostlyclean-am: mostlyclean-compile mostlyclean-generic
+mostlyclean-am: mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool
 
 pdf: pdf-am
 
@@ -678,17 +1140,17 @@ uninstall-am:
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-noinstPROGRAMS cscopelist ctags distclean \
-	distclean-compile distclean-generic distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am
+	clean-libtool clean-noinstPROGRAMS cscopelist ctags distclean \
+	distclean-compile distclean-generic distclean-libtool \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am
 
 
 .PHONY:$(dist_noinst_DATA)

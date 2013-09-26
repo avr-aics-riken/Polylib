@@ -15,14 +15,14 @@
 #include <vector>
 
 namespace PolylibNS {
-
-class PolygonGroup;
+template <typename T> class PolygonGroup;
 
 ////////////////////////////////////////////////////////////////////////////
 ///
 /// クラス:PolygonGroupFactory
 ///  
 ////////////////////////////////////////////////////////////////////////////
+template <typename T> 
 class PolygonGroupFactory {
 public:
 	///
@@ -41,9 +41,11 @@ public:
 	///  @param[in]	class_name	作成するクラス名。
 	///  @return	作成に失敗した場合はNULLが返る。
 	///
-	virtual PolygonGroup* create_instance(std::string class_name) {
-		if (class_name == PolygonGroup::get_class_name()) {
-			return new PolygonGroup;
+	//	virtual PolygonGroup<T>* create_instance(std::string class_name) {
+	virtual PolygonGroup<T>* create_instance(std::string class_name,T tolerance) {
+		if (class_name == PolygonGroup<T>::get_class_name()) {
+		  //		  return new PolygonGroup<T>;
+		  		  return new PolygonGroup<T>(tolerance);
 		}
 		else {
 			return NULL;

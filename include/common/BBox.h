@@ -26,37 +26,38 @@ namespace PolylibNS {
 /// Bounding Boxを管理するクラス
 ///
 ////////////////////////////////////////////////////////////////////////////
+template <typename T>
 class BBox {
 public:
 	BBox() { init(); }
 
-	BBox(float _minx, float _miny, float _minz, float _maxx, float _maxy, float _maxz) {
+	BBox(T _minx, T _miny, T _minz, T _maxx, T _maxy, T _maxz) {
 		min[0] = _minx; min[1] = _miny; min[2] = _minz;
 		max[0] = _maxx; max[1] = _maxy; max[2] = _maxz;
 	}
 
-	BBox(float _min[3], float _max[3]) {
+	BBox(T _min[3], T _max[3]) {
 		min[0] = _min[0]; min[1] = _min[1]; min[2] = _min[2];
 		max[0] = _max[0]; max[1] = _max[1]; max[2] = _max[2];
 	}
 
-	BBox(const Vec3f& _min, const Vec3f& _max) {
+	BBox(const Vec3<T>& _min, const Vec3<T>& _max) {
 		min = _min;
 		max = _max;
 	}
 
 	void init() {
-		float s = 1e10;
+		T s = 1e10;
 		min[0] = s;  min[1] = s;  min[2] = s;
 		max[0] = -s; max[1] = -s; max[2] = -s;
 	}
 
-	void setMinMax(const Vec3f& _min, const Vec3f& _max) {
+	void setMinMax(const Vec3<T>& _min, const Vec3<T>& _max) {
 		min = _min;
 		max = _max;
 	}
 
-	void add(const Vec3f& v) {
+	void add(const Vec3<T>& v) {
 		min[0] = std::min(min[0], v[0]);
 		min[1] = std::min(min[1], v[1]);
 		min[2] = std::min(min[2], v[2]);
@@ -65,9 +66,9 @@ public:
 		max[2] = std::max(max[2], v[2]);
 	}
 
-	Vec3f getPoint(int idx) const {
+	Vec3<T> getPoint(int idx) const {
 		int x, y, z;
-		Vec3f p = min;
+		Vec3<T> p = min;
 		x = idx    & 0x1;
 		y = idx>>1 & 0x1;
 		z = idx>>2 & 0x1;
@@ -77,15 +78,15 @@ public:
 		return p;
 	}
 
-	Vec3f center() const { return .5 * (min + max); }
-	Vec3f size() const { return max - min; }
-	float xsize() const { return max[0] - min[0]; }
-	float ysize() const { return max[1] - min[1]; }
-	float zsize() const { return max[2] - min[2]; }
-	float length(const AxisEnum& axis) const { return max[axis] - min[axis]; }
-	float diameter() const { return (max - min).length(); }
-	AxisEnum getMaxAxis(float& length) const {
-		Vec3f len = size();
+	Vec3<T> center() const { return ((T) .5) * (min + max); }
+	Vec3<T> size() const { return max - min; }
+	T xsize() const { return max[0] - min[0]; }
+	T ysize() const { return max[1] - min[1]; }
+	T zsize() const { return max[2] - min[2]; }
+	T length(const AxisEnum& axis) const { return max[axis] - min[axis]; }
+	T diameter() const { return (max - min).length(); }
+	AxisEnum getMaxAxis(T& length) const {
+		Vec3<T> len = size();
 		AxisEnum axis;
 		if (len[0] > len[1]) {
 			if (len[0] > len[2])	axis = AXIS_X;
@@ -104,7 +105,7 @@ public:
     /// @param[in] pos 試行する点
     /// @return 含まれる場合はtrue。他はfalse。
 	///
-	bool contain(const Vec3f& pos) const {
+	bool contain(const Vec3<T>& pos) const {
 		if (min.t[0] <= pos.t[0] && pos.t[0] <= max.t[0] &&
 			min.t[1] <= pos.t[1] && pos.t[1] <= max.t[1] &&
 			min.t[2] <= pos.t[2] && pos.t[2] <= max.t[2]) {
@@ -121,7 +122,7 @@ public:
     /// @param[in] bbox 試行するBBox
     /// @return 交差する場合はtrue。他はfalse。
 	///
-	bool crossed(const BBox& bbox) const {
+	bool crossed(const BBox<T>& bbox) const {
 		if (max.t[0] < bbox.min.t[0] || bbox.max.t[0] < min.t[0]) return false;
 		if (max.t[1] < bbox.min.t[1] || bbox.max.t[1] < min.t[1]) return false;
 		if (max.t[2] < bbox.min.t[2] || bbox.max.t[2] < min.t[2]) return false;
@@ -134,14 +135,14 @@ public:
     /// @param[in] other_bbox 試行するBBox
     /// @return 交差する場合はtrue。他はfalse。
 	///
-	BBox getCrossedRegion(BBox& other_bbox) const {
+	BBox<T> getCrossedRegion(BBox<T>& other_bbox) const {
 
 		// axis_idに垂直な軸配列
 		// int axis[][2] = { {1,2}, {2,0}, {0,1} };
 
 		// 点の包含判定
-		std::list<Vec3f> inc_own_points;
-		std::list<Vec3f> inc_other_points;
+		std::list<Vec3<T> > inc_own_points;
+		std::list<Vec3<T> > inc_other_points;
 		for (int i=0; i<8; i++) {
 			// 自分に相手の8頂点が含まれるかチェック
 			if (contain(other_bbox.getPoint(i)) == true) {
@@ -154,25 +155,25 @@ public:
 		}
 
 		// 自分のBBox面 と 他のBBox辺 の交差判定
-		std::list<Vec3f> cross_own_face_with_other_side;
+		std::list<Vec3<T> > cross_own_face_with_other_side;
 		for (int axis_id = 0; axis_id < 3; axis_id++) {
-			Vec3f face[2][2];	//face[2面][長方形の対角点]
-			Vec3f side[4][2];	//side[4辺][辺の両端の2点] :対点はmin-maxの順
+			Vec3<T> face[2][2];	//face[2面][長方形の対角点]
+			Vec3<T> side[4][2];	//side[4辺][辺の両端の2点] :対点はmin-maxの順
 			getFace(axis_id, face);
 			other_bbox.getSide(axis_id, side);
 
 			for (int face_id = 0; face_id < 2; face_id++) {
 				for (int side_id = 0; side_id < 4; side_id++) {
 					// 面と点が今見ている軸上でどこにあるかを検出。
-					float z0 = (side[side_id][0])[axis_id];//辺id,点id,xyz
-					float z1 = (side[side_id][1])[axis_id];//辺id,点id,xyz
-					float z  = (face[face_id][0])[axis_id];//面id,点id,xyz
+					T z0 = (side[side_id][0])[axis_id];//辺id,点id,xyz
+					T z1 = (side[side_id][1])[axis_id];//辺id,点id,xyz
+					T z  = (face[face_id][0])[axis_id];//面id,点id,xyz
 
 					if (z0 <= z && z <= z1) {
 						// 2次元平面と点との包含判定
-						Vec2f min = vec3to2(axis_id,face[face_id][0]);
-						Vec2f max = vec3to2(axis_id,face[face_id][1]);
-						Vec2f pos = vec3to2(axis_id,side[side_id][0]);
+						Vec2<T> min = vec3to2(axis_id,face[face_id][0]);
+						Vec2<T> max = vec3to2(axis_id,face[face_id][1]);
+						Vec2<T> pos = vec3to2(axis_id,side[side_id][0]);
 
 						std::cout << "min:" << min << std::endl;
 						std::cout << "max:" << max << std::endl;
@@ -180,7 +181,7 @@ public:
 
 						if (min[0] <= pos[0] && pos[0] <= max[0] &&
 							min[1] <= pos[1] && pos[1] <= max[1]) {
-							Vec3f vtx = side[side_id][0];
+							Vec3<T> vtx = side[side_id][0];
 							vtx[axis_id] = z;
 							cross_own_face_with_other_side.push_back(vtx);
 						}
@@ -190,29 +191,29 @@ public:
 		}
 
 		// 他のBBox面 と 自分のBBox辺 の交差判定
-		std::list<Vec3f> cross_other_face_with_own_side;
+		std::list<Vec3<T> > cross_other_face_with_own_side;
 		for (int axis_id = 0; axis_id < 3; axis_id++) {
-			Vec3f face[2][2];	//face[2面][長方形の対角点]
-			Vec3f side[4][2];	//side[4辺][辺の両端の2点] :対点はmin-maxの順
+			Vec3<T> face[2][2];	//face[2面][長方形の対角点]
+			Vec3<T> side[4][2];	//side[4辺][辺の両端の2点] :対点はmin-maxの順
 			other_bbox.getFace(axis_id, face);
 			getSide(axis_id, side);
 
 			for (int face_id = 0; face_id < 2; face_id++) {
 				for (int side_id = 0; side_id < 4; side_id++) {
 					// 面と点が今見ている軸上でどこにあるかを検出。
-					float z0 = (side[side_id][0])[axis_id];//辺id,点id,xyz
-					float z1 = (side[side_id][1])[axis_id];//辺id,点id,xyz
-					float z  = (face[face_id][0])[axis_id];//面id,点id,xyz
+					T z0 = (side[side_id][0])[axis_id];//辺id,点id,xyz
+					T z1 = (side[side_id][1])[axis_id];//辺id,点id,xyz
+					T z  = (face[face_id][0])[axis_id];//面id,点id,xyz
 
 					if (z0 <= z && z <= z1) {
 						// 2次元平面と点との包含判定
-						Vec2f min = vec3to2(axis_id,face[face_id][0]);
-						Vec2f max = vec3to2(axis_id,face[face_id][1]);
-						Vec2f pos = vec3to2(axis_id,side[side_id][0]);
+						Vec2<T> min = vec3to2(axis_id,face[face_id][0]);
+						Vec2<T> max = vec3to2(axis_id,face[face_id][1]);
+						Vec2<T> pos = vec3to2(axis_id,side[side_id][0]);
 
 						if (min[0] <= pos[0] && pos[0] <= max[0] &&
 							min[1] <= pos[1] && pos[1] <= max[1]) {
-							Vec3f vtx = side[side_id][0];
+							Vec3<T> vtx = side[side_id][0];
 							vtx[axis_id] = z;
 							cross_other_face_with_own_side.push_back(vtx);
 						}
@@ -222,9 +223,9 @@ public:
 		}
 
 		//返り値
-		BBox cross_bbox;
+		BBox<T> cross_bbox;
 		cross_bbox.init();
-		std::list<Vec3f>::iterator itr;
+		typename std::list<Vec3<T> >::iterator itr;
 
 		if (inc_own_points.size() == 1 && inc_other_points.size() == 1) {
 			itr = inc_own_points.begin();
@@ -283,10 +284,10 @@ public:
 	///
 	/// 引数axis_id(0=x,1=y,z=2)に垂直な成分を詰めて返す。
 	///
-	Vec2f vec3to2(int axis_id, Vec3f& v3) const {
+	Vec2<T> vec3to2(int axis_id, Vec3<T>& v3) const {
 		// axis perpendicular to the axis_id
 		int axis[][2] = { {1,2}, {2,0}, {0,1} };
-		Vec2f v2;
+		Vec2<T> v2;
 		v2[0] = v3[axis[axis_id][0]];
 		v2[1] = v3[axis[axis_id][1]];
 		return v2;
@@ -298,7 +299,7 @@ public:
     /// @param[in] face BBoxの面の中で、軸に垂直な面の対角点。
 	///
 	// get 2 faces perpendicular to the axis_id
-	void getFace(int axis_id, Vec3f face[2][2]) const {
+	void getFace(int axis_id, Vec3<T> face[2][2]) const {
 		// min-max vertex indices of face
 		int p_minmax[][2][2] = {
 			{{0,6},{1,7}},
@@ -326,7 +327,7 @@ public:
     /// @param[in] axis_id 軸番号。0=x軸、1=y軸、2=z軸。
     /// @param[in] side BBoxの辺の中で、軸に平行な辺の端点。
 	///
-	void getSide(int axis_id, Vec3f side[4][2]) const {
+	void getSide(int axis_id, Vec3<T> side[4][2]) const {
 		int p_minmax[][4][2] = {
 			{{0,1},{2,3}, {4,5},{6,7}},
 			{{0,2},{1,3}, {4,6},{5,7}},
@@ -348,7 +349,7 @@ public:
 		}
 	}
 
-	Vec3f min, max;
+	Vec3<T> min, max;
 };
 
 } // namespace PolylibNS
