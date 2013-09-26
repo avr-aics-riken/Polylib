@@ -583,8 +583,6 @@ POLYLIB_STAT PolygonGroup::rescale_polygons( float scale )
 // public /////////////////////////////////////////////////////////////////////
 POLYLIB_STAT PolygonGroup::set_all_exid_of_trias( int id )
 {
-  m_id = id;           // keno 2013-07-20
-  m_id_defined = true; // keno 2013-07-20
 	return m_polygons->set_all_exid( id );
 }
 
