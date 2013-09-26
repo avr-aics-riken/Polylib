@@ -1,8 +1,7 @@
 Polylib {
-	tolerance=1.0e-12
 	sphere{
-		tolerance=1.0e-10
 		filepath="sphere.stl"
+		
 	}
 	car {
 	//	class_name = "CarGroup"
@@ -11,15 +10,12 @@ Polylib {
 			filepath = "./car.stl"
 		movable = "true"
 		velocity = 0.05
-	tolerance=1.0e-9
 	}
 	windmill {
-	tolerance=1.0e-11
 		class_name  = "PolygonGroup"
 		blades {
 			class_name = "PolygonGroup"
 			blade1 {
-				tolerance=1.0e-12      
 				//class_name = "BladeGroup"
 				filepath = "./blade1.stl"
 				movable = "true"
@@ -36,7 +32,6 @@ Polylib {
 				center_z = 345.67
 			}
 			blade3 {
-				tolerance=1.0e-11	
 				//class_name = "BladeGroup"
 				filepath = "./blade3.stl"
 				movable = "true"

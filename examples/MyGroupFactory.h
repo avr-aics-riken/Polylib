@@ -11,9 +11,6 @@
 
 #ifndef MYGROUP_FACTORY_H
 #define MYGROUP_FACTORY_H
-
-#include <string.h>
-
 #include "common/BBox.h"
 #include "polygons/VTree.h"
 #include "polygons/Polygons.h"
@@ -28,15 +25,13 @@ using namespace std;
 using namespace PolylibNS;
 
 //class PolygonGroup;
-#define PL_REAL double
-//#define PL_REAL float 
-template<typename T>
-class MyGroupFactory:public PolygonGroupFactory<T>{
+
+class MyGroupFactory:public PolygonGroupFactory{
  public:
- PolygonGroup<T>* create_instance(std::string class_name){
-    if(class_name == CarGroup<T>::get_class_name()){
+ PolygonGroup* create_instance(std::string class_name){
+    if(class_name == CarGroup::get_class_name()){
       //  cout << "CarGroup() called!" <<endl;
-      return new CarGroup<T>();
+      return new CarGroup();
     }
 
     //  if(class_name == BladeGroup::get_class_name()){
@@ -44,7 +39,7 @@ class MyGroupFactory:public PolygonGroupFactory<T>{
     //  }
 
     //default
-    return PolygonGroupFactory<T>::create_instance(class_name);
+    return PolygonGroupFactory::create_instance(class_name);
 
   }
 };

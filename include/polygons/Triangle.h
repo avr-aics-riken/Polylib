@@ -1,4 +1,3 @@
-// -*- Mode: c++ -*-
 /*
  * Polylib - Polygon Management Library
  *
@@ -14,7 +13,6 @@
 #define polylib_triangle_h
 
 #include "common/Vec3.h"
-#include "polygons/Vertex.h"
 
 namespace PolylibNS{
 
@@ -25,7 +23,6 @@ namespace PolylibNS{
 /// しない。
 ///
 ////////////////////////////////////////////////////////////////////////////
-template <typename T>
 class Triangle {
 public:
 	///
@@ -34,22 +31,20 @@ public:
 	Triangle(){};
 
 	///
-      	/// コンストラクタ。
+	/// コンストラクタ。
 	///
 	/// @param[in] vertex ポリゴンの頂点。
 	/// @attention 面積と法線はvertexを元に自動計算される。
 	///
 	Triangle(
-		 //Vec3<T>	vertex[3]
-		 Vertex<T>* vertex_ptr[3]
+		Vec3f	vertex[3]
 	) {
-		m_vertex_ptr[0] = vertex_ptr[0];
-		m_vertex_ptr[1] = vertex_ptr[1];
-		m_vertex_ptr[2] = vertex_ptr[2];
+		m_vertex[0] = vertex[0];
+		m_vertex[1] = vertex[1];
+		m_vertex[2] = vertex[2];
 		calc_normal();
 		calc_area();
 	}
-
 
 	///
 	/// コンストラクタ。
@@ -59,13 +54,12 @@ public:
 	/// @attention 面積はvertexを元に自動計算される。
 	///
 	Triangle(
-		 //Vec3<T>	vertex[3], 
-		 Vertex<T>* vertex_ptr[3],
-		Vec3<T>	normal
+		Vec3f	vertex[3], 
+		Vec3f	normal
 	) {
-		m_vertex_ptr[0] = vertex_ptr[0];
-		m_vertex_ptr[1] = vertex_ptr[1];
-		m_vertex_ptr[2] = vertex_ptr[2];
+		m_vertex[0] = vertex[0];
+		m_vertex[1] = vertex[1];
+		m_vertex[2] = vertex[2];
 		m_normal = normal;
 		calc_area();
 	}
@@ -78,15 +72,13 @@ public:
 	/// @param[in] area		ポリゴンの面積。
 	///
 	Triangle(
-		 //Vec3<T>	vertex[3], 
-
-		 Vertex<T>* vertex_ptr[3],
-		 Vec3<T>	normal, 
-		 T	area
+		Vec3f	vertex[3], 
+		Vec3f	normal, 
+		float	area
 	) {
-		m_vertex_ptr[0] = vertex_ptr[0];
-		m_vertex_ptr[1] = vertex_ptr[1];
-		m_vertex_ptr[2] = vertex_ptr[2];
+		m_vertex[0] = vertex[0];
+		m_vertex[1] = vertex[1];
+		m_vertex[2] = vertex[2];
 		m_normal = normal;
 		m_area = area;
 	}
@@ -102,14 +94,13 @@ public:
 	/// @param[in] calc_area	面積を再計算するか？
 	///
 	void set_vertexes(
-			  //Vec3<T>	vertex[3], 
-		 Vertex<T>* vertex_ptr[3],
+		Vec3f	vertex[3], 
 		bool	calc_normal, 
 		bool	calc_area
 	) {
-		m_vertex_ptr[0] = vertex_ptr[0];
-		m_vertex_ptr[1] = vertex_ptr[1];
-		m_vertex_ptr[2] = vertex_ptr[2];
+		m_vertex[0] = vertex[0];
+		m_vertex[1] = vertex[1];
+		m_vertex[2] = vertex[2];
 		if(calc_normal) this->calc_normal();
 		if(calc_area) this->calc_area();
 	}
@@ -119,18 +110,8 @@ public:
 	///
 	/// @return vertexの配列。
 	///
-	// Vec3<T>* get_vertex() const {
-	//  return const_cast<Vec3<T>*>(m_vertex);
-	//}
-
-	//  Vec3<T>* get_vertex() const {
-	//   return const_cast<Vec3<T>*>( *m_vertex_ptr );
-	// }
-
-
-	Vertex<T>** get_vertex() const {
-	  //	return const_cast<Vec3<T>*>(m_vertex_ptr);
-	  return const_cast<Vertex<T>**>( m_vertex_ptr);
+	Vec3f* get_vertex() const {
+		return const_cast<Vec3f*>(m_vertex);
 	}
 
 	///
@@ -138,7 +119,7 @@ public:
 	///
 	/// @return 法線ベクトル。
 	///
-	Vec3<T> get_normal() const {
+	Vec3f get_normal() const {
 		return m_normal;
 	}
 
@@ -147,8 +128,7 @@ public:
 	///
 	/// @return 面積。
 	///
-	T get_area() const {
-	  // std::cout << __func__<<" " <<m_area<<std::endl;
+	float get_area() const {
 		return m_area;
 	}
 
@@ -187,12 +167,12 @@ public:
 	}
 
 protected:
-        ///
+	///
 	/// 法線ベクトル算出。
 	///
 	void calc_normal() {
-	  Vec3<T> a = *(m_vertex_ptr[1]) - *(m_vertex_ptr[0]);
-	  Vec3<T> b = *(m_vertex_ptr[2]) - *(m_vertex_ptr[0]);
+		Vec3f a = m_vertex[1] - m_vertex[0];
+		Vec3f b = m_vertex[2] - m_vertex[0];
 		m_normal = (cross(a,b)).normalize();
 
 	}
@@ -201,34 +181,27 @@ protected:
 	/// 面積算出。
 	///
 	void calc_area() {
-	  Vec3<T> a = *(m_vertex_ptr[1]) - *(m_vertex_ptr[0]);
-	  Vec3<T> b = *(m_vertex_ptr[2]) - *(m_vertex_ptr[0]);
-		T al = a.length();
-		T bl = b.length();
-		T ab = dot(a,b);
-		T f = al*al*bl*bl - ab*ab;
+		Vec3f a = m_vertex[1] - m_vertex[0];
+		Vec3f b = m_vertex[2] - m_vertex[0];
+		float al = a.length();
+		float bl = b.length();
+		float ab = dot(a,b);
+		float f = al*al*bl*bl - ab*ab;
 		if(f<0.0) f=0.0;
-		//m_area = 0.5*sqrtf(f);
-		m_area = 0.5*sqrt(f);
-		// std::cout << "a("<<a<<") b("<<b<<")"<<std::endl;
-		// std::cout << __func__ <<" "<<m_area <<" "<< f << " " << al << " "<< bl << " "<< ab <<std::endl;
+		m_area = 0.5*sqrtf(f);
 	}
 
 	//=======================================================================
 	// クラス変数
 	//=======================================================================
 	/// 三角形の頂点座標（反時計回りで並んでいる）。
-	//	Vec3<T>	m_vertex[3];
-
-	/// changed with Vertex and VertexList class since Polylib version 3.0
-	/// 三角形の頂点座標（反時計回りで並んでいる）。
-	Vertex<T>* m_vertex_ptr[3];
+	Vec3f	m_vertex[3];
 
 	/// 三角形の法線ベクトル。
-	Vec3<T>	m_normal;
+	Vec3f	m_normal;
 
 	/// 三角形の面積。
-	T	m_area;
+	float	m_area;
 
 	/// 三角形のユーザ定義ID
 	int     m_exid;
@@ -243,55 +216,50 @@ protected:
 /// Polylib内のデータ保存用の基本クラスです。
 ///
 ////////////////////////////////////////////////////////////////////////////
-
-template <typename T>
-class PrivateTriangle : public Triangle<T> {
+class PrivateTriangle : public Triangle {
 public:
 	///
 	/// コンストラクタ。
 	///
-	/// @param[in] vertex_ptr	ポリゴンの頂点へのポインタ。
+	/// @param[in] vertex	ポリゴンの頂点。
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-			//Vec3<T>	vertex[3], 
-			Vertex<T>*	vertex_ptr[3] ,
+		Vec3f	vertex[3], 
 		int		id
-	) : Triangle<T>(vertex_ptr) {
+	) : Triangle(vertex) {
 		m_id = id;
 	}
 
 	///
 	/// コンストラクタ。
 	///
-	/// @param[in] vertex_ptr	ポリゴンの頂点へのポインタ。
+	/// @param[in] vertex	ポリゴンの頂点。
 	/// @param[in] normal	法線。
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-			//Vec3<T>	vertex[3], 
-		Vertex<T>*	vertex_ptr[3], 
-		Vec3<T>	normal, 
+		Vec3f	vertex[3], 
+		Vec3f	normal, 
 		int		id
-	) : Triangle<T>(vertex_ptr, normal) {
+	) : Triangle(vertex, normal) {
 		m_id = id;
 	}
 
 	///
 	/// コンストラクタ。
 	///
-	/// @param[in] vertex_ptr	ポリゴンの頂点へのポインタ。
+	/// @param[in] vertex	ポリゴンの頂点。
 	/// @param[in] normal	法線。
 	/// @param[in] area		ポリゴンの面積。
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-			//Vec3<T>	vertex[3], 
-		Vertex<T>*	vertex_ptr[3], 
-		Vec3<T>	normal, 
-		T	area, 
+		Vec3f	vertex[3], 
+		Vec3f	normal, 
+		float	area, 
 		int		id
-	) : Triangle<T>(vertex_ptr, normal, area) {
+	) : Triangle(vertex, normal, area) {
 		m_id = id;
 	}
 
@@ -302,9 +270,9 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-		Triangle<T>	tri, 
+		Triangle	tri, 
 		int			id
-	) : Triangle<T>(tri.get_vertex(), tri.get_normal()) {
+	) : Triangle(tri.get_vertex(), tri.get_normal()) {
 		m_id = id;
 	}
 
@@ -312,11 +280,10 @@ public:
 	/// コンストラクタ。
 	///
 	/// @param[in] tri		ポリゴン。
-        /// 
 	///
 	PrivateTriangle(
-		const PrivateTriangle<T> &tri 
-	) : Triangle<T>(tri.get_vertex(), tri.get_normal()) {
+		const PrivateTriangle	&tri 
+	) : Triangle(tri.get_vertex(), tri.get_normal()) {
 		m_id = tri.m_id;
 	}
 
@@ -327,17 +294,17 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-		T		*dim,
+		float		*dim,
 		int			id
 	){
 		for( int i=0; i<3; i++ ) {
-		  this->m_vertex_ptr[i]->t[0] = *dim++;
-		  this->m_vertex_ptr[i]->t[1] = *dim++;
-		  this->m_vertex_ptr[i]->t[2] = *dim++;
+			m_vertex[i].t[0] = *dim++;
+			m_vertex[i].t[1] = *dim++;
+			m_vertex[i].t[2] = *dim++;
 		}
 		m_id = id;
-		this->calc_normal();
-		this->calc_area();
+		calc_normal();
+		calc_area();
 	}
 
 	//=======================================================================
@@ -365,9 +332,6 @@ protected:
 	///
 	int m_id;
 };
-
-
-
 
 } //namespace PolylibNS
 

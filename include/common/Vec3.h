@@ -18,7 +18,6 @@
 #include "common/vec3f_func.h"
 #include "common/axis.h"
 
-
 namespace PolylibNS {
 
 ////////////////////////////////////////////////////////////////////////////
@@ -120,25 +119,23 @@ public:
 	static Vec3<T> yaxis() { return Vec3<T>(0, 1, 0); }
 	static Vec3<T> zaxis() { return Vec3<T>(0, 0, 1); }
 
-	T lengthSquared() const { return t[0] * t[0] + t[1] * t[1] + t[2] *t [2]; }
-	//T length() const { return sqrtf(lengthSquared()); }
-	T length() const { return sqrt(lengthSquared()); }
+	float lengthSquared() const { return t[0] * t[0] + t[1] * t[1] + t[2] *t [2]; }
+	float length() const { return sqrtf(lengthSquared()); }
 	Vec3<T>& normalize() {
-		T len = length();
+		float len = length();
 		if (len != 0)
 			return *this /= len;
 		else
 			return *this;
 	}
-	Vec3<T>& normalize(T* len) {
+	Vec3<T>& normalize(float* len) {
 		*len = length();
 		if (*len != 0)
 			return *this /= *len;
 		else
 			return *this;
 	}
-	//T average() const { return (t[0] + t[1] + t[2])/3.f; }
-	T average() const { return (t[0] + t[1] + t[2])/3.; }
+	float average() const { return (t[0] + t[1] + t[2])/3.f; }
 
 	T t[3];
 };
@@ -149,61 +146,31 @@ public:
 typedef Vec3<unsigned char>	Vec3uc;
 typedef Vec3<int>			Vec3i;
 typedef Vec3<float>			Vec3f;
-typedef Vec3<double>			Vec3d;
 
 //=========================================================================
 // inline
 //=========================================================================
-
-template <typename T>
-  inline Vec3<T> operator*(T s, const Vec3<T>& v) {
-	return Vec3<T>(s*v.t[0], s*v.t[1], s*v.t[2]);
+inline Vec3f operator*(float s, const Vec3f& v) {
+	return Vec3f(s*v.t[0], s*v.t[1], s*v.t[2]);
 }
-template <typename T>
-inline Vec3<T> multi(const Vec3<T>& a, const Vec3<T>& b) {
+inline Vec3f multi(const Vec3f& a, const Vec3f& b) {
 	return a * b;
 }
-template <typename T>
-inline T dot(const Vec3<T>& a, const Vec3<T>& b) {
+
+inline float dot(const Vec3f& a, const Vec3f& b) {
 	return a.t[0] * b.t[0] + a.t[1] * b.t[1] + a.t[2] * b.t[2];
 }
-template <typename T>
-inline Vec3<T> cross(const Vec3<T>& a, const Vec3<T>& b) {
-	return Vec3<T>(a.t[1] * b.t[2] - a.t[2] * b.t[1],
+inline Vec3f cross(const Vec3f& a, const Vec3f& b) {
+	return Vec3f(a.t[1] * b.t[2] - a.t[2] * b.t[1],
 	             a.t[2] * b.t[0] - a.t[0] * b.t[2],
 	             a.t[0] * b.t[1] - a.t[1] * b.t[0]);
 }
-template <typename T>
-inline T distanceSquared(const Vec3<T>& a, const Vec3<T>& b) {
+inline float distanceSquared(const Vec3f& a, const Vec3f& b) {
 	return (a - b).lengthSquared();
 }
-template <typename T>
-inline T distance(const Vec3<T>& a, const Vec3<T>& b) {
+inline float distance(const Vec3f& a, const Vec3f& b) {
 	return (a - b).length();
 }
-
-
-/* inline Vec3f operator*(float s, const Vec3f& v) { */
-/* 	return Vec3f(s*v.t[0], s*v.t[1], s*v.t[2]); */
-/* } */
-/* inline Vec3f multi(const Vec3f& a, const Vec3f& b) { */
-/* 	return a * b; */
-/* } */
-
-/* inline float dot(const Vec3f& a, const Vec3f& b) { */
-/* 	return a.t[0] * b.t[0] + a.t[1] * b.t[1] + a.t[2] * b.t[2]; */
-/* } */
-/* inline Vec3f cross(const Vec3f& a, const Vec3f& b) { */
-/* 	return Vec3f(a.t[1] * b.t[2] - a.t[2] * b.t[1], */
-/* 	             a.t[2] * b.t[0] - a.t[0] * b.t[2], */
-/* 	             a.t[0] * b.t[1] - a.t[1] * b.t[0]); */
-/* } */
-/* inline float distanceSquared(const Vec3f& a, const Vec3f& b) { */
-/* 	return (a - b).lengthSquared(); */
-/* } */
-/* inline float distance(const Vec3f& a, const Vec3f& b) { */
-/* 	return (a - b).length(); */
-/* } */
 
 template<typename T>
 inline std::istream& operator>>(std::istream& is, Vec3<T>& v) {

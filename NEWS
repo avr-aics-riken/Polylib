@@ -14,12 +14,6 @@ RELEASE
 =======
 
 -------------------------
-Version 3.0.0  2013-09-16
-
- - support obj format, dual-link data structure, refactoring
-
-
--------------------------
 Version 2.6.8  2013-07-20
 
  - update PolygonGroup::set_all_exid_of_trias()

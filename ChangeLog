@@ -14,13 +14,6 @@ REVISION HISTORY
 ================
 
 ------------------
-2013-09-16
-
- r30 Release 3.0.0
-  - Package 3.0.0
-  - update a user guide
-
-------------------
 2013-07-20
 
  r29 update PolygonGroup::set_all_exid_of_trias() [ver 2.6.8]

@@ -12,4 +12,5 @@
 
 doc_includedir = $(prefix)/doc
 doc_include_HEADERS = \
-    $(top_builddir)/doc/polylib_ug.pdf
+    $(top_builddir)/doc/refman.pdf \
+    $(top_builddir)/doc/Polylib_UG.pdf
