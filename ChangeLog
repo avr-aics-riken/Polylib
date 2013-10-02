@@ -14,6 +14,14 @@ REVISION HISTORY
 ================
 
 ------------------
+2013-10-02
+
+ r34 rmodify for intel mpi [ver 2.6.9]
+   - include mpi.h before stdio.h to suppress error message #error "SEEK_SET is #defined but must not be for the C++ binding of MPI"
+
+------------------
+There are some commit operations from r30 to r33
+------------------
 2013-07-20
 
  r29 update PolygonGroup::set_all_exid_of_trias() [ver 2.6.8]

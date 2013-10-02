@@ -9,6 +9,7 @@
  *
  */
 
+#include "mpi.h"
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -16,7 +17,6 @@
 #include <map>
 //#include "groups/PolygonGroup.h"
 //#include "c_lang/CMPIPolylib.h"
-#include "mpi.h"
 #include "MPIPolylib.h"
 
 // MPI通信用メッセージタグ

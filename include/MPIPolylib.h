@@ -12,9 +12,9 @@
 #ifndef MPIPolylib_h
 #define MPIPolylib_h
 
+#include "mpi.h"
 #include <vector>
 #include <map>
-#include "mpi.h"
 #include "Polylib.h"
 #include "groups/PolygonGroup.h"
 
