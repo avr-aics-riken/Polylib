@@ -16,7 +16,9 @@ REVISION HISTORY
 ------------------
 2013-10-02
 
- r34 rmodify for intel mpi [ver 2.6.9]
+ r35 modify to include string.h for strcpy in CMPIPolylib.cxx [ver 2.7.0]
+ 
+ r34 modify for intel mpi [ver 2.6.9]
    - include mpi.h before stdio.h to suppress error message #error "SEEK_SET is #defined but must not be for the C++ binding of MPI"
 
 ------------------
