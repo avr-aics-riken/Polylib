@@ -173,8 +173,14 @@ protected:
 	void calc_normal() {
 		Vec3f a = m_vertex[1] - m_vertex[0];
 		Vec3f b = m_vertex[2] - m_vertex[0];
-		m_normal = (cross(a,b)).normalize();
 
+		Vec3<double> ad( (double)a[0], (double)a[1], (double)a[2] );
+		Vec3<double> bd( (double)b[0], (double)b[1], (double)b[2] );
+		Vec3<double> normald = (cross(ad,bd)).normalize();
+		m_normal[0] = normald[0];
+		m_normal[1] = normald[1];
+		m_normal[2] = normald[2];
+std::cout << "calc double:" << normald << std::endl;
 	}
 
 	///
