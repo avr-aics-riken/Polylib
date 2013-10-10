@@ -171,16 +171,18 @@ protected:
 	/// 法線ベクトル算出。
 	///
 	void calc_normal() {
-		Vec3f a = m_vertex[1] - m_vertex[0];
-		Vec3f b = m_vertex[2] - m_vertex[0];
+		// double演算に変更 2013.10.10 tkawanab
+		Vec3<double> vd[3];
+		vd[0].assign( m_vertex[0].t[0], m_vertex[0].t[1], m_vertex[0].t[2] );
+		vd[1].assign( m_vertex[1].t[0], m_vertex[1].t[1], m_vertex[1].t[2] );
+		vd[2].assign( m_vertex[2].t[0], m_vertex[2].t[1], m_vertex[2].t[2] );
+		Vec3<double> ad = vd[1] - vd[0];
+		Vec3<double> bd = vd[2] - vd[0];
 
-		Vec3<double> ad( (double)a[0], (double)a[1], (double)a[2] );
-		Vec3<double> bd( (double)b[0], (double)b[1], (double)b[2] );
 		Vec3<double> normald = (cross(ad,bd)).normalize();
 		m_normal[0] = normald[0];
 		m_normal[1] = normald[1];
 		m_normal[2] = normald[2];
-std::cout << "calc double:" << normald << std::endl;
 	}
 
 	///
