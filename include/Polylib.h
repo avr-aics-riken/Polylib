@@ -160,13 +160,22 @@ public:
 	);
 
 	///
-	/// PolygoGroupツリーの最上位ノードの取得。
+	/// PolygonGroupツリーの最上位ノードの取得。
 	///
 	///  @return	最上位ノードのvector。
 	///  @attention 返却したPolygonGroupは、削除不可。vectorは要削除。
 	///
 	std::vector<PolygonGroup *> *get_root_groups() const;
 
+	///
+	/// リーフPolygonGroupリストの取得。
+	/// PolygonGroupツリーの末端ノード（リーフ）をリスト化する。
+	///
+	/// @return		リーフPolygonGroupのvector.
+	/// @attension	返却したPolygonGroupは削除不可。vectorは要削除。
+	///
+	std::vector<PolygonGroup *> *get_leaf_groups() const;
+	
 	///
 	/// 三角形ポリゴンの検索。
 	/// 位置ベクトルmin_posとmax_posにより特定される矩形領域に含まれる、
