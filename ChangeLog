@@ -14,6 +14,13 @@ REVISION HISTORY
 ================
 
 ------------------
+2013-10-11
+
+ r36 improve precision of calculating normal vector [ver 2.7.1]
+   - calculate Triangle::calc_normal() in double precision
+   - add Polylib::get_leaf_groups()
+ 
+------------------
 2013-10-02
 
  r35 modify to include string.h for strcpy in CMPIPolylib.cxx [ver 2.7.0]

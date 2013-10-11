@@ -14,6 +14,10 @@ RELEASE
 =======
 
 -------------------------
+Version 2.7.1  2013-10-11
+ - improve precision of calculating normal vector
+ 
+-------------------------
 Version 2.7.0  2013-10-02
  - modify CMPIPolylib.cxx
  
