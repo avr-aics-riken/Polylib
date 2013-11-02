@@ -14,6 +14,13 @@ REVISION HISTORY
 ================
 
 ------------------
+2013-11-02
+
+ r37 cleanup configure.ac [ver 2.7.2]
+   - expire MPICH version
+   - introduce subdir-objects in Makefile.am
+
+------------------
 2013-10-11
 
  r36 improve precision of calculating normal vector [ver 2.7.1]

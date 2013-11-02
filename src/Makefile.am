@@ -10,6 +10,7 @@
 #
 ##############################################################################
 
+AUTOMAKE_OPTIONS = subdir-objects
 
 if SERIALTARGET
   lib_LIBRARIES = libPOLY.a

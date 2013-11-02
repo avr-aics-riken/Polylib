@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([Polylib], [2.7.1], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [2.7.2], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -23,7 +23,7 @@ AC_CONFIG_HEADERS([config.h])
 #
 # revision No.
 #
-PL_REVISION="20131011_1200"
+PL_REVISION="20131102_1300"
 AC_SUBST(PL_REVISION)
 
 
@@ -53,32 +53,23 @@ AC_SUBST(MPI_LDFLAGS)
 AC_SUBST(MPI_LIBS)
 
 
-# mpich
-AC_ARG_WITH(mpich, [AC_HELP_STRING([--with-mpich=dir],[Specify MPICH install directory])], , with_mpich=none)
-if test "$with_mpich" != "none" ; then
-  MPI_DIR=$with_mpich;
-  MPI_CFLAGS=-I$MPI_DIR/include
-  MPI_LDFLAGS=-L$MPI_DIR/lib
-  MPI_LIBS=-lmpich
-  enable_mpi="mpich"
-fi
-
 
 # openmpi
-if test "$with_mpich" = "none" ; then
-  AC_ARG_WITH( ompi, [AC_HELP_STRING([--with-ompi=dir],[Specify OpenMPI install directory])], , with_ompi=none)
-  if test "$with_ompi" != "none" ; then
-    MPI_DIR=$with_ompi;
-    MPI_CFLAGS=-I$MPI_DIR/include
-    MPI_LDFLAGS=-L$MPI_DIR/lib
-    MPI_LIBS=-lmpi
-    enable_mpi="ompi"
-  fi
+AC_ARG_WITH( ompi, [AC_HELP_STRING([--with-ompi=dir],[Specify OpenMPI install directory])], , with_ompi=none)
+if test "$with_ompi" != "none" ; then
+  MPI_DIR=$with_ompi;
+  MPI_CFLAGS=-I$MPI_DIR/include
+  MPI_LDFLAGS=-L$MPI_DIR/lib
+  MPI_LIBS=-lmpi
+  enable_mpi="ompi"
 fi
 
-if test "$enable_mpi" = "none" ; then
-  echo "  Warning: Neither MPICH nor OpenMPI library is not specified."
-  echo "           If compilation error occurs about MPI, specify --with-mpich or --with-ompi option."
+
+if test "$enable_mpi" != "mpi" ; then
+  if test "$enable_mpi" = "none" ; then
+    echo "  Warning: OpenMPI library is not specified."
+    echo "           If compilation error occurs about MPI, --with-ompi option."
+  fi
 fi
 
 
