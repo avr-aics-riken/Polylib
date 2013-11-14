@@ -20,13 +20,14 @@
 #endif
 
 
+#include "MPIPolylib.h"
 #include <iostream>
 #include <vector>
 #include "common/PolylibCommon.h"
 #include "common/PolylibStat.h"
-#include "MPIPolylib.h"
 #include "c_lang/CPolylib.h"
 #include "c_lang/CMPIPolylib.h"
+#include <string.h> // for strcpy
 
 ///
 /// C言語用MPIPolylib-API（MPI版）

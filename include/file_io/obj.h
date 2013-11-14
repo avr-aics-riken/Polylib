@@ -1,4 +1,4 @@
-/* -- Mode: c++ --*/
+// -*- Mode: c++ -*- 
 /*
  * Polylib - Polygon Management Library
  *
@@ -36,6 +36,8 @@
 namespace PolylibNS {
 
   ///  ファイルの一部を読み込み、ascii / binary を判定する。
+  /// 
+  /// @param[in] path ファイルパス
   bool is_obj_a(std::string path);
 
 /// 
@@ -67,7 +69,10 @@ POLYLIB_STAT obj_a_load(
 );
 
 /// 
-/// ASCII モードのOBJファイルを読み込み、VertexList, tri_listに三角形ポリゴン情報を設定する。
+/// OBJ_BIN形式のファイルを読み込み、
+/// VertexList, tri_listに三角形ポリゴン情報を設定する。
+/// 頂点法線が記録されているかどうかを判別して読み取る。
+/// 頂点法線は記録されていても、この時点で情報を捨てる。
 /// 
 ///
 ///  @param[in,out] vertex_list 頂点リストの領域。
@@ -170,7 +175,7 @@ POLYLIB_STAT obj_bb_save(
 			 int	*total,
 			 T scale ) 
 {
-  PL_DBGOSH << "fname " <<fname<<std::endl;
+  // PL_DBGOSH << "fname " <<fname<<std::endl;
    std::ifstream is(fname.c_str());
    if (is.fail()) {
      PL_ERROSH << "[ERROR]obj:obj_a_load():Can't open " << fname << std::endl;
@@ -180,7 +185,7 @@ POLYLIB_STAT obj_bb_save(
     int n_tri = *total;		// 通番の初期値をセット
     int n_vtx = 0;
     int ivtx=0;
-
+    int n_zero_area_tri=0;
     std::string token;
     Vec3<T> nml;
     Vec3<T> vtx[3];
@@ -198,8 +203,9 @@ POLYLIB_STAT obj_bb_save(
 	Vertex<T>* v=new Vertex<T>;
 	is >> *v;
 	//vertex_list->vtx_add(v);
-	vertex_list->vtx_add_KDT(v);
-	PL_DBGOSH << "vertex " <<*v<<std::endl;
+	//vertex_list->vtx_add_KDT(v);
+	vertex_list->vtx_add_nocheck(v);
+	//PL_DBGOSH << "vertex " <<*v<<std::endl;
       }
       else if (token == "f") {	  // face 
 	int ii[3];
@@ -219,7 +225,8 @@ POLYLIB_STAT obj_bb_save(
 	  ss>>ii[i];
 	  if (vertex_list->size() < ii[i]){
 	    PL_ERROSH << "[ERROR]obj:obj_a_load():error reading file " << fname << std::endl;
-	    PL_ERROSH << "Face uses bigger vertex id than the size of vertex list." << std::endl;  
+	    PL_ERROSH << "Face uses bigger vertex id than the size of vertex list. " << i << " " <<ii[i]<< std::endl;  
+
 	    return PLSTAT_OBJ_IO_ERROR;
 	  }
 
@@ -230,14 +237,18 @@ POLYLIB_STAT obj_bb_save(
 	tmpvertlist[0]=vertex_list->ith(ii[0]-1);
 	tmpvertlist[1]=vertex_list->ith(ii[1]-1);
 	tmpvertlist[2]=vertex_list->ith(ii[2]-1);
+	
 
 	PrivateTriangle<T>* tri = new PrivateTriangle<T>(tmpvertlist, n_tri);
 	if(tri->get_area()==0){
+
 	  PL_DBGOSH << __func__ 
-		    << " Warning :  obj file contains a triangle of the area is zero." << std::endl;
+	  	    << " Warning :  obj file contains a triangle of the area is zero." << std::endl;
 	  PL_DBGOSH <<  "vertex0 ("<< *(tmpvertlist[0]) <<")"<<std::endl;
-	  PL_DBGOSH <<  "vertex1 ("<< *(tmpvertlist[1]) <<")"<<std::endl;	
+	  PL_DBGOSH <<  "vertex1 ("<< *(tmpvertlist[1]) <<")"<<std::endl;
 	  PL_DBGOSH <<  "vertex2 ("<< *(tmpvertlist[2]) <<")"<<std::endl;
+	  n_zero_area_tri++;
+
 	  }
 	
 	tri_list->push_back(tri);
@@ -273,6 +284,12 @@ POLYLIB_STAT obj_bb_save(
       }
     } // end of reading file.
 
+
+
+    if(n_zero_area_tri!=0){
+      	  PL_DBGOSH <<  "# of zero area Triangles "<< n_zero_area_tri <<std::endl;
+    }
+    
 
     if (!is.eof() && is.fail()) {
       PL_ERROSH << "[ERROR]obj:obj_a_load():Error in loading: " << fname << std::endl;
@@ -364,9 +381,14 @@ POLYLIB_STAT obj_a_save(
   for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
     Vertex<T>** tmpvtx=(*itr)->get_vertex();
     int i0,i1,i2;
-    i0=vertex_list->ith(tmpvtx[0]);
-    i1=vertex_list->ith(tmpvtx[1]);
-    i2=vertex_list->ith(tmpvtx[2]);
+    /* i0=vertex_list->ith(tmpvtx[0]); */
+    /* i1=vertex_list->ith(tmpvtx[1]); */
+    /* i2=vertex_list->ith(tmpvtx[2]); */
+    i0=vertex_list->vtx_index(tmpvtx[0]);
+    i1=vertex_list->vtx_index(tmpvtx[1]);
+    i2=vertex_list->vtx_index(tmpvtx[2]);
+
+
     if(i0==-1 || i1==-1 || i2==-1) {
       PL_ERROSH << "[ERROR]obj:obj_a_save():wrong vertex id " 
 		<< i0 << " "<< i1 << " "<< i2 << " "<< std::endl;
@@ -377,7 +399,9 @@ POLYLIB_STAT obj_a_save(
        << (i2+1)<<"//"<< (i2+1) << std::endl;
   }
 
+  vertex_list->index_map_clear();
 
+  return PLSTAT_OK;
 }
 ///////////////////////////////////////////////////////////////
 template <typename T>
@@ -392,40 +416,92 @@ POLYLIB_STAT obj_b_save(
     return PLSTAT_STL_IO_ERROR;
   }
   int inv = tt_check_machine_endian() == TT_LITTLE_ENDIAN ? 0 : 1;
+#ifdef DEBUG
+#undef DEBUG
+#endif
+  //#define DEBUG
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " in. "<<fname <<std::endl;
+#endif
 
   char buf[STL_HEAD];
   for (int i = 0; i < STL_HEAD; i++) buf[i] = 0;
   strcpy(buf, "OBJ_BIN TRIA COND_ID");
   tt_write(ofs, buf, 1, STL_HEAD, inv);
 
-  //uint element_vertex = vertex_list->size();
-  //tt_write(ofs, &element_vertex, sizeof(uint), 1, inv);
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " write header"<< buf <<std::endl;
+#endif
+
+
   ulong element_vertex = vertex_list->size();
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " write vertex size " << element_vertex<<std::endl;
+#endif
+
   tt_write(ofs, &element_vertex, sizeof(ulong), 1, inv);
-  //  uint element = tri_list->size();
-  //tt_write(ofs, &element, sizeof(uint), 1, inv);
+
+
   ulong element = tri_list->size();
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " write triangle size " << element<<std::endl;
+#endif
+
   tt_write(ofs, &element, sizeof(ulong), 1, inv);
+
+
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " header:"<< buf <<std::endl;
+  PL_DBGOSH << __func__ << " element_vertex:"<< element_vertex <<std::endl;
+  PL_DBGOSH << __func__ << " element:"<< element <<std::endl;
+#endif
 
   // 頂点 v 出力
  const std::vector<Vertex<T>*>* vlistout=vertex_list->get_vertex_lists();
-  for(int i=0;i<vlistout->size();++i){
+  for(int i=0;i< vlistout->size();++i){
     Vertex<T>*  vert_tmp=(*vlistout)[i];
     float float_vertex[3];
     float_vertex[0]=(*vert_tmp)[0];
     float_vertex[1]=(*vert_tmp)[1];
     float_vertex[2]=(*vert_tmp)[2];
     tt_write(ofs, float_vertex, sizeof(float), 3, inv);
+#ifdef DEBUG
+  /* PL_DBGOSH << __func__ << " write vertecies " */
+  /* 	    <<float_vertex[0] << " " */
+  /* 	    <<float_vertex[1] << " " */
+  /* 	    <<float_vertex[2] << " " */
+  /* 	    <<std::endl; */
+#endif
+
+    
   }
 
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " write vertecies "<<std::endl;
+#endif
+
+  vertex_list->prepare_num_out();
   // 面 f 出力 
   typename std::vector<PrivateTriangle<T>*>::iterator itr;
   for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
     Vertex<T>** tmpvtx=(*itr)->get_vertex();
     long index[3];
-    index[0]=vertex_list->ith(tmpvtx[0]);
-    index[1]=vertex_list->ith(tmpvtx[1]);
-    index[2]=vertex_list->ith(tmpvtx[2]);
+    // index[0]=vertex_list->ith(tmpvtx[0]);
+    // index[1]=vertex_list->ith(tmpvtx[1]);
+    // index[2]=vertex_list->ith(tmpvtx[2]);
+
+     index[0]=vertex_list->vtx_index(tmpvtx[0]);
+     index[1]=vertex_list->vtx_index(tmpvtx[1]);
+     index[2]=vertex_list->vtx_index(tmpvtx[2]);
+
+#ifdef DEBUG
+     // PL_DBGOSH<< __func__ <<" "<<index[0]
+     // 	      <<" "<<index[1]
+     // 	      <<" "<<index[2]
+     // 	      <<std::endl;
+#endif
+
+
     if(index[0]==-1 || index[1]==-1 || index[2]==-1) {
       PL_ERROSH << "[ERROR]obj:obj_b_save():wrong vertex id " 
 		<< index[0] << " "<< index[1] << " "<< index[2] << " "<< std::endl;
@@ -434,19 +510,33 @@ POLYLIB_STAT obj_b_save(
     ++index[0]; ++index[1]; ++index[2];
     tt_write(ofs, index , sizeof(long), 3, inv);
 
+  /* PL_DBGOSH << __func__ << " write face " */
+  /* 	    <<index[0] << " " */
+  /* 	    <<index[1] << " " */
+  /* 	    <<index[2] << " " */
+  /* 	    <<std::endl; */
+
+   
     int exid = (*itr)->get_exid();
     tt_write(ofs, &exid, sizeof(ushort), 1, inv);
 
   }
 
+  vertex_list->index_map_clear();
+
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " write faces and exid "<<std::endl;
+#endif
+
 
   if (!ofs.eof() && ofs.fail()) {
-    PL_ERROSH << "[ERROR]obj:obj_b_load():Error in saving: " << fname << std::endl;
+    PL_ERROSH << "[ERROR]obj:obj_b_save():Error in saving: " << fname << std::endl;
     return PLSTAT_OBJ_IO_ERROR;
   }
 
     return PLSTAT_OK;
 
+    ///#undef DEBUG
 }
 
 ///////////////////////////////////////////////////////////////
@@ -470,12 +560,12 @@ POLYLIB_STAT obj_bb_save(
 
   //uint element_vertex = vertex_list->size();
   //tt_write(ofs, &element_vertex, sizeof(uint), 1, inv);
-  ulong element_vertex = vertex_list->size();
-  tt_write(ofs, &element_vertex, sizeof(ulong), 1, inv);
+  long element_vertex = vertex_list->size();
+  tt_write(ofs, &element_vertex, sizeof(long), 1, inv);
   //  uint element = tri_list->size();
   //tt_write(ofs, &element, sizeof(uint), 1, inv);
-  ulong element = tri_list->size();
-  tt_write(ofs, &element, sizeof(ulong), 1, inv);
+  long element = tri_list->size();
+  tt_write(ofs, &element, sizeof(long), 1, inv);
 
   // 頂点 v 出力
  const std::vector<Vertex<T>*>* vlistout=vertex_list->get_vertex_lists();
@@ -528,9 +618,13 @@ POLYLIB_STAT obj_bb_save(
   for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
     Vertex<T>** tmpvtx=(*itr)->get_vertex();
     long index[3];
-    index[0]=vertex_list->ith(tmpvtx[0]);
-    index[1]=vertex_list->ith(tmpvtx[1]);
-    index[2]=vertex_list->ith(tmpvtx[2]);
+    // index[0]=vertex_list->ith(tmpvtx[0]);
+    // index[1]=vertex_list->ith(tmpvtx[1]);
+    // index[2]=vertex_list->ith(tmpvtx[2]);
+    index[0]=vertex_list->vtx_index(tmpvtx[0]);
+    index[1]=vertex_list->vtx_index(tmpvtx[1]);
+    index[2]=vertex_list->vtx_index(tmpvtx[2]);
+
     if(index[0]==-1 || index[1]==-1 || index[2]==-1) {
       PL_ERROSH << "[ERROR]obj:obj_bb_save():wrong vertex id " 
 		<< index[0] << " "<< index[1] << " "<< index[2] << " "<< std::endl;
@@ -543,13 +637,14 @@ POLYLIB_STAT obj_bb_save(
     tt_write(ofs, &exid, sizeof(ushort), 1, inv);
 
   }
-
-
+  // cleanup index table
+  vertex_list->index_map_clear();
   if (!ofs.eof() && ofs.fail()) {
     PL_ERROSH << "[ERROR]obj:obj_bb_save():Error in saving: " << fname << std::endl;
     return PLSTAT_OBJ_IO_ERROR;
   }
     return PLSTAT_OK;
+    //#undef DEBUG
 }
 
 
@@ -572,33 +667,60 @@ POLYLIB_STAT obj_b_load(
 		return PLSTAT_STL_IO_ERROR;
 	}
 
-	int inv = tt_check_machine_endian() == TT_LITTLE_ENDIAN ? 0 : 1;
+	//#define DEBUG
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " in. "<<fname <<std::endl;
+#endif
+  int  n_zero_area_tri=0;
 
-	int	n_tri = *total;		// 通番の初期値をセット
+  int inv = tt_check_machine_endian() == TT_LITTLE_ENDIAN ? 0 : 1;
+  
+  int	n_tri = *total;		// 通番の初期値をセット
 
-	char buf[STL_HEAD];
-	for (int i = 0; i < STL_HEAD; i++) buf[i] = 0;
-	tt_read(ifs, buf, sizeof(char), STL_HEAD, inv);
+  char buf[STL_HEAD];
+  for (int i = 0; i < STL_HEAD; i++) buf[i] = 0;
+  tt_read(ifs, buf, sizeof(char), STL_HEAD, inv);
 
-	bool withnormal=false;
-	int icheck, icheck2;
-	icheck = strncmp( buf, "OBJ_BIN TRIA V_NORMAL COND_ID",29);
+#ifdef DEBUG
+  PL_DBGOSH << __func__ << " read header"<<std::endl;
+#endif
 
-	if(icheck!=0){
-	  icheck2 = strncmp( buf, "OBJ_BIN TRIA COND_ID",20);
-	  if(icheck2!=0){
-	    PL_ERROSH << "[ERROR]obj:obj_b_load():Error in loading: " << fname 
-		      <<" file header error!!" << std::endl;
-	        return PLSTAT_OBJ_IO_ERROR; 
-	  }
-	} else {
-	  withnormal=true;
-	}
+
+  bool withnormal=false;
+  int icheck, icheck2;
+  icheck = strncmp( buf, "OBJ_BIN TRIA V_NORMAL COND_ID",29);
+
+  if(icheck!=0){
+    icheck2 = strncmp( buf, "OBJ_BIN TRIA COND_ID",20);
+    if(icheck2!=0){
+      PL_ERROSH << "[ERROR]obj:obj_b_load():Error in loading: " << fname 
+		<<" file header error!!" << std::endl;
+      return PLSTAT_OBJ_IO_ERROR; 
+    }
+  } else {
+    withnormal=true;
+  }
+
+#ifdef DEBUG
+	PL_DBGOSH << __func__ << " withnormal"<< withnormal 
+		  << " " << icheck
+		  << " " << icheck2
+		  <<std::endl;
+#endif
+
 	ulong element_vertex;
 	ulong element;
 	
 	tt_read(ifs, &element_vertex, sizeof(ulong), 1, inv);
+#ifdef DEBUG
+	PL_DBGOSH << __func__ << " read vertex size"<< element_vertex<<std::endl;
+#endif
+
 	tt_read(ifs, &element, sizeof(ulong), 1, inv);
+#ifdef DEBUG
+	PL_DBGOSH << __func__ << " read element size"<< element<<std::endl;
+#endif
+
 
 	for(ulong i=0;i<element_vertex;++i){
 	  float float_vertex[3];
@@ -608,35 +730,69 @@ POLYLIB_STAT obj_b_load(
 	  (*v)[1]=float_vertex[1];
 	  (*v)[2]=float_vertex[2];
 	  // 
-	  Vertex<T>* tmp=vertex_list->vtx_add_KDT(v);
+	  //	  Vertex<T>* tmp=vertex_list->vtx_add_KDT(v);
+	  //	  Vertex<T>* tmp=vertex_list->vtx_add_nocheck(v);
+	 vertex_list->vtx_add_nocheck(v);
 	    //if(tmp!=v) delete v;
 
 	}
+
+#ifdef DEBUG
+	PL_DBGOSH << __func__ << " read vertex"<< element_vertex<<std::endl;
+#endif
+
 	if(withnormal){ // 頂点法線は捨てる
 	  for(ulong i=0;i<element_vertex;++i){
 	    float float_vertex[3];
 	    tt_read(ifs, float_vertex, sizeof(float), 3, inv);
 	  }	  
 	}
+
+
+#ifdef DEBUG
+	PL_DBGOSH << __func__ << " read vertex normal"<< element_vertex<<std::endl;
+#endif
+
 	for(ulong i=0;i<element;++i){
-	    long index[3];
+	  long index[3];
 	    tt_read(ifs, index , sizeof(long), 3, inv);
 	    int exid;
 	    tt_read(ifs, &exid, sizeof(ushort), 1, inv);
 	    Vertex<T>* tmpvlist[3];
-	    tmpvlist[0] = vertex_list->ith(index[0]);
-	    tmpvlist[1] = vertex_list->ith(index[1]);
-	    tmpvlist[2] = vertex_list->ith(index[2]);
 
-	    PrivateTriangle<T>* tri=new PrivateTriangle<T>(vertex_list,
+	    if(vertex_list->size()>index[0]){
+	      tmpvlist[0] = vertex_list->ith(index[0]-1);
+	    }
+	    if(vertex_list->size()>index[1]){
+	      tmpvlist[1] = vertex_list->ith(index[1]-1);
+	    }
+	    if(vertex_list->size()>index[2]){
+	      tmpvlist[2] = vertex_list->ith(index[2]-1);
+	    }
+	    PrivateTriangle<T>* tri=new PrivateTriangle<T>(tmpvlist,
 							   exid);
 	      
-	    tri_list->push_back(tri);
-	  }
+	if(tri->get_area()==0){
+	  PL_DBGOSH << __func__ 
+		    << " Warning :  obj file contains a triangle of the area is zero." << std::endl;
+	  PL_DBGOSH <<  "vertex0 ("<< *(tmpvlist[0]) <<")"<<std::endl;
+	  PL_DBGOSH <<  "vertex1 ("<< *(tmpvlist[1]) <<")"<<std::endl;	
+	  PL_DBGOSH <<  "vertex2 ("<< *(tmpvlist[2]) <<")"<<std::endl;
+	  n_zero_area_tri++;
+	}
+	tri_list->push_back(tri);
+	}
 
-	  
-	  
-	  
+
+    if(n_zero_area_tri!=0){
+      	  PL_DBGOSH <<  "# of zero area Triangles "<< n_zero_area_tri <<std::endl;
+    }
+
+
+#ifdef DEBUG
+	PL_DBGOSH << __func__ << " read face"<< element_vertex<<std::endl;
+#endif
+	//#undef DEBUG
 
     return PLSTAT_OK;
  }

@@ -24,6 +24,7 @@ typedef enum {
 	PLSTAT_INSTANCE_NOT_EXIST,	///< Polylibインスタンスが存在しない。
 	PLSTAT_STL_IO_ERROR,		///< STLファイルIOエラー
 	PLSTAT_OBJ_IO_ERROR,		///< OBJファイルIOエラー
+	PLSTAT_VTK_IO_ERROR,		///< VTKファイルIOエラー
 	PLSTAT_UNKNOWN_STL_FORMAT,	///< ファイル拡張子が.stla、.stlb、.stl以外。
 	PLSTAT_FILE_NOT_SET,		///< リーフグループにファイル名が未設定。
 	PLSTAT_CONFIG_ERROR,		///< 定義ファイルでエラー発生

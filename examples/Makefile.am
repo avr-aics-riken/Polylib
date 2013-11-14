@@ -11,30 +11,35 @@
 ##############################################################################
 
 if SERIALTARGET
-  noinst_PROGRAMS = test test2 test_vtx test_vtx_float test_obj test_xyzrgb_statuette_stl test_obj2 test_obj3 test_obj4
+  noinst_PROGRAMS = test test2 test_vtx test_vtx_float test_obj test_xyzrgb_statuette_stl test_obj2 test_obj3 test_obj4 test_read test_DVertex
 else
-  noinst_PROGRAMS = test_mpi test_mpi2 test_mpi3 test_mpi_xyzrgb1 test_mpi_xyzrgb2 test_mpi_xyzrgb4 test_mpi_xyzrgb8
+  noinst_PROGRAMS = test_mpi test_mpi2 test_mpi3 test_mpi_xyzrgb1 test_mpi_xyzrgb2 test_mpi_xyzrgb4 test_mpi_xyzrgb8 test_mpi_DVertex
 endif
 
-DISTCLEANFILES=*~
+
+DISTCLEANFILES=*~ test test2 test_vtx test_vtx_float test_obj test_xyzrgb_statuette_stl test_obj2 test_obj3 test_obj4 test_read test_DVertex test_mpi test_mpi2 test_mpi3 test_mpi_xyzrgb1 test_mpi_xyzrgb2 test_mpi_xyzrgb4 test_mpi_xyzrgb8 test_mpi_DVertex
 CLEANFILES=data/*.log
 
-
-test_SOURCES  = \
-  test.cxx \
-  blade1.stl \
+EXTRA_DIST=  blade1.stl \
   blade2.stl \
   blade3.stl \
   car.stl \
   car.stla \
-  polylib_config-multi.tpp \
-  polylib_config.tpp \
-  polylib_config2.tpp \
+  polylib_config-multi.tp \
+  polylib_config.tp \
+  polylib_config2.tp \
+  polylib_config_xyzrgb_statuette_stl.tp \
+  polylib_config_objfile_bin.tp \
+  polylib_config_vtxtest.tp \
+  polylib_config_objfile.tp \
   README \
   sphere.stl \
   tower.stl \
   cube.obj 		
 
+
+
+test_SOURCES  =  test.cxx 
 test_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
 
 test2_SOURCES  = test2.cxx
@@ -52,8 +57,14 @@ test_obj3_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
 test_obj4_SOURCES  = test_obj4.cxx
 test_obj4_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
 
+test_read_SOURCES  = test_read.cxx
+test_read_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+
 test_vtx_float_SOURCES  = test_vtx_float.cxx
 test_vtx_float_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+
+test_DVertex_SOURCES = test_DVertex.cxx
+test_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
 
 
 test_xyzrgb_statuette_stl_SOURCES  = test_xyzrgb_statuette_stl.cxx
@@ -86,6 +97,11 @@ test_mpi_xyzrgb4_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 test_mpi_xyzrgb8_SOURCES=test_mpi_xyzrgb8.cxx
 test_mpi_xyzrgb8_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+
+
+
+test_mpi_DVertex_SOURCES  = test_mpi_DVertex.cxx
+test_mpi_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 
 test_LDADD = \
@@ -132,8 +148,19 @@ test_obj4_LDADD = \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
+test_read_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
+    @TP_LDFLAGS@ -lstdc++
 
 test_vtx_float_LDADD = \
+    -L$(top_builddir)/src/.libs -lPOLY \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
+    @TP_LDFLAGS@ -lstdc++
+
+test_DVertex_LDADD = \
     -L$(top_builddir)/src/.libs -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
@@ -195,6 +222,14 @@ test_mpi_xyzrgb4_LDADD = \
 
 
 test_mpi_xyzrgb8_LDADD = \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
+    @TP_LDFLAGS@ -lstdc++
+
+
+
+test_mpi_DVertex_LDADD = \
     -L$(top_builddir)/src/.libs -lMPIPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \

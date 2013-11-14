@@ -193,6 +193,22 @@ std::string PolylibNS::gs_rankno = "";
 // 	}
 // 	return root;
 // }
+//
+// public /////////////////////////////////////////////////////////////////////
+//vector<PolygonGroup *> *Polylib::get_leaf_groups() const {
+//#ifdef DEBUG
+//        PL_DBGOSH << "Polylib::get_leaf_groups() in." << endl;
+//#endif
+//        vector<PolygonGroup*>                       *leaf = new vector<PolygonGroup*>;
+//        vector<PolygonGroup*>::const_iterator        it;
+
+//        for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
+//                if (((*it)->get_children()).size() == 0) {
+//                        leaf->push_back(*it);
+//                }
+//        }
+//        return leaf;
+//}
 
 // // public /////////////////////////////////////////////////////////////////////
 // vector<Triangle*>* Polylib::search_polygons(

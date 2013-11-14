@@ -9,8 +9,8 @@
  *
  */
 
-#include <iostream>
 #include "mpi.h"
+#include <iostream>
 #include "Polylib.h"
 #include "MPIPolylib.h"
 //#include "CarGroup.h"
@@ -71,7 +71,8 @@ int main(int argc, char** argv ){
   p_polylib->show_group_hierarchy();
   cout << "program at 4 on rank :"<<rank<<endl;
   string fname="";
-  string stl="stl_a";
+  //  string stl="obj_b";
+    string stl="stl_b";
   string extend="";
   //  ID_FORMAT id_format=ID_BIN;
   ID_FORMAT id_format=ID_ASCII;

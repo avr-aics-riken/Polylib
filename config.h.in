@@ -80,7 +80,7 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
-/* Variable type of REAL in Polylib. */
+/* Real valiable type to whole Polylib. */
 #undef PL_REAL
 
 /* Define to 1 if you have the ANSI C header files. */

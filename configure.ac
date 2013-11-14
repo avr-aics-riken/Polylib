@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([Polylib], [3.0.0], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [3.1.0], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -25,7 +25,7 @@ AC_CONFIG_MACRO_DIR([m4])
 #
 # revision No.
 #
-PL_REVISION="20130916_1500"
+PL_REVISION="20131030_1200"
 AC_SUBST(PL_REVISION)
 
 
@@ -128,7 +128,7 @@ AC_ARG_WITH(example, [AC_HELP_STRING([--with-example=(no|yes)],[make example [no
 
 
 #
-# enable/disable shared library
+# enable/unenable shared library
 #
 dnl AC_ARG_ENABLE(shared, [AC_HELP_STRING([--enable-shared=(yes|no)],[make shared library [yes]])], , enable_shared=yes)
 
@@ -167,13 +167,10 @@ AC_SUBST(PL_LDFLAGS)
 #
 # handle PL_REAL
 #
-# This variable holds the type of real value in Polylib.
-
+# This valiable holds the type of real value in whole Polylib system.
 AC_MSG_CHECKING([\$(PL_REAL) real type to be used])
-
 # if it is "float" exactly, PL_REAL is defined to "float".
 # if it is not, PL_REAL is defined to "double" as default.
-
 if test "$PL_REAL" = "float"; then
 #do nothing
 AC_MSG_RESULT("$PL_REAL")
@@ -184,8 +181,8 @@ else
 AC_MSG_RESULT("$PL_REAL")
 fi
 
-# AC_SUBST(PL_REAL)  we do not need PL_REAL for Makefiles
-AC_DEFINE_UNQUOTED(PL_REAL,$PL_REAL,[Variable type of REAL in Polylib.])
+AC_SUBST(PL_REAL)  we do not need PL_REAL for Makefiles
+AC_DEFINE_UNQUOTED(PL_REAL,$PL_REAL,[Real valiable type to whole Polylib.])
 
 
 
@@ -209,10 +206,8 @@ AC_PROG_CPP
 AC_PROG_MAKE_SET
 #AC_PROG_RANLIB
 # add to switch libtool
-# addd LT_INIT by keno 2013-09-16
-LT_INIT
 AC_PROG_LIBTOOL
-#AM_PROG_LIBTOOL // remove by keno 2013-09-16
+AM_PROG_LIBTOOL
 AC_SUBST(LIBTOOL_DEPS)
 
 #

@@ -16,7 +16,7 @@ if SERIALTARGET
 #  libPOLY_a_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include
 #  libPOLY_a_SOURCES =  
   lib_LTLIBRARIES = libPOLY.la
-  libPOLY_la_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include 
+  libPOLY_la_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include -DPL_REAL=@PL_REAL@
 #  libPOLY_la_LDFLAGS = @LT_STATIC@
 #  libPOLY_la_LDFLAGS = 
   libPOLY_la_SOURCES = \
@@ -24,6 +24,7 @@ if SERIALTARGET
      c_lang/CPolylib.cxx \
      file_io/stl.cxx \
      file_io/obj.cxx \
+     file_io/vtk.cxx \
      file_io/triangle_id.cxx \
      file_io/TriMeshIO.cxx \
      groups/PolygonGroup.cxx \
@@ -31,6 +32,9 @@ if SERIALTARGET
      polygons/TriMesh.cxx \
      polygons/VTree.cxx \
      polygons/Vertex.cxx \
+     polygons/DVertex.cxx \
+     polygons/DVertexTriangle.cxx \
+     polygons/DVertexManager.cxx \
      polygons/VertexList.cxx \
      polygons/VertKDT.cxx \
      util/time.cxx
@@ -39,7 +43,7 @@ else
   # libMPIPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
   # libMPIPOLY_a_SOURCES = 
   lib_LTLIBRARIES = libMPIPOLY.la
-  libMPIPOLY_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+  libMPIPOLY_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include -DPL_REAL=@PL_REAL@
 #  libMPIPOLY_la_LDFLAGS = @LT_STATIC@
   libMPIPOLY_la_SOURCES = \
      MPIPolylib.cxx \
@@ -48,6 +52,7 @@ else
      c_lang/CPolylib.cxx \
      file_io/stl.cxx \
      file_io/obj.cxx \
+     file_io/vtk.cxx \
      file_io/triangle_id.cxx \
      file_io/TriMeshIO.cxx \
      groups/PolygonGroup.cxx \
@@ -55,11 +60,14 @@ else
      polygons/TriMesh.cxx \
      polygons/VTree.cxx \
      polygons/Vertex.cxx \
+     polygons/DVertex.cxx \
+     polygons/DVertexTriangle.cxx \
+     polygons/DVertexManager.cxx \
      polygons/VertexList.cxx \
      polygons/VertKDT.cxx \
      util/time.cxx
 endif
-  
+
 
 nobase_include_HEADERS = \
   $(top_builddir)/include/MPIPolylib.h \
@@ -77,6 +85,7 @@ nobase_include_HEADERS = \
   $(top_builddir)/include/common/vec3f_func.h \
   $(top_builddir)/include/file_io/stl.h \
   $(top_builddir)/include/file_io/obj.h \
+  $(top_builddir)/include/file_io/vtk.h \
   $(top_builddir)/include/file_io/triangle_id.h \
   $(top_builddir)/include/file_io/TriMeshIO.h \
   $(top_builddir)/include/groups/PolygonGroup.h \
@@ -86,6 +95,9 @@ nobase_include_HEADERS = \
   $(top_builddir)/include/polygons/TriMesh.h \
   $(top_builddir)/include/polygons/VTree.h \
   $(top_builddir)/include/polygons/Vertex.h \
+  $(top_builddir)/include/polygons/DVertex.h \
+  $(top_builddir)/include/polygons/DVertexTriangle.h \
+  $(top_builddir)/include/polygons/DVertexManager.h \
   $(top_builddir)/include/polygons/VertexList.h \
   $(top_builddir)/include/polygons/VertKDT.h \
   $(top_builddir)/include/util/time.h \

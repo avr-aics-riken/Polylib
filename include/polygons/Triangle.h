@@ -36,7 +36,7 @@ public:
 	///
       	/// コンストラクタ。
 	///
-	/// @param[in] vertex ポリゴンの頂点。
+	/// @param[in] vertex_ptr ポリゴンの頂点。
 	/// @attention 面積と法線はvertexを元に自動計算される。
 	///
 	Triangle(
@@ -50,11 +50,10 @@ public:
 		calc_area();
 	}
 
-
 	///
-	/// コンストラクタ。
+        /// コンストラクタ。
 	///
-	/// @param[in] vertex	ポリゴンの頂点。
+	/// @param[in] vertex_ptr	ポリゴンの頂点。
 	/// @param[in] normal	法線。
 	/// @attention 面積はvertexを元に自動計算される。
 	///
@@ -73,7 +72,7 @@ public:
 	///
 	/// コンストラクタ。
 	///
-	/// @param[in] vertex	ポリゴンの頂点。
+	/// @param[in] vertex_ptr	ポリゴンの頂点。
 	/// @param[in] normal	法線。
 	/// @param[in] area		ポリゴンの面積。
 	///
@@ -97,11 +96,11 @@ public:
 	///
 	/// 頂点を設定。
 	///
-	/// @param[in] vertex		三角形の3頂点。
+	/// @param[in] vertex_ptr		三角形の3頂点。
 	/// @param[in] calc_normal	法線ベクトルを再計算するか？
 	/// @param[in] calc_area	面積を再計算するか？
 	///
-	void set_vertexes(
+  virtual void set_vertexes(
 			  //Vec3<T>	vertex[3], 
 		 Vertex<T>* vertex_ptr[3],
 		bool	calc_normal, 
@@ -128,7 +127,7 @@ public:
 	// }
 
 
-	Vertex<T>** get_vertex() const {
+  virtual Vertex<T>** get_vertex() const {
 	  //	return const_cast<Vec3<T>*>(m_vertex_ptr);
 	  return const_cast<Vertex<T>**>( m_vertex_ptr);
 	}
@@ -138,7 +137,7 @@ public:
 	///
 	/// @return 法線ベクトル。
 	///
-	Vec3<T> get_normal() const {
+  virtual Vec3<T> get_normal() const {
 		return m_normal;
 	}
 
@@ -147,7 +146,7 @@ public:
 	///
 	/// @return 面積。
 	///
-	T get_area() const {
+  virtual T get_area() const {
 	  // std::cout << __func__<<" " <<m_area<<std::endl;
 		return m_area;
 	}
@@ -156,7 +155,7 @@ public:
 	/// ユーザ定義IDを設定。
 	///
 	///
-	void set_exid( int id ) {
+  virtual void set_exid( int id ) {
 		m_exid = id;
 	}
 
@@ -165,7 +164,7 @@ public:
 	///
 	/// @return ユーザ定義ID。
 	///
-	int get_exid() const {
+  virtual int get_exid() const {
 		return m_exid;
 	}
 
@@ -173,7 +172,7 @@ public:
 	/// ユーザ定義状態変数を設定。
 	///
 	///
-	void set_shell( int val ) {
+  virtual void set_shell( int val ) {
 		m_shell = val;
 	}
 
@@ -182,7 +181,7 @@ public:
 	///
 	/// @return ユーザ定義状態変数。
 	///
-	int get_shell() const {
+  virtual int get_shell() const {
 		return m_shell;
 	}
 
@@ -190,17 +189,25 @@ protected:
         ///
 	/// 法線ベクトル算出。
 	///
-	void calc_normal() {
-	  Vec3<T> a = *(m_vertex_ptr[1]) - *(m_vertex_ptr[0]);
-	  Vec3<T> b = *(m_vertex_ptr[2]) - *(m_vertex_ptr[0]);
-		m_normal = (cross(a,b)).normalize();
+  virtual void calc_normal() {
+		// double演算に変更 2013.10.10 tkawanab
+		Vec3<double> vd[3];
+		vd[0].assign( m_vertex_ptr[0]->t[0], m_vertex_ptr[0]->t[1], m_vertex_ptr[0]->t[2] );
+		vd[1].assign( m_vertex_ptr[1]->t[0], m_vertex_ptr[1]->t[1], m_vertex_ptr[1]->t[2] );
+		vd[2].assign( m_vertex_ptr[2]->t[0], m_vertex_ptr[2]->t[1], m_vertex_ptr[2]->t[2] );
+		Vec3<double> ad = vd[1] - vd[0];
+		Vec3<double> bd = vd[2] - vd[0];
 
+		Vec3<double> normald = (cross(ad,bd)).normalize();
+		m_normal[0] = normald[0];
+		m_normal[1] = normald[1];
+		m_normal[2] = normald[2];
 	}
 
 	///
 	/// 面積算出。
 	///
-	void calc_area() {
+  virtual void calc_area() {
 	  Vec3<T> a = *(m_vertex_ptr[1]) - *(m_vertex_ptr[0]);
 	  Vec3<T> b = *(m_vertex_ptr[2]) - *(m_vertex_ptr[0]);
 		T al = a.length();
@@ -348,15 +355,19 @@ public:
 	///
 	///  @param[in] id	三角形ポリゴンID。
 	///
-	void set_id(int id)				{m_id = id;}
+  virtual void set_id(int id)				{m_id = id;}
 
 	///
 	/// 三角形ポリゴンIDを返す。
 	///
 	///  @return 三角形ポリゴンID。
 	///
-	int get_id() const				{return m_id;}
+  virtual int get_id() const				{return m_id;}
 
+
+
+
+ 
 protected:
 	//=======================================================================
 	// クラス変数

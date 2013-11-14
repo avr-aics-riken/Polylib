@@ -32,7 +32,7 @@ public:
   /// コンストラクタ  
   ///
   ///
-  Vertex(){};
+ Vertex(){};
 
   /// コンストラクタ  
   ///
@@ -51,7 +51,7 @@ public:
   /// @param[in] y 座標
   /// @param[in] z 座標
 
-  Vertex(T x,T y,T z){
+ Vertex(T x,T y,T z){
     this->t[0]=x;
     this->t[1]=y;
     this->t[2]=z;
@@ -61,25 +61,27 @@ public:
   ///  index アクセス
   ///
 
-  T& operator [](const AxisEnum& axis) { 
+virtual  T& operator [](const AxisEnum& axis) { 
     return this->t[axis];
   }
+  ///
   ///  index アクセス
   ///
 
-  const T& operator [](const AxisEnum& axis) const {
+virtual   const T& operator [](const AxisEnum& axis) const {
     return this->t[axis];
   }
 
 
-  T x() const{
-    return this->t[AXIS_X];
-  }
+// virtual   T x() const{
+//     return this->t[AXIS_X];
+//   }
 
+  ///
   ///  2乗距離
   ///
 
-  T distanceSquared(Vertex v){
+virtual  T distanceSquared(Vertex v){
 
     Vec3<T> vdis(this->t[0]-v.t[0],this->t[1]-v.t[1],this->t[2]-v.t[2]);
 
@@ -102,26 +104,14 @@ public:
 
   ///距離
 
-  T distance(Vertex v){
+virtual   T distance(Vertex v){
     return sqrt(distanceSquared(v));
   }
 
+
+
  };
 
-/* template <typename T> */
-/*   class Vertex_kdtree{ */
-
-
-/*  }; */
-
-/* template <typename T> */
-/*   class Vertex_map{ */
-  
-  
-
-/*  }; */
-
- 
 
 }
 

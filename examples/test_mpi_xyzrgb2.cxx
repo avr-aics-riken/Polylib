@@ -9,8 +9,8 @@
  *
  */
 
-#include <iostream>
 #include "mpi.h"
+#include <iostream>
 #include "Polylib.h"
 #include "MPIPolylib.h"
 //#include "CarGroup.h"
@@ -21,6 +21,7 @@ using namespace std;
 using namespace PolylibNS;
 
 //#define PL_REAL double
+
 #define PL_REAL float
 template <typename T>
 struct MyParallelInfo {
@@ -74,14 +75,15 @@ int main(int argc, char** argv ){
   p_polylib->show_group_hierarchy();
   cout << "program at 4 on rank :"<<rank<<endl;
   string fname="";
-  string stl="stl_a";
+  string stl="obj_b";
+  // string stl="stl_b";
   string extend="";
   //  ID_FORMAT id_format=ID_BIN;
   ID_FORMAT id_format=ID_ASCII;
   //  p_polylib->save_rank0(&fname,stl,extend);
   p_polylib->save_parallel(&fname,stl,extend,id_format);
-
+  cout << "program at 5 on rank :"<<rank<<endl;
   MPI_Finalize();
-  
+  cout << "program at 6 on rank :"<<rank<<endl;
   return 0;
 }

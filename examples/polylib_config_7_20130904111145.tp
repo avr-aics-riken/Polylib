@@ -1,8 +1,0 @@
-"Polylib" {
-    "tmp" {
-        "sphere" {
-            "filepath" = "tmp_sphere_7_20130904111145.stlb"
-        }
-    }
-    "tolerance" = 1.0e-12
-}

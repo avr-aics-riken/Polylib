@@ -593,11 +593,16 @@ std::vector<PrivateTriangle<T>*>* VTree<T>::search(
 	BBox<T>	*bbox, 
 	bool	every
 ) const {
+  //#define DEBUG_VTREE
+#ifdef DEBUG
+	PL_DBGOSH << "VTree::search1:@@@------------------------@@@" << std::endl;
+#endif
+
 #ifdef DEBUG_VTREE
 	PL_DBGOSH << "VTree::search1:@@@------------------------@@@" << std::endl;
 	Vec3<T> min = bbox->getPoint(0);
 	Vec3<T> max = bbox->getPoint(7);
-	PL_DBGOSH << "VTree::min(" << min << "),max(" << max << ")" << std::endl;
+	PL_DBGOSH << "VTree::search1:min(" << min << "),max(" << max << ")" << std::endl;
 #endif
 
 	if (m_root == 0) {
@@ -605,21 +610,23 @@ std::vector<PrivateTriangle<T>*>* VTree<T>::search(
 		exit(1);
 	}
 	std::vector<VElement<T>*> vlist;
+	//PL_DBGOSH << "VTree::search search_recursive start" << std::endl;
 	search_recursive(m_root, *bbox, every, &vlist);
-
+	//PL_DBGOSH << "VTree::search search_recursive end" << std::endl;
 	typename std::vector<VElement<T>*>::iterator itr=vlist.begin();
 
 #ifdef DEBUG_VTREE
 	PL_DBGOSH << "VTree::search_recursive end" << std::endl;
-	for (; itr != vlist.end(); itr++) {
-		PL_DBGOSH << "VTree::search:tid=" << (*itr)->get_triangle()->get_id() 
-				  << std::endl;
-	}
+	/* for (; itr != vlist.end(); itr++) { */
+	/* 	PL_DBGOSH << "VTree::search:tid=" << (*itr)->get_triangle()->get_id()  */
+	/* 			  << std::endl; */
+	/* } */
 	itr=vlist.begin();
 #endif
 
 	std::vector<PrivateTriangle<T>*> *tri_list = new std::vector<PrivateTriangle<T>*>;
 	for (; itr != vlist.end(); itr++) {
+
 #ifdef MEMCOPY_TYPE
 		PrivateTriangle<T> *tri = new PrivateTriangle<T>(
 				(*itr)->getVertex(), (*itr)->get_normal(),
@@ -631,9 +638,12 @@ std::vector<PrivateTriangle<T>*>* VTree<T>::search(
 		tri_list->push_back(*tri);
 		delete(tri);
 #endif
+
 		tri_list->push_back((*itr)->get_triangle());
+
 	}
 	return tri_list;
+	///#undef DEBUG_VTREE
 }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -698,7 +708,7 @@ unsigned int VTree<T>::memory_size() {
 	unsigned int	node_cnt = 1;		// ノード数
 	unsigned int	poly_cnt = 0;		// ポリゴン数
 	unsigned int	size;
-
+	
 	if ((vnode = m_root->get_left()) != NULL) {; 
 		node_count(vnode, &node_cnt, &poly_cnt);
 	}
@@ -706,7 +716,7 @@ unsigned int VTree<T>::memory_size() {
 	PL_DBGOSH << "VTree<T>::memory_size1():node,poly=" << node_cnt << "," 
 			  << poly_cnt << std::endl;
 #endif
-		
+
 	if ((vnode = m_root->get_right()) != NULL) {; 
 		node_count(vnode, &node_cnt, &poly_cnt);
 	}
@@ -718,7 +728,10 @@ unsigned int VTree<T>::memory_size() {
 	size  = sizeof(VTree<T>);
 	size += sizeof(VNode<T>)	 * node_cnt;
 	size += sizeof(VElement<T>) * poly_cnt;
+
 	return size;
+
+	
 }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -848,14 +861,43 @@ void VTree<T>::search_recursive(
 	bool				every, 
 	std::vector<VElement<T>*>	*vlist
 ) const {
+  //#define DEBUG_VTREE
 #ifdef DEBUG_VTREE
 try{
-	PL_DBGOSH << "VTree<T>::search_recursive:@@@----------------------@@@" << std::endl;
+	PL_DBGOSH << "VTree<T>::search_recursive:@@@----------------------@@@ " 
+		  << vn << " " << vn->get_left() << " "<< vn->get_right()<< std::endl;
 #endif
 	if (vn->is_leaf()) {
-	  typename std::vector<VElement<T>*>::const_iterator itr = vn->get_vlist().begin();
+#ifdef DEBUG_VTREE
+	PL_DBGOSH << "VTree<T>::search_recursive:@@@--------at leaf----------@@@" 
+		  << vn << " " << vn->get_left() << " "<< vn->get_right()<< std::endl;
+#endif
+	typename std::vector<VElement<T>*>::const_iterator itr = vn->get_vlist().begin();
+#ifdef DEBUG_VTREE
+	PL_DBGOSH << "VTree<T>::search_recursive:" 
+		  << vn->get_vlist().size() << std::endl;
+#endif
 		for (; itr != vn->get_vlist().end(); itr++) {
-			// determine between bbox and 3 vertices of each triangle.
+
+#ifdef DEBUG_VTREE
+	PL_DBGOSH << "VTree<T>::search_recursive: itr " 
+		  << *itr 
+		  << " "<<(*itr)->get_triangle() 		  
+		  << " "<<(*itr)->get_triangle()->get_vertex()<< std::endl;
+	PL_DBGOSH << "VTree<T>::search_recursive: v0"
+		  <<*((*itr)->get_triangle()->get_vertex()[0])<< std::endl;
+	PL_DBGOSH << "VTree<T>::search_recursive: v1"
+		  <<*((*itr)->get_triangle()->get_vertex()[1])<< std::endl;
+	PL_DBGOSH << "VTree<T>::search_recursive: v2"
+		  <<*((*itr)->get_triangle()->get_vertex()[2])<< std::endl;
+	PL_DBGOSH << "VTree<T>::search_recursive: "
+		  << " ("<<((*itr)->get_bbox()).min
+		  << ") ("<<((*itr)->get_bbox()).max
+		  <<")"
+		  << std::endl;
+#endif
+
+		// determine between bbox and 3 vertices of each triangle.
 			if (every == true) {
 				bool iscontain = true;
 				//const Vec3<T> *temp = (*itr)->get_triangle()->get_vertex();
@@ -872,12 +914,38 @@ try{
 			}
 			else{
 				// determine between bbox and bbox crossed
-				BBox<T> e_bbox = (*itr)->get_bbox();
 
+#ifdef DEBUG_VTREE
+			  PL_DBGOSH << "VTree<T>::search_recursive: every == false " <<std::endl;
+#endif
+				BBox<T> e_bbox = (*itr)->get_bbox();
 				if (e_bbox.crossed(bbox) == true) {
-						vlist->push_back(*itr);
+#ifdef DEBUG_VTREE
+				  PL_DBGOSH << "VTree<T>::search_recursive: crossed true " <<std::endl;
+#endif
+				  vlist->push_back(*itr);
+#ifdef DEBUG_VTREE
+				  PL_DBGOSH << "VTree<T>::search_recursive: add itr to vlist " <<std::endl;
+#endif
+
+
+				} else {
+
+#ifdef DEBUG_VTREE
+				  PL_DBGOSH << "VTree<T>::search_recursive: crossed false " <<std::endl;
+#endif
 				}
+
+				//PL_DBGOSH << "VTree<T>::search_recursive: reached? " <<std::endl;
+#ifdef DEBUG_VTREE
+				PL_DBGOSH << "VTree<T>::search_recursive: min " 
+					  << e_bbox.min<< " max "
+					  <<e_bbox.max<< " " 
+					  << e_bbox.crossed(bbox) <<std::endl;
+#endif
+
 			}
+			
 		}
 #ifdef USE_DEPTH
 		PL_DBGOSH << "VTree<T>::search_recursive:depth=" << vn->get_depth() 
@@ -890,9 +958,13 @@ try{
 	}
 
 #ifdef DEBUG_VTREE
+#ifdef DEBUG_VTREE
+	PL_DBGOSH << "VTree<T>::search_recursive:@@@--------at Node----------@@@" << std::endl;
+#endif
+
 	Vec3<T> min = bbox.getPoint(0);
 	Vec3<T> max = bbox.getPoint(7);
-	PL_DBGOSH << "VTree<T>::min(" << min << "),max(" << max << ")" << std::endl;
+	PL_DBGOSH << "VTree<T>::search_recursive min(" << min << "),max(" << max << ")" << std::endl;
 #endif
 
 	BBox<T> lbox = vn->get_left()->get_bbox_search();
@@ -917,6 +989,8 @@ catch(char *str) {
 	std::cout << str;
 }
 #endif
+
+//#undef DEBUG_VTREE
 }
 
 // private ////////////////////////////////////////////////////////////////////
@@ -1009,23 +1083,25 @@ void VTree<T>::node_count(
 ) {
 	VNode<T>	*vnode;
 
+
 #ifdef DEBUG_VTREE
 	PL_DBGOSH << "VTree<T>::node_count1():" << *node_cnt << std::endl;
 #endif
 	if ((vnode = parent->get_left()) != NULL) {; 
 		(*node_cnt)++;
 		node_count(vnode, node_cnt, tri_cnt);
-	}
-	else {
+	} else {
 		(*tri_cnt) += parent->get_elements_num();
 	}
 #ifdef DEBUG_VTREE
 	PL_DBGOSH << "VTree::node_count2():" << *node_cnt << std::endl;
 #endif
+
 	if ((vnode = parent->get_right()) != NULL) {; 
 		(*node_cnt)++;
 		node_count(vnode, node_cnt, tri_cnt);
 	}
+
 }
 
 

@@ -80,6 +80,11 @@ template <typename T>
 POLYLIB_STAT CarGroup<T>::move(PolylibMoveParams& params){
 
   //   write code here
+  
+  
+  //init_check_leaped();
+
+  //VertexList<T> * m_polygons->m_get_vtx_list
 
 
   return PLSTAT_OK;

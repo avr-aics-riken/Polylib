@@ -9,8 +9,8 @@
  *
  */
 
-#include <iostream>
 #include "mpi.h"
+#include <iostream>
 #include "Polylib.h"
 #include "MPIPolylib.h"
 //#include "CarGroup.h"
@@ -20,8 +20,8 @@
 using namespace std;
 using namespace PolylibNS;
 
-//#define PL_REAL double
-#define PL_REAL float
+#define PL_REAL double
+//#define PL_REAL float
 template <typename T>
 struct MyParallelInfo {
   T bpos[3]; //基準座標

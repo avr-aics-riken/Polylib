@@ -49,6 +49,12 @@ namespace PolylibNS {
 		buff[i++] = c;
 	}
 
+	int icheck, icheck2;
+	icheck = strncmp( buff, "OBJ_BIN TRIA V_NORMAL COND_ID",29);
+	if (icheck ==0) return false ;
+	icheck2 = strncmp( buff, "OBJ_BIN TRIA COND_ID",20);
+	if (icheck2 ==0) return false ;
+
 	if(buff[0]=='#') return true;
 	if(buff[0]=='v') return true;
 

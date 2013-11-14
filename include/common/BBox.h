@@ -14,6 +14,7 @@
 
 #include <algorithm>
 #include <list>
+#include "PolylibCommon.h"
 #include "common/Vec2.h"
 #include "common/Vec3.h"
 #include "common/axis.h"
@@ -58,12 +59,24 @@ public:
 	}
 
 	void add(const Vec3<T>& v) {
+	  // PL_DBGOSH << "BBox::"<<__func__
+	  // 	    << " "<< v[0] 
+	  // 	    << " "<< v[1] 
+	  // 	    << " "<< v[2] 
+	  // 	    <<std::endl;
+	  
 		min[0] = std::min(min[0], v[0]);
+		//PL_DBGOSH << "BBox::"<<__func__<<"0"<<std::endl;
 		min[1] = std::min(min[1], v[1]);
+		//PL_DBGOSH << "BBox::"<<__func__<<"1"<<std::endl;
 		min[2] = std::min(min[2], v[2]);
+		//PL_DBGOSH << "BBox::"<<__func__<<"3"<<std::endl;
 		max[0] = std::max(max[0], v[0]);
+		//PL_DBGOSH << "BBox::"<<__func__<<"4"<<std::endl;
 		max[1] = std::max(max[1], v[1]);
+		//PL_DBGOSH << "BBox::"<<__func__<<"5"<<std::endl;
 		max[2] = std::max(max[2], v[2]);
+		//PL_DBGOSH << "BBox::"<<__func__<<std::endl;
 	}
 
 	Vec3<T> getPoint(int idx) const {
@@ -78,7 +91,7 @@ public:
 		return p;
 	}
 
-	Vec3<T> center() const { return ((T) .5) * (min + max); }
+	Vec3<T> center() const { return ((T)(0.5) * (min + max)); }
 	Vec3<T> size() const { return max - min; }
 	T xsize() const { return max[0] - min[0]; }
 	T ysize() const { return max[1] - min[1]; }

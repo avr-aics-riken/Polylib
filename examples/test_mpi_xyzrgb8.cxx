@@ -9,8 +9,8 @@
  *
  */
 
-#include <iostream>
 #include "mpi.h"
+#include <iostream>
 #include "Polylib.h"
 #include "MPIPolylib.h"
 //#include "CarGroup.h"
@@ -45,7 +45,7 @@ static MyParallelInfo<PL_REAL> myParaInfos[8] = {
 
 int main(int argc, char** argv ){
   int rank;
-  unsigned int step;
+   unsigned int step;
   POLYLIB_STAT stat;
   PolylibMoveParams params;
 
@@ -79,14 +79,15 @@ int main(int argc, char** argv ){
   p_polylib->show_group_hierarchy();
   cout << "program at 4 on rank :"<<rank<<endl;
   string fname="";
-  string stl="stl_a";
+  //  string stl="obj_b";
+  string stl="stl_b";
   string extend="";
-  //  ID_FORMAT id_format=ID_BIN;
-  ID_FORMAT id_format=ID_ASCII;
+  ID_FORMAT id_format=ID_BIN;
+  //  ID_FORMAT id_format=ID_ASCII;
   //  p_polylib->save_rank0(&fname,stl,extend);
   p_polylib->save_parallel(&fname,stl,extend,id_format);
 
   MPI_Finalize();
-  
+
   return 0;
 }

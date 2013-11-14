@@ -29,6 +29,7 @@
 // #define MPITAG_TRIAS				5
 
 
+#include "mpi.h"
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -36,7 +37,6 @@
 #include <map>
 //#include "groups/PolygonGroup.h"
 //#include "c_lang/CMPIPolylib.h"
-#include "mpi.h"
 
 //#define PL_MPI_REAL MPI_DOUBLE
 #if PL_REAL==float
