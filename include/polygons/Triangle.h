@@ -33,6 +33,23 @@ public:
 	///
 	/// コンストラクタ。
 	///
+	/// @param[in] tria コピー元。
+	///
+	Triangle(
+		const Triangle	&tria
+	) {
+		m_vertex[0] = tria.m_vertex[0];
+		m_vertex[1] = tria.m_vertex[1];
+		m_vertex[2] = tria.m_vertex[2];
+		m_normal = tria.m_normal;
+		m_area = tria.m_area;
+		m_exid = tria.m_exid;
+		m_shell = tria.m_shell;
+	}
+
+	///
+	/// コンストラクタ。
+	///
 	/// @param[in] vertex ポリゴンの頂点。
 	/// @attention 面積と法線はvertexを元に自動計算される。
 	///
@@ -278,9 +295,9 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-		Triangle	tri, 
+		const Triangle	&tri, 
 		int			id
-	) : Triangle(tri.get_vertex(), tri.get_normal()) {
+	) : Triangle(tri) {
 		m_id = id;
 	}
 
@@ -291,7 +308,7 @@ public:
 	///
 	PrivateTriangle(
 		const PrivateTriangle	&tri 
-	) : Triangle(tri.get_vertex(), tri.get_normal()) {
+	) : Triangle(tri) {
 		m_id = tri.m_id;
 	}
 
@@ -311,6 +328,29 @@ public:
 			m_vertex[i].t[2] = *dim++;
 		}
 		m_id = id;
+		calc_normal();
+		calc_area();
+	}
+
+	///
+	/// コンストラクタ。
+	///
+	/// @param[in] dim		ポリゴン頂点座標配列。
+	/// @param[in] id		三角形ポリゴンID。
+	/// @param[in] exid		三角形ポリゴンのユーザ定義ID。
+	///
+	PrivateTriangle(
+		float		*dim,
+		int			id,
+		int			exid
+	){
+		for( int i=0; i<3; i++ ) {
+			m_vertex[i].t[0] = *dim++;
+			m_vertex[i].t[1] = *dim++;
+			m_vertex[i].t[2] = *dim++;
+		}
+		m_id = id;
+		m_exid = exid;
 		calc_normal();
 		calc_area();
 	}

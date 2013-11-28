@@ -24,7 +24,8 @@
 #define	MPITAG_CONFIG				2
 #define	MPITAG_NUM_TRIAS			3
 #define MPITAG_TRIA_IDS				4
-#define MPITAG_TRIAS				5
+#define MPITAG_TRIA_EXIDS			5
+#define MPITAG_TRIAS				6
 
 
 using namespace std;
@@ -586,6 +587,8 @@ MPIPolylib::migrate(
 	int          *p_send_num_trias_array;
 	vector<int>   send_tria_ids;
 	int          *p_send_tria_ids_array;
+	vector<int>   send_tria_exids;
+	int          *p_send_tria_exids_array;
 	vector<float> send_trias;
 	float        *p_send_trias_array;
 
@@ -593,11 +596,12 @@ MPIPolylib::migrate(
 	// 配列アドレス記憶用ベクタ
 	vector<int*>  send_num_trias_bufs;
 	vector<int*>  send_tria_ids_bufs;
+	vector<int*>  send_tria_exids_bufs;
 	vector<float*> send_trias_bufs;
 
 	// 送信用MPI_Reqeust配列を確保
-	MPI_Request *mpi_reqs = new MPI_Request[ m_neibour_procs.size() * 3 ]; // 隣接PEごとに3回Isendする
-	MPI_Status  *mpi_stats = new MPI_Status[ m_neibour_procs.size() * 3 ];
+	MPI_Request *mpi_reqs = new MPI_Request[ m_neibour_procs.size() * 4 ]; // 隣接PEごとに4回Isendする
+	MPI_Status  *mpi_stats = new MPI_Status[ m_neibour_procs.size() * 4 ];
 	int reqs_pos = 0;
 
 	//隣接PEごとに移動三角形情報を送信
@@ -607,6 +611,7 @@ MPIPolylib::migrate(
 		send_num_trias.clear();
 		send_trias.clear();
 		send_tria_ids.clear();
+		send_tria_exids.clear();
 		
 		// 全ポリゴングループに対して
 		for( group_itr=m_pg_list.begin(); group_itr!=m_pg_list.end(); group_itr++ ) {
@@ -641,6 +646,9 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 			// 三角形ID情報を送信データに追加
 			pack_tria_ids( &send_tria_ids, p_trias );
 
+			// 三角形のユーザ定義ID情報を送信データに追加
+			pack_tria_exids( &send_tria_exids, p_trias );
+
 			// search結果の後始末
 			if( p_trias ) delete p_trias;
 		}
@@ -649,6 +657,7 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 		// 送信データ初期化
 		p_send_num_trias_array = NULL;
 		p_send_tria_ids_array  = NULL;
+		p_send_tria_exids_array  = NULL;
 		p_send_trias_array     = NULL;
 
 		// グループID,グループ毎三角形数リスト
@@ -665,6 +674,13 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 		for( i=0; i<send_tria_ids.size(); i++ ) {
 			p_send_tria_ids_array[i] = send_tria_ids[i];
 		}
+		// 三角形のユーザ定義IDリスト
+		if( send_tria_exids.size() > 0 ) {
+			p_send_tria_exids_array  = new int[ send_tria_exids.size() ];
+		}
+		for( i=0; i<send_tria_exids.size(); i++ ) {
+			p_send_tria_exids_array[i] = send_tria_exids[i];
+		}
 		// 三角形頂点リスト
 		if( send_trias.size() > 0 ) {
 			p_send_trias_array = new float[ send_trias.size() ];
@@ -676,6 +692,7 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 		// 送信データの先頭アドレスを記憶（MPI_Wait後にdeleteするため）
 		send_num_trias_bufs.push_back( p_send_num_trias_array );
 		send_tria_ids_bufs.push_back( p_send_tria_ids_array );
+		send_tria_exids_bufs.push_back( p_send_tria_exids_array );
 		send_trias_bufs.push_back( p_send_trias_array );
 
 		// 当該PEへ非同期送信 (MPI_Wait()は後でまとめて行う)
@@ -702,6 +719,13 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 					  << " MPITAG_TRIA_IDS faild." << endl;
 			return PLSTAT_MPI_ERROR;
 		}
+		if (MPI_Isend( p_send_tria_exids_array,  send_tria_exids.size(),
+					MPI_INT, (*procs_itr)->m_rank, MPITAG_TRIA_EXIDS,
+					m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
+			PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Isend,"
+					  << " MPITAG_TRIA_EXIDS faild." << endl;
+			return PLSTAT_MPI_ERROR;
+		}
 		if (MPI_Isend( p_send_trias_array,     send_trias.size(),
 					MPI_FLOAT, (*procs_itr)->m_rank, MPITAG_TRIAS,
 					m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
@@ -713,7 +737,7 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 
 	//隣接PEごとに移動三角形情報を受信
 	for (procs_itr = m_neibour_procs.begin(); procs_itr != m_neibour_procs.end(); procs_itr++) {
-		int pos_id, pos_tria;
+		int pos_id, pos_exid, pos_tria;
 		MPI_Request mpi_req;
 		MPI_Status  mpi_stat;
 
@@ -761,6 +785,20 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 			return PLSTAT_MPI_ERROR;
 		}
 
+		// 三角形のユーザ定義IDリストを非同期受信
+		int *p_exidarray = new int[ total_tria_num ];
+		if (MPI_Irecv( p_exidarray,  total_tria_num, MPI_INT, (*procs_itr)->m_rank,
+					 MPITAG_TRIA_EXIDS, m_mycomm, &mpi_req ) != MPI_SUCCESS) {
+			PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Irecv,"
+					  << "MPI_INT faild." << endl;
+			return PLSTAT_MPI_ERROR;
+		}
+		if (MPI_Wait( &mpi_req, &mpi_stat ) != MPI_SUCCESS) {
+			PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Wait,"
+					  << "MPI_INT faild." << endl;
+			return PLSTAT_MPI_ERROR;
+		}
+
 		// 三角形リストを非同期受信
 		float *p_triaarray = new float[ total_tria_num*3*3 ];
 		if (MPI_Irecv( p_triaarray, total_tria_num*3*3, MPI_FLOAT, (*procs_itr)->m_rank,
@@ -777,6 +815,7 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 
 		// 各ポリゴングループに対して三角形情報を追加
 		pos_id = 0;
+		pos_exid = 0;
 		pos_tria = 0;
 		for( i=0; i<m_pg_list.size()*2-1; i+=2 ){
 
@@ -800,8 +839,9 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 			// ベクタに受信データ内容をコピー
 			for( j=0; j<num_trias; j++ ) {
 				tria_vec.push_back(
-						new PrivateTriangle(&p_triaarray[pos_tria], p_idarray[pos_id]) );
+						new PrivateTriangle(&p_triaarray[pos_tria], p_idarray[pos_id], p_exidarray[pos_exid]) );
 				pos_id++;
+				pos_exid++;
 				pos_tria+=9;
 			}
 
@@ -821,11 +861,12 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 		// 受信領域あとしまつ
 		delete[] p_intarray;
 		delete[] p_idarray;
+		delete[] p_exidarray;
 		delete[] p_triaarray;
 	}
 
 	// MPI_Isend()を纏めてアンロック
-	if (MPI_Waitall( m_neibour_procs.size()*3, mpi_reqs, mpi_stats ) != MPI_SUCCESS) {
+	if (MPI_Waitall( m_neibour_procs.size()*4, mpi_reqs, mpi_stats ) != MPI_SUCCESS) {
 		PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Waitall failed." << endl;
 		return PLSTAT_MPI_ERROR;
 	}
@@ -836,6 +877,9 @@ PL_DBGOSH << "pg_name:" << p_pg->get_name() << " movable:" << p_pg->get_movable(
 	}
 	for( i=0; i<send_tria_ids_bufs.size(); i++ ) {
 		delete[] send_tria_ids_bufs.at(i);
+	}
+	for( i=0; i<send_tria_exids_bufs.size(); i++ ) {
+		delete[] send_tria_exids_bufs.at(i);
 	}
 	for( i=0; i<send_trias_bufs.size(); i++ ) {
 		delete[] send_trias_bufs.at(i);
@@ -998,6 +1042,8 @@ MPIPolylib::send_polygons_to_all(
 	int          *p_send_num_trias_array;
 	vector<int>   send_tria_ids;
 	int          *p_send_tria_ids_array;
+	vector<int>   send_tria_exids;
+	int          *p_send_tria_exids_array;
 	vector<float> send_trias;
 	float        *p_send_trias_array;
 
@@ -1009,6 +1055,7 @@ MPIPolylib::send_polygons_to_all(
 		send_num_trias.clear();
 		send_trias.clear();
 		send_tria_ids.clear();
+		send_tria_exids.clear();
 		
 		// 全グループに対して
 		for (group_itr = m_pg_list.begin(); group_itr != m_pg_list.end(); group_itr++) {
@@ -1031,6 +1078,9 @@ MPIPolylib::send_polygons_to_all(
 			// 三角形ID情報を送信データに追加
 			pack_tria_ids( &send_tria_ids, p_trias );
 
+			// 三角形のユーザ定義ID情報を送信データに追加
+			pack_tria_exids( &send_tria_exids, p_trias );
+
 			// search結果の後始末
 			if( p_trias ) delete p_trias;
 		}
@@ -1039,6 +1089,7 @@ MPIPolylib::send_polygons_to_all(
 		// 送信データ配列初期化
 		p_send_num_trias_array = NULL;
 		p_send_tria_ids_array  = NULL;
+		p_send_tria_exids_array  = NULL;
 		p_send_trias_array     = NULL;
  
 		// グループID,グループ毎三角形数リスト
@@ -1054,6 +1105,13 @@ MPIPolylib::send_polygons_to_all(
 		}
 		for( i=0; i<send_tria_ids.size(); i++ ) {
 			p_send_tria_ids_array[i] = send_tria_ids[i];
+		}
+		// 三角形のユーザ定義IDリスト
+		if( send_tria_exids.size() > 0 ) {
+			p_send_tria_exids_array  = new int[ send_tria_exids.size() ];
+		}
+		for( i=0; i<send_tria_exids.size(); i++ ) {
+			p_send_tria_exids_array[i] = send_tria_exids[i];
 		}
 		// 三角形頂点座標リスト
 		if( send_trias.size() > 0 ) {
@@ -1084,6 +1142,12 @@ MPIPolylib::send_polygons_to_all(
 					  << "MPITAG_TRIA_IDS faild." << endl;
 			return PLSTAT_MPI_ERROR;
 		}
+		if (MPI_Send( p_send_tria_exids_array,  send_tria_exids.size(),  MPI_INT,
+			(*proc_itr)->m_rank, MPITAG_TRIA_EXIDS,  m_mycomm ) != MPI_SUCCESS) {
+			PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_all():MPI_Send,"
+					  << "MPITAG_TRIA_EXIDS faild." << endl;
+			return PLSTAT_MPI_ERROR;
+		}
 		if (MPI_Send( p_send_trias_array,     send_trias.size(),     MPI_FLOAT,
 			(*proc_itr)->m_rank, MPITAG_TRIAS,     m_mycomm ) != MPI_SUCCESS) {
 			PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_all():MPI_Send,"
@@ -1094,6 +1158,7 @@ MPIPolylib::send_polygons_to_all(
 		// 送信データの後始末
 		if( p_send_num_trias_array ) delete[] p_send_num_trias_array;
 		if( p_send_tria_ids_array )  delete[] p_send_tria_ids_array;
+		if( p_send_tria_exids_array )  delete[] p_send_tria_exids_array;
 		if( p_send_trias_array )     delete[] p_send_trias_array;
 	}
 	return PLSTAT_OK;
@@ -1160,6 +1225,25 @@ MPIPolylib::pack_tria_ids(
 	// 出力配列に、三角形IDを順に追加
 	for( unsigned int i=0; i<p_trias->size(); i++ ) {
 		p_vec->push_back( p_trias->at(i)->get_id() );
+	}
+	return PLSTAT_OK;
+}
+
+// protected //////////////////////////////////////////////////////////////////
+POLYLIB_STAT
+MPIPolylib::pack_tria_exids(
+	vector<int>* p_vec,
+	const vector<PrivateTriangle*>* p_trias
+)
+{
+#ifdef DEBUG
+	PL_DBGOSH << "MPIPolylib::pack_tria_exids() in. " << endl;
+#endif
+	if( p_trias == NULL ) return PLSTAT_OK;
+
+	// 出力配列に、三角形のユーザ定義IDを順に追加
+	for( unsigned int i=0; i<p_trias->size(); i++ ) {
+		p_vec->push_back( p_trias->at(i)->get_exid() );
 	}
 	return PLSTAT_OK;
 }
@@ -1269,7 +1353,7 @@ MPIPolylib::receive_polygons_from_rank0(
 #endif
 
 	unsigned int i, j;
-	unsigned int pos_id, pos_tria;
+	unsigned int pos_id, pos_exid, pos_tria;
 	MPI_Status mpi_stat;
 
 	// グループIDとグループ毎三角形数の対をrank0から受信
@@ -1311,6 +1395,22 @@ MPIPolylib::receive_polygons_from_rank0(
 	PL_DBGOS << ")" << endl;
 #endif
 
+	// 三角形のユーザ定義IDリストをrank0から受信
+	int *p_exidarray = new int[ total_tria_num ];
+	if (MPI_Recv( p_exidarray,  total_tria_num, MPI_INT, 0, 
+				MPITAG_TRIA_EXIDS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
+		PL_ERROSH << "[ERROR]MPIPolylib::receive_polygons_from_rank0()"
+				  << ":MPI_Recv,MPITAG_TRIA_EXIDS faild." << endl;
+		return PLSTAT_MPI_ERROR;
+	}
+#ifdef DEBUG
+	PL_DBGOSH << "    pexidarray:(";
+	for( i=0; i<total_tria_num; i++ ) {
+		PL_DBGOS << p_exidarray[i] << ",";
+	}
+	PL_DBGOS << ")" << endl;
+#endif
+
 	// 三角形リストをrank0から受信
 	float *p_triaarray = new float[ total_tria_num * 3 * 3 ];
 	if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, 0, 
@@ -1329,6 +1429,7 @@ MPIPolylib::receive_polygons_from_rank0(
 
 	// 各ポリゴングループに対して三角形情報を設定＆KD木構築
 	pos_id = 0;
+	pos_exid = 0;
 	pos_tria = 0;
 	for( i=0; i<m_pg_list.size()*2-1; i+=2 ){	// 偶数番目の値を処理
 
@@ -1351,8 +1452,9 @@ MPIPolylib::receive_polygons_from_rank0(
 
 		// ベクタに受信データ内容を設定
 		for( j=0; j<num_trias; j++ ) {
-			tria_vec.push_back( new PrivateTriangle(&p_triaarray[pos_tria], p_idarray[pos_id]) );
+			tria_vec.push_back( new PrivateTriangle(&p_triaarray[pos_tria], p_idarray[pos_id], p_exidarray[pos_exid]) );
 			pos_id++;
+			pos_exid++;
 			pos_tria+=9;
 		}
 
@@ -1371,6 +1473,7 @@ MPIPolylib::receive_polygons_from_rank0(
 	// 受信領域あとしまつ
 	delete[] p_intarray;
 	delete[] p_idarray;
+	delete[] p_exidarray;
 	delete[] p_triaarray;
 
 #ifdef DEBUG
@@ -1392,7 +1495,7 @@ MPIPolylib::gather_polygons(
 	POLYLIB_STAT ret;
 	unsigned int i, j;
 	int rank;
-	unsigned int pos_id, pos_tria;
+	unsigned int pos_id, pos_exid, pos_tria;
 	MPI_Status mpi_stat;
 
 	// 全rankからポリゴン情報を受信
@@ -1425,6 +1528,16 @@ MPIPolylib::gather_polygons(
 			return PLSTAT_MPI_ERROR;
 		}
 
+		// 三角形のユーザ定義IDリストを受信
+		int *p_exidarray = new int[ total_tria_num ];
+		if (MPI_Recv( p_exidarray,  total_tria_num, MPI_INT, rank, 
+					MPITAG_TRIA_EXIDS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
+			PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
+					  << ":MPI_Recv,MPITAG_TRIA_EXIDS faild.:rank=" << rank 
+					  << endl;
+			return PLSTAT_MPI_ERROR;
+		}
+
 		// 三角形リストを受信
 		float *p_triaarray = new float[ total_tria_num * 3 * 3 ];
 		if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, rank, 
@@ -1437,6 +1550,7 @@ MPIPolylib::gather_polygons(
 
 		// 各ポリゴングループに対して受信した三角形情報を追加
 		pos_id = 0;
+		pos_exid = 0;
 		pos_tria = 0;
 		for( i=0; i<m_pg_list.size() * 2; i++ ){
 
@@ -1459,8 +1573,9 @@ MPIPolylib::gather_polygons(
 
 			// ベクタに受信データ内容を設定
 			for( j=0; j<num_trias; j++ ) {
-				tria_vec.push_back( new PrivateTriangle(&p_triaarray[pos_tria], p_idarray[pos_id]) );
+				tria_vec.push_back( new PrivateTriangle(&p_triaarray[pos_tria], p_idarray[pos_id], p_exidarray[pos_exid]) );
 				pos_id++;
+				pos_exid++;
 				pos_tria+=9;
 			}
 
@@ -1482,6 +1597,7 @@ MPIPolylib::gather_polygons(
 		// 受信領域あとしまつ
 		if( p_intarray != NULL )  delete[] p_intarray;
 		if( p_idarray != NULL )   delete[] p_idarray;
+		if( p_exidarray != NULL )   delete[] p_exidarray;
 		if( p_triaarray != NULL ) delete[] p_triaarray;
 	}
 
@@ -1506,6 +1622,8 @@ MPIPolylib::send_polygons_to_rank0(
 	int          *p_send_num_trias_array;
 	vector<int>   send_tria_ids;
 	int          *p_send_tria_ids_array;
+	vector<int>   send_tria_exids;
+	int          *p_send_tria_exids_array;
 	vector<float> send_trias;
 	float        *p_send_trias_array;
 
@@ -1514,6 +1632,7 @@ MPIPolylib::send_polygons_to_rank0(
 	send_num_trias.clear();
 	send_trias.clear();
 	send_tria_ids.clear();
+	send_tria_exids.clear();
 	
 	// 全グループに対して
 	for (group_itr = m_pg_list.begin(); group_itr != m_pg_list.end(); group_itr++) {
@@ -1535,6 +1654,9 @@ MPIPolylib::send_polygons_to_rank0(
 		// 三角形ID情報を送信データに追加
 		pack_tria_ids( &send_tria_ids, p_trias );
 
+		// 三角形のユーザ定義ID情報を送信データに追加
+		pack_tria_exids( &send_tria_exids, p_trias );
+
 		// search結果の後始末
 		if( p_trias ) delete p_trias;
 		p_trias = NULL;
@@ -1548,6 +1670,10 @@ MPIPolylib::send_polygons_to_rank0(
 	p_send_tria_ids_array  = new int[ send_tria_ids.size() ];
 	for( i=0; i<send_tria_ids.size(); i++ )
 		p_send_tria_ids_array[i] = send_tria_ids[i];
+
+	p_send_tria_exids_array  = new int[ send_tria_exids.size() ];
+	for( i=0; i<send_tria_exids.size(); i++ )
+		p_send_tria_exids_array[i] = send_tria_exids[i];
 
 	p_send_trias_array =     new float[ send_trias.size() ];
 	for( i=0; i<send_trias.size(); i++ )
@@ -1574,6 +1700,12 @@ MPIPolylib::send_polygons_to_rank0(
 				  << ":MPI_Send,MPITAG_TRIA_IDS faild." << endl;
 		return PLSTAT_MPI_ERROR;
 	}
+	if (MPI_Send( p_send_tria_exids_array,  send_tria_exids.size(),  MPI_INT, 0,
+					MPITAG_TRIA_EXIDS,  m_mycomm ) != MPI_SUCCESS) {
+		PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0()"
+				  << ":MPI_Send,MPITAG_TRIA_EXIDS faild." << endl;
+		return PLSTAT_MPI_ERROR;
+	}
 	if (MPI_Send( p_send_trias_array,     send_trias.size(),   MPI_FLOAT, 0,
 					MPITAG_TRIAS,     m_mycomm ) != MPI_SUCCESS) {
 		PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0()"
@@ -1584,6 +1716,7 @@ MPIPolylib::send_polygons_to_rank0(
 	// 送信データの後始末
 	delete[] p_send_num_trias_array;
 	delete[] p_send_tria_ids_array;
+	delete[] p_send_tria_exids_array;
 	delete[] p_send_trias_array;
 
 	return PLSTAT_OK;

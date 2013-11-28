@@ -63,8 +63,7 @@ void TriMesh::init(const vector<PrivateTriangle*>* trias)
 	vector<PrivateTriangle*>::const_iterator itr;
 	for (itr = trias->begin(); itr != trias->end(); itr++) {
 		m_tri_list->push_back(
-			new PrivateTriangle((*itr)->get_vertex(),	(*itr)->get_normal(), 
-								(*itr)->get_area(),		(*itr)->get_id())
+			new PrivateTriangle(*(*itr)) 
 		);
 	}
 }

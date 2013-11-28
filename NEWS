@@ -14,6 +14,10 @@ RELEASE
 =======
 
 -------------------------
+Version 2.7.3  2013-11-28
+ - fix undistributed Triangle::m_exid at MPI
+
+-------------------------
 Version 2.7.2  2013-11-02
  - cleanup configure.ac
 

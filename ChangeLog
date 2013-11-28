@@ -16,6 +16,11 @@ REVISION HISTORY
 ------------------
 2013-11-02
 
+ r38 fix undistributed Triangle::m_exid at MPI [ver 2.7.3]
+
+------------------
+2013-11-02
+
  r37 cleanup configure.ac [ver 2.7.2]
    - expire MPICH version
    - introduce subdir-objects in Makefile.am

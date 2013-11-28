@@ -301,6 +301,19 @@ protected:
 	);
 
 	///
+	/// 三角形のユーザ定義IDの送信情報を作成。
+	/// 
+	/// @param[in,out] p_vec 情報追加先ベクタ
+	/// @param[in] p_trias グループ内三角形リスト
+	/// @return	POLYLIB_STATで定義される値が返る。
+	///
+	POLYLIB_STAT
+	pack_tria_exids(
+		std::vector<int>* p_vec,
+		const std::vector<PrivateTriangle*>* p_trias
+	);
+
+	///
 	/// 自領域内ポリゴンのみ抽出してポリゴン情報を再構築。
 	/// migrate実行後に行う。
 	/// 
