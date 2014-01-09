@@ -19,6 +19,7 @@ extern "C" {  // for C++
 
 #include "mpi.h"
 #include "common/PolylibStat.h"
+#include "file_io/TriMeshIO.h"
 #include "c_lang/CPolylib.h"
 
 
@@ -47,10 +48,10 @@ extern "C" {  // for C++
 POLYLIB_STAT
 mpipolylib_init_parallel_info(
 	MPI_Comm comm,
-	PL_REAL bpos[3],
+	REAL_TYPE bpos[3],
 	unsigned int bbsize[3],
 	unsigned int gcsize[3],
-	PL_REAL dx[3]
+	REAL_TYPE dx[3]
 );
 
 ///
@@ -149,8 +150,8 @@ mpipolylib_save_parallel(
 ///
 TriangleStruct** mpipolylib_search_polygons(
 	char* group_name,
-	PL_REAL min_pos[3],
-	PL_REAL max_pos[3],
+	REAL_TYPE min_pos[3],
+	REAL_TYPE max_pos[3],
 	int every, 
 	int *num_tri,
 	POLYLIB_STAT *err);

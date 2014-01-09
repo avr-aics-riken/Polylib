@@ -20,18 +20,16 @@
 using namespace std;
 using namespace PolylibNS;
 
-//#define PL_REAL double
-#define PL_REAL float
-template <typename T>
+
 struct MyParallelInfo {
-  T bpos[3]; //基準座標
+  REAL_TYPE bpos[3]; //基準座標
   unsigned bbsize[3]; //number of voxel 計算領域
   unsigned gcsize[3]; //number of guidecell voxel
-  T dx[3]; //size of voxel
+  REAL_TYPE dx[3]; //size of voxel
 };
 
 
-static MyParallelInfo<PL_REAL> myParaInfos[4] = {
+static MyParallelInfo myParaInfos[4] = {
   {{-220, -220,-220,}, {22,22,44,}, {1, 1,1,}, {10,10,10} },
   {{-220, 0,-220,}, {22,22,44,}, {1, 1,1,}, {10,10,10} },
   {{0, -220,-220,}, {22,22,44,}, {1, 1,1,}, {10,10,10} },
@@ -39,7 +37,12 @@ static MyParallelInfo<PL_REAL> myParaInfos[4] = {
 };
 
 
+#ifdef WIN32
+int main_test_mpi_xyzrgb4(int argc, char** argv ){
+#else
 int main(int argc, char** argv ){
+#endif
+
   int rank;
   unsigned int step;
   POLYLIB_STAT stat;
@@ -49,7 +52,7 @@ int main(int argc, char** argv ){
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
   cout << "Starting program on rank:"<<rank<<endl;
 
-  MPIPolylib<PL_REAL>* p_polylib = MPIPolylib<PL_REAL>::get_instance();
+  MPIPolylib* p_polylib = MPIPolylib::get_instance();
 
   cout << "program at 1 on rank :"<<rank<<endl;
 

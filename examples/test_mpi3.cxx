@@ -20,25 +20,32 @@
 using namespace std;
 using namespace PolylibNS;
 
-#define PL_REAL double
-//#define PL_REAL float
 
-template <typename T>
+
+
 struct MyParallelInfo {
-  T bpos[3]; //基準座標
+  REAL_TYPE bpos[3]; //基準座標
   unsigned bbsize[3]; //number of voxel 計算領域
   unsigned gcsize[3]; //number of guidecell voxel
-  T dx[3]; //size of voxel
+  REAL_TYPE dx[3]; //size of voxel
 };
 
-static MyParallelInfo<PL_REAL> myParaInfos[4] = {
+static MyParallelInfo myParaInfos[4] = {
   {{-1100, -1800,-1800,}, {18,18,18,}, {1, 1,1,}, {100,100,100} },
   {{-1100,     0,-1800,}, {18,18,18,}, {1, 1,1,}, {100,100,100} },
   {{-1100, -1800,    0,}, {18,18,18,}, {1, 1,1,}, {100,100,100} },
   {{-1100,     0,    0,}, {18,18,18,}, {1, 1,1,}, {100,100,100} }
 };
 
+
+
+#ifdef WIN32
+int main_test_mpi3(int argc, char** argv ){
+#else
 int main(int argc, char** argv ){
+#endif
+
+
   int rank;
   unsigned int step;
   POLYLIB_STAT stat;
@@ -48,9 +55,9 @@ int main(int argc, char** argv ){
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
   cout << "Starting program on rank:"<<rank<<endl;
 
-  MPIPolylib<PL_REAL>* p_polylib = MPIPolylib<PL_REAL>::get_instance();
+  MPIPolylib* p_polylib = MPIPolylib::get_instance();
 
-  p_polylib->set_factory(new MyGroupFactory<PL_REAL>() );
+  p_polylib->set_factory(new MyGroupFactory() );
 
   stat = p_polylib->init_parallel_info(MPI_COMM_WORLD,
 				       myParaInfos[rank].bpos,

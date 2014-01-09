@@ -9,12 +9,13 @@
 #ifndef polylib_dvertex_triangle_h
 #define polylib_dvertex_triangle_h
 
-#include "polygons/Triangle.h"
-#include "polygons/DVertex.h"
+#include "polygons/PrivateTriangle.h"
+
 namespace PolylibNS{
 
-template <typename T>
-class DVertexTriangle : public  PrivateTriangle<T>{
+class DVertex;
+
+class DVertexTriangle : public  PrivateTriangle{
 public:
 
 	///
@@ -24,14 +25,9 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	DVertexTriangle(
-			DVertex<T>*	vertex_ptr[3] ,
+			DVertex*	vertex_ptr[3] ,
 			int		id
-			) : PrivateTriangle<T>( (Vertex<T>**)vertex_ptr,id) {
-			//			) : PrivateTriangle<T>( vertex_ptr,id) {
-	  m_dvertex_ptr[0]=vertex_ptr[0];
-	  m_dvertex_ptr[1]=vertex_ptr[1];
-	  m_dvertex_ptr[2]=vertex_ptr[2];
-	}
+			);
 
 	///
 	/// コンストラクタ。
@@ -41,13 +37,10 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	DVertexTriangle(
-			DVertex<T>*	vertex_ptr[3], 
-			Vec3<T>	normal, 
+			DVertex*	vertex_ptr[3], 
+			Vec3<REAL_TYPE>	normal, 
 			int		id
-			) : PrivateTriangle<T>((Vertex<T>**)vertex_ptr, normal,id) {
-	  m_dvertex_ptr=vertex_ptr;
-	}
-
+			);
 	///
 	/// コンストラクタ。
 	///
@@ -57,13 +50,11 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	DVertexTriangle(
-		DVertex<T>*	vertex_ptr[3], 
-		Vec3<T>	normal, 
-		T	area, 
+		DVertex*	vertex_ptr[3], 
+		Vec3<REAL_TYPE>	normal, 
+		REAL_TYPE	area, 
 		int		id
-			) : Triangle<T>((Vertex<T>**)vertex_ptr, normal, area.id) {
-	  m_dvertex_ptr=vertex_ptr;
-	}
+			) ;
 
 	///
 	/// コンストラクタ。
@@ -72,11 +63,9 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	DVertexTriangle(
-		PrivateTriangle<T>	tri, 
+		PrivateTriangle	tri, 
 		int			id
-			) : PrivateTriangle<T>(tri.get_vertex(), tri.get_normal(),id) {
-	  
-	}
+			);
 
 	///
 	/// コンストラクタ。
@@ -85,10 +74,8 @@ public:
         /// 
 	///
 	DVertexTriangle(
-		const DVertexTriangle<T> &tri 
-			) : PrivateTriangle<T>(tri.get_vertex(), tri.get_normal()) {
-
-	}
+		const DVertexTriangle &tri 
+			);
 
 	///
 	/// コンストラクタ。
@@ -97,33 +84,16 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	DVertexTriangle(
-		T		*dim,
+		REAL_TYPE		*dim,
 		int			id
-	){
-		for( int i=0; i<3; i++ ) {
-		  this->m_vertex_ptr[i]->t[0] = *dim++;
-		  this->m_vertex_ptr[i]->t[1] = *dim++;
-		  this->m_vertex_ptr[i]->t[2] = *dim++;
-		}
-		this->m_id = id;
-		this->calc_normal();
-		this->calc_area();
-		m_dvertex_ptr=dynamic_cast<DVertex<T>**>(this->m_vertex_ptr);
-	}
+	);
 
 
   //  getter
-	DVertex<T>** get_DVertex() {
-	  
-	  //	  std::cout <<__func__<<" "<<m_dvertex_ptr <<std::endl;
-	  m_dvertex_ptr[0]=dynamic_cast<DVertex<T>*>(this->m_vertex_ptr[0]);
-	  m_dvertex_ptr[1]=dynamic_cast<DVertex<T>*>(this->m_vertex_ptr[1]);
-	  m_dvertex_ptr[2]=dynamic_cast<DVertex<T>*>(this->m_vertex_ptr[2]);
-	  return m_dvertex_ptr;
-	}
+	DVertex** get_DVertex() ;
 
 private:
-  DVertex<T>* m_dvertex_ptr[3];
+  DVertex* m_dvertex_ptr[3];
 
 };
 

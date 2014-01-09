@@ -12,26 +12,27 @@
 #ifndef polylib_polygons_h
 #define polylib_polygons_h
 
-#include <vector>
-#include <map>
-#include <iomanip>
-#include "polygons/VTree.h"
-#include "polygons/Vertex.h"
-#include "polygons/DVertex.h"
-#include "polygons/VertexList.h"
-#include "polygons/Triangle.h"
-#include "polygons/DVertexTriangle.h"
-#include "common/tt.h"
-#include "common/axis.h"
-#include "common/Vec3.h"
-#include "common/BBox.h"
+
 #include "common/PolylibStat.h"
 #include "common/PolylibCommon.h"
+#include "common/Vec3.h"
+#include <vector>
+#include <map>
+#include <string>
+#include <iomanip>
+#include <iostream>
+
 
 namespace PolylibNS {
 
-template <typename T> class Triangle;
-template <typename T> class PrivateTriangle;
+
+class BBox;
+class Triangle;
+class PrivateTriangle;
+class DVertexTriangle;
+class VertexList;
+class VertKDT;
+class VTree;
 
 ////////////////////////////////////////////////////////////////////////////
 ///
@@ -39,18 +40,18 @@ template <typename T> class PrivateTriangle;
 /// 三角形ポリゴン集合を管理する純粋仮想クラスです。
 ///
 ////////////////////////////////////////////////////////////////////////////
- template <typename T>
-   class Polygons {
+
+class Polygons {
  public:
    ///
    /// コンストラクタ。
    ///
-   Polygons(){};
+   Polygons();
 
    ///
    /// デストラクタ。
    ///
-   virtual ~Polygons() = 0;
+   virtual ~Polygons();
 
    ///
    /// 引数で与えられる三角形ポリゴンリストの複製を設定する。
@@ -58,7 +59,7 @@ template <typename T> class PrivateTriangle;
    /// @attention オーバーロードメソッドあり。
    ///
    virtual void init(
-		     const std::vector<PrivateTriangle<T>*>	*trias
+		     const std::vector<PrivateTriangle*>	*trias
 		     ) = 0;
 
    /// 三角形ポリゴンリストを初期化し、引数で与えら
@@ -71,7 +72,7 @@ template <typename T> class PrivateTriangle;
    ///  @param[in] n_start_id idlistのid開始位置
    ///  @param[in] n_tri 加える三角形の数
 
-   virtual void init(const T* vertlist,
+   virtual void init(const REAL_TYPE* vertlist,
 		     const int* idlist,
 		     const int n_start_tri,
 		     const int n_start_id,
@@ -95,10 +96,10 @@ template <typename T> class PrivateTriangle;
    ///  @param[in] n_scalar 頂点あたりのスカラーデータの数
    ///  @param[in] n_vector 頂点あたりのベクターデータの数
 
-   virtual void init_dvertex(const T* vertlist,
+   virtual void init_dvertex(const REAL_TYPE* vertlist,
 			     const int* idlist,
-			     const T* scalarlist,
-			     const T* vectorlist,
+			     const REAL_TYPE* scalarlist,
+			     const REAL_TYPE* vectorlist,
 			     const int n_start_tri,
 			     const int n_start_id,
 			     const int n_start_scalar,
@@ -117,7 +118,7 @@ template <typename T> class PrivateTriangle;
    ///  @param[in] trias 設定する三角形ポリゴンリスト。
    ///
    virtual void add(
-		    const std::vector<PrivateTriangle<T>*>		*trias
+		    const std::vector<PrivateTriangle*>		*trias
 		    ) = 0;
 
 
@@ -128,7 +129,7 @@ template <typename T> class PrivateTriangle;
    ///  @param[in] n_start_id idlistのid開始位置
    ///  @param[in] n_tri 加える三角形の数
 
-   virtual void add(const T* vertlist,
+   virtual void add(const REAL_TYPE* vertlist,
 		    const int* idlist,
 		    const int n_start_tri,
 		    const int n_start_id,
@@ -149,10 +150,10 @@ template <typename T> class PrivateTriangle;
    ///  @param[in] n_scalar 頂点あたりのスカラーデータの数
    ///  @param[in] n_vector 頂点あたりのベクターデータの数
 
-   virtual void add_dvertex(const T* vertlist,
+   virtual void add_dvertex(const REAL_TYPE* vertlist,
 			    const int* idlist,
-			    const T* scalarlist,
-			    const T* vectorlist,
+			    const REAL_TYPE* scalarlist,
+			    const REAL_TYPE* vectorlist,
 			    const int n_start_tri,
 			    const int n_start_id,
 			    const int n_start_scalar,
@@ -171,7 +172,7 @@ template <typename T> class PrivateTriangle;
    ///
    virtual POLYLIB_STAT import(
 			       const std::map<std::string, std::string>	fname,
-			       T scale = 1.0
+			       REAL_TYPE scale = 1.0
 			       ) = 0;
 
    ///
@@ -198,8 +199,8 @@ template <typename T> class PrivateTriangle;
    ///  @attention MPIPolylib内でのみ利用するため、ユーザは使用しないで下さい。
    ///  @attention オーバーロードメソッドあり。
    ///
-   virtual const std::vector<PrivateTriangle<T>*>* search(
-							  BBox<T>	*bbox, 
+   virtual const std::vector<PrivateTriangle*>* search(
+							  BBox	*bbox, 
 							  bool	every
 							  ) const = 0;
 
@@ -214,9 +215,9 @@ template <typename T> class PrivateTriangle;
    ///  @attention オーバーロードメソッドあり。
    ///
    virtual POLYLIB_STAT search(
-			       BBox<T>							*bbox, 
+			       BBox							*bbox, 
 			       bool							every, 
-			       std::vector<PrivateTriangle<T>*>	*tri_list
+			       std::vector<PrivateTriangle*>	*tri_list
 			       ) const = 0;
 
    ///
@@ -229,8 +230,8 @@ template <typename T> class PrivateTriangle;
    ///  @attention MPIPolylib内でのみ利用するため、ユーザは使用しないで下さい。
    ///  @attention オーバーロードメソッドあり。
    ///
-   virtual const std::vector<PrivateTriangle<T>*>* linear_search(
-								 BBox<T>	*bbox, 
+   virtual const std::vector<PrivateTriangle*>* linear_search(
+								 BBox	*bbox, 
 								 bool	every
 								 ) const = 0;
 
@@ -245,9 +246,9 @@ template <typename T> class PrivateTriangle;
    ///  @attention オーバーロードメソッドあり。
    ///
    virtual POLYLIB_STAT linear_search(
-				      BBox<T>							*bbox, 
+				      BBox							*bbox, 
 				      bool							every, 
-				      std::vector<PrivateTriangle<T>*>	*tri_list
+				      std::vector<PrivateTriangle*>	*tri_list
 				      ) const = 0;
 
    ///
@@ -256,8 +257,8 @@ template <typename T> class PrivateTriangle;
    ///  @param[in]     pos     指定位置
    ///  @return    検索されたポリゴン
    ///
-   virtual const PrivateTriangle<T>* search_nearest(
-						    const Vec3<T>&    pos
+   virtual const PrivateTriangle* search_nearest(
+						    const Vec3<REAL_TYPE>&    pos
 						    ) const = 0;
 
    ///
@@ -274,18 +275,14 @@ template <typename T> class PrivateTriangle;
    /// @param[in] nscalar スカラーデータ数
    /// @param[in] nvector ベクトルデータ数
 
-   virtual POLYLIB_STAT replace_DVertex(int nscalar,int nvector){
-     return PLSTAT_OK;
-   };
+   virtual POLYLIB_STAT replace_DVertex(int nscalar,int nvector);
 
    /// Vertex -> DVertex  への準備
    ///
    /// @param[in] nscalar スカラーデータ数
    /// @param[in] nvector ベクトルデータ数
 
-   virtual POLYLIB_STAT prepare_DVertex(int nscalar,int nvector){
-     return PLSTAT_OK;
-   };
+   virtual POLYLIB_STAT prepare_DVertex(int nscalar,int nvector);
 
 	//
 	/// DVertex 追加作成用
@@ -294,28 +291,14 @@ template <typename T> class PrivateTriangle;
 	///  @return    polygonへのpointer
 	///
 
-   virtual DVertexTriangle<T>* add_DVertex_Triangle(Vec3<T>* v){
-
-#define DEBUG
-#ifdef DEBUG
-  PL_DBGOSH << "Polygons::"<< __func__
- 	    <<" v0 "<<v[0]
-	    <<" v1 "<<v[1]
-	    <<" v2 "<<v[2]
-	    << std::endl;
-#endif
-
-     return NULL;
-   }
+   virtual DVertexTriangle* add_DVertex_Triangle(Vec3<REAL_TYPE>* v);
 
    	//
 	/// DVertex 追加作成後の重複頂点削除
 	/// 
 	///
   
-   virtual void finalize_DVertex(){
-     //do nothing?
-   }
+   virtual void finalize_DVertex();
 
 
 
@@ -329,17 +312,13 @@ template <typename T> class PrivateTriangle;
    ///
    /// @return 三角形ポリゴンのリスト。
    ///
-   std::vector<PrivateTriangle<T>*> *get_tri_list() const {
-     return m_tri_list;
-   }
+   std::vector<PrivateTriangle*> *get_tri_list() const;
 
    /// VertexListを取得。
    ///
    /// @return VertexList 頂点リストクラス
    ///
-   VertexList<T>* get_vtx_list() const {
-     return m_vertex_list;
-   }
+   VertexList* get_vtx_list() const ;
 
 
 
@@ -348,7 +327,7 @@ template <typename T> class PrivateTriangle;
    ///
    /// @return KD木クラス。
    ///
-   virtual VertKDT<T> *get_vertkdt() const = 0;
+   virtual VertKDT *get_vertkdt() const = 0;
 
 
    ///
@@ -356,29 +335,13 @@ template <typename T> class PrivateTriangle;
    ///
    /// @return KD木クラス。
    ///
-   virtual VTree<T> *get_vtree() const = 0;
+   virtual VTree *get_vtree() const = 0;
 
 
    /// print_vertex
    /// test function for Vertex Class
    ///
-   virtual void print_vertex(){
-	  
-     //  std::cout << __func__ << " begin"<<std::endl;
-     /// codes for VertexList
-     const std::vector<Vertex<T>*>* vl_ptr=m_vertex_list->get_vertex_lists();
-
-     for(int i=0;i<vl_ptr->size();++i){
-       //	  std::cout << __func__ << " begin"<<std::endl;
-       Vertex<T> test=*((*vl_ptr)[i]);
-       //	  std::cout << __func__ << " begin"<<std::endl;
-       PL_DBGOS << __func__ <<" VertexList "<<i 
-		<< " "<<test[AXIS_X] 
-		<< " "<<test[AXIS_Y] 
-		<< " "<<test[AXIS_Z] <<std::endl;;
-     }
-
-   }
+   virtual void print_vertex();
 
 
    virtual void print_memory_size() const =0;
@@ -387,7 +350,7 @@ template <typename T> class PrivateTriangle;
    ///
    /// TriMeshクラスが管理しているBoundingBoxを返す。
    ///
-   virtual BBox<T> get_bbox() const=0;
+   virtual BBox get_bbox() const=0;
 
     ///
     /// hasDVertex
@@ -407,19 +370,12 @@ template <typename T> class PrivateTriangle;
    // クラス変数
    //=======================================================================
    /// 三角形ポリゴンのリスト。
-   std::vector<PrivateTriangle<T>*>	*m_tri_list;
-   //	std::vector<Vertex<T>*>	*m_vtx_list;
-   VertexList<T>	*m_vertex_list;
-   T tolerance;
+   std::vector<PrivateTriangle*>	*m_tri_list;
+   //	std::vector<Vertex*>	*m_vtx_list;
+   VertexList	*m_vertex_list;
+   REAL_TYPE tolerance;
   
  };
-
-///
-/// デストラクタ
-///  @attention 継承しているクラスから呼び出されるために必要。
-///
-template <typename T>
-Polygons<T>::~Polygons() {}
 
 
 } //namespace PolylibNS

@@ -10,14 +10,23 @@
  */
 
 #include<time.h>
+
+#ifdef WIN32
+#include <windows.h>
+#else
 #include<sys/time.h>
 #include<sys/resource.h>
+#endif
+
 #include "util/time.h"
 
 namespace PolylibNS {
 
 bool getrusage_sec(double *usr_time, double *sys_time, double *total)
 {
+#ifdef WIN32
+	return true;
+#else
 	struct rusage	t;
 	struct timeval	st, ut, tt;
 	bool			ret;
@@ -37,6 +46,7 @@ bool getrusage_sec(double *usr_time, double *sys_time, double *total)
 	*sys_time = st.tv_sec + (double)st.tv_usec*1.e-6;
 	*total    = tt.tv_sec + (double)tt.tv_usec*1.e-6;
 	return ret;
+#endif
 }
 
 } //namespace PolylibNS

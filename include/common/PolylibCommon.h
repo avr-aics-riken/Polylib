@@ -12,6 +12,20 @@
 #ifndef polylib_common_h
 #define polylib_common_h
 
+#include "common/PolylibDefine.h"
+
+
+#ifdef WIN32
+ #define __func__ __FUNCTION__
+ #define PL_DEBGOSH std::cout
+
+#else
+	
+#endif
+
+
+
+
 #include <iostream>
 
 namespace PolylibNS {

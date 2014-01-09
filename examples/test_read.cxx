@@ -15,20 +15,24 @@
 using namespace std;
 using namespace PolylibNS;
 
-//#define PL_REAL double
-#define PL_REAL float
-int main(){
+#ifdef WIN32
+int main_test_read(){
+#else
+int main(int argc, char** argv ){
+#endif
+
+
 
   cout<< "test 0" << endl;
 
-  Polylib<PL_REAL>* pl_instance = Polylib<PL_REAL>::get_instance();
+  Polylib* pl_instance = Polylib::get_instance();
   //Polylib<double>* pl_instance = Polylib<double>::get_instance();
 
   cout<< "test 1" << endl;
 
   //  pl_instance->load();
 
-  PL_REAL scale=1.0;
+  REAL_TYPE scale=1.0;
   
   //  std::string file="polylib_config_objfile.tp";
   std::string file;
@@ -49,12 +53,12 @@ int main(){
   cout<<"sizeof(float*) "<< sizeof(float*)<< endl;
   cout<<"sizeof(double) "<< sizeof(double)<< endl;
   cout<<"sizeof(double*) "<< sizeof(double*)<< endl;
-  cout<<"sizeof(PrivateTriangle<float>) "<< sizeof(PrivateTriangle<float>) << endl;
-  cout<<"sizeof(PrivateTriangle<float>*) "<< sizeof(PrivateTriangle<float>*) << endl;
-  cout<<"sizeof(PrivateTriangle<double>) "<< sizeof(PrivateTriangle<double>) << endl;
-  cout<<"sizeof(PrivateTriangle<double>*) "<< sizeof(PrivateTriangle<double>*) << endl;
-  cout<<"sizeof(Vertex<float>) "<< sizeof(Vertex<float>) << endl;
-  cout<<"sizeof(Vertex<double>*) "<< sizeof(Vertex<double>) << endl;
+  cout<<"sizeof(PrivateTriangle) "<< sizeof(PrivateTriangle) << endl;
+  cout<<"sizeof(PrivateTriangle*) "<< sizeof(PrivateTriangle*) << endl;
+  cout<<"sizeof(PrivateTriangle) "<< sizeof(PrivateTriangle) << endl;
+  cout<<"sizeof(PrivateTriangle*) "<< sizeof(PrivateTriangle*) << endl;
+  cout<<"sizeof(Vertex) "<< sizeof(Vertex) << endl;
+  cout<<"sizeof(Vertex*) "<< sizeof(Vertex*) << endl;
   cout << "memsize "<<pl_instance->used_memory_size() <<endl;
 
 

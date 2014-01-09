@@ -15,20 +15,24 @@
 using namespace std;
 using namespace PolylibNS;
 
-//#define PL_REAL double
-#define PL_REAL float
-int main(){
+
+#ifdef WIN32
+int main_test(){
+#else
+int main(int argc, char** argv ){
+#endif
+
 
   cout<< "test 0" << endl;
 
   //Polylib<double>* pl_instance = Polylib<double>::get_instance();
-  Polylib<PL_REAL>* pl_instance = Polylib<PL_REAL>::get_instance();
+  Polylib* pl_instance = Polylib::get_instance();
 
   cout<< "test 1" << endl;
 
   //  pl_instance->load();
 
-  PL_REAL scale=1.0;
+  REAL_TYPE scale=1.0;
   std::string file="polylib_config.tp";
   cout<< "test 1 - 1" << endl;
   pl_instance->load(file,scale);

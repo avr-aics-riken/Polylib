@@ -40,13 +40,13 @@ using namespace PolylibNS;
 POLYLIB_STAT
 mpipolylib_init_parallel_info(
 	MPI_Comm comm,
-	PL_REAL bpos[3],
+	REAL_TYPE bpos[3],
 	unsigned int bbsize[3],
 	unsigned int gcsize[3],
-	PL_REAL dx[3]
+	REAL_TYPE dx[3]
 )
 {
-  return (MPIPolylib<PL_REAL>::get_instance())->init_parallel_info( comm, bpos, bbsize, gcsize, dx );
+  return (MPIPolylib::get_instance())->init_parallel_info( comm, bpos, bbsize, gcsize, dx );
 }
 
 
@@ -56,10 +56,10 @@ POLYLIB_STAT
 mpipolylib_load_rank0(char* config_name)
 {
 	if( config_name == NULL ) {
-		return (MPIPolylib<PL_REAL>::get_instance())->load_rank0();
+		return (MPIPolylib::get_instance())->load_rank0();
 	}
 	string fname = config_name;
-	return (MPIPolylib<PL_REAL>::get_instance())->load_rank0( fname );
+	return (MPIPolylib::get_instance())->load_rank0( fname );
 }
 
 
@@ -69,10 +69,10 @@ POLYLIB_STAT
 mpipolylib_load_parallel(char* config_name)
 {
 	if( config_name == NULL ) {
-		return (MPIPolylib<PL_REAL>::get_instance())->load_parallel();
+		return (MPIPolylib::get_instance())->load_parallel();
 	}
 	string fname = config_name;
-	return (MPIPolylib<PL_REAL>::get_instance())->load_parallel( fname );
+	return (MPIPolylib::get_instance())->load_parallel( fname );
 }
 
 
@@ -93,10 +93,10 @@ mpipolylib_save_rank0(
 	if( extend ) s_extend = extend;
 
 	if( extend==NULL ) {
-		stat = (MPIPolylib<PL_REAL>::get_instance())->save_rank0( &s_fname, s_format );
+		stat = (MPIPolylib::get_instance())->save_rank0( &s_fname, s_format );
 	}
 	else {
-		stat = (MPIPolylib<PL_REAL>::get_instance())->save_rank0( &s_fname, s_format, s_extend );
+		stat = (MPIPolylib::get_instance())->save_rank0( &s_fname, s_format, s_extend );
 	}
 	*p_fname = (char*)malloc( s_fname.size()+1 );
 	if(p_fname == NULL){
@@ -125,10 +125,10 @@ mpipolylib_save_parallel(
 	if( extend ) s_extend = extend;
 
 	if( extend==NULL ) {
-		stat = (MPIPolylib<PL_REAL>::get_instance())->save_parallel( &s_fname, s_format );
+		stat = (MPIPolylib::get_instance())->save_parallel( &s_fname, s_format );
 	}
 	else {
-		stat = (MPIPolylib<PL_REAL>::get_instance())->save_parallel( &s_fname, s_format, s_extend );
+		stat = (MPIPolylib::get_instance())->save_parallel( &s_fname, s_format, s_extend );
 	}
 	*p_fname = (char*)malloc( s_fname.size()+1 );
 	if(p_fname == NULL){
@@ -144,14 +144,14 @@ mpipolylib_save_parallel(
 // search_polygons
 TriangleStruct** mpipolylib_search_polygons(
 	char* group_name,
-	PL_REAL min_pos[3],
-	PL_REAL max_pos[3],
+	REAL_TYPE min_pos[3],
+	REAL_TYPE max_pos[3],
 	int every, 
 	int *num_tri,
 	POLYLIB_STAT *err
 )
 {
-	Vec3<PL_REAL> c_min_pos,c_max_pos;
+	Vec3<REAL_TYPE> c_min_pos,c_max_pos;
 	string c_group_name(group_name);
 
 	for(int i=0; i<3; i++){
@@ -164,11 +164,11 @@ TriangleStruct** mpipolylib_search_polygons(
 	else b_every = false;
 
 	//Polylibから三角形リストを抽出
-	std::vector<Triangle<PL_REAL>*>*  tri_list =
-	  (MPIPolylib<PL_REAL>::get_instance())->search_polygons(
+	std::vector<Triangle*>*  tri_list =
+	  (MPIPolylib::get_instance())->search_polygons(
 		 c_group_name, c_min_pos, c_max_pos, b_every);
-	// std::vector<Triangle<PL_REAL>*>*  tri_list =
-	//   (MPIPolylib<PL_REAL>::get_instance())->Polylib<PL_REAL>::search_polygons(
+	// std::vector<Triangle*>*  tri_list =
+	//   (MPIPolylib::get_instance())->Polylib::search_polygons(
 	// 	 c_group_name, c_min_pos, c_max_pos, b_every);
 	*num_tri  = tri_list->size();
 
@@ -181,7 +181,7 @@ TriangleStruct** mpipolylib_search_polygons(
 		return NULL;
 	}
 
-	std::vector<Triangle<PL_REAL>*>::iterator itr;
+	std::vector<Triangle*>::iterator itr;
 	int num = 0;
 	for(itr=tri_list->begin(); itr!=tri_list->end(); itr++){
 		//TriangleクラスインスタンスをTriangleStruct*にキャストする
@@ -198,7 +198,7 @@ TriangleStruct** mpipolylib_search_polygons(
 // show_group_hierarchy
 void mpipolylib_show_group_hierarchy()
 {
-	(MPIPolylib<PL_REAL>::get_instance())->show_group_hierarchy();
+	(MPIPolylib::get_instance())->show_group_hierarchy();
 }
 
 
@@ -207,7 +207,7 @@ void mpipolylib_show_group_hierarchy()
 POLYLIB_STAT mpipolylib_show_group_info(char* group_name)
 {
 	string c_group_name(group_name);
-	return (MPIPolylib<PL_REAL>::get_instance())->show_group_info(c_group_name);
+	return (MPIPolylib::get_instance())->show_group_info(c_group_name);
 }
 
 
@@ -215,7 +215,7 @@ POLYLIB_STAT mpipolylib_show_group_info(char* group_name)
 // used_memory_size
 unsigned int mpipolylib_used_memory_size()
 {
-	return (MPIPolylib<PL_REAL>::get_instance())->used_memory_size();
+	return (MPIPolylib::get_instance())->used_memory_size();
 }
 
 // eof
