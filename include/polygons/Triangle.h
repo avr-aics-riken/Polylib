@@ -14,6 +14,7 @@
 #define polylib_triangle_h
 
 #include "common/Vec3.h"
+#include "common/PolylibCommon.h"
 #include "polygons/Vertex.h"
 
 namespace PolylibNS{
@@ -43,11 +44,23 @@ public:
 		 //Vec3<T>	vertex[3]
 		 Vertex<T>* vertex_ptr[3]
 	) {
-		m_vertex_ptr[0] = vertex_ptr[0];
-		m_vertex_ptr[1] = vertex_ptr[1];
-		m_vertex_ptr[2] = vertex_ptr[2];
-		calc_normal();
-		calc_area();
+
+	  if(vertex_ptr[0]!=NULL && 
+	     vertex_ptr[1]!=NULL && 
+	     vertex_ptr[2]!=NULL ){
+
+	    m_vertex_ptr[0] = vertex_ptr[0];
+	    m_vertex_ptr[1] = vertex_ptr[1];
+	    m_vertex_ptr[2] = vertex_ptr[2];
+
+	  } else {
+	    PL_ERROSH << __func__<<" pointer is null p0="<< vertex_ptr[0]
+		      <<" p1="<< vertex_ptr[1]
+		      <<" p2="<< vertex_ptr[2]<<std::endl;
+
+	  }
+	  calc_normal();
+	  calc_area();
 	}
 
 	///
@@ -103,14 +116,14 @@ public:
   virtual void set_vertexes(
 			  //Vec3<T>	vertex[3], 
 		 Vertex<T>* vertex_ptr[3],
-		bool	calc_normal, 
-		bool	calc_area
+		bool	calc_normal_bool, 
+		bool	calc_area_bool
 	) {
 		m_vertex_ptr[0] = vertex_ptr[0];
 		m_vertex_ptr[1] = vertex_ptr[1];
 		m_vertex_ptr[2] = vertex_ptr[2];
-		if(calc_normal) this->calc_normal();
-		if(calc_area) this->calc_area();
+		if(calc_normal_bool) this->calc_normal();
+		if(calc_area_bool) this->calc_area();
 	}
 
 	///
@@ -121,6 +134,7 @@ public:
 	// Vec3<T>* get_vertex() const {
 	//  return const_cast<Vec3<T>*>(m_vertex);
 	//}
+
 
 	//  Vec3<T>* get_vertex() const {
 	//   return const_cast<Vec3<T>*>( *m_vertex_ptr );
@@ -190,19 +204,21 @@ protected:
 	/// 法線ベクトル算出。
 	///
   virtual void calc_normal() {
-		// double演算に変更 2013.10.10 tkawanab
-		Vec3<double> vd[3];
-		vd[0].assign( m_vertex_ptr[0]->t[0], m_vertex_ptr[0]->t[1], m_vertex_ptr[0]->t[2] );
-		vd[1].assign( m_vertex_ptr[1]->t[0], m_vertex_ptr[1]->t[1], m_vertex_ptr[1]->t[2] );
-		vd[2].assign( m_vertex_ptr[2]->t[0], m_vertex_ptr[2]->t[1], m_vertex_ptr[2]->t[2] );
-		Vec3<double> ad = vd[1] - vd[0];
-		Vec3<double> bd = vd[2] - vd[0];
 
-		Vec3<double> normald = (cross(ad,bd)).normalize();
-		m_normal[0] = normald[0];
-		m_normal[1] = normald[1];
-		m_normal[2] = normald[2];
-	}
+    // double演算に変更 2013.10.10 tkawanab
+
+    Vec3<double> vd[3];
+    vd[0].assign( m_vertex_ptr[0]->t[0], m_vertex_ptr[0]->t[1], m_vertex_ptr[0]->t[2] );
+    vd[1].assign( m_vertex_ptr[1]->t[0], m_vertex_ptr[1]->t[1], m_vertex_ptr[1]->t[2] );
+    vd[2].assign( m_vertex_ptr[2]->t[0], m_vertex_ptr[2]->t[1], m_vertex_ptr[2]->t[2] );
+
+    Vec3<double> ad = vd[1] - vd[0];
+    Vec3<double> bd = vd[2] - vd[0];
+    Vec3<double> normald = (cross(ad,bd)).normalize();
+    m_normal[0] = normald[0];
+    m_normal[1] = normald[1];
+    m_normal[2] = normald[2];
+  }
 
 	///
 	/// 面積算出。
@@ -215,7 +231,6 @@ protected:
 		T ab = dot(a,b);
 		T f = al*al*bl*bl - ab*ab;
 		if(f<0.0) f=0.0;
-		//m_area = 0.5*sqrtf(f);
 		m_area = 0.5*sqrt(f);
 		// std::cout << "a("<<a<<") b("<<b<<")"<<std::endl;
 		// std::cout << __func__ <<" "<<m_area <<" "<< f << " " << al << " "<< bl << " "<< ab <<std::endl;
@@ -241,7 +256,7 @@ protected:
 	int     m_exid;
 
 	/// 三角形のユーザ定義状態変数
-	int		m_shell;
+	int	m_shell;
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -333,19 +348,45 @@ public:
 	/// @param[in] dim		ポリゴン頂点座標配列。
 	/// @param[in] id		三角形ポリゴンID。
 	///
-	PrivateTriangle(
-		T		*dim,
-		int			id
-	){
-		for( int i=0; i<3; i++ ) {
-		  this->m_vertex_ptr[i]->t[0] = *dim++;
-		  this->m_vertex_ptr[i]->t[1] = *dim++;
-		  this->m_vertex_ptr[i]->t[2] = *dim++;
-		}
-		m_id = id;
-		this->calc_normal();
-		this->calc_area();
+        ///  頂点は頂点クラスに登録する為、このコンストラクタは
+        ///  存在意義が無くなる。
+        ///  
+ 	PrivateTriangle(
+ 		T		*dim,
+ 		int			id
+			){
+ 	  PL_ERROS << "PrivateTriangle(T,int) is obsolete. !!!NOTHING IS DONE!!!" << std::endl;
+
 	}
+
+
+
+// 	PrivateTriangle(
+// 		T		*dim,
+// 		int			id
+// 	){
+// #define DEBUG
+// #ifdef DEBUG
+// 	  PL_DBGOSH << "PrivateTriangle started." << std::endl;
+// #endif
+// 		for( int i=0; i<3; i++ ) {
+// 		  PL_DBGOSH << "PrivateTriangle  0 i ."<<i << std::endl;
+// 		  this->m_vertex_ptr[i]->t[0] = *dim++;
+// 		  PL_DBGOSH << "PrivateTriangle  1 i ."<<i << std::endl;
+// 		  this->m_vertex_ptr[i]->t[1] = *dim++;
+// 		  PL_DBGOSH << "PrivateTriangle  2 i ."<<i << std::endl;
+// 		  this->m_vertex_ptr[i]->t[2] = *dim++;
+// 		  PL_DBGOSH << "PrivateTriangle  3 i ."<<i << std::endl;
+// 		}
+// 		m_id = id;
+// 		this->calc_normal();
+// 		this->calc_area();
+
+// #ifdef DEBUG
+// 	  PL_DBGOSH << "PrivateTriangle called." << std::endl;
+// #endif
+// #undef DEBUG
+// 	}
 
 	//=======================================================================
 	// Setter/Getter

@@ -49,6 +49,21 @@ int main(int argc, char** argv ){
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
   cout << "Starting program on rank:"<<rank<<endl;
 
+// {
+//     int i = 0;
+//     char hostname[256];
+//     gethostname(hostname, sizeof(hostname));
+//     printf("PID %d on %s ready for attach\n", getpid(), hostname);
+//     fflush(stdout);
+//     if(rank==0){
+//     // while (0 == i)
+//     //     sleep(5);
+//       char a;
+//       std::cin >> a;
+//     }
+// }
+
+
   MPIPolylib<PL_REAL>* p_polylib = MPIPolylib<PL_REAL>::get_instance();
 
   //  p_polylib->set_factory(new MyGroupFactory() );
@@ -68,7 +83,7 @@ int main(int argc, char** argv ){
 
   string  config_filename;
   if(rank ==0) {
-    config_filename = "polylib_config_0_20130731174205.tp";
+    config_filename = "polylib_config_0_20130731174205.tpp";
 
   } else if(rank ==1) {
     config_filename = "polylib_config_1_20130731174205.tpp";
@@ -93,6 +108,8 @@ int main(int argc, char** argv ){
   string stl="stl_a";
   string extend="";
 
+
+  cout << "data saving by save_rank0 on rank "<<rank<<endl;
   p_polylib->save_rank0(&fname,stl,extend);
 
   //  p_polylib->save_parallel(&fname,stl,extend,id_format);

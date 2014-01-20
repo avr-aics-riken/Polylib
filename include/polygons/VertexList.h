@@ -110,14 +110,15 @@ namespace PolylibNS{
       m_vkdt = vkdt;
     }
 
-    /// Vertex  用KD木
-    VertKDT<T>* getKDT(){return m_vkdt;}
+
+    VertKDT<T>* getKDT(){return m_vkdt;}     //!< Vertex  用KD木
 
 
-    ///  Vertexの格納場所へのポインタ
-    const std::vector<Vertex<T>*>* get_vertex_lists(){return m_vertex_list;}
-    /// Vertex の追加 同一性チェック無し。
-    void vtx_add_nocheck(Vertex<T>* v);
+
+    const std::vector<Vertex<T>*>* get_vertex_lists(){return m_vertex_list;}  //!<  Vertexの格納場所へのポインタ
+    std::vector<Vertex<T>*>* get_vertex_lists_mod(){return m_vertex_list;}  //!<  Vertexの格納場所へのポインタ
+
+    void vtx_add_nocheck(Vertex<T>* v);  //!< Vertex の追加 同一性チェック無し。
 
     int vtx_add_i(Vertex<T>* v); //!< Vertexの追加、m_vertex_listのindexを返す。同一性チェック済み。
     Vertex<T>* vtx_add(Vertex<T>* v); //!< Vertexの追加、その頂点のポインタを示す。同一性チェック済み。

@@ -30,21 +30,39 @@ using namespace PolylibNS;
 //class PolygonGroup;
 #define PL_REAL double
 //#define PL_REAL float 
+
+/// MyGroupFactory 
+///
+///
+///
+
+
 template<typename T>
 class MyGroupFactory:public PolygonGroupFactory<T>{
  public:
- PolygonGroup<T>* create_instance(std::string class_name){
+  ///  create_instance  をオーバーライドして、
+  ///
+  /// @param[in] class_name
+  /// @param[in] tolerance
+
+  PolygonGroup<T>* create_instance(std::string class_name,T tolerance){
+#ifdef DEBUG
+   PL_DBGOSH<< "in MyGroupFactory::create_instance called. "<<class_name<<std::endl;
+   PL_DBGOSH<< "in MyGroupFactory::create_instance called. "
+	   <<CarGroup<T>::get_class_name<<std::endl;
+#endif
     if(class_name == CarGroup<T>::get_class_name()){
-      //  cout << "CarGroup() called!" <<endl;
-      return new CarGroup<T>();
+#ifdef DEBUG
+      PL_DBGOSH<< "in MyGroupFactory::create_instance create CarGroup."<<std::endl;
+#endif
+      return new CarGroup<T>(tolerance);
     }
 
-    //  if(class_name == BladeGroup::get_class_name()){
-    //    return new BladeGroup();
-    //  }
-
     //default
-    return PolygonGroupFactory<T>::create_instance(class_name);
+#ifdef DEBUG
+    PL_DBGOSH<< "in MyGroupFactory::create_instance create OtherGroup."<<std::endl;
+#endif //DEBUG
+    return PolygonGroupFactory<T>::create_instance(class_name,tolerance);
 
   }
 };

@@ -43,6 +43,10 @@ public:
 	///
 	//	virtual PolygonGroup<T>* create_instance(std::string class_name) {
 	virtual PolygonGroup<T>* create_instance(std::string class_name,T tolerance) {
+#ifdef DEBUG
+	  PL_DBGOSH << "PolygonGroup<T>::create_instance class_name " 
+		    <<class_name<<std::endl;
+#endif
 		if (class_name == PolygonGroup<T>::get_class_name()) {
 		  //		  return new PolygonGroup<T>;
 		  		  return new PolygonGroup<T>(tolerance);
