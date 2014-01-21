@@ -152,7 +152,12 @@ test_mpi_DVertex_SOURCES  = test_mpi_DVertex.cxx
 test_mpi_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 
-test_mpi_move_SOURCES  = test_mpi_move.cxx
+test_mpi_move_SOURCES  = \
+  test_mpi_move.cxx \
+  CarGroup.cxx \
+  MyGroupFactory.cxx \
+  CarGroup.h \
+  MyGroupFactory.h
 test_mpi_move_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 
