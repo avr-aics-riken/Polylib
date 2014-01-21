@@ -123,7 +123,9 @@ test_mpi_DVertex_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(test_mpi_DVertex_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-am_test_mpi_move_OBJECTS = test_mpi_move-test_mpi_move.$(OBJEXT)
+am_test_mpi_move_OBJECTS = test_mpi_move-test_mpi_move.$(OBJEXT) \
+	test_mpi_move-CarGroup.$(OBJEXT) \
+	test_mpi_move-MyGroupFactory.$(OBJEXT)
 test_mpi_move_OBJECTS = $(am_test_mpi_move_OBJECTS)
 test_mpi_move_DEPENDENCIES =
 test_mpi_move_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -499,7 +501,13 @@ test_mpi_xyzrgb8_SOURCES = test_mpi_xyzrgb8.cxx
 test_mpi_xyzrgb8_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 test_mpi_DVertex_SOURCES = test_mpi_DVertex.cxx
 test_mpi_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
-test_mpi_move_SOURCES = test_mpi_move.cxx
+test_mpi_move_SOURCES = \
+  test_mpi_move.cxx \
+  CarGroup.cxx \
+  MyGroupFactory.cxx \
+  CarGroup.h \
+  MyGroupFactory.h
+
 test_mpi_move_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 test_LDADD = \
     -L$(top_builddir)/src/.libs -lPOLY \
@@ -753,6 +761,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mpi3-MyGroupFactory.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mpi3-test_mpi3.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mpi_DVertex-test_mpi_DVertex.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mpi_move-CarGroup.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mpi_move-MyGroupFactory.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mpi_move-test_mpi_move.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mpi_xyzrgb2-test_mpi_xyzrgb2.Po@am__quote@
@@ -927,6 +937,34 @@ test_mpi_move-test_mpi_move.obj: test_mpi_move.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='test_mpi_move.cxx' object='test_mpi_move-test_mpi_move.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_move-test_mpi_move.obj `if test -f 'test_mpi_move.cxx'; then $(CYGPATH_W) 'test_mpi_move.cxx'; else $(CYGPATH_W) '$(srcdir)/test_mpi_move.cxx'; fi`
+
+test_mpi_move-CarGroup.o: CarGroup.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_move-CarGroup.o -MD -MP -MF $(DEPDIR)/test_mpi_move-CarGroup.Tpo -c -o test_mpi_move-CarGroup.o `test -f 'CarGroup.cxx' || echo '$(srcdir)/'`CarGroup.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/test_mpi_move-CarGroup.Tpo $(DEPDIR)/test_mpi_move-CarGroup.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CarGroup.cxx' object='test_mpi_move-CarGroup.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_move-CarGroup.o `test -f 'CarGroup.cxx' || echo '$(srcdir)/'`CarGroup.cxx
+
+test_mpi_move-CarGroup.obj: CarGroup.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_move-CarGroup.obj -MD -MP -MF $(DEPDIR)/test_mpi_move-CarGroup.Tpo -c -o test_mpi_move-CarGroup.obj `if test -f 'CarGroup.cxx'; then $(CYGPATH_W) 'CarGroup.cxx'; else $(CYGPATH_W) '$(srcdir)/CarGroup.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/test_mpi_move-CarGroup.Tpo $(DEPDIR)/test_mpi_move-CarGroup.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CarGroup.cxx' object='test_mpi_move-CarGroup.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_move-CarGroup.obj `if test -f 'CarGroup.cxx'; then $(CYGPATH_W) 'CarGroup.cxx'; else $(CYGPATH_W) '$(srcdir)/CarGroup.cxx'; fi`
+
+test_mpi_move-MyGroupFactory.o: MyGroupFactory.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_move-MyGroupFactory.o -MD -MP -MF $(DEPDIR)/test_mpi_move-MyGroupFactory.Tpo -c -o test_mpi_move-MyGroupFactory.o `test -f 'MyGroupFactory.cxx' || echo '$(srcdir)/'`MyGroupFactory.cxx
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/test_mpi_move-MyGroupFactory.Tpo $(DEPDIR)/test_mpi_move-MyGroupFactory.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MyGroupFactory.cxx' object='test_mpi_move-MyGroupFactory.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_move-MyGroupFactory.o `test -f 'MyGroupFactory.cxx' || echo '$(srcdir)/'`MyGroupFactory.cxx
+
+test_mpi_move-MyGroupFactory.obj: MyGroupFactory.cxx
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_move-MyGroupFactory.obj -MD -MP -MF $(DEPDIR)/test_mpi_move-MyGroupFactory.Tpo -c -o test_mpi_move-MyGroupFactory.obj `if test -f 'MyGroupFactory.cxx'; then $(CYGPATH_W) 'MyGroupFactory.cxx'; else $(CYGPATH_W) '$(srcdir)/MyGroupFactory.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/test_mpi_move-MyGroupFactory.Tpo $(DEPDIR)/test_mpi_move-MyGroupFactory.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MyGroupFactory.cxx' object='test_mpi_move-MyGroupFactory.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_move_CXXFLAGS) $(CXXFLAGS) -c -o test_mpi_move-MyGroupFactory.obj `if test -f 'MyGroupFactory.cxx'; then $(CYGPATH_W) 'MyGroupFactory.cxx'; else $(CYGPATH_W) '$(srcdir)/MyGroupFactory.cxx'; fi`
 
 test_mpi_xyzrgb1-test_mpi_xyzrgb1.o: test_mpi_xyzrgb1.cxx
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_mpi_xyzrgb1_CXXFLAGS) $(CXXFLAGS) -MT test_mpi_xyzrgb1-test_mpi_xyzrgb1.o -MD -MP -MF $(DEPDIR)/test_mpi_xyzrgb1-test_mpi_xyzrgb1.Tpo -c -o test_mpi_xyzrgb1-test_mpi_xyzrgb1.o `test -f 'test_mpi_xyzrgb1.cxx' || echo '$(srcdir)/'`test_mpi_xyzrgb1.cxx
