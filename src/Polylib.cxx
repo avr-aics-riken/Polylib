@@ -73,11 +73,18 @@ Polylib* Polylib::get_instance() {
 void Polylib::set_factory(
 	PolygonGroupFactory		*factory
 ) {
+#ifdef DEBUG
+  PL_DBGOSH<<"Polylib<T>::set_factory calld. "<<factory<<std::endl;
+#endif // DEBUG
 	if (factory == NULL) return;
+#ifdef DEBUG
+  PL_DBGOSH<<"Polylib<T>::set_factory new factory is set. "<<factory<<std::endl;
+#endif // DEBUG
 
 	// 明示的に指定された場合は、そのFactoryクラスを使用する
 	delete m_factory;
 	m_factory = factory;
+
 }
 
 /// TextParser
@@ -345,10 +352,13 @@ POLYLIB_STAT Polylib::check_group_name(
 
   PolygonGroup *Polylib::create_polygon_group(std::string class_name,REAL_TYPE tolerance)
 {
+	//#define DEBUG
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::create_polygon_group() in." << std::endl;
 #endif
 	return m_factory->create_instance(class_name,tolerance);
+	//#undef DEBUG
+
 }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -559,8 +569,24 @@ Polylib::Polylib()
 
 Polylib::~Polylib()
 {
+
+  //#define DEBUG
   std::vector<PolygonGroup*>::iterator it;
-	for (it = m_pg_list.begin(); it != m_pg_list.end();) {
+
+  if(m_pg_list.size()!=0){
+
+#ifdef DEBUG
+    PL_DBGOSH << "~Polylib():there is at least one PolygonGroup.";
+#endif
+    
+  } else {
+    
+#ifdef DEBUG
+    PL_DBGOSH << "~Polylib():there is no PolygonGroup.";
+#endif
+  }
+
+  for (it = m_pg_list.begin(); it != m_pg_list.end();) {
 #ifdef DEBUG
 PL_DBGOSH << "~Polylib():" << (*it)->get_name() << std::endl;
 #endif
@@ -570,6 +596,8 @@ PL_DBGOSH << "~Polylib():" << (*it)->get_name() << std::endl;
 	}
 	if(tp !=0) delete tp;
 
+	//#undef DEBUG
+
 }
 
 // protected //////////////////////////////////////////////////////////////////
@@ -578,6 +606,8 @@ PL_DBGOSH << "~Polylib():" << (*it)->get_name() << std::endl;
 POLYLIB_STAT Polylib::make_group_tree(
     TextParser* tp
 ) {
+
+  //#define DEBUG
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::make_group_tree(TextParser) in." << std::endl;
 #endif
@@ -631,7 +661,7 @@ POLYLIB_STAT Polylib::make_group_tree(
 	  status = tp->changeNode(*nodes_iter);
 	  tp->currentNode(current_node);
 #ifdef DEBUG	  
-	  PL_DBGOS<<"current_node "<< current_node <<  std::endl;
+	  PL_DBGOSH<<"current_node "<< current_node <<  std::endl;
 #endif // DEBUG	  
 	  std::vector<std::string> nodes;
 	  std::vector<std::string> leaves;
@@ -674,11 +704,14 @@ POLYLIB_STAT Polylib::make_group_tree(
 	    }
 
 	  }
-
+#ifdef DEBUG
+	  PL_DBGOSH << "m_factory->create_instance calling" <<std::endl;
+#endif
 	  pg = m_factory->create_instance(class_name,tolerance);
 	  add_pg_list(pg);
 	  if (pg == NULL) {
-	    PL_ERROSH << "[ERROR]Polylib::make_group_tree():Class name not found."
+	    PL_ERROSH << "[ERROR]Polylib::make_group_tree():Class name not found. "
+
 		      << class_name
 		      << std::endl;
 	    return PLSTAT_CONFIG_ERROR;
@@ -694,6 +727,7 @@ POLYLIB_STAT Polylib::make_group_tree(
 	} 
 	
 	return PLSTAT_OK;
+	//#undef DEBUG
 }
 
 
@@ -877,6 +911,12 @@ POLYLIB_STAT Polylib::save_with_rankno(
 	if (extend == "") {
 		time_t		timer = time(NULL);
 		struct tm	*date = localtime(&timer);
+		/* PL_DBGOSH<<"save_with_rank0 "<<date->tm_year+1900 */
+		/* 	 <<" "<< date->tm_mon+1 */
+		/* 	 << " " << date->tm_mday */
+		/* 	 << " " <<date->tm_hour */
+		/* 	 << " " <<date->tm_min */
+		/* 	 << " " <<date->tm_sec<<std::endl; */
 		sprintf(my_extend, "%04d%02d%02d%02d%02d%02d",
 			date->tm_year+1900, date->tm_mon+1, date->tm_mday,
 			date->tm_hour,      date->tm_min,   date->tm_sec);
@@ -948,7 +988,7 @@ POLYLIB_STAT Polylib::save_with_rankno(
 
 POLYLIB_STAT Polylib::setfilepath(std::map<std::string,std::string>& stl_fname_map){
 
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
   PL_DBGOS << "stl_map size " <<  stl_fname_map.size()<<std::endl;
 #endif //DEBUG
@@ -991,7 +1031,7 @@ POLYLIB_STAT Polylib::setfilepath(std::map<std::string,std::string>& stl_fname_m
     tp->changeNode("/Polylib");
   }
   return PLSTAT_OK;
-#undef DEBUG
+  //#undef DEBUG
 }
 
 /////////////////////////////////////////　　
@@ -1113,6 +1153,7 @@ void Polylib::show_group_name(
 
 PolygonGroup* Polylib::get_group(int internal_id) const
 {
+	//#define DEBUG
 #ifdef DEBUG
 	PL_DBGOSH << "Polylib::get_group(" << internal_id << ") in." << std::endl;
 #endif
@@ -1126,6 +1167,7 @@ PolygonGroup* Polylib::get_group(int internal_id) const
 	PL_DBGOS << "Polylib::get_group(" << internal_id << ") returns NULL" << std::endl;
 #endif
 	return NULL;
+//#undef  DEBUG
 }
 
 // private ////////////////////////////////////////////////////////////////////

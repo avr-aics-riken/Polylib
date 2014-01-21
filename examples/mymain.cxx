@@ -28,6 +28,7 @@ extern int main_test_read();
 extern int main_test_vtx();
 extern int main_vtx_float();
 extern int main_test_xyzrgb_statuette_stl();
+extern int main_test_move(int argc, char** argv );//3
 #include <stdlib.h>
 
 int main(int argc, char** argv ){
@@ -76,8 +77,9 @@ int main(int argc, char** argv ){
 		ret = main_vtx_float();
 	}else if(id == 18){
 		ret = main_test_xyzrgb_statuette_stl();
+	}else if(id == 19){
+		ret = main_test_move(argc,argv);
 	}
-
 	return ret;
 }
 

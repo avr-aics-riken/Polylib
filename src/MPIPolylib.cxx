@@ -401,7 +401,7 @@ MPIPolylib::save_rank0(
 		       std::string extend
 		       )
 {
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
   PL_DBGOSH << "MPIPolylib::save_rank0() in. " << std::endl;
 #endif
@@ -463,17 +463,24 @@ MPIPolylib::save_rank0(
       }
 
     } else { // nomal 
-      if( (ret = send_polygons_to_rank0()) != PLSTAT_OK ) {
-	PL_ERROSH << "[ERROR]MPIPolylib::save_rank0():send_polygons_to_rank0() faild."
-		  <<" returns:"<< PolylibStat2::String(ret) << std::endl;
-	return ret;
-      }
-    
-    }    
 
+#ifdef DEBUG
+      PL_DBGOSH << "MPIPolylib::save_rank0() send_polygons_to_rank0" << std::endl;
+#endif
+
+      if( (ret = send_polygons_to_rank0()) != PLSTAT_OK ) {
+			PL_ERROSH << "[ERROR]MPIPolylib::save_rank0():send_polygons_to_rank0() faild."
+			<<" returns:"<< PolylibStat2::String(ret) << std::endl;
+			return ret;
+      } else {
+#ifdef DEBUG
+	PL_DBGOSH << "MPIPolylib::save_rank0() send_polygons_to_rank0 end rank " << m_myrank<< std::endl;
+#endif    
+	  } 
+	}
   }
   return PLSTAT_OK;
-#undef DEBUG
+//#undef DEBUG
 }
 
 
@@ -559,6 +566,7 @@ MPIPolylib::move(
    MPIPolylib::migrate(
 )
    {
+	   //#define DEBUG
 #ifdef DEBUG
      PL_DBGOSH << "MPIPolylib::migrate() in. " << std::endl;
 #endif
@@ -616,7 +624,8 @@ MPIPolylib::move(
 
 	   // 当該隣接PE領域内にある移動フラグONの三角形を取得
 	   p_trias = p_pg->search_outbounded(
-					     (*procs_itr)->m_area.m_gcell_bbox, &((*itr).second) );
+					     (*procs_itr)->m_area.m_gcell_bbox,
+					     &((*itr).second) );
 	 }
 
 	 // グループIDと当該グループの三角形数の対を送信データに追加
@@ -668,10 +677,13 @@ MPIPolylib::move(
        // 当該PEへ非同期送信 (MPI_Wait()は後でまとめて行う)
 #ifdef DEBUG
        PL_DBGOSH << "sending polygons rank:" << m_myrank <<  "->rank:"
-		 << (*procs_itr)->m_rank << " ";
+				<< (*procs_itr)->m_rank << " ";
        for( i=0; i< send_num_trias.size(); i+=2 ) {
-	 PL_DBGOS << "(gid:" << send_num_trias[i] 
-		  << ",num_tria:" << send_num_trias[i+1] << ")";
+			 PL_DBGOS << "(gid:" << send_num_trias[i] 
+				  << ",num_tria:" << send_num_trias[i+1] << ")";
+			 PL_DBGOS << " (gid:" << p_send_num_trias_array[i] 
+				  << ",num_tria:" << p_send_num_trias_array[i+1] << ")";
+
        }
        PL_DBGOS << std::endl;
 #endif
@@ -692,25 +704,41 @@ MPIPolylib::move(
        }
 
 
-       if(sizeof(REAL_TYPE)==4){
-	  PL_DBGOSH << __func__ << " float " << to_string((REAL_TYPE)) << std::endl;
-	  if (MPI_Isend( p_send_trias_array,     send_trias.size(),
-			 MPI_FLOAT, (*procs_itr)->m_rank, MPITAG_TRIAS,
-			 m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
-	    PL_ERROSH << "[ERROR]MPIPolylib::init_parallel_info():MPI_Isend "
-		      << "faild." << std::endl;
-	    return PLSTAT_MPI_ERROR;
+#ifdef DEBUG
+       PL_DBGOSH << "sending data " <<std::endl;
+       for(int ii=0;ii<send_trias.size();ii++){
+	 PL_DBGOSH << ii << " " << p_send_trias_array[ii]<<std::endl;
+       }
+       PL_DBGOSH << "sending data end" <<std::endl;
+#endif
 
-	  }
-	} else if (sizeof(REAL_TYPE)==8){
-	  if (MPI_Isend( p_send_trias_array,     send_trias.size(),
-			 MPI_DOUBLE, (*procs_itr)->m_rank, MPITAG_TRIAS,
-			 m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
-	  
-	    PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Isend,"
-		      << " MPITAG_TRIAS faild." << std::endl;
-	    return PLSTAT_MPI_ERROR;
-	  }
+	   if(sizeof(REAL_TYPE)==4){
+			  PL_DBGOSH << __func__ << " float " << to_string((REAL_TYPE)) << std::endl;
+			if (MPI_Isend( p_send_trias_array,     send_trias.size(),
+					 MPI_FLOAT, (*procs_itr)->m_rank, MPITAG_TRIAS,
+					 m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
+				PL_ERROSH << "[ERROR]MPIPolylib::init_parallel_info():MPI_Isend "
+					  << "faild." << std::endl;
+				return PLSTAT_MPI_ERROR;
+
+			  } else {
+#ifdef DEBUG
+				PL_DBGOSH << "sending data p_send_trias_array success" <<std::endl;
+#endif
+			  }
+		} else if (sizeof(REAL_TYPE)==8){
+		  if (MPI_Isend( p_send_trias_array,     send_trias.size(),
+				 MPI_DOUBLE, (*procs_itr)->m_rank, MPITAG_TRIAS,
+				 m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
+		  
+			PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Isend,"
+				  << " MPITAG_TRIAS faild." << std::endl;
+			return PLSTAT_MPI_ERROR;
+		  } else {
+#ifdef DEBUG
+	    PL_DBGOSH << "sending data p_send_trias_array success" <<std::endl;
+#endif
+		  }
 	} else {
 	  PL_ERROSH << "[ERROR]MPIPolylib::init_parallel_info():MPI_Allgather "
 		    << "real type is not double nor float"<<std::endl;
@@ -720,6 +748,10 @@ MPIPolylib::move(
      }
 
 
+#ifdef DEBUG
+     //     PL_DBGOSH << "sending data to "<<  (*procs_itr)->m_rank << " end" <<std::endl;
+     PL_DBGOSH << "sending data to  end" <<std::endl;
+#endif
 
      //隣接PEごとに移動三角形情報を受信
      for (procs_itr = m_neibour_procs.begin(); procs_itr != m_neibour_procs.end(); procs_itr++) {
@@ -764,30 +796,56 @@ MPIPolylib::move(
 	 PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Irecv,"
 		   << "MPI_INT faild." << std::endl;
 	 return PLSTAT_MPI_ERROR;
+       } else {
+#ifdef DEBUG
+	 PL_DBGOSH << "receive p_idarray" << std::endl;
+#endif
        }
        if (MPI_Wait( &mpi_req, &mpi_stat ) != MPI_SUCCESS) {
 	 PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Wait,"
 		   << "MPI_INT faild." << std::endl;
 	 return PLSTAT_MPI_ERROR;
+       }  else {
+#ifdef DEBUG
+	 PL_DBGOSH << "p_idarray ..." << std::endl;
+	 for(int i=0;i<total_tria_num ;++i){
+	   PL_DBGOSH << i<<" "<< p_idarray[i] << std::endl;
+	 }
+#endif
        }
 
        // 三角形リストを非同期受信
        REAL_TYPE *p_triaarray = new REAL_TYPE[ total_tria_num*3*3 ];
 
        if(sizeof(REAL_TYPE)==4){
-	 if (MPI_Irecv( p_triaarray, total_tria_num*3*3, MPI_FLOAT, (*procs_itr)->m_rank,
+	 
+		if (MPI_Irecv( p_triaarray, total_tria_num*3*3,
+			MPI_FLOAT, (*procs_itr)->m_rank,
 			MPITAG_TRIAS, m_mycomm, &mpi_req ) != MPI_SUCCESS) {
-	   PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Irecv,PL_MPI_REAL:"
-		     << " faild." << std::endl;
-	   return PLSTAT_MPI_ERROR;
-	   
-	 }
+		   PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Irecv,PL_MPI_REAL:"
+				 << " faild." << std::endl;
+		   return PLSTAT_MPI_ERROR;
+		 } else {
+	// #ifdef DEBUG
+	// 	 PL_DBGOSH << "receive p_triaarray" << std::endl;
+	// 	 for (int ii=0;ii<total_tria_num*3*3;++ii){
+	// 	   PL_DBGOSH << ii<< " " << p_triaarray[ii]<<std::endl;
+	//}
+	// #endif	   
+		 }
        } else  if(sizeof(REAL_TYPE)==8){
 	 if (MPI_Irecv( p_triaarray, total_tria_num*3*3, MPI_DOUBLE, (*procs_itr)->m_rank,
 			MPITAG_TRIAS, m_mycomm, &mpi_req ) != MPI_SUCCESS) {
 	   PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Irecv,PL_MPI_REAL:"
 		     << " faild." << std::endl;
 	   return PLSTAT_MPI_ERROR;
+	 } else {
+// #ifdef DEBUG
+// 	 PL_DBGOSH << "receive p_triaarray" << std::endl;
+// 	 for (int ii=0;ii<total_tria_num*3*3;++ii){
+// 	   PL_DBGOSH << ii<< " " << p_triaarray[ii]<<std::endl;
+//	 }
+// #endif
 	 }
        } else {
 	 PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Irecv,PL_MPI_REAL:"
@@ -802,37 +860,114 @@ MPIPolylib::move(
 	 PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Wait,PL_MPI_REAL"
 		   << " faild." << std::endl;
 	 return PLSTAT_MPI_ERROR;
-       }
+       }  else {
+#ifdef DEBUG
+	 PL_DBGOSH << "receive finish waiting ...2" << std::endl;
+
+#endif
+       } 
+
+#ifdef DEBUG
+	 PL_DBGOSH << "receive p_triaarray" << std::endl;
+	 for (int ii=0;ii<total_tria_num*3*3;++ii){
+	   PL_DBGOSH << ii<< " " << p_triaarray[ii]<<std::endl;
+	 }
+
+#endif
+
 
        // 各ポリゴングループに対して三角形情報を追加
        pos_id = 0;
        pos_tria = 0;
        for( i=0; i<this->m_pg_list.size()*2-1; i+=2 ){
-
+#ifdef DEBUG
+	 PL_DBGOSH << "start adding trinagles to PolygonGroup"<<i << std::endl;
+#endif
 	 // ポリゴングループID
 	 int pg_id = p_intarray[i];
-
+#ifdef DEBUG
+	 PL_DBGOSH << "adding trinagles to PolygonGroup"
+		   << i <<" polygon group ID " << pg_id << std::endl;
+#endif
 	 // 当該ポリゴングループの三角形数
 	 unsigned int num_trias = p_intarray[i+1];
-
+#ifdef DEBUG
+	 PL_DBGOSH << "adding trinagles to PolygonGroup"
+		   << i <<" # of triangles. "<<num_trias << std::endl;
+#endif
 	 // グループIDのポリゴングループインスタンス取得
 	 PolygonGroup* p_pg = this->get_group( pg_id );
+
 	 if( p_pg == NULL ) {
 	   PL_ERROSH << "[ERROR]MPIPolylib::migrate():invalid pg_id:"
 		     << pg_id << std::endl;
 	   return PLSTAT_NG;
 	 }
 
+#ifdef DEBUG
+	 PL_DBGOSH << "adding trinagles to PolygonGroup"
+		   << i <<"  pg_id  "<< pg_id << std::endl;
+#endif
 	 // PrivateTriangleのベクタ - 受信データ配列からベクタへの変換用
 	 std::vector<PrivateTriangle*> tria_vec;
 
 	 // ベクタに受信データ内容をコピー
 	 for( j=0; j<num_trias; j++ ) {
-	   tria_vec.push_back(
-			      new PrivateTriangle(&p_triaarray[pos_tria], p_idarray[pos_id]) );
+	   //tria_vec.push_back(
+		//	      new PrivateTriangle(&p_triaarray[pos_tria], p_idarray[pos_id]) );
+#ifdef DEBUG
+	   PL_DBGOSH << "adding trinagles to PolygonGroup"
+		     << i <<" copy data to tria_vec "<< j << std::endl;
+	   PL_DBGOSH << pos_id << " " << p_idarray[pos_id]<<std::endl;
+	   PL_DBGOSH << pos_tria   << " " << p_triaarray[pos_tria]   <<std::endl;
+	   PL_DBGOSH << pos_tria+1 << " " << p_triaarray[pos_tria+1] <<std::endl;
+	   PL_DBGOSH << pos_tria+2 << " " << p_triaarray[pos_tria+2] <<std::endl;
+	   PL_DBGOSH << pos_tria+3 << " " << p_triaarray[pos_tria+3] <<std::endl;
+	   PL_DBGOSH << pos_tria+4 << " " << p_triaarray[pos_tria+4] <<std::endl;
+	   PL_DBGOSH << pos_tria+5 << " " << p_triaarray[pos_tria+5] <<std::endl;
+	   PL_DBGOSH << pos_tria+6 << " " << p_triaarray[pos_tria+6] <<std::endl;
+	   PL_DBGOSH << pos_tria+7 << " " << p_triaarray[pos_tria+7] <<std::endl;
+	   PL_DBGOSH << pos_tria+8 << " " << p_triaarray[pos_tria+8] <<std::endl;
+	   PL_DBGOSH << &tria_vec << std::endl;
+#endif //DEBUG
+	   // add vertex first 
+	   // vertex compaction performed later.
+
+	   Vertex* vertex_ptr[3];
+	   vertex_ptr[0] = new Vertex(p_triaarray[pos_tria],
+					 p_triaarray[pos_tria+1],
+					 p_triaarray[pos_tria+2]);
+	   vertex_ptr[1] =  new Vertex(p_triaarray[pos_tria+3],
+					  p_triaarray[pos_tria+4],
+					  p_triaarray[pos_tria+5]);
+	   vertex_ptr[2] =  new Vertex(p_triaarray[pos_tria+6],
+					  p_triaarray[pos_tria+7],
+					  p_triaarray[pos_tria+8]);
+
+	   p_pg->get_vertexlist()->vtx_add_nocheck(vertex_ptr[0]);
+	   p_pg->get_vertexlist()->vtx_add_nocheck(vertex_ptr[1]);
+	   p_pg->get_vertexlist()->vtx_add_nocheck(vertex_ptr[2]);
+
+	   tria_vec.push_back( new PrivateTriangle(vertex_ptr,
+						      p_idarray[pos_id]));
+	   //	   tria_vec.push_back(
+	   //new PrivateTriangle<T>(&p_triaarray[pos_tria],
+	   //p_idarray[pos_id]) );
+	   
+#ifdef DEBUG
+	   PL_DBGOSH << "adding trinagles to tria_vec."<<std::endl;
+#endif	   
 	   pos_id++;
 	   pos_tria+=9;
-	 }
+
+	 } // triangle loop
+
+
+
+#ifdef DEBUG
+	 PL_DBGOSH << "adding trinagles to PolygonGroup"
+		   << i <<" copy data to tria_vec" << std::endl;
+#endif
 
 	 // ポリゴングループに三角形リストを追加
 	 if( (ret = p_pg->add_triangles( &tria_vec )) != PLSTAT_OK ) {
@@ -841,6 +976,10 @@ MPIPolylib::move(
 	   return ret;
 	 }
 
+#ifdef DEBUG
+	 PL_DBGOSH << "adding trinagles to PolygonGroup"
+		   << i <<" call add_triangles." << std::endl;
+#endif
 	 // ベクタの内容あとしまつ
 	 for( j=0; j<num_trias; j++ ) {
 	   delete tria_vec.at(j);
@@ -888,7 +1027,7 @@ MPIPolylib::move(
 	
      // 自PE領域外ポリゴン情報を消去
      if( erase_outbounded_polygons() != PLSTAT_OK ) {
-       PL_ERROSH << "[ERROR]MPIPolylib::migrate():rebuild_polygons() failed." << std::endl;
+       PL_ERROSH << "[ERROR]MPIPolylib::migrate():erace_outbounded_polygons() failed." << std::endl; 
      }
 
      // 後始末 2010.08.24
@@ -899,6 +1038,7 @@ MPIPolylib::move(
      PL_DBGOSH << "MPIPolylib::migrate() out normaly." << std::endl;
 #endif
      return PLSTAT_OK;
+     //#undef DEBUG
    }
 
 
@@ -1656,6 +1796,7 @@ MPIPolylib::receive_polygons_from_rank0(
 
 POLYLIB_STAT
 MPIPolylib::gather_polygons(){
+//#define DEBUG
 #ifdef DEBUG
 	PL_DBGOSH << "MPIPolylib::gather_polygons() in. " << std::endl;
 #endif
@@ -1680,11 +1821,18 @@ MPIPolylib::gather_polygons(){
 			return PLSTAT_MPI_ERROR;
 		}
 
+#ifdef DEBUG
+	PL_DBGOSH << "MPIPolylib::gather_polygons() get group id and # of triangles." << std::endl;
+#endif
 		// 受信する全三角形数を算出
 		unsigned int total_tria_num = 0;
 		for( i=1; i<this->m_pg_list.size() * 2; i+=2 ){
 			total_tria_num += p_intarray[i];
 		}
+
+#ifdef DEBUG
+	PL_DBGOSH << "MPIPolylib::gather_polygons() calc # of triangles." << std::endl;
+#endif
 
 		// 三角形IDリストを受信
 		int *p_idarray = new int[ total_tria_num ];
@@ -1695,6 +1843,10 @@ MPIPolylib::gather_polygons(){
 					  << std::endl;
 			return PLSTAT_MPI_ERROR;
 		}
+
+#ifdef DEBUG
+	PL_DBGOSH << "MPIPolylib::gather_polygons() get id list." << std::endl;
+#endif
 
 		// 三角形リストを受信
 		REAL_TYPE *p_triaarray = new REAL_TYPE[ total_tria_num * 3 * 3 ];
@@ -1723,7 +1875,9 @@ MPIPolylib::gather_polygons(){
 			
 		}
 
-
+#ifdef DEBUG
+	PL_DBGOSH << "MPIPolylib::gather_polygons() get triangle list." << std::endl;
+#endif
 
 		// 各ポリゴングループに対して受信した三角形情報を追加
 		pos_id = 0;
@@ -1734,18 +1888,32 @@ MPIPolylib::gather_polygons(){
 		for( i=0; i<this->m_pg_list.size() * 2; i++ ){
 
 			// ポリゴングループID
-			int pg_id = p_intarray[i];
+		  int pg_id = p_intarray[i];
 
 			// 当該ポリゴングループの三角形数
-			unsigned int num_trias = p_intarray[i+1];
+		  unsigned int num_trias = p_intarray[i+1];
 
 			// グループIDのポリゴングループインスタンス取得
-			PolygonGroup* p_pg = this->get_group( pg_id );
-			if( p_pg == NULL ) {
-				PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons():invalid pg_id:"
-						  << pg_id << std::endl;
-				return PLSTAT_NG;
-			}
+#ifdef DEBUG
+		  PL_DBGOSH << "MPIPolylib::gather_polygons() polygon id. "<< pg_id << std::endl;
+#endif
+			
+		  PolygonGroup* p_pg = this->get_group( pg_id );
+		  if( p_pg == NULL ) {
+#ifdef DEBUG
+		    PL_DBGOSH << "MPIPolylib::gather_polygons() polygongropup pointer. "<< p_pg << std::endl;
+#endif
+
+		    PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons():invalid pg_id:"
+			      << pg_id << std::endl;
+		    return PLSTAT_NG;
+		  }
+
+#ifdef DEBUG
+			PL_DBGOSH << "MPIPolylib::gather_polygons() get group pointer. "<< i << " rank "<< rank << std::endl;
+			PL_DBGOSH << "MPIPolylib::gather_polygons() n_start_tri "<< n_start_tri << " n_start_id "<< n_start_id << num_trias << std::endl;
+#endif
+
 
 
 			//ポリゴングループに三角形リストを追加
@@ -1753,10 +1921,19 @@ MPIPolylib::gather_polygons(){
 			  PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons():p_pg->add() failed. returns:" 
 				    << PolylibStat2::String(ret) << std::endl;
 				return ret;
+
+			} else {
+
+#ifdef DEBUG
+			  PL_DBGOSH << "MPIPolylib::gather_polygons() get group pointer. "<< i << std::endl;
+#endif
+
 			}
 			n_start_tri+=num_trias*9;
 			n_start_id+=num_trias;
-
+#ifdef DEBUG
+			PL_DBGOSH << "MPIPolylib::gather_polygons() add triangles to group. "<< i << " " << p_pg << std::endl;
+#endif
 			// //PrivateTriangleのベクタ生成
 			// std::vector<PrivateTriangle*> tria_vec;
 
@@ -1782,6 +1959,9 @@ MPIPolylib::gather_polygons(){
 			i++;
 		}
 
+#ifdef DEBUG
+	PL_DBGOSH << "MPIPolylib::gather_polygons() add triangles." << std::endl;
+#endif
 		// 受信領域あとしまつ
 		if( p_intarray != NULL )  delete[] p_intarray;
 		if( p_idarray != NULL )   delete[] p_idarray;
@@ -1789,13 +1969,14 @@ MPIPolylib::gather_polygons(){
 	}
 
 	
-	for( i=0; i<this->m_pg_list.size() ; i++ ){
-	  this->m_pg_list[i]->finalize_DVertex();
-	}
+
+	// for( i=0; i<this->m_pg_list.size() ; i++ ){
+	//  this->m_pg_list[i]->finalize_DVertex();
+	// }
 	return PLSTAT_OK;
 
 
-
+	//#undef DEBUG
 }
 
 
@@ -2137,6 +2318,8 @@ MPIPolylib::gather_polygons_vtk(){
 
 POLYLIB_STAT
 MPIPolylib::send_polygons_to_rank0(){
+
+  //#define DEBUG
 #ifdef DEBUG
 	PL_DBGOSH << "MPIPolylib::send_polygons_to_rank0() in. " << std::endl;
 #endif
@@ -2245,6 +2428,7 @@ MPIPolylib::send_polygons_to_rank0(){
 	delete[] p_send_trias_array;
 
 	return PLSTAT_OK;
+	//#undef DEBUG
 }
 
 // protected //////////////////////////////////////////////////////////////////

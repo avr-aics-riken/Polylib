@@ -9,6 +9,7 @@
  *
  */
 #include "polygons/PrivateTriangle.h"
+#include "common/PolylibCommon.h"
 
 namespace PolylibNS{
 
@@ -101,15 +102,36 @@ namespace PolylibNS{
 		REAL_TYPE		*dim,
 		int			id
 	){
-		for( int i=0; i<3; i++ ) {
-		  this->m_vertex_ptr[i]->t[0] = *dim++;
-		  this->m_vertex_ptr[i]->t[1] = *dim++;
-		  this->m_vertex_ptr[i]->t[2] = *dim++;
-		}
-		m_id = id;
-		this->calc_normal();
-		this->calc_area();
+ 	  PL_ERROS << "PrivateTriangle(T,int) is obsolete. !!!NOTHING IS DONE!!!" << std::endl;
 	}
+
+
+// 	PrivateTriangle(
+// 		T		*dim,
+// 		int			id
+// 	){
+// #define DEBUG
+// #ifdef DEBUG
+// 	  PL_DBGOSH << "PrivateTriangle started." << std::endl;
+// #endif
+// 		for( int i=0; i<3; i++ ) {
+// 		  PL_DBGOSH << "PrivateTriangle  0 i ."<<i << std::endl;
+// 		  this->m_vertex_ptr[i]->t[0] = *dim++;
+// 		  PL_DBGOSH << "PrivateTriangle  1 i ."<<i << std::endl;
+// 		  this->m_vertex_ptr[i]->t[1] = *dim++;
+// 		  PL_DBGOSH << "PrivateTriangle  2 i ."<<i << std::endl;
+// 		  this->m_vertex_ptr[i]->t[2] = *dim++;
+// 		  PL_DBGOSH << "PrivateTriangle  3 i ."<<i << std::endl;
+// 		}
+// 		m_id = id;
+// 		this->calc_normal();
+// 		this->calc_area();
+
+// #ifdef DEBUG
+// 	  PL_DBGOSH << "PrivateTriangle called." << std::endl;
+// #endif
+// #undef DEBUG
+// 	}
 
 	//=======================================================================
 	// Setter/Getter

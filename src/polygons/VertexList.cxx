@@ -85,8 +85,11 @@ const std::vector<Vertex*>* VertexList::get_vertex_lists()
 	return m_vertex_list;
 }
 
-
-
+//!<  Vertexの格納場所へのポインタ
+std::vector<Vertex*>* VertexList::get_vertex_lists_mod()
+{
+	return m_vertex_list;
+}
 
 Vertex* VertexList::ith(int i) {
 	return (*m_vertex_list)[i];

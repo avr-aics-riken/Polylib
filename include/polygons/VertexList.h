@@ -91,6 +91,8 @@ class VertexList{
 
     ///  Vertexの格納場所へのポインタ
     const std::vector<Vertex*>* get_vertex_lists();
+    std::vector<Vertex*>* get_vertex_lists_mod();  //!<  Vertexの格納場所へのポインタ
+
     /// Vertex の追加 同一性チェック無し。
     void vtx_add_nocheck(Vertex* v);
 

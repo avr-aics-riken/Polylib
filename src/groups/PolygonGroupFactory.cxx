@@ -37,6 +37,11 @@ PolygonGroupFactory::~PolygonGroupFactory()
 //	virtual PolygonGroup* create_instance(std::string class_name) {
 PolygonGroup* PolygonGroupFactory::create_instance(std::string class_name,REAL_TYPE tolerance) 
 {
+
+#ifdef DEBUG
+	  PL_DBGOSH << "PolygonGroup<T>::create_instance class_name " 
+		    <<class_name<<std::endl;
+#endif
 	if (class_name == PolygonGroup::get_class_name()) {
 	  //		  return new PolygonGroup;
 	  		  return new PolygonGroup(tolerance);

@@ -161,7 +161,7 @@ TriMesh::~TriMesh()
 #ifdef DEBUG
   PL_DBGOSH << "TriMesh::"<<__func__<< " end of vtx_comaction"<<std::endl;
 #endif
-
+ //#undef DEBUG
  }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -476,7 +476,7 @@ void TriMesh::init(const std::vector<PrivateTriangle*>* trias)
   //  POLYLIB_STAT status = TriMeshIO::vtx_compaction(new_vertex_list, this->m_tri_list);
   //  POLYLIB_STAT status = vtx_compaction();
   vtx_compaction();
-
+  //#undef DEBUG
 }
 
 
@@ -489,39 +489,91 @@ void TriMesh::init(const std::vector<PrivateTriangle*>* trias)
 		      const int n_start_tri,
 		      const int n_start_id,
 		      const unsigned int n_tri)
-   {
-
-
+{
+#ifdef DEBUG
+   PL_DBGOSH << "TriMesh::add start"<<std::endl;
+#endif
      if (this->m_tri_list == NULL) {
        this->m_tri_list = new std::vector<PrivateTriangle*>;
      }
      if (this->m_vertex_list == NULL) {
        this->m_vertex_list = new VertexList;
      }
-     
+#ifdef DEBUG
+     PL_DBGOSH << "TriMesh::add VertexList and PrivateTriangle is ready."<<std::endl;
+#endif
 
      for(int i=0;i<n_tri;++i) {
        int id=n_start_tri+i*9;
        Vertex* vtx_tri[3];
        for(int j=0;j<3;++j){
 	 Vertex* v=new Vertex(vertlist[id+j*3],vertlist[id+j*3+1],vertlist[id+j*3+2]);
+
+
 	 //vtx_tri[j]=this->m_vertex_list->vtx_add_KDT(v);
 	 //if(vtx_tri[j]!=v) delete v;
 	 this->m_vertex_list->vtx_add_nocheck(v);
+	 /* PL_DBGOSH << "TriMesh::add Triangle. vtx "<< j << " " <<v<<std::endl; */
+	 /* PL_DBGOSH << "TriMesh::add Triangle. vtx "<< j << " " <<*v<<std::endl; */
+	 //   なくなっていた１行
+	 vtx_tri[j]=v;
+	 //   なくなっていた１行
+
        }
        int id2=n_start_id+i;
+
+       if(vtx_tri[0]!=NULL &&vtx_tri[1]!=NULL &&vtx_tri[2]!=NULL){
+	 //PL_DBGOSH << __func__  << " Vertex pointer is checked."<<std::endl;
+       } else {
+	 PL_ERROSH << __func__ 
+		   << " NULL pointer "<< vtx_tri[0]
+		   <<" "<< vtx_tri[1]
+		   <<" "<< vtx_tri[2]<<std::endl;
+       } 
+
        PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[id2]);
+
+       /* PL_DBGOSH << "TriMesh::add Triangle. triangle "<< i  */
+       /* 		 << " id "<<idlist[id2]<<std::endl; */
+
        this->m_tri_list->push_back(tri);
+
+       /* PL_DBGOSH << "TriMesh::add Triangle. triangle "<< i <<std::endl; */
+       /* // */
      }
      
+     //PL_DBGOSH << "TriMesh::add Triangle. add vtx"<<std::endl;
+
      // 三角形リストをID順にソート
      std::sort( this->m_tri_list->begin(), this->m_tri_list->end(), PrivTriaLess() );
+#ifdef DEBUG
+     PL_DBGOSH << "TriMesh::add Triangle. sort"<<std::endl;
+#endif
+     // Comment
+     // Vertex および PrivateTriangle が delete されていない。
+     // 2013-Jan.-10th T. Suzuki
 
+#ifdef DEBUG     
+     for(int i=0;i<this->m_tri_list->size();++i){
+       PL_DBGOSH << " before id "<<(*this->m_tri_list)[i]->get_id() <<std::endl;
+     }
+#endif
+     
      // ID重複ぶんを削除
      this->m_tri_list->erase(
-			     std::unique(this->m_tri_list->begin(), this->m_tri_list->end(), PrivTriaEqual()),
+			     std::unique(this->m_tri_list->begin(), 
+					 this->m_tri_list->end(), 
+					 PrivTriaEqual()),
 			     this->m_tri_list->end());
-   }
+
+#ifdef DEBUG
+     for(int i=0;i<this->m_tri_list->size();++i){
+       PL_DBGOSH << " after id "<<(*this->m_tri_list)[i]->get_id() <<std::endl;
+     }
+     PL_DBGOSH << "TriMesh::add end"<<std::endl;
+#endif
+
+}
 
 
 // public /////////////////////////////////////////////////////////////////////
@@ -531,6 +583,7 @@ TriMesh::add(
 	const std::vector<PrivateTriangle*> *trias
 )
 {
+//#define DEBUG
 #ifdef DEBUG
   PL_DBGOSH << "TriMesh::add_triangles() in." << std::endl;
 #endif
@@ -555,6 +608,11 @@ TriMesh::add(
 	this->m_tri_list->erase(
 	std::unique(this->m_tri_list->begin(), this->m_tri_list->end(), PrivTriaEqual()),
 		this->m_tri_list->end());
+#ifdef DEBUG
+  PL_DBGOSH << "TriMesh<T>::add_triangles() in." << std::endl;
+#endif
+
+#undef DEBUG
 }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -946,6 +1004,10 @@ void TriMesh::init_vertex_list()
  {
    //#define DEBUG
 
+#ifdef DEBUG
+   PL_DBGOSH << "vtx_compaction" <<std::endl;
+#endif
+
    std::map<Vertex*,Vertex*>* vtx_map=new  std::map<Vertex*,Vertex*>;
 ;
    this->m_vertex_list->vertex_compaction(vtx_map);
@@ -1245,7 +1307,7 @@ TriMesh::add_DVertex_Triangle(Vec3<REAL_TYPE>* v)
 	 else    PL_DBGOSH << "TriMesh::"<< __func__<< " null VertexList"<<std::endl;
 	}
 	//  PL_DBGOSH << "TriMesh::"<< __func__<< " VertexList ptr"<<this->m_vertex_list;
-	//PL_DBGOSH << "TriMesh::"<< __func__<< "add triangle"<<std::endl;
+    //PL_DBGOSH << "TriMesh::"<< __func__<< "add tringle"<<std::endl;
 
 	int n_tri=this->m_tri_list->size();
 

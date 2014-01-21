@@ -21,7 +21,8 @@
 #define PL_VERSION_NO  "3.1.0"
 
 /** POLYLIBライブラリのリビジョン */
-#define PL_REVISION    "20131114_1200"
+
+#define PL_REVISION    "20140120_1800"
 
 #endif /* _POLYLIB_VERSION_H_ */
 

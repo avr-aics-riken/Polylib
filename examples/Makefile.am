@@ -13,11 +13,11 @@
 if SERIALTARGET
   noinst_PROGRAMS = test test2 test_vtx test_vtx_float test_obj test_xyzrgb_statuette_stl test_obj2 test_obj3 test_obj4 test_read test_DVertex
 else
-  noinst_PROGRAMS = test_mpi test_mpi2 test_mpi3 test_mpi_xyzrgb1 test_mpi_xyzrgb2 test_mpi_xyzrgb4 test_mpi_xyzrgb8 test_mpi_DVertex
+  noinst_PROGRAMS = test_mpi test_mpi2 test_mpi3 test_mpi_xyzrgb1 test_mpi_xyzrgb2 test_mpi_xyzrgb4 test_mpi_xyzrgb8 test_mpi_DVertex test_mpi_move
 endif
 
 
-DISTCLEANFILES=*~ test test2 test_vtx test_vtx_float test_obj test_xyzrgb_statuette_stl test_obj2 test_obj3 test_obj4 test_read test_DVertex test_mpi test_mpi2 test_mpi3 test_mpi_xyzrgb1 test_mpi_xyzrgb2 test_mpi_xyzrgb4 test_mpi_xyzrgb8 test_mpi_DVertex
+DISTCLEANFILES=*~ test test2 test_vtx test_vtx_float test_obj test_xyzrgb_statuette_stl test_obj2 test_obj3 test_obj4 test_read test_DVertex test_mpi test_mpi2 test_mpi3 test_mpi_xyzrgb1 test_mpi_xyzrgb2 test_mpi_xyzrgb4 test_mpi_xyzrgb8 test_mpi_DVertex test_mpi_move
 CLEANFILES=data/*.log
 
 EXTRA_DIST=  blade1.stl \
@@ -28,6 +28,7 @@ EXTRA_DIST=  blade1.stl \
   polylib_config-multi.tp \
   polylib_config.tp \
   polylib_config2.tp \
+  polylib_config_move.tp \
   polylib_config_xyzrgb_statuette_stl.tp \
   polylib_config_objfile_bin.tp \
   polylib_config_vtxtest.tp \
@@ -35,7 +36,54 @@ EXTRA_DIST=  blade1.stl \
   README \
   sphere.stl \
   tower.stl \
-  cube.obj 		
+  cube.obj \
+square.obj \
+ car_0_20130731174205.id \
+ car_0_20130731174205.stla \
+ car_1_20130731174205.id \
+ car_1_20130731174205.stla \
+ car_2_20130731174205.id \
+ car_2_20130731174205.stla \
+ car_3_20130731174205.id \
+ car_3_20130731174205.stla \
+ polylib_config_0_20130731174205.tpp \
+ polylib_config_1_20130731174205.tpp \
+ polylib_config_2_20130731174205.tpp \
+ polylib_config_3_20130731174205.tpp \
+ sphere_3_20130731174205.id \
+ sphere_3_20130731174205.stla \
+ windmill_blades_blade1_0_20130731174205.id \
+ windmill_blades_blade1_0_20130731174205.stla \
+ windmill_blades_blade1_1_20130731174205.id \
+ windmill_blades_blade1_1_20130731174205.stla \
+ windmill_blades_blade1_2_20130731174205.id \
+ windmill_blades_blade1_2_20130731174205.stla \
+ windmill_blades_blade1_3_20130731174205.id \
+ windmill_blades_blade1_3_20130731174205.stla \
+ windmill_blades_blade2_0_20130731174205.id \
+ windmill_blades_blade2_0_20130731174205.stla \
+ windmill_blades_blade2_1_20130731174205.id \
+ windmill_blades_blade2_1_20130731174205.stla \
+ windmill_blades_blade2_2_20130731174205.id \
+ windmill_blades_blade2_2_20130731174205.stla \
+ windmill_blades_blade2_3_20130731174205.id \
+ windmill_blades_blade2_3_20130731174205.stla \
+ windmill_blades_blade3_0_20130731174205.id \
+ windmill_blades_blade3_0_20130731174205.stla \
+ windmill_blades_blade3_1_20130731174205.id \
+ windmill_blades_blade3_1_20130731174205.stla \
+ windmill_blades_blade3_2_20130731174205.id \
+ windmill_blades_blade3_2_20130731174205.stla \
+ windmill_blades_blade3_3_20130731174205.id \
+ windmill_blades_blade3_3_20130731174205.stla \
+ windmill_tower_0_20130731174205.id \
+ windmill_tower_0_20130731174205.stla \
+ windmill_tower_1_20130731174205.id \
+ windmill_tower_1_20130731174205.stla \
+ windmill_tower_2_20130731174205.id \
+ windmill_tower_2_20130731174205.stla \
+ windmill_tower_3_20130731174205.id \
+ windmill_tower_3_20130731174205.stla 
 
 
 
@@ -102,6 +150,10 @@ test_mpi_xyzrgb8_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 test_mpi_DVertex_SOURCES  = test_mpi_DVertex.cxx
 test_mpi_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+
+
+test_mpi_move_SOURCES  = test_mpi_move.cxx
+test_mpi_move_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
 
 
 test_LDADD = \
@@ -230,6 +282,13 @@ test_mpi_xyzrgb8_LDADD = \
 
 
 test_mpi_DVertex_LDADD = \
+    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    @MPI_LDFLAGS@ \
+    @MPI_LIBS@ \
+    @TP_LDFLAGS@ -lstdc++
+
+
+test_mpi_move_LDADD = \
     -L$(top_builddir)/src/.libs -lMPIPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \

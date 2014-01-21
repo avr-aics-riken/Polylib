@@ -187,7 +187,7 @@ class TriMesh : public Polygons {
     ///
     ///  @return	POLYLIB_STATで定義される値が返る。
     ///
-    POLYLIB_STAT build();
+    virtual POLYLIB_STAT build();
 
     ///
     /// TriMeshクラスが管理している三角形ポリゴン数を返す。
@@ -368,6 +368,7 @@ class TriMesh : public Polygons {
     /// 
     /// 重複頂点の削除
     ///
+	//    virtual void vtx_compaction();
     void vtx_compaction();
 
 

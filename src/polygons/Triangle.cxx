@@ -9,7 +9,7 @@
  *
  */
 #include "polygons/Triangle.h"
-
+#include "common/PolylibCommon.h"
 
 namespace PolylibNS{
 
@@ -33,11 +33,23 @@ namespace PolylibNS{
 		 //Vec3	vertex[3]
 		 Vertex* vertex_ptr[3]
 	) {
-		m_vertex_ptr[0] = vertex_ptr[0];
-		m_vertex_ptr[1] = vertex_ptr[1];
-		m_vertex_ptr[2] = vertex_ptr[2];
-		calc_normal();
-		calc_area();
+
+	  if(vertex_ptr[0]!=NULL && 
+	     vertex_ptr[1]!=NULL && 
+	     vertex_ptr[2]!=NULL ){
+
+	    m_vertex_ptr[0] = vertex_ptr[0];
+	    m_vertex_ptr[1] = vertex_ptr[1];
+	    m_vertex_ptr[2] = vertex_ptr[2];
+
+	  } else {
+	    PL_ERROS << __func__<<" pointer is null p0="<< vertex_ptr[0]
+		      <<" p1="<< vertex_ptr[1]
+		      <<" p2="<< vertex_ptr[2]<<std::endl;
+
+	  }
+	  calc_normal();
+	  calc_area();
 	}
 
 	///
@@ -93,14 +105,14 @@ namespace PolylibNS{
   void Triangle::set_vertexes(
 			  //Vec3	vertex[3], 
 		 Vertex* vertex_ptr[3],
-		bool	calc_normal, 
-		bool	calc_area
+		bool	calc_normal_bool, 
+		bool	calc_area_bool
 	) {
 		m_vertex_ptr[0] = vertex_ptr[0];
 		m_vertex_ptr[1] = vertex_ptr[1];
 		m_vertex_ptr[2] = vertex_ptr[2];
-		if(calc_normal) this->calc_normal();
-		if(calc_area) this->calc_area();
+		if(calc_normal_bool) this->calc_normal();
+		if(calc_area_bool) this->calc_area();
 	}
 
 	///
@@ -180,18 +192,20 @@ namespace PolylibNS{
 	/// 法線ベクトル算出。
 	///
   void Triangle::calc_normal() {
-		// double演算に変更 2013.10.10 tkawanab
-		Vec3<double> vd[3];
-		vd[0].assign( m_vertex_ptr[0]->t[0], m_vertex_ptr[0]->t[1], m_vertex_ptr[0]->t[2] );
-		vd[1].assign( m_vertex_ptr[1]->t[0], m_vertex_ptr[1]->t[1], m_vertex_ptr[1]->t[2] );
-		vd[2].assign( m_vertex_ptr[2]->t[0], m_vertex_ptr[2]->t[1], m_vertex_ptr[2]->t[2] );
-		Vec3<double> ad = vd[1] - vd[0];
-		Vec3<double> bd = vd[2] - vd[0];
 
-		Vec3<double> normald = (cross(ad,bd)).normalize();
-		m_normal[0] = normald[0];
-		m_normal[1] = normald[1];
-		m_normal[2] = normald[2];
+    // double演算に変更 2013.10.10 tkawanab
+
+    Vec3<double> vd[3];
+    vd[0].assign( m_vertex_ptr[0]->t[0], m_vertex_ptr[0]->t[1], m_vertex_ptr[0]->t[2] );
+    vd[1].assign( m_vertex_ptr[1]->t[0], m_vertex_ptr[1]->t[1], m_vertex_ptr[1]->t[2] );
+    vd[2].assign( m_vertex_ptr[2]->t[0], m_vertex_ptr[2]->t[1], m_vertex_ptr[2]->t[2] );
+
+    Vec3<double> ad = vd[1] - vd[0];
+    Vec3<double> bd = vd[2] - vd[0];
+    Vec3<double> normald = (cross(ad,bd)).normalize();
+    m_normal[0] = normald[0];
+    m_normal[1] = normald[1];
+    m_normal[2] = normald[2];
 	}
 
 	///
@@ -205,7 +219,7 @@ namespace PolylibNS{
 		REAL_TYPE ab = dot(a,b);
 		REAL_TYPE f = al*al*bl*bl - ab*ab;
 		if(f<0.0) f=0.0;
-		//m_area = 0.5*sqrtf(f);
+		
 		m_area = 0.5*sqrt(f);
 		// std::cout << "a("<<a<<") b("<<b<<")"<<std::endl;
 		// std::cout << __func__ <<" "<<m_area <<" "<< f << " " << al << " "<< bl << " "<< ab <<std::endl;

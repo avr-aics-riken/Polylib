@@ -183,6 +183,14 @@ class Polygons {
    virtual POLYLIB_STAT build() = 0;
 
    ///
+   /// Polygonsクラスに含まれる頂点情報KD木を作成。重複点を削除
+   ///
+   ///  @return	POLYLIB_STATで定義される値が返る。
+   ///
+   //   virtual void vtx_compaction() = 0;
+
+
+   ///
    /// Polygonsクラスで保持する三角形ポリゴンの総数を返す。
    /// 
    ///  @return 三角形ポリゴンの総数。

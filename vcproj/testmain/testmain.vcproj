@@ -366,6 +366,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\examples\test_mpi_move.cxx"
+				>
+			</File>
+			<File
 				RelativePath="..\..\examples\test_mpi_xyzrgb1.cxx"
 				>
 			</File>

@@ -833,6 +833,9 @@ protected:
 	/// ユーザ定義タイプ : (追加 2013.07.17)
 	std::string							m_type;
 
+	///  頂点同一性チェックの判定基準 (追加 2013.09.03)
+	REAL_TYPE m_tolerance;
+
 private:
 	/// ユーザ定義id : (追加 2010.10.20)
 	int							m_id;
@@ -840,8 +843,7 @@ private:
 	/// ユーザ定義IDが設定されたか？：（追加 2013.06.17)
 	bool						m_id_defined;
 
-	///  頂点同一性チェックの判定基準 (追加 2013.09.03)
-	REAL_TYPE m_tolerance;
+
 
   //	DVertexManager* m_DVM_ptr;
  

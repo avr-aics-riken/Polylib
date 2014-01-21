@@ -644,6 +644,8 @@ POLYLIB_STAT PolygonGroup::build_polygon_tree()
 #ifdef DEBUG
 	PL_DBGOSH << "PolygonGroup::build_polygon_tree() in.:" << m_name << std::endl;
 #endif
+	// before rebuild Polygon tree vertex_compaction first.
+	//m_polygons->vtx_compaction();
 
 	//木構造の生成
 	POLYLIB_STAT ret = m_polygons->build();
@@ -874,6 +876,7 @@ PolygonGroup::search_outbounded(
 	std::vector<int> *exclude_tria_ids
 )
 {
+  //#define DEBUG
 #ifdef DEBUG
 	PL_DBGOSH << "PolygonGroup::search_outbounded() in. " << std::endl;
 #endif
@@ -881,7 +884,9 @@ PolygonGroup::search_outbounded(
 
 	// 除外IDリストを昇順ソート
 	std::sort( exclude_tria_ids->begin(), exclude_tria_ids->end() );
-
+#ifdef DEBUG
+	PL_DBGOSH << "PolygonGroup::search_outbounded() neibour box " << neibour_bbox.min<<" " << neibour_bbox.max<<std::endl;
+#endif
 	// 隣接PE領域(ガイドセル含)に懸かる三角形を検索
 	p_trias = (std::vector<PrivateTriangle*>*)search( &neibour_bbox, false );
 #ifdef DEBUG
@@ -893,7 +898,7 @@ PL_DBGOSH << "p_trias org num:" << p_trias->size() << std::endl;
 	for( itr=p_trias->begin(); itr!=p_trias->end(); ) {
 		int id = (*itr)->get_id();
 		if( std::binary_search(exclude_tria_ids->begin(),
-							   exclude_tria_ids->end(), id) ) {
+							exclude_tria_ids->end(), id) ) {
 			itr = p_trias->erase(itr);
 		}
 		else {
@@ -904,6 +909,7 @@ PL_DBGOSH << "p_trias org num:" << p_trias->size() << std::endl;
 PL_DBGOSH << "p_trias ret num:" << p_trias->size() << std::endl;
 #endif
 	return p_trias;
+	//#undef DEBUG
 }
 // public /////////////////////////////////////////////////////////////////////
 
@@ -915,15 +921,30 @@ PolygonGroup::add_triangles(
 				   const int n_start_id,
 				   const unsigned int n_tri){
 
+
+  //#define DEBUG
+#ifdef DEBUG
+  PL_DBGOSH << __func__<< " n_tri="<<n_tri << std::endl;
+#endif
+
   if( n_tri==0)	  return PLSTAT_OK;
 
-	m_polygons->add(vertlist, idlist, n_start_tri, n_start_id,n_tri);
+#ifdef DEBUG
+  PL_DBGOSH << __func__<< " add start" << std::endl;
+#endif
+
+  m_polygons->add(vertlist, idlist, n_start_tri, n_start_id,n_tri);
+
+#ifdef DEBUG
+  PL_DBGOSH << __func__<< " add finished" << std::endl;
+#endif
 
 
-	// KD木要再構築フラグを立てる
-	m_need_rebuild = true;
+  // KD木要再構築フラグを立てる
+  m_need_rebuild = true;
+  return PLSTAT_OK;
 
-	return PLSTAT_OK;
+  //#undef DEBUG
 }
 
 
@@ -936,6 +957,7 @@ PolygonGroup::add_triangles(
 	std::vector<PrivateTriangle*> *tri_list
 )
 {
+#define DEBUG
 #ifdef DEBUG
 	PL_DBGOSH << "PolygonGroup::add_triangles() in. " << std::endl;
 #endif
@@ -943,12 +965,21 @@ PolygonGroup::add_triangles(
 		return PLSTAT_OK;
 	}
 
+#ifdef DEBUG
+	PL_DBGOSH << "PolygonGroup::add_triangles() in. " << std::endl;
+#endif
+
 	m_polygons->add( tri_list );
+#ifdef DEBUG
+	PL_DBGOSH << "PolygonGroup::add_triangles() end. " << std::endl;
+#endif
+
 
 	// KD木要再構築フラグを立てる
 	m_need_rebuild = true;
 
 	return PLSTAT_OK;
+#undef DEBUG
 }
 
 // public /////////////////////////////////////////////////////////////////////
@@ -1159,7 +1190,7 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 	PolygonGroup			*parent, 
 	TextParser* tp
 ) {
-#define DEBUG
+  //#define DEBUG
 #ifdef DEBUG
   PL_DBGOS << __func__ << " in"  <<std::endl;
 #endif
@@ -1309,7 +1340,9 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 	  m_parent_path	= parent->acq_fullpath();
 	  parent->add_children(this);
 	} else {
+#ifdef DEBUG	  
 	  PL_DBGOSH << "parent is root."<<pg_name<<std::endl;
+#endif // DEBUG	  
 	}
 
 	// その他の属性を設定
@@ -1336,7 +1369,7 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 	m_type = type_string;
 
 	return PLSTAT_OK;
-#undef DEBUG
+	//#undef DEBUG
 }
 
 // protected //////////////////////////////////////////////////////////////////
