@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 #include <string>
 #include <iostream>
 #include "Polylib.h"
@@ -23,38 +23,38 @@ int main(int argc, char** argv ){
 
 
 
-  cout<< "test 0" << endl;
+	cout<< "test 0" << endl;
 
-  //Polylib<double>* pl_instance = Polylib<double>::get_instance();
-  Polylib* pl_instance = Polylib::get_instance();
+	//Polylib<double>* pl_instance = Polylib<double>::get_instance();
+	Polylib* pl_instance = Polylib::get_instance();
 
-  cout<< "test 1" << endl;
+	cout<< "test 1" << endl;
 
-  //  pl_instance->load();
+	//  pl_instance->load();
 
-  REAL_TYPE scale=1.0;
-  std::string file="polylib_config_vtxtest.tpp";
+	REAL_TYPE scale=1.0;
+	std::string file="polylib_config_vtxtest.tpp";
 
-  pl_instance->load(file,scale);
+	pl_instance->load(file,scale);
 
-  cout<< "test 2" << endl;
+	cout<< "test 2" << endl;
 
-  pl_instance->show_group_hierarchy();
- 
-  cout<< "test 3" << endl;
+	pl_instance->show_group_hierarchy();
+
+	cout<< "test 3" << endl;
 
 
-  // //  pl_instance->show_group_info("car"); // not working??
-  // string fname="";
-  // string stl="stl_a";
+	// //  pl_instance->show_group_info("car"); // not working??
+	// string fname="";
+	// string stl="stl_a";
 
-  // string extend="";
+	// string extend="";
 
-  // pl_instance->save(&fname,stl,extend);
+	// pl_instance->save(&fname,stl,extend);
 
-  // cout<< "test 4" << endl;
+	// cout<< "test 4" << endl;
 
-  return 0;
+	return 0;
 
 
 }

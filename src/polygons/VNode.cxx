@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #include "polygons/VNode.h"
 #include "polygons/VElement.h"
@@ -26,7 +26,7 @@ namespace PolylibNS {
 	/// @return true=リーフ/false=リーフでない。
 	///
 	bool VNode::is_leaf() const {
-	  return m_left == 0;
+		return m_left == 0;
 	}
 
 	///
@@ -121,9 +121,9 @@ namespace PolylibNS {
 	}
 
 	///
- 	/// ノードが所持する要素の数を取得。
+	/// ノードが所持する要素の数を取得。
 	///
- 	/// @return 要素数。
+	/// @return 要素数。
 	///
 	int VNode::get_elements_num() const {
 		return m_vlist.size();
@@ -152,98 +152,98 @@ namespace PolylibNS {
 
 
 
-// VNode
+	// VNode
 
-// public /////////////////////////////////////////////////////////////////////
+	// public /////////////////////////////////////////////////////////////////////
 
-VNode::VNode()
-{
-	m_left = NULL;
-	m_right = NULL;
-	m_axis = AXIS_X;
-	m_bbox_search.init();
+	VNode::VNode()
+	{
+		m_left = NULL;
+		m_right = NULL;
+		m_axis = AXIS_X;
+		m_bbox_search.init();
 #ifdef USE_DEPTH
-	m_depth = 0;
+		m_depth = 0;
 #endif
-}
-
-// public /////////////////////////////////////////////////////////////////////
-
-VNode::~VNode()
-{
-  std::vector<VElement*>::iterator itr = m_vlist.begin();
-	for (; itr != m_vlist.end(); itr++) {
-		delete *itr;
 	}
-	m_vlist.clear();
-	if (m_left!=NULL) {delete m_left; m_left=NULL;}
-	if (m_right!=NULL){delete m_right; m_right=NULL;}
-}
 
-// public /////////////////////////////////////////////////////////////////////
+	// public /////////////////////////////////////////////////////////////////////
 
-void VNode::split(const int& max_elem)
-{
+	VNode::~VNode()
+	{
+		std::vector<VElement*>::iterator itr = m_vlist.begin();
+		for (; itr != m_vlist.end(); itr++) {
+			delete *itr;
+		}
+		m_vlist.clear();
+		if (m_left!=NULL) {delete m_left; m_left=NULL;}
+		if (m_right!=NULL){delete m_right; m_right=NULL;}
+	}
 
-  m_left = new VNode();
-  m_right = new VNode();
+	// public /////////////////////////////////////////////////////////////////////
 
-  BBox left_bbox = m_bbox;
-  BBox right_bbox = m_bbox;
+	void VNode::split(const int& max_elem)
+	{
 
-  REAL_TYPE x = .5 * (m_bbox.min[m_axis] + m_bbox.max[m_axis]);
-  left_bbox.max[m_axis] = x;
-  right_bbox.min[m_axis] = x;
+		m_left = new VNode();
+		m_right = new VNode();
 
-  m_left->set_bbox(left_bbox);
-  m_right->set_bbox(right_bbox);
+		BBox left_bbox = m_bbox;
+		BBox right_bbox = m_bbox;
 
-  // Vec3<REAL_TYPE> lmin=left_bbox.getPoint(0);
-  // Vec3<REAL_TYPE> lmax=left_bbox.getPoint(7);
-  // Vec3<REAL_TYPE> rmin=right_bbox.getPoint(0);
-  // Vec3<REAL_TYPE> rmax=right_bbox.getPoint(7);
-  // std::cout<< __func__ << " nelement " <<m_vlist.size()<<std::endl;
-  // std::cout<< __func__ << " lmin " <<lmin<<std::endl;
-  // std::cout<< __func__ << " lmax " <<lmax<<std::endl;
-  // std::cout<< __func__ << " rmin " <<rmin<<std::endl;
-  // std::cout<< __func__ << " rmax " <<rmax<<std::endl;
+		REAL_TYPE x = .5 * (m_bbox.min[m_axis] + m_bbox.max[m_axis]);
+		left_bbox.max[m_axis] = x;
+		right_bbox.min[m_axis] = x;
+
+		m_left->set_bbox(left_bbox);
+		m_right->set_bbox(right_bbox);
+
+		// Vec3<REAL_TYPE> lmin=left_bbox.getPoint(0);
+		// Vec3<REAL_TYPE> lmax=left_bbox.getPoint(7);
+		// Vec3<REAL_TYPE> rmin=right_bbox.getPoint(0);
+		// Vec3<REAL_TYPE> rmax=right_bbox.getPoint(7);
+		// std::cout<< __func__ << " nelement " <<m_vlist.size()<<std::endl;
+		// std::cout<< __func__ << " lmin " <<lmin<<std::endl;
+		// std::cout<< __func__ << " lmax " <<lmax<<std::endl;
+		// std::cout<< __func__ << " rmin " <<rmin<<std::endl;
+		// std::cout<< __func__ << " rmax " <<rmax<<std::endl;
 
 
 
 #ifdef USE_DEPTH
-  m_left->m_depth = m_depth+1;
-  m_right->m_depth = m_depth+1;
+		m_left->m_depth = m_depth+1;
+		m_right->m_depth = m_depth+1;
 #endif
-  std::vector<VElement*>::const_iterator itr = m_vlist.begin();
+		std::vector<VElement*>::const_iterator itr = m_vlist.begin();
 
-  for (; itr != m_vlist.end(); itr++) {
-    if ((*itr)->get_pos()[m_axis] < x) {
-      m_left->m_vlist.push_back((*itr));
-      m_left->set_bbox_search((*itr));
-    }
-    else {
-      m_right->m_vlist.push_back((*itr));
-      m_right->set_bbox_search((*itr));
-    }
-  }
-  m_vlist.clear();
+		for (; itr != m_vlist.end(); itr++) {
+			if ((*itr)->get_pos()[m_axis] < x) {
+				m_left->m_vlist.push_back((*itr));
+				m_left->set_bbox_search((*itr));
+			}
+			else {
+				m_right->m_vlist.push_back((*itr));
+				m_right->set_bbox_search((*itr));
+			}
+		}
+		m_vlist.clear();
 
-  // set the next axis to split a bounding box
-  AxisEnum axis;
-  if (m_axis == AXIS_Z)  axis = AXIS_X;
-  else if (m_axis == AXIS_X) axis = AXIS_Y;
-  else	axis = AXIS_Z;
+		// set the next axis to split a bounding box
+		AxisEnum axis;
+		if (m_axis == AXIS_Z)  axis = AXIS_X;
+		else if (m_axis == AXIS_X) axis = AXIS_Y;
+		else	axis = AXIS_Z;
 
-  m_left->set_axis(axis);
-  m_right->set_axis(axis);
-  if (m_left->get_elements_num() > max_elem) {
-    m_left->split(max_elem);
-  }
-  if (m_right->get_elements_num() > max_elem) {
-    m_right->split(max_elem);
-  }
-}
-	
+		m_left->set_axis(axis);
+		m_right->set_axis(axis);
+		if (m_left->get_elements_num() > max_elem) {
+			m_left->split(max_elem);
+		}
+		if (m_right->get_elements_num() > max_elem) {
+			m_right->split(max_elem);
+		}
+	}
+
 } //namespace PolylibNS
 
 

@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 #ifdef WIN32
 //１８ケース
 extern int main_test();//1
@@ -34,7 +34,7 @@ extern int main_test_move(int argc, char** argv );//3
 int main(int argc, char** argv ){
 	/*
 	if(argc!=2){
-		return -1;
+	return -1;
 	}
 	int ret = 0;
 	int id = ::atoi( argv[1]);

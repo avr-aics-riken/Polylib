@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #include "common/BBox.h"
 
@@ -43,12 +43,12 @@ namespace PolylibNS {
 	}
 
 	void BBox::add(const Vec3<REAL_TYPE>& v) {
-	  // PL_DBGOSH << "BBox::"<<__func__
-	  // 	    << " "<< v[0] 
-	  // 	    << " "<< v[1] 
-	  // 	    << " "<< v[2] 
-	  // 	    <<std::endl;
-	  
+		// PL_DBGOSH << "BBox::"<<__func__
+		// 	    << " "<< v[0] 
+		// 	    << " "<< v[1] 
+		// 	    << " "<< v[2] 
+		// 	    <<std::endl;
+
 		min[0] = std::min(min[0], v[0]);
 		//PL_DBGOSH << "BBox::"<<__func__<<"0"<<std::endl;
 		min[1] = std::min(min[1], v[1]);
@@ -80,7 +80,7 @@ namespace PolylibNS {
 	{ 
 		return ((REAL_TYPE)(0.5) * (min + max)); 
 	}
-	
+
 	Vec3<REAL_TYPE> BBox::size() const 
 	{ 
 		return max - min; 
@@ -108,14 +108,14 @@ namespace PolylibNS {
 
 	///
 	/// 引数で与えられた点が、このBBoxに含まれるかを判定する。
-    /// @param[in] pos 試行する点
-    /// @return 含まれる場合はtrue。他はfalse。
+	/// @param[in] pos 試行する点
+	/// @return 含まれる場合はtrue。他はfalse。
 	///
 	bool BBox::contain(const Vec3<REAL_TYPE>& pos) const {
 		if (min.t[0] <= pos.t[0] && pos.t[0] <= max.t[0] &&
 			min.t[1] <= pos.t[1] && pos.t[1] <= max.t[1] &&
 			min.t[2] <= pos.t[2] && pos.t[2] <= max.t[2]) {
-			return true;
+				return true;
 		}
 		else {
 			return false;
@@ -125,8 +125,8 @@ namespace PolylibNS {
 	///
 	/// BBoxとBBoxの交差判定を行う。
 	/// KD-Treeの交差判定と同じ。
-    /// @param[in] bbox 試行するBBox
-    /// @return 交差する場合はtrue。他はfalse。
+	/// @param[in] bbox 試行するBBox
+	/// @return 交差する場合はtrue。他はfalse。
 	///
 	bool BBox::crossed(const BBox& bbox) const {
 		if (max.t[0] < bbox.min.t[0] || bbox.max.t[0] < min.t[0]) return false;
@@ -138,8 +138,8 @@ namespace PolylibNS {
 	///
 	/// BBoxとBBoxの重複領域の抽出を行う。
 	/// 自身の面と他方の辺との交差判定を行う。
-    /// @param[in] other_bbox 試行するBBox
-    /// @return 交差する場合はtrue。他はfalse。
+	/// @param[in] other_bbox 試行するBBox
+	/// @return 交差する場合はtrue。他はfalse。
 	///
 	BBox BBox::getCrossedRegion(BBox& other_bbox) const {
 
@@ -187,9 +187,9 @@ namespace PolylibNS {
 
 						if (min[0] <= pos[0] && pos[0] <= max[0] &&
 							min[1] <= pos[1] && pos[1] <= max[1]) {
-							Vec3<REAL_TYPE> vtx = side[side_id][0];
-							vtx[axis_id] = z;
-							cross_own_face_with_other_side.push_back(vtx);
+								Vec3<REAL_TYPE> vtx = side[side_id][0];
+								vtx[axis_id] = z;
+								cross_own_face_with_other_side.push_back(vtx);
 						}
 					}
 				}
@@ -219,9 +219,9 @@ namespace PolylibNS {
 
 						if (min[0] <= pos[0] && pos[0] <= max[0] &&
 							min[1] <= pos[1] && pos[1] <= max[1]) {
-							Vec3<REAL_TYPE> vtx = side[side_id][0];
-							vtx[axis_id] = z;
-							cross_other_face_with_own_side.push_back(vtx);
+								Vec3<REAL_TYPE> vtx = side[side_id][0];
+								vtx[axis_id] = z;
+								cross_other_face_with_own_side.push_back(vtx);
 						}
 					}
 				}
@@ -240,26 +240,26 @@ namespace PolylibNS {
 			cross_bbox.add(*itr);
 		}
 		else if ((inc_own_points.size() == 2 && inc_other_points.size() == 0) ||
-				 (inc_own_points.size() == 4 && inc_other_points.size() == 0)) {
-			itr = inc_own_points.begin();
-			for (; itr != inc_own_points.end(); itr++) {
-				cross_bbox.add(*itr);
-			}
-			itr = cross_other_face_with_own_side.begin();
-			for (;itr != cross_other_face_with_own_side.end(); itr++) {
-				cross_bbox.add(*itr);
-			}
+			(inc_own_points.size() == 4 && inc_other_points.size() == 0)) {
+				itr = inc_own_points.begin();
+				for (; itr != inc_own_points.end(); itr++) {
+					cross_bbox.add(*itr);
+				}
+				itr = cross_other_face_with_own_side.begin();
+				for (;itr != cross_other_face_with_own_side.end(); itr++) {
+					cross_bbox.add(*itr);
+				}
 		}
 		else if ((inc_own_points.size() == 0 && inc_other_points.size() == 2) ||
-				 (inc_own_points.size() == 0 && inc_other_points.size() == 4)) {
-			itr = inc_other_points.begin();
-			for (; itr != inc_other_points.end(); itr++) {
-				cross_bbox.add(*itr);
-			}
-			itr = cross_own_face_with_other_side.begin();
-			for (; itr != cross_own_face_with_other_side.end(); itr++) {
-				cross_bbox.add(*itr);
-			}
+			(inc_own_points.size() == 0 && inc_other_points.size() == 4)) {
+				itr = inc_other_points.begin();
+				for (; itr != inc_other_points.end(); itr++) {
+					cross_bbox.add(*itr);
+				}
+				itr = cross_own_face_with_other_side.begin();
+				for (; itr != cross_own_face_with_other_side.end(); itr++) {
+					cross_bbox.add(*itr);
+				}
 		}
 		else if (inc_own_points.size() == 8 && inc_other_points.size() == 0) {
 			itr = inc_own_points.begin();
@@ -301,8 +301,8 @@ namespace PolylibNS {
 
 	///
 	/// 引数axis_id(0=x,1=y,z=2)に垂直な、このBBoxの面の対角点を返す。
-    /// @param[in] axis_id 軸番号。0=x軸、1=y軸、2=z軸。
-    /// @param[in] face BBoxの面の中で、軸に垂直な面の対角点。
+	/// @param[in] axis_id 軸番号。0=x軸、1=y軸、2=z軸。
+	/// @param[in] face BBoxの面の中で、軸に垂直な面の対角点。
 	///
 	// get 2 faces perpendicular to the axis_id
 	void BBox::getFace(int axis_id, Vec3<REAL_TYPE> face[2][2]) const {
@@ -330,8 +330,8 @@ namespace PolylibNS {
 
 	///
 	/// 引数axis_id(0=x,1=y,z=2)に平行な、このBBoxの辺の端点を返す。
-    /// @param[in] axis_id 軸番号。0=x軸、1=y軸、2=z軸。
-    /// @param[in] side BBoxの辺の中で、軸に平行な辺の端点。
+	/// @param[in] axis_id 軸番号。0=x軸、1=y軸、2=z軸。
+	/// @param[in] side BBoxの辺の中で、軸に平行な辺の端点。
 	///
 	void BBox::getSide(int axis_id, Vec3<REAL_TYPE> side[4][2]) const {
 		int p_minmax[][4][2] = {

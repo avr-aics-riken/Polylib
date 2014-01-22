@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef CARGROUP_H
 #define CARGROUP_H
@@ -26,22 +26,22 @@ using namespace PolylibNS;
 
 class CarGroup:public PolygonGroup{
 
- public:
-  static string get_class_name() ;
-  virtual string whoami();
-  CarGroup();
-  CarGroup(REAL_TYPE tolerance);
- protected:
-  double m_velocity;
-  POLYLIB_STAT move(PolylibMoveParams& params);
-  POLYLIB_STAT build_group_tree(Polylib* polylib,PolygonGroup* parent,TextParser* tp);
+public:
+	static string get_class_name() ;
+	virtual string whoami();
+	CarGroup();
+	CarGroup(REAL_TYPE tolerance);
+protected:
+	double m_velocity;
+	POLYLIB_STAT move(PolylibMoveParams& params);
+	POLYLIB_STAT build_group_tree(Polylib* polylib,PolygonGroup* parent,TextParser* tp);
 
 
-  POLYLIB_STAT mk_param_tag(
-				      TextParser* tp,
-				      string rank_no,
-				      string extend,
-				      string format);
+	POLYLIB_STAT mk_param_tag(
+		TextParser* tp,
+		string rank_no,
+		string extend,
+		string format);
 
 };
 

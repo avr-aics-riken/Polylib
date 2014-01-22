@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #include "Polylib.h"
 
@@ -21,18 +21,18 @@ int main(int argc, char** argv ){
 #endif
 
 
-  Polylib* pl_instance = Polylib::get_instance();
+	Polylib* pl_instance = Polylib::get_instance();
 
-  //  pl_instance->load();
-  pl_instance->load("polylib_config-multi.tp");
-  pl_instance->show_group_hierarchy();
-  //  pl_instance->show_group_info("car"); // not working??
-  string fname="";
-  string stl="stl_a";
-  string extend="";
-  pl_instance->save(&fname,stl,extend);
-  
-  return 0;
+	//  pl_instance->load();
+	pl_instance->load("polylib_config-multi.tp");
+	pl_instance->show_group_hierarchy();
+	//  pl_instance->show_group_info("car"); // not working??
+	string fname="";
+	string stl="stl_a";
+	string extend="";
+	pl_instance->save(&fname,stl,extend);
+
+	return 0;
 
 
 }

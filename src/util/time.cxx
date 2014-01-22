@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #include<time.h>
 
@@ -22,31 +22,31 @@
 
 namespace PolylibNS {
 
-bool getrusage_sec(double *usr_time, double *sys_time, double *total)
-{
+	bool getrusage_sec(double *usr_time, double *sys_time, double *total)
+	{
 #ifdef WIN32
-	return true;
+		return true;
 #else
-	struct rusage	t;
-	struct timeval	st, ut, tt;
-	bool			ret;
-	int				iret;
+		struct rusage	t;
+		struct timeval	st, ut, tt;
+		bool			ret;
+		int				iret;
 
-	iret = getrusage(RUSAGE_SELF, &t);
-	if (iret == 0)		ret = true;
-	else				ret = false;
+		iret = getrusage(RUSAGE_SELF, &t);
+		if (iret == 0)		ret = true;
+		else				ret = false;
 
-	iret = gettimeofday(&tt, NULL);
-	if (iret == 0)		ret = true;
-	else				ret = false;
+		iret = gettimeofday(&tt, NULL);
+		if (iret == 0)		ret = true;
+		else				ret = false;
 
-	ut = t.ru_utime;
-	st = t.ru_stime;
-	*usr_time = ut.tv_sec + (double)ut.tv_usec*1.e-6;
-	*sys_time = st.tv_sec + (double)st.tv_usec*1.e-6;
-	*total    = tt.tv_sec + (double)tt.tv_usec*1.e-6;
-	return ret;
+		ut = t.ru_utime;
+		st = t.ru_stime;
+		*usr_time = ut.tv_sec + (double)ut.tv_usec*1.e-6;
+		*sys_time = st.tv_sec + (double)st.tv_usec*1.e-6;
+		*total    = tt.tv_sec + (double)tt.tv_usec*1.e-6;
+		return ret;
 #endif
-}
+	}
 
 } //namespace PolylibNS

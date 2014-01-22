@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef polylib_polygongroupfactory_h
 #define polylib_polygongroupfactory_h
@@ -18,36 +18,36 @@
 
 namespace PolylibNS {
 
-class PolygonGroup;
+	class PolygonGroup;
 
-////////////////////////////////////////////////////////////////////////////
-///
-/// クラス:PolygonGroupFactory
-///  
-////////////////////////////////////////////////////////////////////////////
- 
-class PolygonGroupFactory {
-public:
+	////////////////////////////////////////////////////////////////////////////
 	///
- 	/// コンストラクタ。
-	///
-	PolygonGroupFactory();
+	/// クラス:PolygonGroupFactory
+	///  
+	////////////////////////////////////////////////////////////////////////////
 
-	///
- 	/// デストラクタ。
-	///
-	virtual ~PolygonGroupFactory();
+	class PolygonGroupFactory {
+	public:
+		///
+		/// コンストラクタ。
+		///
+		PolygonGroupFactory();
 
-	///
-	/// インスタンス作成。
-	///
-	///  @param[in]	class_name	作成するクラス名。
-	///  @return	作成に失敗した場合はNULLが返る。
-	///
-	//	virtual PolygonGroup* create_instance(std::string class_name) {
-	virtual PolygonGroup* create_instance( std::string class_name,REAL_TYPE tolerance);
+		///
+		/// デストラクタ。
+		///
+		virtual ~PolygonGroupFactory();
 
-};
+		///
+		/// インスタンス作成。
+		///
+		///  @param[in]	class_name	作成するクラス名。
+		///  @return	作成に失敗した場合はNULLが返る。
+		///
+		//	virtual PolygonGroup* create_instance(std::string class_name) {
+		virtual PolygonGroup* create_instance( std::string class_name,REAL_TYPE tolerance);
+
+	};
 
 } //namespace PolylibNS
 

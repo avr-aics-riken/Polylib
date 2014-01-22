@@ -1,14 +1,14 @@
 /* -*- Mode: c++ -*- */
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef c_polylib_h
 #define c_polylib_h
@@ -76,10 +76,10 @@ POLYLIB_STAT polylib_load(char* config_name);
 ///			IDファイル   : ポリゴングループ名_付加文字.ID。
 ///
 POLYLIB_STAT polylib_save(
-	char	**p_fname,
-	char	*format,
-	char	*extend
-);
+						  char	**p_fname,
+						  char	*format,
+						  char	*extend
+						  );
 
 ///
 /// Polylib::search_polygonsメソッドのラッパー関数。

@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 #include <string>
 #include <iostream>
 #include "Polylib.h"
@@ -23,55 +23,55 @@ int main(int argc, char** argv ){
 
 
 
-  cout<< "test 0" << endl;
+	cout<< "test 0" << endl;
 
-  Polylib* pl_instance = Polylib::get_instance();
-  //Polylib<double>* pl_instance = Polylib<double>::get_instance();
+	Polylib* pl_instance = Polylib::get_instance();
+	//Polylib<double>* pl_instance = Polylib<double>::get_instance();
 
-  cout<< "test 1" << endl;
+	cout<< "test 1" << endl;
 
-  //  pl_instance->load();
+	//  pl_instance->load();
 
-  REAL_TYPE scale=1.0;
-  
-  //  std::string file="polylib_config_objfile.tp";
-  std::string file;
-  std::cin >> file;
+	REAL_TYPE scale=1.0;
 
-  pl_instance->load(file,scale);
+	//  std::string file="polylib_config_objfile.tp";
+	std::string file;
+	std::cin >> file;
 
-  cout<< "test 2" << endl;
+	pl_instance->load(file,scale);
 
-  pl_instance->show_group_hierarchy();
- 
-  cout<< "test 3" << endl;
-  cout<<"sizeof(int) "<< sizeof(int)<< endl;
-  cout<<"sizeof(int*) "<< sizeof(int*)<< endl;
-  cout<<"sizeof(long) "<< sizeof(long)<< endl;
-  cout<<"sizeof(long*) "<< sizeof(long*)<< endl;
-  cout<<"sizeof(float) "<< sizeof(float)<< endl;
-  cout<<"sizeof(float*) "<< sizeof(float*)<< endl;
-  cout<<"sizeof(double) "<< sizeof(double)<< endl;
-  cout<<"sizeof(double*) "<< sizeof(double*)<< endl;
-  cout<<"sizeof(PrivateTriangle) "<< sizeof(PrivateTriangle) << endl;
-  cout<<"sizeof(PrivateTriangle*) "<< sizeof(PrivateTriangle*) << endl;
-  cout<<"sizeof(PrivateTriangle) "<< sizeof(PrivateTriangle) << endl;
-  cout<<"sizeof(PrivateTriangle*) "<< sizeof(PrivateTriangle*) << endl;
-  cout<<"sizeof(Vertex) "<< sizeof(Vertex) << endl;
-  cout<<"sizeof(Vertex*) "<< sizeof(Vertex*) << endl;
-  cout << "memsize "<<pl_instance->used_memory_size() <<endl;
+	cout<< "test 2" << endl;
+
+	pl_instance->show_group_hierarchy();
+
+	cout<< "test 3" << endl;
+	cout<<"sizeof(int) "<< sizeof(int)<< endl;
+	cout<<"sizeof(int*) "<< sizeof(int*)<< endl;
+	cout<<"sizeof(long) "<< sizeof(long)<< endl;
+	cout<<"sizeof(long*) "<< sizeof(long*)<< endl;
+	cout<<"sizeof(float) "<< sizeof(float)<< endl;
+	cout<<"sizeof(float*) "<< sizeof(float*)<< endl;
+	cout<<"sizeof(double) "<< sizeof(double)<< endl;
+	cout<<"sizeof(double*) "<< sizeof(double*)<< endl;
+	cout<<"sizeof(PrivateTriangle) "<< sizeof(PrivateTriangle) << endl;
+	cout<<"sizeof(PrivateTriangle*) "<< sizeof(PrivateTriangle*) << endl;
+	cout<<"sizeof(PrivateTriangle) "<< sizeof(PrivateTriangle) << endl;
+	cout<<"sizeof(PrivateTriangle*) "<< sizeof(PrivateTriangle*) << endl;
+	cout<<"sizeof(Vertex) "<< sizeof(Vertex) << endl;
+	cout<<"sizeof(Vertex*) "<< sizeof(Vertex*) << endl;
+	cout << "memsize "<<pl_instance->used_memory_size() <<endl;
 
 
-  // // //  pl_instance->show_group_info("car"); // not working??
-  // string fname="";
-  // string obj="obj_b";
-  // string extend="";
+	// // //  pl_instance->show_group_info("car"); // not working??
+	// string fname="";
+	// string obj="obj_b";
+	// string extend="";
 
-  // pl_instance->save(&fname,obj,extend);
+	// pl_instance->save(&fname,obj,extend);
 
-  // cout<< "test 4" << endl;
+	// cout<< "test 4" << endl;
 
-  return 0;
+	return 0;
 
 
 }
