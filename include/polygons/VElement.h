@@ -22,67 +22,67 @@
 //#define DEBUG_VTREE
 namespace PolylibNS {
 
-	////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+///
+/// クラス:VElement
+/// KD木構造の要素クラスです。
+///
+////////////////////////////////////////////////////////////////////////////
+
+
+class PrivateTriangle;
+
+class VElement {
+public:
 	///
-	/// クラス:VElement
-	/// KD木構造の要素クラスです。
+	/// コンストラクタ。
 	///
-	////////////////////////////////////////////////////////////////////////////
+	/// @param[in] tri ポリゴン情報のポインタ。
+	/// @attention ポインタを格納するが、参照のみ。deleteは行わない。
+	///
+	VElement(
+		PrivateTriangle* tri
+		);
 
 
-	class PrivateTriangle;
-
-	class VElement {
-	public:
-		///
-		/// コンストラクタ。
-		///
-		/// @param[in] tri ポリゴン情報のポインタ。
-		/// @attention ポインタを格納するが、参照のみ。deleteは行わない。
-		///
-		VElement(
-			PrivateTriangle* tri
-			);
+	VElement();
+	///
+	/// デストラクタ。
+	///
+	virtual ~VElement();
 
 
-		VElement();
-		///
-		/// デストラクタ。
-		///
-		virtual ~VElement();
+	//=======================================================================
+	// Setter/Getter
+	//=======================================================================
+	///
+	/// triangle。
+	///
+	PrivateTriangle* get_triangle();
 
+	///
+	/// Center position of bbox on triangle.
+	/// 
+	Vec3<REAL_TYPE> get_pos() const;
 
-		//=======================================================================
-		// Setter/Getter
-		//=======================================================================
-		///
-		/// triangle。
-		///
-		PrivateTriangle* get_triangle();
+	///
+	/// Bounding box of this triangle
+	///
+	BBox get_bbox() const ;
 
-		///
-		/// Center position of bbox on triangle.
-		/// 
-		Vec3<REAL_TYPE> get_pos() const;
+private:
+	//=======================================================================
+	// クラス変数
+	//=======================================================================
+	/// triangle
+	PrivateTriangle	*m_tri;
 
-		///
-		/// Bounding box of this triangle
-		///
-		BBox get_bbox() const ;
+	/// Center position of bbox on triangle.
+	Vec3<REAL_TYPE>			m_pos;
 
-	private:
-		//=======================================================================
-		// クラス変数
-		//=======================================================================
-		/// triangle
-		PrivateTriangle	*m_tri;
-
-		/// Center position of bbox on triangle.
-		Vec3<REAL_TYPE>			m_pos;
-
-		/// Bounding box of this triangle
-		BBox			m_bbox;
-	};
+	/// Bounding box of this triangle
+	BBox			m_bbox;
+};
 
 }
 
