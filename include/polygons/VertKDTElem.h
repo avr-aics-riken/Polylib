@@ -11,44 +11,44 @@
 
 namespace PolylibNS{
 
-////////////////////////////////////////////////////////////////////////////
-///
-///  クラス:VertKDTElem
-///  VertexKD木の要素クラスです。
-///
-////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	///
+	///  クラス:VertKDTElem
+	///  VertexKD木の要素クラスです。
+	///
+	////////////////////////////////////////////////////////////////////////////
 
 
-class VertKDTElem{
-public:
-	/// 
-	/// コンストラクタ。
-	///
-	/// @param[in] 
-	/// @attention ポインタを格納するが、参照のみ。deleteは行わない。
-	/// 
-	VertKDTElem(Vertex* vertex);
+	class VertKDTElem{
+	public:
+		/// 
+		/// コンストラクタ。
+		///
+		/// @param[in] 
+		/// @attention ポインタを格納するが、参照のみ。deleteは行わない。
+		/// 
+		VertKDTElem(Vertex* vertex);
 
-	//setter/getter
-	///
-	/// return vertex.
-	///
-	Vertex* get_vertex();
-	//setter/getter
+		//setter/getter
+		///
+		/// return vertex.
+		///
+		Vertex* get_vertex();
+		//setter/getter
 
-	///
-	/// return vertex.
-	///
-	Vec3<REAL_TYPE>* get_pos() const;
+		///
+		/// return vertex.
+		///
+		Vec3<REAL_TYPE>* get_pos() const;
 
-private:
-	///
-	/// vertex
-	///
-	Vertex* m_vertex; 
+	private:
+		///
+		/// vertex
+		///
+		Vertex* m_vertex; 
 
 
-};// end of class 
+	};// end of class 
 
 }// end of namespace PolylibNS
 #endif //polylib_VertKDTElem_h

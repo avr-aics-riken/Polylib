@@ -17,36 +17,36 @@
 
 namespace PolylibNS{
 
-////////////////////////////////////////////////////////////////////////////
-///
-/// クラス:DVertexManager
-///   DVertex  のユーザー定義データ形式を保持します。
-/// 
-///
-////////////////////////////////////////////////////////////////////////////
-class DVertexManager {
+	////////////////////////////////////////////////////////////////////////////
+	///
+	/// クラス:DVertexManager
+	///   DVertex  のユーザー定義データ形式を保持します。
+	/// 
+	///
+	////////////////////////////////////////////////////////////////////////////
+	class DVertexManager {
 
-private:
-	int m_nscalar;
-	int m_nvector;
-	//    int m_size;
-public:
-	//    DVertexManager():m_nscalar(0),m_nvector(0),m_size(8){};
-	DVertexManager():m_nscalar(0),m_nvector(0){};
-	// DVertexManager(int nscalar,int nvector,int size){
-	//   m_nscalar=nscalar;
-	//   m_nvector=nvector;
-	//   m_size=size;
-	// }
-	DVertexManager(int nscalar,int nvector){
-		m_nscalar=nscalar;
-		m_nvector=nvector;
-	}
-	int nscalar(){return m_nscalar;}
-	int nvector(){return m_nvector;}
-	//int size(){return m_size;}
+	private:
+		int m_nscalar;
+		int m_nvector;
+		//    int m_size;
+	public:
+		//    DVertexManager():m_nscalar(0),m_nvector(0),m_size(8){};
+		DVertexManager():m_nscalar(0),m_nvector(0){};
+		// DVertexManager(int nscalar,int nvector,int size){
+		//   m_nscalar=nscalar;
+		//   m_nvector=nvector;
+		//   m_size=size;
+		// }
+		DVertexManager(int nscalar,int nvector){
+			m_nscalar=nscalar;
+			m_nvector=nvector;
+		}
+		int nscalar(){return m_nscalar;}
+		int nvector(){return m_nvector;}
+		//int size(){return m_size;}
 
-};
+	};
 
 }
 

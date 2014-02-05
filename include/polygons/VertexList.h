@@ -27,137 +27,137 @@
 
 namespace PolylibNS{
 
-class Vertex;
-class VertKDT;
+	class Vertex;
+	class VertKDT;
 
-////////////////////////////////////////////////////////////////////////////
-///
-/// クラス:vertex_list
-///   polygon の頂点クラスVertex  を収めるクラス。
-/// 
-///
-////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	///
+	/// クラス:vertex_list
+	///   polygon の頂点クラスVertex  を収めるクラス。
+	/// 
+	///
+	////////////////////////////////////////////////////////////////////////////
 
 
-class VertexList{
+	class VertexList{
 
-private:
-	/// Vertex の格納場所
-	std::vector<Vertex*>* m_vertex_list; 
-	/// 同一性チェックの基準値
-	REAL_TYPE m_tolerance; 
-	/// 同一性チェックの基準値の2乗
-	REAL_TYPE m_tolerance_2;
-	/// Vertex  用KD木
-	VertKDT* m_vkdt; 
+	private:
+		/// Vertex の格納場所
+		std::vector<Vertex*>* m_vertex_list; 
+		/// 同一性チェックの基準値
+		REAL_TYPE m_tolerance; 
+		/// 同一性チェックの基準値の2乗
+		REAL_TYPE m_tolerance_2;
+		/// Vertex  用KD木
+		VertKDT* m_vkdt; 
 
-	/// KD木生成用BBox
-	BBox m_bbox;
+		/// KD木生成用BBox
+		BBox m_bbox;
 
-	//番号検索用 map
-	std::map<Vertex*, std::vector<Vertex*>::size_type>* m_num_map;
+		//番号検索用 map
+		std::map<Vertex*, std::vector<Vertex*>::size_type>* m_num_map;
 
 #ifdef  VertexListDEBUG
-	std::map<Vertex*, int> m_pointer_count;
+		std::map<Vertex*, int> m_pointer_count;
 #endif
 
-public:
+	public:
 
-	/// コンストラクタ　基準値
-	VertexList();
+		/// コンストラクタ　基準値
+		VertexList();
 
-	VertexList(REAL_TYPE tolerance);
+		VertexList(REAL_TYPE tolerance);
 
-	/// コンストラクタ
-	///
-	VertexList(VertKDT* vkdt,REAL_TYPE tolerance);
+		/// コンストラクタ
+		///
+		VertexList(VertKDT* vkdt,REAL_TYPE tolerance);
 
-	/// デストラクタ
-	///
-	/// Vertex  は削除。削除する場合は、vtx_clearを呼ぶ。
-	/// VertKDT  は削除しない。削除する場合は、 外部から
+		/// デストラクタ
+		///
+		/// Vertex  は削除。削除する場合は、vtx_clearを呼ぶ。
+		/// VertKDT  は削除しない。削除する場合は、 外部から
 
-	~VertexList();
-
-
-	///Vertex 用KD木のセット
-	///
-	/// @param[in]  vkdt 利用するKD木のポインタ
-	void setKDT(VertKDT* vkdt);
-
-	/// Vertex  用KD木
-	VertKDT* getKDT();
+		~VertexList();
 
 
-	///  Vertexの格納場所へのポインタ
-	const std::vector<Vertex*>* get_vertex_lists();
-	std::vector<Vertex*>* get_vertex_lists_mod();  //!<  Vertexの格納場所へのポインタ
+		///Vertex 用KD木のセット
+		///
+		/// @param[in]  vkdt 利用するKD木のポインタ
+		void setKDT(VertKDT* vkdt);
 
-	/// Vertex の追加 同一性チェック無し。
-	void vtx_add_nocheck(Vertex* v);
-
-	int vtx_add_i(Vertex* v); //!< Vertexの追加、m_vertex_listのindexを返す。同一性チェック済み。
-	Vertex* vtx_add(Vertex* v); //!< Vertexの追加、その頂点のポインタを示す。同一性チェック済み。
-	Vertex* vtx_add_KDT(Vertex* v); //!< Vertexの追加、その頂点のポインタを示す。同一性チェック済み。
-
-	Vertex* ith(int i);//!< i番目Vertexを取り出す。
-	Vertex* ith(long i);//!< i番目Vertexを取り出す。
-
-	long ith(Vertex* vtx_ptr) const ;
-
-	/// 頂点の数
-	///
-	/// @return 頂点の数
-	std::vector<Vertex*>::size_type size();
-
-	/// bbox をVertKDTへ設定
-	void set_bbox() ;
-	/// bbox をVertKDTを取得
-	BBox get_bbox() const ;
-
-	/// 三角形ポリゴンの面出力時、頂点の番号を取得する場合に、番号のテーブルを準備する。
-	/// 
-	///  後始末は index_map_clear()で行う。
-	void prepare_num_out();
-
-	/// 三角形ポリゴンの面出力時、頂点の番号を取得する
-	///
-	/// @param[in] Vertex のポインタ
-	/// @return 頂点番号
-	/// @attention prepare_num_out() を呼び出す。
-	std::vector<Vertex*>::size_type vtx_index(Vertex* v);
-
-	/// 三角形ポリゴンの面出力時、頂点の番号を取得する場合の、番号のテーブルを削除する。
-	void index_map_clear();
+		/// Vertex  用KD木
+		VertKDT* getKDT();
 
 
-	/// 基準値を設定する
-	void set_tolerance(const REAL_TYPE tol);
+		///  Vertexの格納場所へのポインタ
+		const std::vector<Vertex*>* get_vertex_lists();
+		std::vector<Vertex*>* get_vertex_lists_mod();  //!<  Vertexの格納場所へのポインタ
 
-	/// 基準
-	REAL_TYPE tolerance() const ;
+		/// Vertex の追加 同一性チェック無し。
+		void vtx_add_nocheck(Vertex* v);
 
-	///  プリント
-	void print() const ;
+		int vtx_add_i(Vertex* v); //!< Vertexの追加、m_vertex_listのindexを返す。同一性チェック済み。
+		Vertex* vtx_add(Vertex* v); //!< Vertexの追加、その頂点のポインタを示す。同一性チェック済み。
+		Vertex* vtx_add_KDT(Vertex* v); //!< Vertexの追加、その頂点のポインタを示す。同一性チェック済み。
 
-	// setter and getter  for tolerance  
+		Vertex* ith(int i);//!< i番目Vertexを取り出す。
+		Vertex* ith(long i);//!< i番目Vertexを取り出す。
+
+		long ith(Vertex* vtx_ptr) const ;
+
+		/// 頂点の数
+		///
+		/// @return 頂点の数
+		std::vector<Vertex*>::size_type size();
+
+		/// bbox をVertKDTへ設定
+		void set_bbox() ;
+		/// bbox をVertKDTを取得
+		BBox get_bbox() const ;
+
+		/// 三角形ポリゴンの面出力時、頂点の番号を取得する場合に、番号のテーブルを準備する。
+		/// 
+		///  後始末は index_map_clear()で行う。
+		void prepare_num_out();
+
+		/// 三角形ポリゴンの面出力時、頂点の番号を取得する
+		///
+		/// @param[in] Vertex のポインタ
+		/// @return 頂点番号
+		/// @attention prepare_num_out() を呼び出す。
+		std::vector<Vertex*>::size_type vtx_index(Vertex* v);
+
+		/// 三角形ポリゴンの面出力時、頂点の番号を取得する場合の、番号のテーブルを削除する。
+		void index_map_clear();
 
 
-	/// 基準値の取得
-	REAL_TYPE get_tolerance();
+		/// 基準値を設定する
+		void set_tolerance(const REAL_TYPE tol);
 
-	/// 重複頂点の削除
-	POLYLIB_STAT vertex_compaction(std::map<Vertex*,Vertex*>* vertex_map);
+		/// 基準
+		REAL_TYPE tolerance() const ;
 
+		///  プリント
+		void print() const ;
 
-	//  private:
-	/// Vertex の解放
-
-	void vtx_clear();
-
+		// setter and getter  for tolerance  
 
 
-};//end of class
+		/// 基準値の取得
+		REAL_TYPE get_tolerance();
+
+		/// 重複頂点の削除
+		POLYLIB_STAT vertex_compaction(std::map<Vertex*,Vertex*>* vertex_map);
+
+
+		//  private:
+		/// Vertex の解放
+
+		void vtx_clear();
+
+
+
+	};//end of class
 
 } //end of namespace PolylibNS
 

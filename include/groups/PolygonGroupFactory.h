@@ -18,36 +18,36 @@
 
 namespace PolylibNS {
 
-class PolygonGroup;
+	class PolygonGroup;
 
-////////////////////////////////////////////////////////////////////////////
-///
-/// クラス:PolygonGroupFactory
-///  
-////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	///
+	/// クラス:PolygonGroupFactory
+	///  
+	////////////////////////////////////////////////////////////////////////////
 
-class PolygonGroupFactory {
-public:
-	///
-	/// コンストラクタ。
-	///
-	PolygonGroupFactory();
+	class PolygonGroupFactory {
+	public:
+		///
+		/// コンストラクタ。
+		///
+		PolygonGroupFactory();
 
-	///
-	/// デストラクタ。
-	///
-	virtual ~PolygonGroupFactory();
+		///
+		/// デストラクタ。
+		///
+		virtual ~PolygonGroupFactory();
 
-	///
-	/// インスタンス作成。
-	///
-	///  @param[in]	class_name	作成するクラス名。
-	///  @return	作成に失敗した場合はNULLが返る。
-	///
-	//	virtual PolygonGroup* create_instance(std::string class_name) {
-	virtual PolygonGroup* create_instance( std::string class_name,REAL_TYPE tolerance);
+		///
+		/// インスタンス作成。
+		///
+		///  @param[in]	class_name	作成するクラス名。
+		///  @return	作成に失敗した場合はNULLが返る。
+		///
+		//	virtual PolygonGroup* create_instance(std::string class_name) {
+		virtual PolygonGroup* create_instance( std::string class_name,REAL_TYPE tolerance);
 
-};
+	};
 
 } //namespace PolylibNS
 
