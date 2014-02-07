@@ -17,7 +17,8 @@
 
 //PL_REALはgcc -Dで定義済み   -Dの中に定義されている値は見えないので,configure等に例REAL_TYPE_FLOATなど  float/doubleを分けるヒントになる別のdefineを用意する必要がある
 //#ifdef PL_REAL
-#define REAL_TYPE float
+//#define REAL_TYPE float
+#define REAL_TYPE PL_REAL
 #define REAL_VAL_MAX FLT_MAX;
 /*
 #else	

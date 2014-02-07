@@ -88,42 +88,42 @@ square.obj \
 
 
 test_SOURCES  =  test.cxx 
-test_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test2_SOURCES  = test2.cxx
-test2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_vtx_SOURCES  = test_vtx.cxx
-test_vtx_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_vtx_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_obj_SOURCES  = test_obj.cxx
-test_obj_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_obj_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 test_obj2_SOURCES  = test_obj2.cxx
-test_obj2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_obj2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 test_obj3_SOURCES  = test_obj3.cxx
-test_obj3_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_obj3_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 test_obj4_SOURCES  = test_obj4.cxx
-test_obj4_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_obj4_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_read_SOURCES  = test_read.cxx
-test_read_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_read_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_vtx_float_SOURCES  = test_vtx_float.cxx
-test_vtx_float_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_vtx_float_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_DVertex_SOURCES = test_DVertex.cxx
-test_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 
 test_xyzrgb_statuette_stl_SOURCES  = test_xyzrgb_statuette_stl.cxx
-test_xyzrgb_statuette_stl_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@
+test_xyzrgb_statuette_stl_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 
 test_mpi_SOURCES  = test_mpi.cxx
-test_mpi_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_mpi2_SOURCES  = test_mpi2.cxx
-test_mpi2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_mpi3_SOURCES  = \
   test_mpi3.cxx \
@@ -131,25 +131,25 @@ test_mpi3_SOURCES  = \
   MyGroupFactory.cxx \
   CarGroup.h \
   MyGroupFactory.h
-test_mpi3_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi3_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 
 test_mpi_xyzrgb1_SOURCES=test_mpi_xyzrgb1.cxx
-test_mpi_xyzrgb1_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi_xyzrgb1_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_mpi_xyzrgb2_SOURCES=test_mpi_xyzrgb2.cxx
-test_mpi_xyzrgb2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi_xyzrgb2_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_mpi_xyzrgb4_SOURCES=test_mpi_xyzrgb4.cxx
-test_mpi_xyzrgb4_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi_xyzrgb4_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 test_mpi_xyzrgb8_SOURCES=test_mpi_xyzrgb8.cxx
-test_mpi_xyzrgb8_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi_xyzrgb8_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 
 
 test_mpi_DVertex_SOURCES  = test_mpi_DVertex.cxx
-test_mpi_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi_DVertex_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 
 test_mpi_move_SOURCES  = \
@@ -158,7 +158,7 @@ test_mpi_move_SOURCES  = \
   MyGroupFactory.cxx \
   CarGroup.h \
   MyGroupFactory.h
-test_mpi_move_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
+test_mpi_move_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 
 test_LDADD = \
