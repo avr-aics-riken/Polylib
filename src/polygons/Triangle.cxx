@@ -23,6 +23,24 @@ namespace PolylibNS{
 
 	Triangle::Triangle(){}
 
+
+	///
+	/// コンストラクタ。
+	///
+	/// @param[in] tria コピー元。
+	///
+	Triangle::Triangle(
+		const Triangle  &tria
+ 	) {
+		m_vertex_ptr[0] = tria.m_vertex_ptr[0];
+		m_vertex_ptr[1] = tria.m_vertex_ptr[1];
+		m_vertex_ptr[2] = tria.m_vertex_ptr[2];
+		m_normal = tria.m_normal;
+		m_area = tria.m_area;
+		m_exid = tria.m_exid;
+		m_shell = tria.m_shell;
+	}
+
 	///
 	/// コンストラクタ。
 	///
@@ -50,6 +68,8 @@ namespace PolylibNS{
 		}
 		calc_normal();
 		calc_area();
+		m_exid = 0;
+		m_shell = 0;
 	}
 
 	///
@@ -69,6 +89,8 @@ namespace PolylibNS{
 			m_vertex_ptr[2] = vertex_ptr[2];
 			m_normal = normal;
 			calc_area();
+			m_exid = 0;
+			m_shell = 0;
 	}
 
 	///
@@ -90,6 +112,8 @@ namespace PolylibNS{
 			m_vertex_ptr[2] = vertex_ptr[2];
 			m_normal = normal;
 			m_area = area;
+			m_exid = 0;
+			m_shell = 0;
 	}
 
 	//=======================================================================

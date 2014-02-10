@@ -115,8 +115,10 @@ namespace PolylibNS {
 
 	void TriMesh::init(const REAL_TYPE* vertlist,
 		const int* idlist,
+		const int* exidlist,
 		const int n_start_tri,
 		const int n_start_id,
+		const int n_start_exid,
 		const unsigned int n_tri)
 	{
 		//#define DEBUG
@@ -146,7 +148,7 @@ namespace PolylibNS {
 			}
 			//int id2=n_start_id+i;
 			//PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[id2]);
-			PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[n_start_id+i]);
+			PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[n_start_id+i],exidlist[n_start_exid+i]);
 			this->m_tri_list->push_back(tri);
 		}
 
@@ -168,10 +170,12 @@ namespace PolylibNS {
 
 	void TriMesh::init_dvertex(const REAL_TYPE* vertlist,
 		const int* idlist,
+		const int* exidlist,
 		const REAL_TYPE* scalarlist,
 		const REAL_TYPE* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
+		const int n_start_exid,
 		const int n_start_scalar,
 		const int n_start_vector,
 		const unsigned int n_tri,
@@ -227,7 +231,7 @@ namespace PolylibNS {
 			}
 			//int id2=n_start_id+i;
 			//PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[id2]);
-			DVertexTriangle* dtri=new DVertexTriangle(vtx_tri,idlist[n_start_id+i]);
+			DVertexTriangle* dtri=new DVertexTriangle(vtx_tri,idlist[n_start_id+i],exidlist[n_start_exid+i]);
 			PrivateTriangle* tri=dtri;
 			this->m_tri_list->push_back(tri);
 		}
@@ -252,10 +256,12 @@ namespace PolylibNS {
 
 	void TriMesh::add_dvertex(const REAL_TYPE* vertlist,
 		const int* idlist,
+		const int* exidlist,
 		const REAL_TYPE* scalarlist,
 		const REAL_TYPE* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
+		const int n_start_exid,
 		const int n_start_scalar,
 		const int n_start_vector,
 		const unsigned int n_tri,
@@ -335,7 +341,8 @@ namespace PolylibNS {
 				vtx_tri[j]=dv;
 			}
 			int id2=n_start_id+i;
-			DVertexTriangle* tri=new DVertexTriangle(vtx_tri,idlist[id2]);
+			int id3=n_start_exid+i;
+			DVertexTriangle* tri=new DVertexTriangle(vtx_tri,idlist[id2],exidlist[id3]);
 			//      PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[id2]);
 			this->m_tri_list->push_back((PrivateTriangle*)tri);
 		}
@@ -486,8 +493,10 @@ namespace PolylibNS {
 
 	void TriMesh::add(const REAL_TYPE* vertlist,
 		const int* idlist,
+		const int* exidlist,
 		const int n_start_tri,
 		const int n_start_id,
+		const int n_start_exid,
 		const unsigned int n_tri)
 	{
 #ifdef DEBUG
@@ -521,6 +530,7 @@ namespace PolylibNS {
 
 			}
 			int id2=n_start_id+i;
+			int id3=n_start_exid+i;
 
 			if(vtx_tri[0]!=NULL &&vtx_tri[1]!=NULL &&vtx_tri[2]!=NULL){
 				//PL_DBGOSH << __func__  << " Vertex pointer is checked."<<std::endl;
@@ -531,7 +541,7 @@ namespace PolylibNS {
 				<<" "<< vtx_tri[2]<<std::endl;
 			} 
 
-			PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[id2]);
+			PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[id2],exidlist[id3]);
 
 			/* PL_DBGOSH << "TriMesh::add Triangle. triangle "<< i  */
 			/* 		 << " id "<<idlist[id2]<<std::endl; */

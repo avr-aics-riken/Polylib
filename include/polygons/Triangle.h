@@ -36,6 +36,15 @@ namespace PolylibNS{
 		///
 		/// コンストラクタ。
 		///
+		/// @param[in] tria コピー元。
+		///
+		Triangle(
+			const Triangle  &tria
+ 		) ;
+
+		///
+		/// コンストラクタ。
+		///
 		/// @param[in] vertex_ptr ポリゴンの頂点。
 		/// @attention 面積と法線はvertexを元に自動計算される。
 		///
@@ -43,6 +52,7 @@ namespace PolylibNS{
 			//Vec3	vertex[3]
 			Vertex* vertex_ptr[3]
 		) ;
+
 		///
 		/// コンストラクタ。
 		///

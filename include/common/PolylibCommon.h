@@ -20,6 +20,7 @@
 #define PL_DEBGOSH std::cout
 
 #else
+#define PL_DEBGOSH std::cout
 
 #endif
 

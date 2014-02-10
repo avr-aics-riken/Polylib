@@ -24,13 +24,16 @@ namespace PolylibNS{
 	///
 	/// @param[in] vertex_ptr	ポリゴンの頂点へのポインタ。
 	/// @param[in] id		三角形ポリゴンID。
+	/// @param[in] exid		三角形ポリゴンのユーザ定義ID。
 	///
 	PrivateTriangle::PrivateTriangle(
 		//Vec3<REAL_TYPE>	vertex[3], 
 		Vertex*	vertex_ptr[3] ,
-		int		id
+		int		id,
+		int		exid
 		) : Triangle(vertex_ptr) {
 			m_id = id;
+			m_exid = exid;
 	}
 
 	///
@@ -74,9 +77,9 @@ namespace PolylibNS{
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle::PrivateTriangle(
-		Triangle	tri, 
+		const Triangle	tri, 
 		int			id
-		) : Triangle(tri.get_vertex(), tri.get_normal()) {
+		) : Triangle(tri) {
 			m_id = id;
 	}
 
@@ -88,7 +91,7 @@ namespace PolylibNS{
 	///
 	PrivateTriangle::PrivateTriangle(
 		const PrivateTriangle &tri 
-		) : Triangle(tri.get_vertex(), tri.get_normal()) {
+		) : Triangle(tri) {
 			m_id = tri.m_id;
 	}
 
@@ -132,6 +135,33 @@ namespace PolylibNS{
 	// #endif
 	// #undef DEBUG
 	// 	}
+
+	///
+	/// コンストラクタ。
+	///
+	/// @param[in] dim    ポリゴン頂点座標配列。
+	/// @param[in] id    三角形ポリゴンID。
+	/// @param[in] exid    三角形ポリゴンのユーザ定義ID。
+	///
+	PrivateTriangle::PrivateTriangle(
+		REAL_TYPE	*dim,
+		int			id,
+		int			exid
+	){
+		PL_ERROS << "PrivateTriangle(T,int,int) is obsolete. !!!NOTHING IS DONE!!!" << std::endl;
+#if 0
+		for( int i=0; i<3; i++ ) {
+			m_vertex[i].t[0] = *dim++;
+			m_vertex[i].t[1] = *dim++;
+			m_vertex[i].t[2] = *dim++;
+		}
+		m_id = id;
+		m_exid = exid;
+		calc_normal();
+		calc_area();
+#endif
+	}
+
 
 	//=======================================================================
 	// Setter/Getter

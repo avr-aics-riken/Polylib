@@ -41,11 +41,13 @@ namespace PolylibNS{
 		///
 		/// @param[in] vertex_ptr	ポリゴンの頂点へのポインタ。
 		/// @param[in] id		三角形ポリゴンID。
+		/// @param[in] exid		三角形ポリゴンのユーザ定義ID。
 		///
 		PrivateTriangle(
 			//Vec3<REAL_TYPE>	vertex[3], 
 			Vertex*	vertex_ptr[3] ,
-			int		id
+			int		id,
+			int		exid
 			);
 		///
 		/// コンストラクタ。
@@ -84,7 +86,7 @@ namespace PolylibNS{
 		/// @param[in] id		三角形ポリゴンID。
 		///
 		PrivateTriangle(
-			Triangle	tri, 
+			const Triangle	tri, 
 			int			id
 			);
 		///
@@ -107,6 +109,20 @@ namespace PolylibNS{
 			REAL_TYPE		*dim,
 			int			id
 			);
+
+		///
+		/// コンストラクタ。
+		///
+		/// @param[in] dim    ポリゴン頂点座標配列。
+		/// @param[in] id    三角形ポリゴンID。
+		/// @param[in] exid    三角形ポリゴンのユーザ定義ID。
+		///
+		PrivateTriangle(
+			REAL_TYPE	*dim,
+			int		id,
+			int		exid
+			);
+
 
 		//=======================================================================
 		// Setter/Getter

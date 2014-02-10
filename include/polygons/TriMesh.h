@@ -72,14 +72,17 @@ namespace PolylibNS {
 		///
 		///  @param[in] vertlist 設定する三角形ポリゴン頂点リスト。
 		///  @param[in] idlist 三角形のid。
+		///  @param[in] exidlist 三角形のユーザ定義id。
 		///  @param[in] n_start_tri vertlistの頂点開始位置
-		///  @param[in] n_start_id idlistのid開始位置
+		///  @param[in] n_start_exid exidlistのid開始位置
 		///  @param[in] n_tri 加える三角形の数
 
 		void init(const REAL_TYPE* vertlist,
 			const int* idlist,
+			const int* exidlist,
 			const int n_start_tri,
 			const int n_start_id,
+			const int n_start_exid,
 			const unsigned int n_tri);
 
 
@@ -89,10 +92,12 @@ namespace PolylibNS {
 		///
 		///  @param[in] vertlist 設定する三角形ポリゴン頂点リスト。
 		///  @param[in] idlist 三角形のid。
+		///  @param[in] exidlist 三角形のユーザ定義id。
 		///  @param[in] scalarlist 設定するスカラーデータのリスト
 		///  @param[in] vectorlist 設定するベクターデータのリスト
 		///  @param[in] n_start_tri vertlistの頂点開始位置
 		///  @param[in] n_start_id idlistのid開始位置
+		///  @param[in] n_start_exid exidlistのid開始位置
 		///  @param[in] n_start_scalar scalarlistの開始位置
 		///  @param[in] n_start_vector vectorlistの開始位置
 		///  @param[in] n_tri 加える三角形の数
@@ -101,10 +106,12 @@ namespace PolylibNS {
 
 		virtual void init_dvertex(const REAL_TYPE* vertlist,
 			const int* idlist,
+			const int* exidlist,
 			const REAL_TYPE* scalarlist,
 			const REAL_TYPE* vectorlist,
 			const int n_start_tri,
 			const int n_start_id,
+			const int n_start_exid,
 			const int n_start_scalar,
 			const int n_start_vector,
 			const unsigned int n_tri,
@@ -131,14 +138,18 @@ namespace PolylibNS {
 		///
 		///  @param[in] vertlist 設定する三角形ポリゴン頂点リスト。
 		///  @param[in] idlist 三角形のid。
+		///  @param[in] exidlist 三角形のユーザ定義id。
 		///  @param[in] n_start_tri vertlistの頂点開始位置
 		///  @param[in] n_start_id idlistのid開始位置
+		///  @param[in] n_start_exid exidlistのid開始位置
 		///  @param[in] n_tri 加える三角形の数
 
 		void add(const REAL_TYPE* vertlist,
 			const int* idlist,
+			const int* exidlist,
 			const int n_start_tri,
 			const int n_start_id,
+			const int n_start_exid,
 			const unsigned int n_tri);
 
 
@@ -148,10 +159,12 @@ namespace PolylibNS {
 		///
 		///  @param[in] vertlist 設定する三角形ポリゴン頂点リスト。
 		///  @param[in] idlist 三角形のid。
+		///  @param[in] exidlist 三角形のユーザ定義id。
 		///  @param[in] scalarlist 設定するスカラーデータのリスト
 		///  @param[in] vectorlist 設定するベクターデータのリスト
 		///  @param[in] n_start_tri vertlistの頂点開始位置
 		///  @param[in] n_start_id idlistのid開始位置
+		///  @param[in] n_start_exid exidlistのid開始位置
 		///  @param[in] n_start_scalar scalarlistの開始位置
 		///  @param[in] n_start_vector vectorlistの開始位置
 		///  @param[in] n_tri 加える三角形の数
@@ -160,10 +173,12 @@ namespace PolylibNS {
 
 		virtual void add_dvertex(const REAL_TYPE* vertlist,
 			const int* idlist,
+			const int* exidlist,
 			const REAL_TYPE* scalarlist,
 			const REAL_TYPE* vectorlist,
 			const int n_start_tri,
 			const int n_start_id,
+			const int n_start_exid,
 			const int n_start_scalar,
 			const int n_start_vector,
 			const unsigned int n_tri,

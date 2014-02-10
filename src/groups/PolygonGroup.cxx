@@ -180,6 +180,21 @@ namespace PolylibNS {
 	}
 
 	///
+	/// 子グループを削除。
+	///
+	/// @param[in] p 子グループ。
+	///
+	void PolygonGroup::remove_child(PolygonGroup* p) {
+		std::vector<PolygonGroup*>::iterator itr;
+		for( itr=m_children.begin(); itr!=m_children.end(); itr++ ) {
+			if( *itr == p ) {
+				itr = m_children.erase(itr);
+				break;
+			}
+		}
+	}
+
+	///
 	/// Polygonクラスが管理する頂点リストを取得。
 	///
 	/// @return  頂点リスト
@@ -338,10 +353,13 @@ namespace PolylibNS {
 	}
 	// public /////////////////////////////////////////////////////////////////////
 
-	POLYLIB_STAT PolygonGroup::init(const REAL_TYPE* vertlist,
+	POLYLIB_STAT PolygonGroup::init(
+		const REAL_TYPE* vertlist,
 		const int* idlist,
+		const int* exidlist,
 		const int n_start_tri,
 		const int n_start_id,
+		const int n_start_exid,
 		const unsigned int n_tri){
 
 			//#define DEBUG
@@ -351,7 +369,7 @@ namespace PolylibNS {
 #endif
 
 
-			m_polygons->init(vertlist,idlist,n_start_tri,n_start_id,n_tri);
+			m_polygons->init(vertlist,idlist,exidlist,n_start_tri,n_start_id,n_start_exid,n_tri);
 #ifdef DEBUG
 			PL_DBGOSH <<"PolygonGroup::" << __func__<<" end of Polygons::init."  <<std::endl;
 #endif
@@ -363,12 +381,15 @@ namespace PolylibNS {
 
 	// public /////////////////////////////////////////////////////////////////////
 
-	POLYLIB_STAT PolygonGroup::init_dvertex(const REAL_TYPE* vertlist,
+	POLYLIB_STAT PolygonGroup::init_dvertex(
+		const REAL_TYPE* vertlist,
 		const int* idlist,
+		const int* exidlist,
 		const REAL_TYPE* scalarlist,
 		const REAL_TYPE* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
+		const int n_start_exid,
 		const int n_start_scalar,
 		const int n_start_vector,
 		const unsigned int n_tri,
@@ -384,8 +405,8 @@ namespace PolylibNS {
 
 
 
-			m_polygons->init_dvertex(vertlist,idlist,scalarlist,vectorlist,
-				n_start_tri,n_start_id,n_start_scalar,n_start_vector,
+			m_polygons->init_dvertex(vertlist,idlist,exidlist,scalarlist,vectorlist,
+				n_start_tri,n_start_id,n_start_exid,n_start_scalar,n_start_vector,
 				n_tri,n_scalar,n_vector);
 
 #ifdef DEBUG
@@ -399,12 +420,15 @@ namespace PolylibNS {
 
 	// public /////////////////////////////////////////////////////////////////////
 
-	POLYLIB_STAT PolygonGroup::add_dvertex(const REAL_TYPE* vertlist,
+	POLYLIB_STAT PolygonGroup::add_dvertex(
+		const REAL_TYPE* vertlist,
 		const int* idlist,
+		const int* exidlist,
 		const REAL_TYPE* scalarlist,
 		const REAL_TYPE* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
+		const int n_start_exid,
 		const int n_start_scalar,
 		const int n_start_vector,
 		const unsigned int n_tri,
@@ -419,8 +443,8 @@ namespace PolylibNS {
 
 
 
-			m_polygons->add_dvertex(vertlist,idlist,scalarlist,vectorlist,
-				n_start_tri,n_start_id,n_start_scalar,n_start_vector,
+			m_polygons->add_dvertex(vertlist,idlist,exidlist,scalarlist,vectorlist,
+				n_start_tri,n_start_id,n_start_exid,n_start_scalar,n_start_vector,
 				n_tri,n_scalar,n_vector);
 
 #ifdef DEBUG
@@ -917,8 +941,10 @@ namespace PolylibNS {
 		PolygonGroup::add_triangles(
 		const REAL_TYPE* vertlist,
 		const int* idlist,
+		const int* exidlist,
 		const int n_start_tri,
 		const int n_start_id,
+		const int n_start_exid,
 		const unsigned int n_tri){
 
 
@@ -933,7 +959,7 @@ namespace PolylibNS {
 			PL_DBGOSH << __func__<< " add start" << std::endl;
 #endif
 
-			m_polygons->add(vertlist, idlist, n_start_tri, n_start_id,n_tri);
+			m_polygons->add(vertlist, idlist, exidlist, n_start_tri, n_start_id, n_start_exid, n_tri);
 
 #ifdef DEBUG
 			PL_DBGOSH << __func__<< " add finished" << std::endl;

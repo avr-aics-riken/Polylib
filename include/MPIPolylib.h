@@ -32,10 +32,11 @@
 #define	MPITAG_CONFIG				2
 #define	MPITAG_NUM_TRIAS			3
 #define MPITAG_TRIA_IDS				4
-#define MPITAG_TRIAS				5
-#define MPITAG_TRIA_NDATA			6
-#define MPITAG_TRIA_SCALAR			7
-#define MPITAG_TRIA_VECTOR			8
+#define MPITAG_TRIA_EXIDS			5
+#define MPITAG_TRIAS				6
+#define MPITAG_TRIA_NDATA			7
+#define MPITAG_TRIA_SCALAR			8
+#define MPITAG_TRIA_VECTOR			9
 
 //#define PL_MPI_REAL MPI_DOUBLE
 #ifdef PL_REAL_FLOAT
@@ -363,6 +364,19 @@ namespace PolylibNS {
 		///
 		POLYLIB_STAT
 			pack_tria_ids(
+			std::vector<int>* p_vec,
+			const std::vector<PrivateTriangle*>* p_trias
+			);
+
+		///
+		/// 三角形のユーザ定義IDの送信情報を作成。
+		/// 
+		/// @param[in,out] p_vec 情報追加先ベクタ
+		/// @param[in] p_trias グループ内三角形リスト
+		/// @return  POLYLIB_STATで定義される値が返る。
+		///
+		POLYLIB_STAT
+			pack_tria_exids(
 			std::vector<int>* p_vec,
 			const std::vector<PrivateTriangle*>* p_trias
 			);

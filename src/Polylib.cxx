@@ -177,8 +177,10 @@ namespace PolylibNS {
 				//リーフのみがポリゴン情報を持っている
 				if ((*it)->get_children().empty() == false)	continue;
 
-				// ポリゴン数が0ならばファイル出力不要 2010.10.19
-				if ((*it)->get_triangles()->size() == 0)	continue;
+				// vtk出力指定ならポリゴン数0でも出力
+				if(stl_format!="vtk_a" && stl_format!="vtk_b") {
+					if ((*it)->get_triangles()->size() == 0)	continue;
+				}
 
 				// STLファイル保存 (第一引数のランク番号は不要)
 				stat = (*it)->save_stl_file("", my_extend, stl_format,
@@ -303,6 +305,28 @@ namespace PolylibNS {
 			}
 		}
 		return leaf;
+	}
+
+	// public /////////////////////////////////////////////////////////////////////
+
+	POLYLIB_STAT Polylib::remove_leaf_group(const std::string name) {
+#ifdef DEBUG
+		PL_DBGOSH << "Polylib::remove_leaf_group() in." << endl;
+#endif
+		std::vector<PolygonGroup*>::iterator it;
+		for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
+			if (((*it)->get_children()).size() == 0 &&
+			    ((*it)->acq_fullpath() == name))
+			{
+				if( (*it)->get_parent() != NULL ) {
+					(*it)->get_parent()->remove_child(*it);
+				}
+				m_pg_list.erase(it);
+				delete (*it);
+				return PLSTAT_OK;
+			}
+		}
+		return PLSTAT_NG;
 	}
 
 	// public /////////////////////////////////////////////////////////////////////
@@ -527,11 +551,11 @@ namespace PolylibNS {
 						// MOD	S fuchi error C2440: '初期化中' : 'PolylibNS::Vertex **' から 'PolylibNS::Vec3<T> *' に変換できません。
 						//Vec3<REAL_TYPE>* v = tri->get_vertex();
 
-						Vec3<REAL_TYPE>* v = *(tri->get_vertex());
+						Vertex** v = tri->get_vertex();
 						// MOD	E 					
-						Vec3<REAL_TYPE> c((v[0][0]+v[1][0]+v[2][0])/3.0,
-							(v[0][1]+v[1][1]+v[2][1])/3.0,
-							(v[0][2]+v[1][2]+v[2][2])/3.0);
+						Vec3<REAL_TYPE> c(((*v[0])[0]+(*v[1])[0]+(*v[2])[0])/3.0,
+							((*v[0])[1]+(*v[1])[1]+(*v[2])[1])/3.0,
+							((*v[0])[2]+(*v[1])[2]+(*v[2])[2])/3.0);
 						REAL_TYPE dist2 = (c - pos).lengthSquared();
 						if (tri_min == 0 || dist2 < dist2_min) {
 							tri_min = tri;
@@ -1303,7 +1327,7 @@ namespace PolylibNS {
 			PL_DBGOSH << "list "<<parent_name << " "<< index <<std::endl;
 #endif
 			while( index !=std::string::npos){
-				daughter_name=parent_name.substr(index+1);
+				daughter_name=parent_name.substr(index);
 				parent_name=parent_name.substr(0,index);
 				path_list.push_back(parent_name);
 				//    PL_DBGOSH << "list "<<parent_name << " "<< path_list.size() <<std::endl;
@@ -1337,10 +1361,11 @@ namespace PolylibNS {
 				parent = pg_instance;
 				parent_name=path_list[i];
 				daughter_name= group_name;
-				index = group_name.find_first_not_of(parent_name);
-				if(index!=std::string::npos){
-					daughter_name= group_name.substr(index+1);
-				}
+				//index = group_name.find_first_not_of(parent_name);
+				//if(index!=std::string::npos){
+			//		daughter_name= group_name.substr(index+1);
+			//	}
+				daughter_name=group_name.substr(parent_name.length()+1);
 
 				PL_DBGOSH << "list check "<< parent_name<< " "<<daughter_name<< " "<<index<<std::endl;
 
@@ -1443,7 +1468,6 @@ namespace PolylibNS {
 		pg_instance->finalize_DVertex();
 
 	}
-
 
 } //namespace PolylibNS
 

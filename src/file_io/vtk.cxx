@@ -127,15 +127,23 @@ namespace PolylibNS {
 			//  const std::vector<Vertex*>* vlistout=vertex_list->get_vertex_lists();
 
 			// should be a DVertex
-			DVertex* dv=dynamic_cast<DVertex*>(vlistout->at(0));
-			DVertexManager* dvm=dv->DVM();
+			DVertex* dv=NULL;
+			DVertexManager* dvm=NULL;
+			int nscalar_tmp=0;
+			int nvector_tmp=0;
+			if(tri_list->size()!=0){
+				DVertex* dv=dynamic_cast<DVertex*>(vlistout->at(0));
+				DVertexManager* dvm=dv->DVM();
+				nscalar_tmp=dvm->nscalar();
+				nvector_tmp=dvm->nvector();
+			}
 
 			os << "POINT_DATA " << vertex_list->size() <<std::endl;  
 #ifdef DEBUG
-			PL_DBGOSH << __func__ <<"SCALAR "<<dvm->nscalar() <<std::endl;
+			PL_DBGOSH << __func__ <<"SCALAR "<<nscalar_tmp <<std::endl;
 #endif // DEBUG
 
-			for(int i=0;i<dvm->nscalar();++i){
+			for(int i=0;i<nscalar_tmp;++i){
 
 				os << "SCALARS polylib_Scalar_data"<<i;
 
@@ -166,10 +174,10 @@ namespace PolylibNS {
 #endif // DEBUG
 
 
-			for(int i=0;i<dvm->nvector();++i){
+			for(int i=0;i<nvector_tmp;++i){
 
 #ifdef DEBUG
-				PL_DBGOSH << __func__ <<"VECTOR "<<i << " " << dvm->nvector()<<std::endl;
+				PL_DBGOSH << __func__ <<"VECTOR "<<i << " " << nvector_tmp<<std::endl;
 #endif // DEBUG
 
 				os << "VECTORS polylib_Vector_data"<<i; 
@@ -188,7 +196,7 @@ namespace PolylibNS {
 				for(int j=0;j<vlistout->size();++j){
 
 #ifdef DEBUG
-					PL_DBGOSH << __func__ <<"VECTOR "<<i << " " << dvm->nvector()<<std::endl;
+					PL_DBGOSH << __func__ <<"VECTOR "<<i << " " << nvector_tmp<<std::endl;
 #endif // DEBUG
 
 					DVertex *dv=dynamic_cast<DVertex *>((*vlistout)[j]);

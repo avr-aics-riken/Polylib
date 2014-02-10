@@ -194,6 +194,14 @@ namespace PolylibNS {
 		///
 		std::vector<PolygonGroup *> *get_leaf_groups() const;
 
+		//
+		// リーフポリゴングループを削除する
+		//
+		// @param[in] name 削除対象ポリゴングループ名称（フルパス指定）
+		// @return OK/NG
+		POLYLIB_STAT remove_leaf_group(
+			const std::string name);
+
 		///
 		/// 三角形ポリゴンの検索。
 		/// 位置ベクトルmin_posとmax_posにより特定される矩形領域に含まれる、
