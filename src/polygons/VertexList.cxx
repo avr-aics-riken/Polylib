@@ -281,7 +281,7 @@ namespace PolylibNS{
 
 		// MOD S fuchi warning C4756: 定数演算でオーバーフローを起こしました。
 		//REAL_TYPE min_distance=1.0e107;
-		REAL_TYPE min_distance= REAL_VAL_MAX;
+		REAL_TYPE min_distance= (sizeof(REAL_TYPE)==4)?FLT_MAX:DBL_MAX ;	
 		// MOD E 
 		int index=0;
 		int isave=-1;
