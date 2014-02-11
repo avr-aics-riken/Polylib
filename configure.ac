@@ -5,7 +5,7 @@
 # Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
 # All rights reserved.
 # 
-# Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+# Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
 # All rights reserved.
 #
 ##############################################################################
@@ -13,8 +13,8 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.69])
-AC_INIT([Polylib], [2.7.3], [keno@riken.jp],[Polylib])
+AC_PREREQ([2.57])
+AC_INIT([Polylib], [2.7.4], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -23,9 +23,8 @@ AC_CONFIG_HEADERS([config.h])
 #
 # revision No.
 #
-PL_REVISION="20131128_2000"
+PL_REVISION="20140211_2100"
 AC_SUBST(PL_REVISION)
-
 
 PL_CXX="$CXX"
 AC_SUBST(PL_CXX)
@@ -34,6 +33,7 @@ enable_mpi="none"
 
 # if a wrapper compiler is used, "enable_mpi" is empty, but parallel.
 # wrappers like mpicxx, mpicc, mpiCC, mpic++, mpiFCCpx are taking into consideration, if not add in case.
+# CC is for Hopper
 
 case "$PL_CXX" in
   mpicxx)   enable_mpi="mpi" ;;
@@ -41,6 +41,7 @@ case "$PL_CXX" in
   mpiCC)    enable_mpi="mpi" ;;
   mpic++)   enable_mpi="mpi" ;;
   mpiFCCpx) enable_mpi="mpi" ;;
+  CC)       enable_mpi="mpi" ;;
 esac
 
 
@@ -56,7 +57,7 @@ AC_SUBST(MPI_LIBS)
 
 # openmpi
 AC_ARG_WITH( ompi, [AC_HELP_STRING([--with-ompi=dir],[Specify OpenMPI install directory])], , with_ompi=none)
-if test "$with_ompi" != "none" ; then
+if test x"$with_ompi" != x"none" ; then
   MPI_DIR=$with_ompi;
   MPI_CFLAGS=-I$MPI_DIR/include
   MPI_LDFLAGS=-L$MPI_DIR/lib
@@ -65,8 +66,8 @@ if test "$with_ompi" != "none" ; then
 fi
 
 
-if test "$enable_mpi" != "mpi" ; then
-  if test "$enable_mpi" = "none" ; then
+if test x"$enable_mpi" != x"mpi" ; then
+  if test x"$enable_mpi" = x"none" ; then
     echo "  Warning: OpenMPI library is not specified."
     echo "           If compilation error occurs about MPI, --with-ompi option."
   fi
@@ -78,7 +79,7 @@ fi
 # default prefix setting
 #
 AC_PREFIX_DEFAULT([/usr/local/Polylib])
-if test "$prefix" = "NONE" ; then
+if test x"$prefix" = x"NONE" ; then
   PL_INST_DIR=/usr/local/Polylib
 else
   PL_INST_DIR="$prefix"
@@ -93,7 +94,7 @@ AC_SUBST(TP_DIR)
 AC_SUBST(TP_CFLAGS)
 AC_SUBST(TP_LDFLAGS)
 
-if test "$with_parser" != "none" ; then
+if test x"$with_parser" != x"none" ; then
   TP_DIR=$with_parser;
   TP_CFLAGS=`$TP_DIR/bin/tp-config --cflags`
   TP_LDFLAGS=`$TP_DIR/bin/tp-config --libs`
@@ -118,7 +119,7 @@ AC_ARG_WITH(example, [AC_HELP_STRING([--with-example=(no|yes)],[make example [no
 
 
 
-if test "$enable_mpi" = "none" ; then
+if test x"$enable_mpi" = x"none" ; then
   PL_LIBS="-lPOLY"
 else
   PL_LIBS="-lMPIPOLY"
@@ -144,7 +145,7 @@ AC_SUBST(PL_LDFLAGS)
 #
 AC_SUBST(MAKE_SUB_DIRS)
 MAKE_SUB_DIRS="src doc"
-if test "$with_example" = "yes" ; then
+if test x"$with_example" = x"yes" ; then
   MAKE_SUB_DIRS="$MAKE_SUB_DIRS"" examples"
 fi
 
