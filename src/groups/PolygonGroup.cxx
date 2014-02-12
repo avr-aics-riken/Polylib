@@ -1455,9 +1455,11 @@ POLYLIB_STAT
 			<< ")" << std::endl;
 			}
 			*/
-			if( is_far( origin, cell_size, (*p_trias->at(i)->get_vertex())[j],
-				(*m_trias_before_move->at(i)->get_vertex())[j]        ) ) {
-					PL_ERROSH << "[ERROR]PolygonGroup::check_leaped():Leaped Vertex"
+			if( is_far( origin, cell_size,
+			            (*(*p_trias->at(i)->get_vertex()))[j],
+			            (*(*m_trias_before_move->at(i)->get_vertex()))[j] )
+			) {
+				PL_ERROSH << "[ERROR]PolygonGroup::check_leaped():Leaped Vertex"
 						<< " Detected. GroupID:" << m_internal_id
 						<< " TriaID:" << p_trias->at(i)->get_id()
 						<< " before:(" << m_trias_before_move->at(i)->get_vertex()[j]
