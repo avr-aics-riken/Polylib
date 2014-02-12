@@ -548,11 +548,9 @@ const Triangle* Polylib::search_nearest_polygon(
 			if ((*it)->get_children().size()==0) {
 				const PrivateTriangle* tri = (*it)->search_nearest(pos);
 				if (tri) {
-					// MOD	S fuchi error C2440: '初期化中' : 'PolylibNS::Vertex **' から 'PolylibNS::Vec3<T> *' に変換できません。
-					//Vec3<REAL_TYPE>* v = tri->get_vertex();
 
 					Vertex** v = tri->get_vertex();
-					// MOD	E 					
+					
 					Vec3<REAL_TYPE> c(((*v[0])[0]+(*v[1])[0]+(*v[2])[0])/3.0,
 						((*v[0])[1]+(*v[1])[1]+(*v[2])[1])/3.0,
 						((*v[0])[2]+(*v[1])[2]+(*v[2])[2])/3.0);

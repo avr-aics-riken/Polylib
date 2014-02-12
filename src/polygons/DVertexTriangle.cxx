@@ -42,12 +42,10 @@ DVertexTriangle::DVertexTriangle(
 	Vec3<REAL_TYPE>	normal, 
 	int		id
 	) : PrivateTriangle((Vertex**)vertex_ptr, normal,id) {
-		//MOD S fuchi  ポインタのコピー　上記では　 error C2440: '=' : 'PolylibNS::DVertex *[]' から 'PolylibNS::DVertex *[3]' に変換できません。
-		//m_dvertex_ptr=vertex_ptr;
+
 		for(int i=0;i<3;i++){
 			m_dvertex_ptr[i]=vertex_ptr[i];
 		}
-		//MOD E 
 
 }
 
@@ -64,16 +62,12 @@ DVertexTriangle::DVertexTriangle(
 	Vec3<REAL_TYPE>	normal, 
 	REAL_TYPE	area, 
 	int		id
-	//MOD S fuchi	 error C2440: '=' : 'PolylibNS::DVertex *[]' から 'PolylibNS::DVertex *[3]' に変換できません。	
-	//) : Triangle((Vertex**)vertex_ptr, normal, area) {
+
 	) : PrivateTriangle((Vertex**)vertex_ptr, normal, area,id) {
-		// 
-		//m_dvertex_ptr=vertex_ptr;
+
 		for(int i=0;i<3;i++){
 			m_dvertex_ptr[i]=vertex_ptr[i];
 		}
-		//MOD E 
-
 }
 
 ///
@@ -119,14 +113,10 @@ DVertexTriangle::DVertexTriangle(
 		this->m_id = id;
 		this->calc_normal();
 		this->calc_area();
-		//MOD S fuchi	 error C2680: 'PolylibNS::DVertex **' : dynamic_cast のターゲット型が無効です。
 
-		//m_dvertex_ptr=dynamic_cast<DVertex**>(this->m_vertex_ptr);
 		for( int i=0; i<3; i++ ) {
 			m_dvertex_ptr[i]=dynamic_cast<DVertex*>(m_vertex_ptr[i]);
 		}
-		//MOD E 
-
 }
 
 

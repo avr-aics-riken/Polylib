@@ -1166,14 +1166,13 @@ POLYLIB_STAT PolygonGroup::rescale_polygons( REAL_TYPE scale )
 		scaled[2][0] = org[2][0] * scale;
 		scaled[2][1] = org[2][1] * scale;
 		scaled[2][2] = org[2][2] * scale;
-		//MOD S fuchi error C2664: 'PolylibNS::Triangle::set_vertexes' : 1 番目の引数を 'PolylibNS::Vec3<T> [3]' から 'PolylibNS::Vertex *[]' に変換できません。(
-		//(*it)->set_vertexes( scaled, true, true );
+
 		Vertex* vertex_ptr[3];
 		for(int i=0;i<3;i++){
 			vertex_ptr[i] = new Vertex(scaled[i]);
 		}
 		(*it)->set_vertexes( vertex_ptr, true, true );
-		//MOD E 
+
 		// Vec3<REAL_TYPE>* org = (*it)->get_vertex();
 		// Vec3<REAL_TYPE>  scaled[3];
 		// scaled[0][0] = org[0][0] * scale;
@@ -1442,19 +1441,6 @@ POLYLIB_STAT
 
 		for( j=0; j<3; j++ ) {
 			// 隣接セルより遠方へ移動してたらcerrにメッセージを出力。
-
-			//MOD S fuchi		 error C2664: 'PolylibNS::PolygonGroup::is_far' : 3 番目の引数を 'PolylibNS::Vertex *' から 'PolylibNS::Vec3<T>' に変換できません。	
-			/*	
-			if( is_far( origin, cell_size, p_trias->at(i)->get_vertex()[j],
-			m_trias_before_move->at(i)->get_vertex()[j]        ) ) {
-			PL_ERROSH << "[ERROR]PolygonGroup::check_leaped():Leaped Vertex"
-			<< " Detected. GroupID:" << m_internal_id
-			<< " TriaID:" << p_trias->at(i)->get_id()
-			<< " before:(" << m_trias_before_move->at(i)->get_vertex()[j]
-			<< ") after:(" << p_trias->at(i)->get_vertex()[j]
-			<< ")" << std::endl;
-			}
-			*/
 			if( is_far( origin, cell_size,
 			            (*(*p_trias->at(i)->get_vertex()))[j],
 			            (*(*m_trias_before_move->at(i)->get_vertex()))[j] )
@@ -1465,8 +1451,7 @@ POLYLIB_STAT
 						<< " before:(" << m_trias_before_move->at(i)->get_vertex()[j]
 					<< ") after:(" << p_trias->at(i)->get_vertex()[j]
 					<< ")" << std::endl;
-			}
-			//MOD E 
+			}	
 		}
 		// 移動前三角形インスタンスはもう不要なので削除
 		delete m_trias_before_move->at(i);

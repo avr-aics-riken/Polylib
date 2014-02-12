@@ -1708,10 +1708,9 @@ POLYLIB_STAT
 
 	// XML文字列からグループ階層構造を構築
 	config_str = p_str;
-	//MOD S fuchi   error C2664: 'PolylibNS::Polylib::make_group_tree' : 1 番目の引数を 'std::string' から 'TextParser *' に変換できません。
-	//if( (ret = this->make_group_tree( config_str )) != PLSTAT_OK ) {
+
 	if( (ret = this->make_group_tree( this->tp )) != PLSTAT_OK ) {
-		//MOD E 
+
 		PL_ERROSH << "[ERROR]MPIPolylib::broadcast_config_from_rank0():make_group_tree() faild. returns:" << ret << std::endl;
 		return ret;
 	}

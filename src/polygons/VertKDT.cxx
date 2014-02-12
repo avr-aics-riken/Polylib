@@ -47,10 +47,9 @@ POLYLIB_STAT VertKDT::create(
 	const BBox	bbox, 
 	std::vector<Vertex*>* vert_list
 	){
-		//MOD S fuchi error C4716: 'PolylibNS::VertKDT::create' : 値を返さなければいけません
-		//create(m_max_elements,bbox,vert_list);
+
 		return create(m_max_elements,bbox,vert_list);
-		//MOD E 
+
 }
 
 
@@ -563,10 +562,8 @@ void VertKDT::search_recursive(
 				bool iscontain = true;
 				//const Vec3<REAL_TYPE> *temp = (*itr)->get_triangle()->get_vertex();
 
-				//MOD S fuchi	error C2039: 'get_triangle' : 'PolylibNS::VertKDTElem' のメンバではありません。
-				//Vertex** temp=(*itr)->get_triangle()->get_vertex();
 				Vertex* temp=(*itr)->get_vertex();
-				//MOD E 
+
 				for (int i = 0; i < 3; i++) {
 					if (bbox.contain( (Vec3<REAL_TYPE>) *(temp[i]) ) == false)  {
 						iscontain = false;

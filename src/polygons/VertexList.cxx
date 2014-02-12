@@ -197,10 +197,8 @@ REAL_TYPE VertexList::tolerance() const {
 void VertexList::print() const 
 {
 	for(int i=0;i<this->m_vertex_list->size();++i){
-		//MOD S fuchi error C2100: 間接指定演算子 (*) の使い方が正しくありません。
-		//Vertex test=*(this->m_vertex_list[i]);
+
 		Vertex& test=*(m_vertex_list->at(i));
-		//MOD E 
 
 		PL_DBGOS << "VertexList "<<i 
 			<< " "<<test[AXIS_X] 
@@ -279,10 +277,8 @@ int VertexList::vtx_add_i(Vertex* v)
 	// tempolary uses __DBL_MAX__
 	//    REAL_TYPE min_distance=__DBL_MAX__;
 
-	// MOD S fuchi warning C4756: 定数演算でオーバーフローを起こしました。
-	//REAL_TYPE min_distance=1.0e107;
 	REAL_TYPE min_distance= (sizeof(REAL_TYPE)==4)?FLT_MAX:DBL_MAX ;	
-	// MOD E 
+
 	int index=0;
 	int isave=-1;
 	bool same_point_find=false;
@@ -348,10 +344,9 @@ Vertex* VertexList::vtx_add(Vertex* v)
 	//search same vertex point in the list.
 
 	int index= vtx_add_i(v);
-	//MOD S fuchi  error C2440: 'return' : 'std::vector<_Ty>' から 'PolylibNS::Vertex *' に変換できません。
-	//return m_vertex_list[index];
+
 	return m_vertex_list->at(index);
-	//MOD E 
+ 
 } 
 
 Vertex* VertexList::vtx_add_KDT(Vertex* v)
