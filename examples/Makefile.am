@@ -161,10 +161,6 @@ test_mpi_move_SOURCES  = \
 test_mpi_move_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ -DPL_REAL=@PL_REAL@
 
 
-test_mpi_move_SOURCES  = test_mpi_move.cxx
-test_mpi_move_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@
-
-
 test_LDADD = \
     -L$(top_builddir)/src/.libs -lPOLY \
     @MPI_LDFLAGS@ \
