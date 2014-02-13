@@ -22,7 +22,7 @@ int main(){
 
   cout<< "test 0" << endl;
 
-  Polylib<PL_REAL>* pl_instance = Polylib<PL_REAL>::get_instance();
+  Polylib* pl_instance = Polylib::get_instance();
 
   cout<< "test 1" << endl;
 
@@ -50,7 +50,7 @@ int main(){
 
   pl_instance->show_group_hierarchy();
   pgname="DV/byhand";
-  Vec3<PL_REAL> vlist[3];
+  Vec3 vlist[3];
 
   for (int itri=0;itri<2;itri++){
     if(itri==0){
@@ -66,12 +66,12 @@ int main(){
     }
 
 
-  DVertexTriangle<PL_REAL>* tri=
+  DVertexTriangle* tri=
     pl_instance->add_DVertex_Triangle(pgname,vlist);
 
-  DVertex<PL_REAL>** vec_list= tri->get_DVertex();
+  DVertex** vec_list= tri->get_DVertex();
   std::cout << "back from get_DVertex " <<vec_list <<std::endl;
-    DVertex<PL_REAL>* DVp=NULL;
+    DVertex* DVp=NULL;
     for(int ii=0;ii<3;++ii){
     DVp=vec_list[ii];
 
@@ -92,13 +92,13 @@ int main(){
 
   std::cout << "set_vector" <<std::endl;
 
-  Vec3<PL_REAL> a(10,20+ii,30+ii);
-  Vec3<PL_REAL> b(13,23+ii,33+ii);
+  Vec3 a(10,20+ii,30+ii);
+  Vec3 b(13,23+ii,33+ii);
 
   DVp->set_vector(0,a);
   DVp->set_vector(2,b);
 
-  Vec3<PL_REAL> c,d;
+  Vec3 c,d;
   DVp->get_vector(0,&c);
 
   DVp->get_vector(2,&d);
