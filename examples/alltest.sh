@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 PREFIX=/home/hsim/GitData/Polylib_3.2_fjqs
 PARSER=/home/hsim/opt/TextParser
