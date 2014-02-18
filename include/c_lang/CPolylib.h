@@ -1,14 +1,14 @@
 /* -*- Mode: c++ -*- */
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef c_polylib_h
 #define c_polylib_h
@@ -20,7 +20,7 @@ extern "C" {  // for C++
 
 #include "common/PolylibStat.h"
 
-//#define PL_REAL double
+
 
 // #ifdef HAVE_CONFIG_H
 // #include "config.h"
@@ -38,13 +38,14 @@ extern "C" {  // for C++
 #define POLYLIB_FALSE 0
 #define POLYLIB_TRUE  1
 
+
 ///
 /// 三角形ポリゴン情報構造体
 ///
 typedef struct {
-	PL_REAL m_vertex[9];	///< ３頂点座標
-	PL_REAL m_normal[3];	///< 法線ベクトル
-	PL_REAL m_area;		///< 面積
+	REAL_TYPE m_vertex[9];	///< ３頂点座標
+	REAL_TYPE m_normal[3];	///< 法線ベクトル
+	REAL_TYPE m_area;		///< 面積
 } TriangleStruct;
 
 ///
@@ -75,10 +76,10 @@ POLYLIB_STAT polylib_load(char* config_name);
 ///			IDファイル   : ポリゴングループ名_付加文字.ID。
 ///
 POLYLIB_STAT polylib_save(
-	char	**p_fname,
-	char	*format,
-	char	*extend
-);
+						  char	**p_fname,
+						  char	*format,
+						  char	*extend
+						  );
 
 ///
 /// Polylib::search_polygonsメソッドのラッパー関数。
@@ -99,8 +100,8 @@ POLYLIB_STAT polylib_save(
 ///
 TriangleStruct** polylib_search_polygons(
 	char* group_name,
-	PL_REAL min_pos[3],
-	PL_REAL max_pos[3],
+	REAL_TYPE min_pos[3],
+	REAL_TYPE max_pos[3],
 	int every, 
 	int *num_tri,
 	POLYLIB_STAT *err);

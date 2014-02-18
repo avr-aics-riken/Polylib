@@ -1,0 +1,12 @@
+Polylib {
+	Square {
+		class_name = "CarGroup"
+	//	filepath = "/foo/bar/car.stl_a"
+	//		filepath = "./car.stla"
+			filepath = "./square.obj"
+		movable = "true"
+		//velocity = 2.5
+		velocity = 5.0
+	}
+
+} // end of Polylib

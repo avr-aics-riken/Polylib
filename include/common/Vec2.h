@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef vec2_h
 #define vec2_h
@@ -35,9 +35,9 @@ public:
 
 	operator       T*()       { return &x; }
 	operator const T*() const { return &x; }
-	      T* ptr()       { return &x; }
+	T* ptr()       { return &x; }
 	const T* ptr() const { return &x; }
-	      T& operator [](int i)       { return (&x)[i]; }
+	T& operator [](int i)       { return (&x)[i]; }
 	const T& operator [](int i) const { return (&x)[i]; }
 
 	Vec2<T>& operator+=(const Vec2<T>& v) {

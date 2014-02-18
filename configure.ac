@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([Polylib], [3.0.0], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [3.3.0], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -25,7 +25,7 @@ AC_CONFIG_MACRO_DIR([m4])
 #
 # revision No.
 #
-PL_REVISION="20130916_1500"
+PL_REVISION="20140218_1600"
 AC_SUBST(PL_REVISION)
 
 
@@ -36,6 +36,7 @@ enable_mpi="none"
 
 # if a wrapper compiler is used, "enable_mpi" is empty, but parallel.
 # wrappers like mpicxx, mpicc, mpiCC, mpic++, mpiFCCpx are taking into consideration, if not add in case.
+# CC is for Hopper
 
 case "$PL_CXX" in
   mpicxx)   enable_mpi="mpi" ;;
@@ -43,6 +44,7 @@ case "$PL_CXX" in
   mpiCC)    enable_mpi="mpi" ;;
   mpic++)   enable_mpi="mpi" ;;
   mpiFCCpx) enable_mpi="mpi" ;;
+  CC)       enable_mpi="mpi" ;;
 esac
 
 
@@ -57,7 +59,7 @@ AC_SUBST(MPI_LIBS)
 
 # mpich
 AC_ARG_WITH(mpich, [AC_HELP_STRING([--with-mpich=dir],[Specify MPICH install directory])], , with_mpich=none)
-if test "$with_mpich" != "none" ; then
+if test x"$with_mpich" != x"none" ; then
   MPI_DIR=$with_mpich;
   MPI_CFLAGS=-I$MPI_DIR/include
   MPI_LDFLAGS=-L$MPI_DIR/lib
@@ -67,9 +69,9 @@ fi
 
 
 # openmpi
-if test "$with_mpich" = "none" ; then
+if test x"$with_mpich" = x"none" ; then
   AC_ARG_WITH( ompi, [AC_HELP_STRING([--with-ompi=dir],[Specify OpenMPI install directory])], , with_ompi=none)
-  if test "$with_ompi" != "none" ; then
+  if test x"$with_ompi" != x"none" ; then
     MPI_DIR=$with_ompi;
     MPI_CFLAGS=-I$MPI_DIR/include
     MPI_LDFLAGS=-L$MPI_DIR/lib
@@ -78,7 +80,7 @@ if test "$with_mpich" = "none" ; then
   fi
 fi
 
-if test "$enable_mpi" = "none" ; then
+if test x"$enable_mpi" = x"none" ; then
   echo "  Warning: Neither MPICH nor OpenMPI library is not specified."
   echo "           If compilation error occurs about MPI, specify --with-mpich or --with-ompi option."
 fi
@@ -89,7 +91,7 @@ fi
 # default prefix setting
 #
 AC_PREFIX_DEFAULT([/usr/local/Polylib])
-if test "$prefix" = "NONE" ; then
+if test x"$prefix" = x"NONE" ; then
   PL_INST_DIR=/usr/local/Polylib
 else
   PL_INST_DIR="$prefix"
@@ -105,7 +107,7 @@ AC_SUBST(TP_CFLAGS)
 AC_SUBST(TP_LDFLAGS)
 AC_SUBST(TP_MPI_LDFLAGS)
 
-if test "$with_parser" != "none" ; then
+if test x"$with_parser" != x"none" ; then
   TP_DIR=$with_parser;
   TP_CFLAGS=`$TP_DIR/bin/tp-config --cflags`
   TP_LDFLAGS=`$TP_DIR/bin/tp-config --libs`
@@ -128,7 +130,7 @@ AC_ARG_WITH(example, [AC_HELP_STRING([--with-example=(no|yes)],[make example [no
 
 
 #
-# enable/disable shared library
+# enable/unenable shared library
 #
 dnl AC_ARG_ENABLE(shared, [AC_HELP_STRING([--enable-shared=(yes|no)],[make shared library [yes]])], , enable_shared=yes)
 
@@ -145,7 +147,7 @@ dnl AC_SUBST(LT_STATIC)
 
 
 
-if test "$enable_mpi" = "none" ; then
+if test x"$enable_mpi" = x"none" ; then
   PL_LIBS="-lPOLY"
 else
   PL_LIBS="-lMPIPOLY"
@@ -167,14 +169,11 @@ AC_SUBST(PL_LDFLAGS)
 #
 # handle PL_REAL
 #
-# This variable holds the type of real value in Polylib.
-
+# This valiable holds the type of real value in whole Polylib system.
 AC_MSG_CHECKING([\$(PL_REAL) real type to be used])
-
 # if it is "float" exactly, PL_REAL is defined to "float".
 # if it is not, PL_REAL is defined to "double" as default.
-
-if test "$PL_REAL" = "float"; then
+if test x"$PL_REAL" = x"float"; then
 #do nothing
 AC_MSG_RESULT("$PL_REAL")
 AC_MSG_WARN([PL_REAL is set to float!])
@@ -184,8 +183,8 @@ else
 AC_MSG_RESULT("$PL_REAL")
 fi
 
-# AC_SUBST(PL_REAL)  we do not need PL_REAL for Makefiles
-AC_DEFINE_UNQUOTED(PL_REAL,$PL_REAL,[Variable type of REAL in Polylib.])
+AC_SUBST(PL_REAL)  we do not need PL_REAL for Makefiles
+AC_DEFINE_UNQUOTED(PL_REAL,$PL_REAL,[Real valiable type to whole Polylib.])
 
 
 
@@ -195,7 +194,7 @@ AC_DEFINE_UNQUOTED(PL_REAL,$PL_REAL,[Variable type of REAL in Polylib.])
 #
 AC_SUBST(MAKE_SUB_DIRS)
 MAKE_SUB_DIRS="src doc"
-if test "$with_example" = "yes" ; then
+if test x"$with_example" = x"yes" ; then
   MAKE_SUB_DIRS="$MAKE_SUB_DIRS"" examples"
 fi
 
@@ -209,10 +208,8 @@ AC_PROG_CPP
 AC_PROG_MAKE_SET
 #AC_PROG_RANLIB
 # add to switch libtool
-# addd LT_INIT by keno 2013-09-16
-LT_INIT
 AC_PROG_LIBTOOL
-#AM_PROG_LIBTOOL // remove by keno 2013-09-16
+AM_PROG_LIBTOOL
 AC_SUBST(LIBTOOL_DEPS)
 
 #

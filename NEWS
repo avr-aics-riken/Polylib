@@ -14,9 +14,14 @@ RELEASE
 =======
 
 -------------------------
+Version 3.1.0  2013-11-16
+
+ - support vtk format, user-defined scalar/vector value(s) on each vertices
+
+-------------------------
 Version 3.0.0  2013-09-16
 
- - support obj format, dual-link data structure, refactoring
+ - support obj format, shared vertices data structure, refactoring
 
 
 -------------------------
