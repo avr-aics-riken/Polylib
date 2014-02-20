@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-/*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
- * All rights reserved.
- * 
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
-=======
 Installation Instructions
 *************************
 
@@ -300,7 +288,6 @@ default values for variables like `CC', `cache_file', and `prefix'.
 `PREFIX/etc/config.site' if it exists.  Or, you can set the
 `CONFIG_SITE' environment variable to the location of the site script.
 A warning: not all `configure' scripts look for a site script.
->>>>>>> version3
 
 Defining Variables
 ==================
@@ -373,66 +360,6 @@ operates.
      Run the configure checks, but stop before creating any output
      files.
 
-<<<<<<< HEAD
- --prefix=INSTALL_DIR
-    Specify a directory to be installed. The default directory is /usr/local/Polylib.
-
- --with-example=(no|yes)
-    Specify building example. The default is 'no'.
-
- --with-ompi=OPENMPI_DIR
-    If the OpenMPI library is used, specify the directory path that OpenMPI library is
-    installed. This option will be required to use a native compiler. Instead, if the 
-    wrapper compiler, e.g., mpicxx, is used to compile, this options can be eliminated.
-
- --with-parser=TEXTPARSER_PATH
-    Specify the directory path that is installed TextParser library.
-
-
- CXX=CXX_COMPILER
-    Specify a C++ compiler, e.g., g++, icpc, xlc++ or others.
-
- CXXFLAGS=CXX_OPTIONS
-    Specify compiler options.
-
-
-
-Here is some examples;
-
-
-## Serial, Intel compiler, and with example
- 
-  $ ./configure --prefix=/hoge/Polylib \
-                --with-parser=/usr/local/TextParser \
-                --with-example=yes \
-                CXX=icpc \
-                CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
-
-
-## OpenMPI with wrapper compiler, default install directory, /wo example
-
-  $ ./configure --with-parser=/usr/local/FFV/TextParser \
-                CXX=mpicxx \
-                CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
-
-
-## K-computer
-
-  $ ./configure --prefix=/hoge \
-                --with-parser=/usr/local/TextParser \
-                --host=sparc64-unknown-linux-gnu \
-                CXX=mpiFCCpx \
-                CXXFLAGS="-Kfast,ocl,preex,simd=2,uxsimd,array_private,parallel,openmp"
-
-
-
-
-2. Hand compile
-
-If a provided configure does not work, use Makefile_hand to build this library. At first,
-edit MACRO to tell your machine environment.
-=======
 `configure' also accepts some other, not widely useful, options.  Run
 `configure --help' for more details.
->>>>>>> version3
 
