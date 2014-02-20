@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef vec3f_func_h
 #define vec3f_func_h
@@ -15,7 +15,7 @@
 namespace PolylibNS {
 
 inline
-void vec3f_copy(float to[3], const float from[3])
+	void vec3f_copy(float to[3], const float from[3])
 {
 	to[0] = from[0];
 	to[1] = from[1];
@@ -23,7 +23,7 @@ void vec3f_copy(float to[3], const float from[3])
 }
 
 inline
-void vec3f_set(float v[3], float x, float y, float z)
+	void vec3f_set(float v[3], float x, float y, float z)
 {
 	v[0] = x;
 	v[1] = y;
@@ -31,7 +31,7 @@ void vec3f_set(float v[3], float x, float y, float z)
 }
 
 inline
-void vec3f_min(float c[3], const float a[3], const float b[3])
+	void vec3f_min(float c[3], const float a[3], const float b[3])
 {
 	c[0] = (a[0] < b[0]) ? a[0] : b[0];
 	c[1] = (a[1] < b[1]) ? a[1] : b[1];
@@ -39,7 +39,7 @@ void vec3f_min(float c[3], const float a[3], const float b[3])
 }
 
 inline
-void vec3f_max(float c[3], const float a[3], const float b[3])
+	void vec3f_max(float c[3], const float a[3], const float b[3])
 {
 	c[0] = (a[0] > b[0]) ? a[0] : b[0];
 	c[1] = (a[1] > b[1]) ? a[1] : b[1];
@@ -47,7 +47,7 @@ void vec3f_max(float c[3], const float a[3], const float b[3])
 }
 
 inline
-void vec3f_plus(float c[3], const float a[3], const float b[3])
+	void vec3f_plus(float c[3], const float a[3], const float b[3])
 {
 	c[0] = a[0] + b[0];
 	c[1] = a[1] + b[1];
@@ -55,7 +55,7 @@ void vec3f_plus(float c[3], const float a[3], const float b[3])
 }
 
 inline
-void vec3f_minus(float c[3], const float a[3], const float b[3])
+	void vec3f_minus(float c[3], const float a[3], const float b[3])
 {
 	c[0] = a[0] - b[0];
 	c[1] = a[1] - b[1];
@@ -63,7 +63,7 @@ void vec3f_minus(float c[3], const float a[3], const float b[3])
 }
 
 inline
-void vec3f_multi(float c[3], const float a[3], const float b[3])
+	void vec3f_multi(float c[3], const float a[3], const float b[3])
 {
 	c[0] = a[0] * b[0];
 	c[1] = a[1] * b[1];
@@ -71,7 +71,7 @@ void vec3f_multi(float c[3], const float a[3], const float b[3])
 }
 
 inline
-void vec3f_multi(float c[3], const float a[3], const float b)
+	void vec3f_multi(float c[3], const float a[3], const float b)
 {
 	c[0] = a[0] * b;
 	c[1] = a[1] * b;
@@ -79,7 +79,7 @@ void vec3f_multi(float c[3], const float a[3], const float b)
 }
 
 inline
-void vec3f_div(float c[3], const float a[3], const float b[3])
+	void vec3f_div(float c[3], const float a[3], const float b[3])
 {
 	c[0] = a[0] / b[0];
 	c[1] = a[1] / b[1];
@@ -87,7 +87,7 @@ void vec3f_div(float c[3], const float a[3], const float b[3])
 }
 
 inline
-void vec3f_div(float c[3], const float a[3], const float b)
+	void vec3f_div(float c[3], const float a[3], const float b)
 {
 	float inv = 1.f / b;
 	c[0] = a[0] * inv;
@@ -96,13 +96,13 @@ void vec3f_div(float c[3], const float a[3], const float b)
 }
 
 inline
-float vec3f_dot(const float a[3], const float b[3])
+	float vec3f_dot(const float a[3], const float b[3])
 {
 	return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
 inline
-void vec3f_cross(float c[3], const float a[3], const float b[3])
+	void vec3f_cross(float c[3], const float a[3], const float b[3])
 {
 	c[0] = a[1] * b[2] - a[2] * b[1];
 	c[1] = a[2] * b[0] - a[0] * b[2];
@@ -110,7 +110,7 @@ void vec3f_cross(float c[3], const float a[3], const float b[3])
 }
 
 inline
-float vec3f_sqdist(const float a[3], const float b[3])
+	float vec3f_sqdist(const float a[3], const float b[3])
 {
 	float x = a[0] - b[0];
 	float y = a[1] - b[1];
@@ -119,7 +119,7 @@ float vec3f_sqdist(const float a[3], const float b[3])
 }
 
 inline
-float vec3f_dist(const float a[3], const float b[3])
+	float vec3f_dist(const float a[3], const float b[3])
 {
 	return sqrtf(vec3f_sqdist(a, b));
 }

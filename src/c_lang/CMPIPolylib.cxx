@@ -1,13 +1,24 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+//alternative codes
+#endif
+
 
 #include "MPIPolylib.h"
 #include <iostream>
@@ -28,11 +39,11 @@ using namespace PolylibNS;
 // init_parallel_info
 POLYLIB_STAT
 mpipolylib_init_parallel_info(
-	MPI_Comm comm,
-	float bpos[3],
-	unsigned int bbsize[3],
-	unsigned int gcsize[3],
-	float dx[3]
+							  MPI_Comm comm,
+							  REAL_TYPE bpos[3],
+							  unsigned int bbsize[3],
+							  unsigned int gcsize[3],
+							  REAL_TYPE dx[3]
 )
 {
 	return (MPIPolylib::get_instance())->init_parallel_info( comm, bpos, bbsize, gcsize, dx );
@@ -69,10 +80,10 @@ mpipolylib_load_parallel(char* config_name)
 // save_rank0
 POLYLIB_STAT
 mpipolylib_save_rank0(
-	char	**p_fname,
-	char	*format,
-	char	*extend
-)
+					  char	**p_fname,
+					  char	*format,
+					  char	*extend
+					  )
 {
 	string s_fname;
 	string s_format = format;
@@ -101,10 +112,10 @@ mpipolylib_save_rank0(
 // save_parallel
 POLYLIB_STAT
 mpipolylib_save_parallel(
-	char	**p_fname,
-	char	*format,
-	char	*extend
-)
+						 char	**p_fname,
+						 char	*format,
+						 char	*extend
+						 )
 {
 	string s_fname;
 	string s_format = format;
@@ -133,14 +144,14 @@ mpipolylib_save_parallel(
 // search_polygons
 TriangleStruct** mpipolylib_search_polygons(
 	char* group_name,
-	float min_pos[3],
-	float max_pos[3],
+	REAL_TYPE min_pos[3],
+	REAL_TYPE max_pos[3],
 	int every, 
 	int *num_tri,
 	POLYLIB_STAT *err
-)
+	)
 {
-	Vec3f c_min_pos,c_max_pos;
+	Vec3<REAL_TYPE> c_min_pos,c_max_pos;
 	string c_group_name(group_name);
 
 	for(int i=0; i<3; i++){
@@ -154,13 +165,16 @@ TriangleStruct** mpipolylib_search_polygons(
 
 	//Polylibから三角形リストを抽出
 	std::vector<Triangle*>*  tri_list =
-			(MPIPolylib::get_instance())->search_polygons(
-						c_group_name, c_min_pos, c_max_pos, b_every);
+		(MPIPolylib::get_instance())->search_polygons(
+		c_group_name, c_min_pos, c_max_pos, b_every);
+	// std::vector<Triangle*>*  tri_list =
+	//   (MPIPolylib::get_instance())->Polylib::search_polygons(
+	// 	 c_group_name, c_min_pos, c_max_pos, b_every);
 	*num_tri  = tri_list->size();
 
 	//三角形リストのポインタ配列の確保
 	TriangleStruct **p_tri =
-			(TriangleStruct**)malloc( sizeof(TriangleStruct*)*(*num_tri) );
+		(TriangleStruct**)malloc( sizeof(TriangleStruct*)*(*num_tri) );
 	if(p_tri == NULL){
 		fprintf(stderr,"mpipolylib_serch_polygons: Can not allocate memory.\n");
 		*err = PLSTAT_MEMORY_NOT_ALLOC;

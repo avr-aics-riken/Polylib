@@ -1,18 +1,20 @@
+// -*- Mode: c++ -*-
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef polylib_triangle_h
 #define polylib_triangle_h
 
 #include "common/Vec3.h"
+#include "polygons/Vertex.h"
 
 namespace PolylibNS{
 
@@ -23,12 +25,13 @@ namespace PolylibNS{
 /// しない。
 ///
 ////////////////////////////////////////////////////////////////////////////
+
 class Triangle {
 public:
 	///
 	/// コンストラクタ。
 	///
-	Triangle(){};
+	Triangle();
 
 	///
 	/// コンストラクタ。
@@ -36,69 +39,47 @@ public:
 	/// @param[in] tria コピー元。
 	///
 	Triangle(
-		const Triangle	&tria
-	) {
-		m_vertex[0] = tria.m_vertex[0];
-		m_vertex[1] = tria.m_vertex[1];
-		m_vertex[2] = tria.m_vertex[2];
-		m_normal = tria.m_normal;
-		m_area = tria.m_area;
-		m_exid = tria.m_exid;
-		m_shell = tria.m_shell;
-	}
+		const Triangle  &tria
+	) ;
 
 	///
 	/// コンストラクタ。
 	///
-	/// @param[in] vertex ポリゴンの頂点。
+	/// @param[in] vertex_ptr ポリゴンの頂点。
 	/// @attention 面積と法線はvertexを元に自動計算される。
 	///
 	Triangle(
-		Vec3f	vertex[3]
-	) {
-		m_vertex[0] = vertex[0];
-		m_vertex[1] = vertex[1];
-		m_vertex[2] = vertex[2];
-		calc_normal();
-		calc_area();
-	}
+		//Vec3	vertex[3]
+		Vertex* vertex_ptr[3]
+	) ;
 
 	///
 	/// コンストラクタ。
 	///
-	/// @param[in] vertex	ポリゴンの頂点。
+	/// @param[in] vertex_ptr	ポリゴンの頂点。
 	/// @param[in] normal	法線。
 	/// @attention 面積はvertexを元に自動計算される。
 	///
 	Triangle(
-		Vec3f	vertex[3], 
-		Vec3f	normal
-	) {
-		m_vertex[0] = vertex[0];
-		m_vertex[1] = vertex[1];
-		m_vertex[2] = vertex[2];
-		m_normal = normal;
-		calc_area();
-	}
+		//Vec3	vertex[3], 
+		Vertex* vertex_ptr[3],
+		Vec3<REAL_TYPE>	normal
+		) ;
 
 	///
 	/// コンストラクタ。
 	///
-	/// @param[in] vertex	ポリゴンの頂点。
+	/// @param[in] vertex_ptr	ポリゴンの頂点。
 	/// @param[in] normal	法線。
 	/// @param[in] area		ポリゴンの面積。
 	///
 	Triangle(
-		Vec3f	vertex[3], 
-		Vec3f	normal, 
-		float	area
-	) {
-		m_vertex[0] = vertex[0];
-		m_vertex[1] = vertex[1];
-		m_vertex[2] = vertex[2];
-		m_normal = normal;
-		m_area = area;
-	}
+		//Vec3	vertex[3], 
+
+		Vertex* vertex_ptr[3],
+		Vec3<REAL_TYPE>	normal, 
+		REAL_TYPE	area
+		) ;
 
 	//=======================================================================
 	// Setter/Getter
@@ -106,127 +87,94 @@ public:
 	///
 	/// 頂点を設定。
 	///
-	/// @param[in] vertex		三角形の3頂点。
+	/// @param[in] vertex_ptr		三角形の3頂点。
 	/// @param[in] calc_normal	法線ベクトルを再計算するか？
 	/// @param[in] calc_area	面積を再計算するか？
 	///
-	void set_vertexes(
-		Vec3f	vertex[3], 
+	virtual void set_vertexes(
+		//Vec3	vertex[3], 
+		Vertex* vertex_ptr[3],
 		bool	calc_normal, 
 		bool	calc_area
-	) {
-		m_vertex[0] = vertex[0];
-		m_vertex[1] = vertex[1];
-		m_vertex[2] = vertex[2];
-		if(calc_normal) this->calc_normal();
-		if(calc_area) this->calc_area();
-	}
+		) ;
 
 	///
 	/// vertexの配列を取得。
 	///
 	/// @return vertexの配列。
 	///
-	Vec3f* get_vertex() const {
-		return const_cast<Vec3f*>(m_vertex);
-	}
+	// Vec3* get_vertex() const {
+	//  return const_cast<Vec3*>(m_vertex);
+	//}
+
+	//  Vec3* get_vertex() const {
+	//   return const_cast<Vec3*>( *m_vertex_ptr );
+	// }
+
+
+	virtual Vertex** get_vertex() const ;
 
 	///
 	/// 法線ベクトルを取得。
 	///
 	/// @return 法線ベクトル。
 	///
-	Vec3f get_normal() const {
-		return m_normal;
-	}
-
+	virtual Vec3<REAL_TYPE> get_normal() const ;
 	///
 	/// 面積を取得。
 	///
 	/// @return 面積。
 	///
-	float get_area() const {
-		return m_area;
-	}
-
+	virtual REAL_TYPE get_area() const ;
 	///
 	/// ユーザ定義IDを設定。
 	///
 	///
-	void set_exid( int id ) {
-		m_exid = id;
-	}
-
+	virtual void set_exid( int id ) ;
 	///
 	/// ユーザ定義IDを取得。
 	///
 	/// @return ユーザ定義ID。
 	///
-	int get_exid() const {
-		return m_exid;
-	}
+	virtual int get_exid() const ;
 
 	///
 	/// ユーザ定義状態変数を設定。
 	///
 	///
-	void set_shell( int val ) {
-		m_shell = val;
-	}
-
+	virtual void set_shell( int val ) ;
 	///
 	/// ユーザ定義状態変数を取得。
 	///
 	/// @return ユーザ定義状態変数。
 	///
-	int get_shell() const {
-		return m_shell;
-	}
+	virtual int get_shell() const;
 
 protected:
 	///
 	/// 法線ベクトル算出。
 	///
-	void calc_normal() {
-		// double演算に変更 2013.10.10 tkawanab
-		Vec3<double> vd[3];
-		vd[0].assign( m_vertex[0].t[0], m_vertex[0].t[1], m_vertex[0].t[2] );
-		vd[1].assign( m_vertex[1].t[0], m_vertex[1].t[1], m_vertex[1].t[2] );
-		vd[2].assign( m_vertex[2].t[0], m_vertex[2].t[1], m_vertex[2].t[2] );
-		Vec3<double> ad = vd[1] - vd[0];
-		Vec3<double> bd = vd[2] - vd[0];
-
-		Vec3<double> normald = (cross(ad,bd)).normalize();
-		m_normal[0] = normald[0];
-		m_normal[1] = normald[1];
-		m_normal[2] = normald[2];
-	}
-
+	virtual void calc_normal() ;
 	///
 	/// 面積算出。
 	///
-	void calc_area() {
-		Vec3f a = m_vertex[1] - m_vertex[0];
-		Vec3f b = m_vertex[2] - m_vertex[0];
-		float al = a.length();
-		float bl = b.length();
-		float ab = dot(a,b);
-		float f = al*al*bl*bl - ab*ab;
-		if(f<0.0) f=0.0;
-		m_area = 0.5*sqrtf(f);
-	}
+	virtual void calc_area();
 
 	//=======================================================================
 	// クラス変数
 	//=======================================================================
 	/// 三角形の頂点座標（反時計回りで並んでいる）。
-	Vec3f	m_vertex[3];
+	//	Vec3<REAL_TYPE>	m_vertex[3];
+
+	/// changed with Vertex and VertexList class since Polylib version 3.0
+	/// 三角形の頂点座標（反時計回りで並んでいる）。
+	Vertex* m_vertex_ptr[3];
 
 	/// 三角形の法線ベクトル。
-	Vec3f	m_normal;
+	Vec3<REAL_TYPE>	m_normal;
 
 	/// 三角形の面積。
-	float	m_area;
+	REAL_TYPE	m_area;
 
 	/// 三角形のユーザ定義ID
 	int     m_exid;
@@ -235,151 +183,6 @@ protected:
 	int		m_shell;
 };
 
-////////////////////////////////////////////////////////////////////////////
-///
-/// クラス:PrivateTriangleクラス
-/// Polylib内のデータ保存用の基本クラスです。
-///
-////////////////////////////////////////////////////////////////////////////
-class PrivateTriangle : public Triangle {
-public:
-	///
-	/// コンストラクタ。
-	///
-	/// @param[in] vertex	ポリゴンの頂点。
-	/// @param[in] id		三角形ポリゴンID。
-	///
-	PrivateTriangle(
-		Vec3f	vertex[3], 
-		int		id
-	) : Triangle(vertex) {
-		m_id = id;
-	}
-
-	///
-	/// コンストラクタ。
-	///
-	/// @param[in] vertex	ポリゴンの頂点。
-	/// @param[in] normal	法線。
-	/// @param[in] id		三角形ポリゴンID。
-	///
-	PrivateTriangle(
-		Vec3f	vertex[3], 
-		Vec3f	normal, 
-		int		id
-	) : Triangle(vertex, normal) {
-		m_id = id;
-	}
-
-	///
-	/// コンストラクタ。
-	///
-	/// @param[in] vertex	ポリゴンの頂点。
-	/// @param[in] normal	法線。
-	/// @param[in] area		ポリゴンの面積。
-	/// @param[in] id		三角形ポリゴンID。
-	///
-	PrivateTriangle(
-		Vec3f	vertex[3], 
-		Vec3f	normal, 
-		float	area, 
-		int		id
-	) : Triangle(vertex, normal, area) {
-		m_id = id;
-	}
-
-	///
-	/// コンストラクタ。
-	///
-	/// @param[in] tri		ポリゴン。
-	/// @param[in] id		三角形ポリゴンID。
-	///
-	PrivateTriangle(
-		const Triangle	&tri, 
-		int			id
-	) : Triangle(tri) {
-		m_id = id;
-	}
-
-	///
-	/// コンストラクタ。
-	///
-	/// @param[in] tri		ポリゴン。
-	///
-	PrivateTriangle(
-		const PrivateTriangle	&tri 
-	) : Triangle(tri) {
-		m_id = tri.m_id;
-	}
-
-	///
-	/// コンストラクタ。
-	///
-	/// @param[in] dim		ポリゴン頂点座標配列。
-	/// @param[in] id		三角形ポリゴンID。
-	///
-	PrivateTriangle(
-		float		*dim,
-		int			id
-	){
-		for( int i=0; i<3; i++ ) {
-			m_vertex[i].t[0] = *dim++;
-			m_vertex[i].t[1] = *dim++;
-			m_vertex[i].t[2] = *dim++;
-		}
-		m_id = id;
-		calc_normal();
-		calc_area();
-	}
-
-	///
-	/// コンストラクタ。
-	///
-	/// @param[in] dim		ポリゴン頂点座標配列。
-	/// @param[in] id		三角形ポリゴンID。
-	/// @param[in] exid		三角形ポリゴンのユーザ定義ID。
-	///
-	PrivateTriangle(
-		float		*dim,
-		int			id,
-		int			exid
-	){
-		for( int i=0; i<3; i++ ) {
-			m_vertex[i].t[0] = *dim++;
-			m_vertex[i].t[1] = *dim++;
-			m_vertex[i].t[2] = *dim++;
-		}
-		m_id = id;
-		m_exid = exid;
-		calc_normal();
-		calc_area();
-	}
-
-	//=======================================================================
-	// Setter/Getter
-	//=======================================================================
-	///
-	/// 三角形ポリゴンIDを設定。
-	///
-	///  @param[in] id	三角形ポリゴンID。
-	///
-	void set_id(int id)				{m_id = id;}
-
-	///
-	/// 三角形ポリゴンIDを返す。
-	///
-	///  @return 三角形ポリゴンID。
-	///
-	int get_id() const				{return m_id;}
-
-protected:
-	//=======================================================================
-	// クラス変数
-	//=======================================================================
-	/// PolygonGroup内で一意となる三角形ポリゴンID。
-	///
-	int m_id;
-};
 
 } //namespace PolylibNS
 

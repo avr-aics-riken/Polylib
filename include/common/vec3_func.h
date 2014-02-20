@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef vec3_func_h
 #define vec3_func_h
@@ -15,7 +15,7 @@
 namespace PolylibNS {
 
 template<typename T1, typename T2> inline
-void vec3_copy(T1 to[3], const T2 from[3])
+	void vec3_copy(T1 to[3], const T2 from[3])
 {
 	to[0] = from[0];
 	to[1] = from[1];
@@ -23,7 +23,7 @@ void vec3_copy(T1 to[3], const T2 from[3])
 }
 
 template<typename T1, typename T2> inline
-void vec3_set(T1 v[3], T2 x, T2 y, T2 z)
+	void vec3_set(T1 v[3], T2 x, T2 y, T2 z)
 {
 	v[0] = x;
 	v[1] = y;
@@ -31,7 +31,7 @@ void vec3_set(T1 v[3], T2 x, T2 y, T2 z)
 }
 
 template<typename T> inline
-void vec3_min(T c[3], const T a[3], const T b[3])
+	void vec3_min(T c[3], const T a[3], const T b[3])
 {
 	c[0] = (a[0] < b[0]) ? a[0] : b[0];
 	c[1] = (a[1] < b[1]) ? a[1] : b[1];
@@ -39,7 +39,7 @@ void vec3_min(T c[3], const T a[3], const T b[3])
 }
 
 template<typename T> inline
-void vec3_max(T c[3], const T a[3], const T b[3])
+	void vec3_max(T c[3], const T a[3], const T b[3])
 {
 	c[0] = (a[0] > b[0]) ? a[0] : b[0];
 	c[1] = (a[1] > b[1]) ? a[1] : b[1];
@@ -47,7 +47,7 @@ void vec3_max(T c[3], const T a[3], const T b[3])
 }
 
 template<typename T1, typename T2, typename T3> inline
-void vec3_plus(T1 c[3], const T2 a[3], const T3 b[3])
+	void vec3_plus(T1 c[3], const T2 a[3], const T3 b[3])
 {
 	c[0] = a[0] + b[0];
 	c[1] = a[1] + b[1];
@@ -55,7 +55,7 @@ void vec3_plus(T1 c[3], const T2 a[3], const T3 b[3])
 }
 
 template<typename T1, typename T2, typename T3> inline
-void vec3_minus(T1 c[3], const T2 a[3], const T3 b[3])
+	void vec3_minus(T1 c[3], const T2 a[3], const T3 b[3])
 {
 	c[0] = a[0] - b[0];
 	c[1] = a[1] - b[1];
@@ -63,7 +63,7 @@ void vec3_minus(T1 c[3], const T2 a[3], const T3 b[3])
 }
 
 template<typename T1, typename T2, typename T3> inline
-void vec3_multi(T1 c[3], const T2 a[3], const T3 b[3])
+	void vec3_multi(T1 c[3], const T2 a[3], const T3 b[3])
 {
 	c[0] = a[0] * b[0];
 	c[1] = a[1] * b[1];
@@ -71,7 +71,7 @@ void vec3_multi(T1 c[3], const T2 a[3], const T3 b[3])
 }
 
 template<typename T1, typename T2, typename T3> inline
-void vec3_multi(T1 c[3], const T2 a[3], const T3 b)
+	void vec3_multi(T1 c[3], const T2 a[3], const T3 b)
 {
 	c[0] = a[0] * b;
 	c[1] = a[1] * b;
@@ -79,7 +79,7 @@ void vec3_multi(T1 c[3], const T2 a[3], const T3 b)
 }
 
 template<typename T1, typename T2, typename T3> inline
-void vec3_div(T1 c[3], const T2 a[3], const T3 b[3])
+	void vec3_div(T1 c[3], const T2 a[3], const T3 b[3])
 {
 	c[0] = a[0] / b[0];
 	c[1] = a[1] / b[1];
@@ -87,7 +87,7 @@ void vec3_div(T1 c[3], const T2 a[3], const T3 b[3])
 }
 
 template<typename T1, typename T2, typename T3> inline
-void vec3_div(T1 c[3], const T2 a[3], const T3 b)
+	void vec3_div(T1 c[3], const T2 a[3], const T3 b)
 {
 	T1 inv = 1. / b;
 	c[0] = a[0] * inv;

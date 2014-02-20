@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef mesh_io_h
 #define mesh_io_h
@@ -16,6 +16,12 @@
 #include <map>
 #include "common/PolylibStat.h"
 #include "common/PolylibCommon.h"
+#include "file_io/stl.h"
+#include "file_io/obj.h"
+#include "file_io/vtk.h"
+#include "polygons/Vertex.h"
+#include "polygons/VertexList.h"
+#include "polygons/Triangle.h"
 
 namespace PolylibNS {
 
@@ -27,32 +33,39 @@ namespace PolylibNS {
 ////////////////////////////////////////////////////////////////////////////
 class TriMeshIO {
 public:
+
 	///
-	/// STLファイルを読み込み、tri_listにセットする。
+	/// STL /OBJファイルを読み込み、tri_listにセットする。
 	///
+	///  @param[in,out] vertex_list	頂点リストの領域。
 	///  @param[in,out] tri_list	三角形ポリゴンリストの領域。
 	///  @param[in]		fmap		ファイル名、ファイルフォーマットのセット。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
+
 	static POLYLIB_STAT load(
-		std::vector<PrivateTriangle*>				*tri_list,
+		VertexList*	vertex_list,
+		std::vector<PrivateTriangle*>	*tri_list,
 		const std::map<std::string, std::string>	&fmap,
-		float scale = 1.0
-	);
+		REAL_TYPE scale = 1.0
+		);
+
 
 	///
 	/// tri_listの内容をSTL形式でファイルへ保存。
 	///
 	///  @param[in] tri_list	三角形ポリゴンのリスト(出力内容)。
 	///  @param[in] fname		ファイル名。
-	///  @param[in] fmt			ファイルフォーマット。
+	///  @param[in] fmt	ファイルフォーマット。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
+
 	static POLYLIB_STAT save(
+		VertexList* vertex_list,
 		std::vector<PrivateTriangle*>	*tri_list,
-		std::string						fname, 
-		std::string 					fmt = ""
-	);
+		std::string				fname, 
+		std::string 				fmt = ""
+		);
 
 	///
 	/// ファイル名を元に入力ファイルのフォーマットを取得する。
@@ -63,7 +76,7 @@ public:
 	///
 	static std::string input_file_format(
 		const std::string &filename
-	);
+		);
 
 	/// STLファイルのフォーマット種別
 	///
@@ -73,7 +86,14 @@ public:
 	static const std::string FMT_STL_AA;	///< アスキーファイル
 	static const std::string FMT_STL_B;		///< バイナリファイル
 	static const std::string FMT_STL_BB;	///< バイナリファイル
+	static const std::string FMT_OBJ_A;		///< ascii
+	static const std::string FMT_OBJ_AA;	///< ascii 
+	static const std::string FMT_OBJ_B;		///< binary
+	static const std::string FMT_OBJ_BB;	///< binary
+	static const std::string FMT_VTK_A;	///< vtk ascii
+	static const std::string FMT_VTK_B;	///< vtk binary
 	static const std::string DEFAULT_FMT;	///< TrimeshIO.cxxで定義している値
+
 };
 
 } //namespace PolylibNS

@@ -1,13 +1,18 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
+
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -17,6 +22,7 @@
 #include "common/PolylibStat.h"
 #include "Polylib.h"
 #include "c_lang/CPolylib.h"
+
 
 ///
 /// Ｃ言語用Polylib-API
@@ -40,10 +46,10 @@ polylib_load( char *config_name )
 // save
 POLYLIB_STAT
 polylib_save(
-	char	**p_fname,
-	char	*format,
-	char	*extend
-)
+			 char	**p_fname,
+			 char	*format,
+			 char	*extend
+			 )
 {
 	string s_fname;
 	string s_format = format;
@@ -71,15 +77,16 @@ polylib_save(
 // search_polygons
 TriangleStruct**
 polylib_search_polygons(
-	char* group_name,
-	float min_pos[3],
-	float max_pos[3],
-	int every,
-	int *num_tri,
-	POLYLIB_STAT *err
-)
+						char* group_name,
+						REAL_TYPE min_pos[3],
+						REAL_TYPE max_pos[3],
+						int every,
+						int *num_tri,
+						POLYLIB_STAT *err
+						)
 {
-	Vec3f c_min_pos,c_max_pos;
+	//	PL_VEC3 c_min_pos,c_max_pos;
+	Vec3<REAL_TYPE> c_min_pos,c_max_pos;
 	string c_group_name(group_name);
 
 	for(int i=0; i<3; i++){
@@ -93,13 +100,13 @@ polylib_search_polygons(
 
 	//Polylibから三角形リストを抽出
 	std::vector<Triangle*>*  tri_list =
-			(Polylib::get_instance())->search_polygons(
-						c_group_name, c_min_pos, c_max_pos, b_every);
+		(Polylib::get_instance())->search_polygons(
+		c_group_name, c_min_pos, c_max_pos, b_every);
 	*num_tri  = tri_list->size();
 
 	//三角形リストのポインタ配列の確保
 	TriangleStruct **p_tri =
-			(TriangleStruct**)malloc( sizeof(TriangleStruct*)*(*num_tri) );
+		(TriangleStruct**)malloc( sizeof(TriangleStruct*)*(*num_tri) );
 	if(p_tri == NULL){
 		fprintf(stderr,"polylib_serch_polygons: Can not allocate memory.\n");
 		*err = PLSTAT_MEMORY_NOT_ALLOC;

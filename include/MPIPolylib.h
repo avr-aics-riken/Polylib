@@ -1,22 +1,49 @@
+// -*- Mode: c++ -*-
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
+
 
 #ifndef MPIPolylib_h
 #define MPIPolylib_h
 
+#define to_string( s )  # s
+
 #include "mpi.h"
+#include <exception>
+#include <typeinfo>
 #include <vector>
 #include <map>
 #include "Polylib.h"
 #include "groups/PolygonGroup.h"
+#include "polygons/DVertexTriangle.h"
+#include "polygons/DVertex.h"
+#include "file_io/TriMeshIO.h"
+
+// MPI通信用メッセージタグ
+#define	MPITAG_NUM_CONFIG			1
+#define	MPITAG_CONFIG				2
+#define	MPITAG_NUM_TRIAS			3
+#define MPITAG_TRIA_IDS				4
+#define MPITAG_TRIA_EXIDS			5
+#define MPITAG_TRIAS				6
+#define MPITAG_TRIA_NDATA			7
+#define MPITAG_TRIA_SCALAR			8
+#define MPITAG_TRIA_VECTOR			9
+
+//#define PL_MPI_REAL MPI_DOUBLE
+#ifdef PL_REAL_FLOAT
+#define PL_MPI_REAL MPI_FLOAT
+#else
+#define PL_MPI_REAL MPI_DOUBLE
+#endif
 
 namespace PolylibNS {
 ////////////////////////////////////////////////////////////////////////////
@@ -25,6 +52,7 @@ namespace PolylibNS {
 /// 並列プロセス情報。
 ///
 ////////////////////////////////////////////////////////////////////////////
+
 struct ParallelInfo {
 	/// MPIコミュニケータ
 	MPI_Comm m_comm;
@@ -38,6 +66,7 @@ struct ParallelInfo {
 	/// migrate除外三角形IDマップ(k:グループID, v:三角形IDリスト)
 	std::map< int, std::vector<int> > m_exclusion_map;
 };
+
 
 ////////////////////////////////////////////////////////////////////////////
 ///
@@ -66,12 +95,12 @@ public:
 	///  @return POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	init_parallel_info(
+		init_parallel_info(
 		MPI_Comm comm,
-		float bpos[3],
+		REAL_TYPE bpos[3],
 		unsigned int bbsize[3],
 		unsigned int gcsize[3],
-		float dx[3]
+		REAL_TYPE dx[3]
 	);
 
 	///
@@ -82,9 +111,9 @@ public:
 	/// @return 常に PLSTAT_NG が返ります。
 	///
 	POLYLIB_STAT
-	load(
+		load(
 		std::string config_filename
-	){ return PLSTAT_NG; };
+		);
 
 	///
 	/// rank0によるデータ構築。
@@ -97,10 +126,10 @@ public:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	load_rank0(
+		load_rank0(
 		std::string config_filename = "",
-		float scale = 1.0
-	);
+		REAL_TYPE scale = 1.0
+		);
 
 	///
 	/// 全rank並列でのデータ構築。
@@ -113,10 +142,10 @@ public:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	load_parallel( 
+		load_parallel( 
 		std::string config_filename = "",
 		ID_FORMAT	id_format = ID_BIN
-	);
+		);
 
 	///
 	/// Polylib::save()のオーバライドメソッド。
@@ -126,24 +155,23 @@ public:
 	/// @return 常に PLSTAT_NG が返ります。
 	///
 	POLYLIB_STAT
-	save(
+		save(
 		std::string *p_config_filename
-	){ return PLSTAT_NG; };
+		);
 
 	///
 	/// rank0によるデータ保存。
 	/// rank0の本クラスインスタンスが保持するグループ階層構造を設定ファイルに書き出す。
 	/// 同時に各rankに分散するポリゴンデータもrank0に集められ、指定されたフォーマットの
-	/// STLファイルにrank0で書き出す。
+	/// STL/OBJファイルにrank0で書き出す。
 	/// 設定ファイル命名規則は以下の通り
-	///   polylib_config_付加文字列.xml
 	///   polylib_config_付加文字列.tpp
-	/// STLファイル命名規則は以下の通り
+	/// STL/OBJファイル命名規則は以下の通り
 	///   ポリゴングループ名称_付加文字列.拡張子
 	///
 	/// @param[out] p_config_filename	設定ファイル名返却用stringインスタンスへのポインタ
-	/// @param[in]  stl_format			STLファイルフォーマット。 "stl_a":アスキー形式　"stl_b":バイナリ形式
-    /// @param[in]  extend				ファイル名に付加する文字列。省略可。省略
+	/// @param[in]  stl_format STL/OBJファイルフォーマット。 "stl_a":アスキー形式　"stl_b":バイナリ形式 "obj_a":アスキー形式　"obj_b","obj_bb":バイナリ形式,"obj_bb"は、頂点法線付き。
+	/// @param[in]  extend				ファイル名に付加する文字列。省略可。省略
 	///									した場合は、付加文字列として本メソッド呼
 	///									び出し時の年月日時分秒(YYYYMMDD24hhmmss)
 	///									を用いる。
@@ -151,25 +179,24 @@ public:
 	/// @attention 出力引数p_config_filenameの返却値はrank0でのみ有効
 	///
 	POLYLIB_STAT
-	save_rank0(
+		save_rank0(
 		std::string *p_config_filename,
 		std::string stl_format,
 		std::string extend = ""
-	);
+		);
 
 	///
 	/// 全rank並列でのデータ保存。
 	/// 各rankの本クラスインスタンスが保持するグループ階層構造を設定ファイルに各rank毎に書き出す。
-	/// 同時にポリゴンデータも指定されたフォーマットのSTLファイルに各rank毎に書き出す。
+	/// 同時にポリゴンデータも指定されたフォーマットのSTL/OBJファイルに各rank毎に書き出す。
 	/// 設定ファイル命名規則は以下の通り
-	///   polylib_config_ランク番号_付加文字列.xml
 	///   polylib_config_ランク番号_付加文字列.tpp
-	/// STLファイル命名規則は以下の通り
+	/// STL/OBJファイル命名規則は以下の通り
 	///   ポリゴングループ名称_ランク番号_付加文字列.拡張子
 	///
 	/// @param[out] p_config_filename	設定ファイル名返却用stringインスタンスへのポインタ
-	/// @param[in] stl_format	STLファイルフォーマット。 "stl_a":アスキー形式　"stl_b":バイナリ形式
-    /// @param[in]  extend				ファイル名に付加する文字列。省略可。省略
+	/// @param[in] stl_format	STL/OBJファイルフォーマット。 "stl_a":アスキー形式　"stl_b":バイナリ形式 "obj_a":アスキー形式　"obj_b","obj_bb":バイナリ形式,"obj_bb"は、頂点法線付き。
+	/// @param[in]  extend				ファイル名に付加する文字列。省略可。省略
 	///									した場合は、付加文字列として本メソッド呼
 	///									び出し時の年月日時分秒(YYYYMMDD24hhmmss)
 	///									を用いる。
@@ -177,12 +204,12 @@ public:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	save_parallel(
+		save_parallel(
 		std::string *p_config_filename,
 		std::string stl_format,
 		std::string extend = "",
 		ID_FORMAT	id_format = ID_BIN
-	);
+		);
 
 	///
 	/// ポリゴン座標の移動。
@@ -192,9 +219,9 @@ public:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	move(
+		move(
 		PolylibMoveParams &params
-	);
+		);
 
 	///
 	/// ポリゴンデータのPE間移動。
@@ -204,13 +231,13 @@ public:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	migrate();
+		migrate();
 
 	///
 	/// m_myprocの内容をget
 	/// @return 自PE領域情報
 	///
-	ParallelInfo get_myproc(){ return m_myproc; };
+	ParallelInfo get_myproc();
 
 	///
 	/// MPIPolylibが利用中の概算メモリ量を返す
@@ -224,6 +251,7 @@ protected:
 	/// コンストラクタ。
 	/// singletonのため非公開。本クラスインスタンス取得にはget_instance()を利用する。
 	///
+
 	MPIPolylib();
 
 	///
@@ -236,7 +264,7 @@ protected:
 	///  @param p	表示対象となるグループのポインタ。
 	///  @param tab	階層の深さを示すスペース。
 	///  @attention プロセス毎に動作する。
-    ///   出力にランク数が加わる以外は非並列版と同じ。
+	///   出力にランク数が加わる以外は非並列版と同じ。
 	///
 	void show_group_name(PolygonGroup* p, std::string tab);
 
@@ -247,9 +275,9 @@ protected:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	broadcast_config(
+		broadcast_config(
 		std::string config_contents
-	);
+		);
 
 	///
 	/// 各PE領域内ポリゴン情報を全rankに送信
@@ -257,7 +285,7 @@ protected:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	send_polygons_to_all();
+		send_polygons_to_all();
 
 	///
 	/// グループID＆グループ内三角形数の送信情報を作成。
@@ -268,11 +296,11 @@ protected:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	pack_num_trias(
+		pack_num_trias(
 		std::vector<int>* p_vec,
 		int group_id,
 		const std::vector<PrivateTriangle*>* p_trias
-	);
+		);
 
 	///
 	/// 三角形の送信情報を作成。
@@ -282,10 +310,50 @@ protected:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	pack_trias(
-		std::vector<float>* p_vec,
+		pack_trias(
+		std::vector<REAL_TYPE>* p_vec,
 		const std::vector<PrivateTriangle*>* p_trias
-	);
+		);
+
+	///
+	/// DVertex三角形のデータ数を作成
+	/// 
+	/// @param[in,out] p_vec 情報追加先ベクタ
+	/// @param[in] p_trias グループ内三角形リスト
+	/// @return	POLYLIB_STATで定義される値が返る。
+	///
+	POLYLIB_STAT
+		pack_tria_ndata(
+		std::vector<int>* p_vec,
+		const std::vector<PrivateTriangle*>* p_trias
+		);
+
+	///
+	/// DVertex三角形のスカラーデータ送信情報を作成。
+	/// 
+	/// @param[in,out] p_vec 情報追加先ベクタ
+	/// @param[in] p_trias グループ内三角形リスト
+	/// @return	POLYLIB_STATで定義される値が返る。
+	///
+	POLYLIB_STAT
+		pack_tria_scalar_data(
+		std::vector<REAL_TYPE>* p_vec,
+		const std::vector<PrivateTriangle*>* p_trias
+		);
+
+	///
+	/// DVertex三角形のベクターデータ送信情報を作成。
+	/// 
+	/// @param[in,out] p_vec 情報追加先ベクタ
+	/// @param[in] p_trias グループ内三角形リスト
+	/// @return	POLYLIB_STATで定義される値が返る。
+	///
+	POLYLIB_STAT
+		pack_tria_vector_data(
+		std::vector<REAL_TYPE>* p_vec,
+		const std::vector<PrivateTriangle*>* p_trias
+		);
+
 
 	///
 	/// 三角形IDの送信情報を作成。
@@ -295,23 +363,23 @@ protected:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	pack_tria_ids(
+		pack_tria_ids(
 		std::vector<int>* p_vec,
 		const std::vector<PrivateTriangle*>* p_trias
-	);
+		);
 
 	///
 	/// 三角形のユーザ定義IDの送信情報を作成。
 	/// 
 	/// @param[in,out] p_vec 情報追加先ベクタ
 	/// @param[in] p_trias グループ内三角形リスト
-	/// @return	POLYLIB_STATで定義される値が返る。
+	/// @return  POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	pack_tria_exids(
+		pack_tria_exids(
 		std::vector<int>* p_vec,
 		const std::vector<PrivateTriangle*>* p_trias
-	);
+		);
 
 	///
 	/// 自領域内ポリゴンのみ抽出してポリゴン情報を再構築。
@@ -320,7 +388,7 @@ protected:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	erase_outbounded_polygons();
+		erase_outbounded_polygons();
 
 	///
 	/// ポリゴングループ定義情報をrank0から受信し、グループ階層構造を構築。
@@ -328,7 +396,7 @@ protected:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	broadcast_config_from_rank0();
+		broadcast_config_from_rank0();
 
 	///
 	/// 自領域に必要なポリゴン情報をrank0から受信
@@ -336,25 +404,39 @@ protected:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-	receive_polygons_from_rank0();
+		receive_polygons_from_rank0();
 
 	///
 	/// 他rankからポリゴン情報をrank0で受信
 	///
 	POLYLIB_STAT
-	gather_polygons();
+		gather_polygons();
 
 	///
 	/// rank0へポリゴン情報を送信
 	///
 	POLYLIB_STAT
-	send_polygons_to_rank0();
+		send_polygons_to_rank0();
+
+
+	///
+	/// 他rankからポリゴン情報をrank0で受信(vtk)
+	///
+	POLYLIB_STAT
+		gather_polygons_vtk();
+
+	///
+	/// rank0へポリゴン情報を送信(vtk)
+	///
+	POLYLIB_STAT
+		send_polygons_to_rank0_vtk();
+
 
 	///
 	/// 移動除外三角形IDリストの作成
 	///
 	POLYLIB_STAT
-	select_excluded_trias( PolygonGroup *p_pg );
+		select_excluded_trias( PolygonGroup *p_pg );
 
 protected:
 	///
@@ -382,6 +464,7 @@ protected:
 	/// 自プロセスが利用するコミュニケーター
 	MPI_Comm m_mycomm;
 };
+
 
 } //namespace PolylibNS
 

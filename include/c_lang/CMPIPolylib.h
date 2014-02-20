@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef c_mpi_polylib_h
 #define c_mpi_polylib_h
@@ -19,7 +19,9 @@ extern "C" {  // for C++
 
 #include "mpi.h"
 #include "common/PolylibStat.h"
+#include "file_io/TriMeshIO.h"
 #include "c_lang/CPolylib.h"
+
 
 ///
 /// C言語用MPIPolylib（MPI版）
@@ -45,11 +47,11 @@ extern "C" {  // for C++
 ///
 POLYLIB_STAT
 mpipolylib_init_parallel_info(
-	MPI_Comm comm,
-	float bpos[3],
-	unsigned int bbsize[3],
-	unsigned int gcsize[3],
-	float dx[3]
+							  MPI_Comm comm,
+							  REAL_TYPE bpos[3],
+							  unsigned int bbsize[3],
+							  unsigned int gcsize[3],
+							  REAL_TYPE dx[3]
 );
 
 ///
@@ -99,10 +101,10 @@ mpipolylib_load_parallel(char* config_name);
 ///
 POLYLIB_STAT
 mpipolylib_save_rank0(
-	char	**p_fname,
-	char	*format,
-	char	*extend
-);
+					  char	**p_fname,
+					  char	*format,
+					  char	*extend
+					  );
 
 ///
 /// MPIPolylib::save_parallelメソッドのラッパー関数。
@@ -124,10 +126,10 @@ mpipolylib_save_rank0(
 ///
 POLYLIB_STAT
 mpipolylib_save_parallel(
-	char	**p_fname,
-	char	*format,
-	char	*extend
-);
+						 char	**p_fname,
+						 char	*format,
+						 char	*extend
+						 );
 
 ///
 /// Polylib::search_polygonsメソッドのラッパー関数。
@@ -148,8 +150,8 @@ mpipolylib_save_parallel(
 ///
 TriangleStruct** mpipolylib_search_polygons(
 	char* group_name,
-	float min_pos[3],
-	float max_pos[3],
+	REAL_TYPE min_pos[3],
+	REAL_TYPE max_pos[3],
 	int every, 
 	int *num_tri,
 	POLYLIB_STAT *err);

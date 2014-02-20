@@ -1,22 +1,24 @@
+/* -- Mode: c++ --*/
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef polylib_h
 #define polylib_h
-
+#include <string.h>
 #include <vector>
 #include <iostream>
 #include "polygons/Polygons.h"
 #include "polygons/TriMesh.h"
 #include "polygons/Triangle.h"
+#include "polygons/DVertexTriangle.h"
 #include "groups/PolygonGroup.h"
 #include "groups/PolygonGroupFactory.h"
 #include "common/PolylibStat.h"
@@ -27,7 +29,20 @@
 #include "TextParser.h"
 #include "Version.h"
 
+//#define TIME_MEASURE
+#ifdef TIME_MEASURE
+#include <stdio.h>
+#include <time.h>
+#endif // TIME_MEASURE
+
+#ifdef WIN32
+#include <stdio.h>
+#include <time.h>
+#endif
+
 namespace PolylibNS {
+
+class VertKDT;
 
 ////////////////////////////////////////////////////////////////////////////
 ///
@@ -35,27 +50,30 @@ namespace PolylibNS {
 /// 計算領域情報。
 ///
 ////////////////////////////////////////////////////////////////////////////
+
 struct CalcAreaInfo {
 	/// 基点座標
-	Vec3f m_bpos;
+	Vec3<REAL_TYPE> m_bpos;
 
 	/// 計算領域のボクセル数
-	Vec3f m_bbsize;
+	Vec3<REAL_TYPE> m_bbsize;
 
 	/// ガイドセルのボクセル数
-	Vec3f m_gcsize;
+	Vec3<REAL_TYPE> m_gcsize;
 
 	/// ボクセル１辺の長さ
-	Vec3f m_dx;
+	Vec3<REAL_TYPE> m_dx;
 
 	/// ガイドセルを含めた担当領域の最小位置
-	Vec3f m_gcell_min;
+	Vec3<REAL_TYPE> m_gcell_min;
 
 	/// ガイドセルを含めた担当領域の最大位置
-	Vec3f m_gcell_max;
+	Vec3<REAL_TYPE> m_gcell_max;
 
 	/// ガイドセルを含めたBounding Box
 	BBox m_gcell_bbox;
+
+
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -84,6 +102,7 @@ public:
 ///	ポリゴンを管理する為のクラスライブラリです。
 ///
 ////////////////////////////////////////////////////////////////////////////
+
 class Polylib
 {
 public:
@@ -109,7 +128,7 @@ public:
 	///
 	void set_factory(
 		PolygonGroupFactory		*factory = NULL
-	);
+		);
 
 
 	///
@@ -121,9 +140,9 @@ public:
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT load(
-           std::string			config_name = "polylib_config.tpp",
-			float				scale = 1.0
-	);
+		std::string			config_name = "polylib_config.tpp",
+		REAL_TYPE				scale = 1.0
+		);
 
 	///
 	/// PolygoGroupツリー、三角形ポリゴン情報の保存。
@@ -145,7 +164,7 @@ public:
 		std::string			*p_config_name,
 		std::string			stl_format,
 		std::string			extend = ""
-	);
+		);
 
 	///
 	/// 三角形ポリゴン座標の移動。
@@ -157,7 +176,7 @@ public:
 	///
 	POLYLIB_STAT move(
 		PolylibMoveParams	&params
-	);
+		);
 
 	///
 	/// PolygonGroupツリーの最上位ノードの取得。
@@ -167,15 +186,22 @@ public:
 	///
 	std::vector<PolygonGroup *> *get_root_groups() const;
 
-	///
 	/// リーフPolygonGroupリストの取得。
 	/// PolygonGroupツリーの末端ノード（リーフ）をリスト化する。
 	///
-	/// @return		リーフPolygonGroupのvector.
-	/// @attension	返却したPolygonGroupは削除不可。vectorは要削除。
+	/// @return    リーフPolygonGroupのvector.
+	/// @attension  返却したPolygonGroupは削除不可。vectorは要削除。
 	///
 	std::vector<PolygonGroup *> *get_leaf_groups() const;
-	
+
+	//
+	// リーフポリゴングループを削除する
+	//
+	// @param[in] name 削除対象ポリゴングループ名称（フルパス指定）
+	// @return OK/NG
+	POLYLIB_STAT remove_leaf_group(
+		const std::string name);
+
 	///
 	/// 三角形ポリゴンの検索。
 	/// 位置ベクトルmin_posとmax_posにより特定される矩形領域に含まれる、
@@ -191,10 +217,10 @@ public:
 	///
 	std::vector<Triangle*>* search_polygons(
 		std::string		group_name, 
-		Vec3f			min_pos, 
-		Vec3f			max_pos, 
+		Vec3<REAL_TYPE>			min_pos, 
+		Vec3<REAL_TYPE>			max_pos, 
 		bool			every
-	) const;
+		) const;
 
 	///
 	/// 指定した点に最も近い三角形ポリゴンの検索。
@@ -205,8 +231,8 @@ public:
 	///
 	const Triangle* search_nearest_polygon(
 		std::string group_name,
-		const Vec3f&    pos
-	) const;
+		const Vec3<REAL_TYPE>&    pos
+		) const;
 
 	///
 	/// 引数のグループ名が既存グループと重複しないかチェック。
@@ -220,7 +246,7 @@ public:
 	POLYLIB_STAT check_group_name(
 		const std::string	&pg_name, 
 		const std::string	&parent_path
-	);
+		);
 
 	///
 	/// PolygonGroupのインスタンスの生成。
@@ -228,13 +254,13 @@ public:
 	/// に応じたPolygonGroupのインスタンスを生成する。
 	///
 	///  @param[in] class_name		クラス名
+	///  @param[in]  頂点同一性判定基準
 	///  @return	生成したPolygonGroup
 	///  @attention	Polylib内部で使用する関数であり、通常は利用者が用いるもの
 	///				ではない。
 	///
-	PolygonGroup *create_polygon_group(
-		std::string		class_name
-	);
+	PolygonGroup *create_polygon_group(std::string class_name,
+		REAL_TYPE tolerance);
 
 	///
 	/// PolygonGroupの追加。
@@ -246,7 +272,7 @@ public:
 	///
 	void add_pg_list(
 		PolygonGroup	*pg
-	);
+		);
 
 	///
 	/// グループ階層構造を標準出力に出力。
@@ -257,7 +283,7 @@ public:
 	///
 	void show_group_hierarchy(
 		FILE	*fp	= NULL
-	);
+		);
 
 	///
 	/// グループの情報と配下の三角形ポリゴン情報を標準出力に出力。
@@ -270,7 +296,7 @@ public:
 	///
 	POLYLIB_STAT show_group_info(
 		std::string		group_name
-	);
+		);
 
 	///
 	/// Polylibが利用中の概算メモリ量を返す
@@ -288,17 +314,50 @@ public:
 	///
 	PolygonGroup* get_group(
 		std::string		name
-	) const;
-  
-  /**
-   * @brief バージョン番号の文字列を返す
-   */
-  std::string getVersionInfo()
-  {
-    std::string str(PL_VERSION_NO);
-    return str;
-  }
-  
+		) const;
+
+	/**
+	* @brief バージョン番号の文字列を返す
+	*/
+	std::string getVersionInfo();
+
+
+	///
+	/// 与えられた名前のポリゴングループにDVertexクラスを持つポリゴンを格納する
+	/// 際の、スカラーデータとベクトルデータの数を指定する。
+	/// 指定された名前のポリゴングループが存在しない場合は、
+	/// 指定された階層にポリゴングループを新規に作成する。
+	/// DTは、データの型である。
+	/// 
+	/// @param[in] group_name ポリゴングループの名称
+	/// @param[in] nscalar スカラーデータ数
+	/// @param[in] nvector ベクトルデータ数
+
+
+	void make_DVertex_PolygonGroup(std::string group_name,
+		int nscalar,
+		int nvector);
+
+
+
+	/// 新規にDVertexを持つ三角形ポリゴンを追加する。
+	///
+	/// @param[in] name ポリゴンを追加するポリゴングループの名称。 
+	/// @param[in] v   ポリゴンの各頂点　0?2
+	///
+	/// @return 作成したポリゴンへのポインタ。
+	DVertexTriangle* 
+		add_DVertex_Triangle(std::string name,
+		Vec3<REAL_TYPE>* v);
+
+
+
+	/// 新規にDVertexを登録した場合に、不要頂点の削除を行う。
+	///
+	/// @param[in] name ポリゴングループ名称
+	void finalize_DVertex(std::string name);
+
+
 
 protected:
 	///
@@ -325,34 +384,10 @@ protected:
 	///
 	///
 
-  POLYLIB_STAT make_group_tree(
-       TextParser *  tp_ptr
-		       );
-
-	///
-	/// 引数の内容でグループ階層構造を構築。
-	///
-	///  @param[in] config_contents	設定ファイルの内容(XML形式)。
-	///  @return	POLYLIB_STATで定義される値が返る。
-	///  @attention	MPIPolylibクラスがMPI環境で利用することを想定している。
-	///  @attention	オーバーロードメソッドあり。
-	///
 	POLYLIB_STAT make_group_tree(
-		std::string		config_contents
-	);
+		TextParser *  tp_ptr
+		);
 
-	///
-	/// 設定ファイルを読み込み、内容をcontentsに設定。
-	///
-	///  @param[out] contents	設定ファイルの内容(XML形式)。
-	///  @param[in]  fname		設定ファイル名。
-	///  @return	POLYLIB_STATで定義される値が返る。
-	///  @attention	MPIPolylibクラスがMPI環境で利用することを想定している。
-	///
-	POLYLIB_STAT load_config_file(
-		std::string			*contents,
-		std::string			fname = "" 
-	);
 
 	///
 	/// 三角形IDファイルの存在が必須なload関数。
@@ -367,8 +402,8 @@ protected:
 	POLYLIB_STAT load_with_idfile(
 		std::string		config_name,
 		ID_FORMAT		id_format,
-		float			scale = 1.0
-	);
+		REAL_TYPE			scale = 1.0
+		);
 
 	///
 	/// STLファイルの読み込み。
@@ -385,8 +420,8 @@ protected:
 	POLYLIB_STAT load_polygons(
 		bool		with_id_file,
 		ID_FORMAT	id_format,
-		float		scale = 1.0
-	);
+		REAL_TYPE		scale = 1.0
+		);
 
 	///
 	/// 設定ファイルの保存。
@@ -398,14 +433,13 @@ protected:
 	///						マット。
 	///  @return	作成した設定ファイルの名称。エラー時はNULLが返る。
 	///
-#if 1
-	char *save_config_file(
+	char* save_config_file(
 		std::string	rank_no,
 		std::string	extend,
 		std::string	format
-	);
-#endif
-	
+		);
+
+
 	/// TextParser 内部データから　"filepath" "filepath[*]" というリーフを
 	/// すべて削除する.
 	///
@@ -429,6 +463,17 @@ protected:
 	POLYLIB_STAT setfilepath( std::map<std::string,std::string>& stl_fname_map);
 
 
+	/// map  
+	///
+	///　
+	///　
+	///　
+	///
+	/// @param[in] stl_fname_map saveしたSTLファイルとその階層のmap型データ
+	/// @return	POLYLIB_STATで定義される値が返る。
+
+	void create_tp_structure( std::map<std::string,std::string>& stl_fname_map);
+
 	///
 	/// 設定ファイルの保存。 PolylibConfig 内部にあったものをここへ。
 	//  暫定措置
@@ -440,12 +485,10 @@ protected:
 	///						マット。
 	///  @return	作成した設定ファイルの名称。エラー時はNULLが返る。
 	///
-#if 1
 	char * polylib_config_save_file(
 		std::string	rank_no,
 		std::string	extend
-	);
-#endif
+		);
 
 	/// PolygoGroupツリー、三角形ポリゴン情報の保存。
 	/// グループツリー情報を設定ファイルへ出力。三角形ポリゴン情報をSTLファイル
@@ -456,7 +499,7 @@ protected:
 	///	 @param[in]	 maxrank		最大ランク番号。
 	///	 @param[in]	 extend			ファイ名に付加される文字列。
 	///	 @param[in]	 stl_format		STLファイルフォーマット指定。
-       	///  @param[in]	 id_format		三角形IDファイルの出力形式。
+	///  @param[in]	 id_format		三角形IDファイルの出力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention	ファイル名命名規約は次の通り。
 	///			定義ファイル : polylib_config_ランク番号_付加文字.xml。
@@ -470,7 +513,7 @@ protected:
 		std::string		extend,
 		std::string		stl_format,
 		ID_FORMAT		id_format
-	);
+		);
 
 	///
 	/// グループ名の表示。
@@ -485,7 +528,7 @@ protected:
 		PolygonGroup	*p, 
 		std::string		tab,
 		FILE			*fp
-	);
+		);
 
 	///
 	/// グループの取得。
@@ -496,7 +539,10 @@ protected:
 	///
 	PolygonGroup* get_group(
 		int	internal_id
-	) const;
+		) const;
+
+
+
 
 private:
 	///
@@ -517,12 +563,12 @@ private:
 	///
 	std::vector<PrivateTriangle*> *search_polygons(
 		std::string		group_name, 
-		Vec3f			min_pos, 
-		Vec3f			max_pos,
+		Vec3<REAL_TYPE>			min_pos, 
+		Vec3<REAL_TYPE>			max_pos,
 		bool			every,
 		bool			linear, 
 		POLYLIB_STAT	*ret
-	) const;
+		) const;
 
 	///
 	/// グループの検索。
@@ -533,7 +579,7 @@ private:
 	void search_group(
 		PolygonGroup				*p, 
 		std::vector<PolygonGroup*>	*pg
-	) const;
+		) const;
 
 
 protected:
@@ -541,7 +587,7 @@ protected:
 	// クラス変数
 	//=======================================================================
 	/// 自クラスのインスタンス(singleton)
-	static Polylib				*m_instance;
+	//static Polylib		*m_instance;
 
 	/// PolygonGroupのファクトリークラス
 	PolygonGroupFactory			*m_factory;
@@ -550,10 +596,15 @@ protected:
 	std::vector<PolygonGroup*>	m_pg_list;
 
 
-	// TextParser へのポインタ
+	/// TextParser へのポインタ
 	TextParser* tp;
 
+	///   頂点を同一視する場合の基準値
+	REAL_TYPE m_distance_tolerance;
+
 };
+
+
 
 } //namespace PolylibNS
 

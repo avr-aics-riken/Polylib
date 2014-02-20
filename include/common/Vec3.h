@@ -1,13 +1,13 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+* Polylib - Polygon Management Library
+*
+* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+* All rights reserved.
+*
+* Copyright (c) 2012-2013 Advanced Institute for Computational Science, RIKEN.
+* All rights reserved.
+*
+*/
 
 #ifndef vec3_h
 #define vec3_h
@@ -37,27 +37,27 @@ public:
 	Vec3<T>& assign(T _x, T _y, T _z) { 
 		t[0] = _x; t[1] = _y; t[2] = _z; return *this; 
 	}
- 
+
 	operator       T*()       { return &t[0]; }
 	operator const T*() const { return &t[0]; }
-	      T* ptr()       { return &t[0]; }
+	T* ptr()       { return &t[0]; }
 	const T* ptr() const { return &t[0]; }
-	      T& operator [](const AxisEnum& axis) { 
-              return t[axis];
-          }
+	T& operator [](const AxisEnum& axis) { 
+		return t[axis];
+	}
 	const T& operator [](const AxisEnum& axis) const {
-              return t[axis];
-          }
-//	      T& operator [](int i) { 
-//              if (i == 0) return t[0];
-//              else if (i == 1) return t[1];
-//              return t[2];
-//          }
-//	const T& operator [](int i) const {
-//              if (i == 0) return t[0];
-//              else if (i == 1) return t[1];
-//              return t[2];
-//          }
+		return t[axis];
+	}
+	//	      T& operator [](int i) { 
+	//              if (i == 0) return t[0];
+	//              else if (i == 1) return t[1];
+	//              return t[2];
+	//          }
+	//	const T& operator [](int i) const {
+	//              if (i == 0) return t[0];
+	//              else if (i == 1) return t[1];
+	//              return t[2];
+	//          }
 
 	Vec3<T>& operator+=(const Vec3<T>& v) {
 		t[0] += v.t[0]; t[1] += v.t[1]; t[2] += v.t[2]; 
@@ -146,10 +146,39 @@ public:
 typedef Vec3<unsigned char>	Vec3uc;
 typedef Vec3<int>			Vec3i;
 typedef Vec3<float>			Vec3f;
+typedef Vec3<double>			Vec3d;
 
 //=========================================================================
 // inline
 //=========================================================================
+template <typename T>
+inline Vec3<T> operator*(T s, const Vec3<T>& v) {
+	return Vec3<T>(s*v.t[0], s*v.t[1], s*v.t[2]);
+}
+template <typename T>
+inline Vec3<T> multi(const Vec3<T>& a, const Vec3<T>& b) {
+	return a * b;
+}
+template <typename T>
+inline T dot(const Vec3<T>& a, const Vec3<T>& b) {
+	return a.t[0] * b.t[0] + a.t[1] * b.t[1] + a.t[2] * b.t[2];
+}
+template <typename T>
+inline Vec3<T> cross(const Vec3<T>& a, const Vec3<T>& b) {
+	return Vec3<T>(a.t[1] * b.t[2] - a.t[2] * b.t[1],
+		a.t[2] * b.t[0] - a.t[0] * b.t[2],
+		a.t[0] * b.t[1] - a.t[1] * b.t[0]);
+}
+template <typename T>
+inline T distanceSquared(const Vec3<T>& a, const Vec3<T>& b) {
+	return (a - b).lengthSquared();
+}
+template <typename T>
+inline T distance(const Vec3<T>& a, const Vec3<T>& b) {
+	return (a - b).length();
+}
+
+#if 0
 inline Vec3f operator*(float s, const Vec3f& v) {
 	return Vec3f(s*v.t[0], s*v.t[1], s*v.t[2]);
 }
@@ -157,20 +186,26 @@ inline Vec3f multi(const Vec3f& a, const Vec3f& b) {
 	return a * b;
 }
 
-inline float dot(const Vec3f& a, const Vec3f& b) {
+template <typename T>
+inline T dot(const Vec3<T>& a, const Vec3<T>& b) {
 	return a.t[0] * b.t[0] + a.t[1] * b.t[1] + a.t[2] * b.t[2];
 }
+/*
+inline float dot(const Vec3f& a, const Vec3f& b) {
+return a.t[0] * b.t[0] + a.t[1] * b.t[1] + a.t[2] * b.t[2];
+}
+*/
 template <typename T>
 inline Vec3<T> cross(const Vec3<T>& a, const Vec3<T>& b) {
 	return Vec3<T>(a.t[1] * b.t[2] - a.t[2] * b.t[1],
-	             a.t[2] * b.t[0] - a.t[0] * b.t[2],
-	             a.t[0] * b.t[1] - a.t[1] * b.t[0]);
+		a.t[2] * b.t[0] - a.t[0] * b.t[2],
+		a.t[0] * b.t[1] - a.t[1] * b.t[0]);
 }
 /*
 inline Vec3f cross(const Vec3f& a, const Vec3f& b) {
-	return Vec3f(a.t[1] * b.t[2] - a.t[2] * b.t[1],
-	             a.t[2] * b.t[0] - a.t[0] * b.t[2],
-	             a.t[0] * b.t[1] - a.t[1] * b.t[0]);
+return Vec3f(a.t[1] * b.t[2] - a.t[2] * b.t[1],
+a.t[2] * b.t[0] - a.t[0] * b.t[2],
+a.t[0] * b.t[1] - a.t[1] * b.t[0]);
 }
 */
 inline float distanceSquared(const Vec3f& a, const Vec3f& b) {
@@ -179,6 +214,7 @@ inline float distanceSquared(const Vec3f& a, const Vec3f& b) {
 inline float distance(const Vec3f& a, const Vec3f& b) {
 	return (a - b).length();
 }
+#endif
 
 template<typename T>
 inline std::istream& operator>>(std::istream& is, Vec3<T>& v) {
