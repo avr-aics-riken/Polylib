@@ -83,7 +83,9 @@ square.obj \
  windmill_tower_2_20130731174205.id \
  windmill_tower_2_20130731174205.stla \
  windmill_tower_3_20130731174205.id \
- windmill_tower_3_20130731174205.stla 
+ windmill_tower_3_20130731174205.stla \
+ mymain.cxx \
+ alltest.sh
 
 
 

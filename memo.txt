@@ -1,2 +1,0 @@
- configure.ac - (autoconf) -> configure 
-Makefile.am -> (automake) -> Makefile.in -> (configure) -> Makefile

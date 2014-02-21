@@ -36,7 +36,8 @@ README         This document
 doc/           Documents
 include/       Header files
 src/           Source files
-examples/      Example source
+examples/      Example sources
+m4/            for libtools
 Makefile_hand  Makefile for special target
 
 
@@ -118,7 +119,9 @@ Here is some examples;
 
 ## OpenMPI with wrapper compiler, default install directory, /wo example
 
-  $ ./configure --with-parser=/usr/local/TextParser \
+  $ ./configure --prefix=/usr/local/FFV/Polylib \
+                --with-parser=/usr/local/FFV/TextParser \
+                --with-example=yes \
                 CXX=mpicxx \
                 CXXFLAGS="-O3 -Wall -fno-strict-aliasing" \
                 PL_REAL=float

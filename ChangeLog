@@ -14,9 +14,49 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-02-21
+
+ r40 Merge branch version3 to master [ve 3.3.0]
+
+------------------
+2014-02-11
+
+ r39 add CC compiler wrapper script in configure.ac for NERSC Hopper [ver 2.7.4]
+
+------------------
+2013-11-02
+
+ r38 fix undistributed Triangle::m_exid at MPI [ver 2.7.3]
+
+------------------
+2013-11-02
+
+ r37 cleanup configure.ac [ver 2.7.2]
+   - expire MPICH version
+   - introduce subdir-objects in Makefile.am
+
+------------------
+2013-10-11
+
+ r36 improve precision of calculating normal vector [ver 2.7.1]
+   - calculate Triangle::calc_normal() in double precision
+   - add Polylib::get_leaf_groups()
+ 
+------------------
+2013-10-02
+
+ r35 modify to include string.h for strcpy in CMPIPolylib.cxx [ver 2.7.0]
+ 
+ r34 modify for intel mpi [ver 2.6.9]
+   - include mpi.h before stdio.h to suppress error message #error "SEEK_SET is #defined but must not be for the C++ binding of MPI"
+
+------------------
+There are some commit operations from r30 to r33
+
+------------------
 2013-09-16
 
- r30 Release 3.0.0
+ r30 Branch - ver 3.0.0
   - Package 3.0.0
   - update a user guide
 
