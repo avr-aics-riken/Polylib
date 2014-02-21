@@ -36,8 +36,8 @@ namespace PolylibNS{
 class DVertex :public Vertex{
 
 private:
-	REAL_TYPE* m_scalar;
-	std::vector<Vec3<REAL_TYPE>*>* m_vector;
+	PL_REAL* m_scalar;
+	std::vector<Vec3<PL_REAL>*>* m_vector;
 	DVertexManager* DVM_ptr;
 
 public:
@@ -65,7 +65,7 @@ public:
 			PL_DBGOSH << "DVertex::"<< __func__<< " 2 "<< std::endl;
 #endif //
 
-			if(m_scalar==NULL) m_scalar=new REAL_TYPE[DVM_ptr->nscalar()];
+			if(m_scalar==NULL) m_scalar=new PL_REAL[DVM_ptr->nscalar()];
 #ifdef DEBUG
 			PL_DBGOSH << "DVertex::"<< __func__<< " 3 "<< std::endl;
 #endif //
@@ -75,13 +75,13 @@ public:
 				PL_DBGOSH << "DVertex::"<< __func__<< " 4 "<< std::endl;
 #endif //
 
-				m_vector=new std::vector<Vec3<REAL_TYPE>*>;
+				m_vector=new std::vector<Vec3<PL_REAL>*>;
 #ifdef DEBUG
 				PL_DBGOSH << "DVertex::"<< __func__<< " 5 "<< std::endl;
 #endif //
 
 				for(int i=0;i<DVM_ptr->nvector();++i){
-					Vec3<REAL_TYPE>* tmp=new Vec3<REAL_TYPE>;
+					Vec3<PL_REAL>* tmp=new Vec3<PL_REAL>;
 					m_vector->push_back(tmp);
 				}
 #ifdef DEBUG
@@ -98,11 +98,11 @@ public:
 	void set_DVM(DVertexManager* DVM){
 		if(DVM_ptr==NULL) DVM_ptr=DVM;
 		if(DVM_ptr!=NULL) {
-			if(m_scalar==NULL) m_scalar=new REAL_TYPE[DVM_ptr->nscalar()];
+			if(m_scalar==NULL) m_scalar=new PL_REAL[DVM_ptr->nscalar()];
 			if(m_vector==NULL) {
-				m_vector=new std::vector<Vec3<REAL_TYPE>*>;
+				m_vector=new std::vector<Vec3<PL_REAL>*>;
 				for(int i=0;i<DVM_ptr->nvector();++i){
-					Vec3<REAL_TYPE>* tmp=new Vec3<REAL_TYPE>;
+					Vec3<PL_REAL>* tmp=new Vec3<PL_REAL>;
 					m_vector->push_back(tmp);
 				}
 			}
@@ -130,7 +130,7 @@ public:
 	/// @param[in] i スカラーのインデックス。0で開始。
 	/// @param[in] d 登録するスカラー値。
 
-	void set_scalar(const int i,const REAL_TYPE d){
+	void set_scalar(const int i,const PL_REAL d){
 		//      std::cout << __func__ << " start "<<this <<std::endl;
 		if(i>=DVM_ptr->nscalar()){
 			PL_ERROSH<< "error in DVertex " << __func__
@@ -146,7 +146,7 @@ public:
 	/// @param[in] i スカラーのインデックス。0で開始。
 	/// @return スカラー値
 
-	REAL_TYPE get_scalar(int i) const {
+	PL_REAL get_scalar(int i) const {
 		if(i>=DVM_ptr->nscalar()){
 			PL_ERROSH<< "error in DVertex " << __func__
 				<<" wrong index for DVertex scalar data. index "
@@ -162,10 +162,10 @@ public:
 	/// ベクター値を登録する。
 	///
 	/// @param[in] i i番目ベクトルのインデックス。0で開始。
-	/// @param[in] vec 登録する Vec3<REAL_TYPE> ベクター
+	/// @param[in] vec 登録する Vec3<PL_REAL> ベクター
 
 
-	void set_vector(const int i, const Vec3<REAL_TYPE> vec){
+	void set_vector(const int i, const Vec3<PL_REAL> vec){
 		// PL_DBGOSH << " "<< i<< " " << vec << " " 
 		// 		<< DVM_ptr->nvector() <<std::endl;
 
@@ -175,7 +175,7 @@ public:
 				<< i << "  nscalar = "<<DVM_ptr->nvector()<<std::endl;
 		} else {
 
-			Vec3<REAL_TYPE>* vector=new Vec3<REAL_TYPE>;
+			Vec3<PL_REAL>* vector=new Vec3<PL_REAL>;
 			(*vector) = vec;
 			(*m_vector)[i]=vector;
 		}
@@ -184,7 +184,7 @@ public:
 	///
 	/// @param[in] i i番目ベクトルのインデックス。0で開始。
 	/// @param[in] vec Vec3 ベクトル
-	void get_vector(const int i, Vec3<REAL_TYPE>* vec){
+	void get_vector(const int i, Vec3<PL_REAL>* vec){
 		if(i>=DVM_ptr->nvector()){
 			PL_ERROSH<< "error in DVertex " << __func__
 				<<" wrong index for DVertex vector data. index "

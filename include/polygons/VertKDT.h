@@ -63,7 +63,7 @@ public:
 	///  @return    検索されたVertex
 	///
 	const Vertex* search_nearest(
-		const Vec3<REAL_TYPE>&    pos
+		const Vec3<PL_REAL>&    pos
 		) const;
 
 	///
@@ -75,7 +75,7 @@ public:
 	///
 	const Vertex* search_nearest_recursive(
 		VertKDTNode       *vn, 
-		const Vec3<REAL_TYPE>&    pos
+		const Vec3<PL_REAL>&    pos
 		) const;
 
 	///

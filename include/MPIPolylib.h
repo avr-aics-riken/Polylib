@@ -97,10 +97,10 @@ public:
 	POLYLIB_STAT
 		init_parallel_info(
 		MPI_Comm comm,
-		REAL_TYPE bpos[3],
+		PL_REAL bpos[3],
 		unsigned int bbsize[3],
 		unsigned int gcsize[3],
-		REAL_TYPE dx[3]
+		PL_REAL dx[3]
 	);
 
 	///
@@ -128,7 +128,7 @@ public:
 	POLYLIB_STAT
 		load_rank0(
 		std::string config_filename = "",
-		REAL_TYPE scale = 1.0
+		PL_REAL scale = 1.0
 		);
 
 	///
@@ -311,7 +311,7 @@ protected:
 	///
 	POLYLIB_STAT
 		pack_trias(
-		std::vector<REAL_TYPE>* p_vec,
+		std::vector<PL_REAL>* p_vec,
 		const std::vector<PrivateTriangle*>* p_trias
 		);
 
@@ -337,7 +337,7 @@ protected:
 	///
 	POLYLIB_STAT
 		pack_tria_scalar_data(
-		std::vector<REAL_TYPE>* p_vec,
+		std::vector<PL_REAL>* p_vec,
 		const std::vector<PrivateTriangle*>* p_trias
 		);
 
@@ -350,7 +350,7 @@ protected:
 	///
 	POLYLIB_STAT
 		pack_tria_vector_data(
-		std::vector<REAL_TYPE>* p_vec,
+		std::vector<PL_REAL>* p_vec,
 		const std::vector<PrivateTriangle*>* p_trias
 		);
 

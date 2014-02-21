@@ -68,7 +68,7 @@ POLYLIB_STAT Polygons::prepare_DVertex(int nscalar,int nvector){
 ///  @return    polygonへのpointer
 ///
 
-DVertexTriangle* Polygons::add_DVertex_Triangle(Vec3<REAL_TYPE>* v){
+DVertexTriangle* Polygons::add_DVertex_Triangle(Vec3<PL_REAL>* v){
 
 
 #ifdef DEBUG

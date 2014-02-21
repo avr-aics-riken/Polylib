@@ -73,8 +73,8 @@ std::vector<PrivateTriangle*>* VTree::search(
 
 #ifdef DEBUG_VTREE
 		PL_DBGOSH << "VTree::search1:@@@------------------------@@@" << std::endl;
-		Vec3<REAL_TYPE> min = bbox->getPoint(0);
-		Vec3<REAL_TYPE> max = bbox->getPoint(7);
+		Vec3<PL_REAL> min = bbox->getPoint(0);
+		Vec3<PL_REAL> max = bbox->getPoint(7);
 		PL_DBGOSH << "VTree::search1:min(" << min << "),max(" << max << ")" << std::endl;
 #endif
 
@@ -128,8 +128,8 @@ POLYLIB_STAT VTree::search(
 	) const {
 #ifdef DEBUG_VTREE
 		PL_DBGOSH << "VTree::search2:@@@------------------------@@@" << std::endl;
-		Vec3<REAL_TYPE> min = bbox->getPoint(0);
-		Vec3<REAL_TYPE> max = bbox->getPoint(7);
+		Vec3<PL_REAL> min = bbox->getPoint(0);
+		Vec3<PL_REAL> max = bbox->getPoint(7);
 		PL_DBGOSH << "VTree::min(" << min << "),max(" << max << ")" << std::endl;
 #endif
 
@@ -210,7 +210,7 @@ unsigned int VTree::memory_size() {
 // public /////////////////////////////////////////////////////////////////////
 
 const PrivateTriangle* VTree::search_nearest(
-	const Vec3<REAL_TYPE>&	pos
+	const Vec3<PL_REAL>&	pos
 	) const {
 		if (m_root == 0) {
 			std::cerr << "Polylib::vtree::Error" << std::endl;
@@ -224,34 +224,34 @@ const PrivateTriangle* VTree::search_nearest(
 
 const PrivateTriangle* VTree::search_nearest_recursive(
 	VNode		   *vn,
-	const Vec3<REAL_TYPE>&	pos
+	const Vec3<PL_REAL>&	pos
 	) const {
 		if (vn->is_leaf()) {
 			const PrivateTriangle* tri_min = 0;
 			//float dist2_min = 0.0;
-			REAL_TYPE dist2_min = 0.0;
+			PL_REAL dist2_min = 0.0;
 
 			// ノード内のポリゴンから最も近い物を探す(リニアサーチ)
 			std::vector<VElement*>::const_iterator itr = vn->get_vlist().begin();
 			for (; itr != vn->get_vlist().end(); itr++) {
 				const PrivateTriangle* tri = (*itr)->get_triangle();
 
-				//const Vec3<REAL_TYPE> *v = tri->get_vertex();
-				// Vec3<REAL_TYPE> c((v[0][0]+v[1][0]+v[2][0])/3.0,
+				//const Vec3<PL_REAL> *v = tri->get_vertex();
+				// Vec3<PL_REAL> c((v[0][0]+v[1][0]+v[2][0])/3.0,
 				// 		(v[0][1]+v[1][1]+v[2][1])/3.0,
 				// 		(v[0][2]+v[1][2]+v[2][2])/3.0);
 
 				Vertex** vtx = tri->get_vertex();
-				Vec3<REAL_TYPE> v0,v1,v2;
+				Vec3<PL_REAL> v0,v1,v2;
 				v0=*(vtx[0]);
 				v1=*(vtx[1]);
 				v2=*(vtx[2]);
 
-				Vec3<REAL_TYPE> c((v0[0]+v1[0]+v2[0])/3.0,
+				Vec3<PL_REAL> c((v0[0]+v1[0]+v2[0])/3.0,
 					(v0[1]+v1[1]+v2[1])/3.0,
 					(v0[2]+v1[2]+v2[2])/3.0);
 				//float dist2 = (c - pos).lengthSquared();
-				REAL_TYPE dist2 = (c - pos).lengthSquared();
+				PL_REAL dist2 = (c - pos).lengthSquared();
 				if (tri_min == 0 || dist2 < dist2_min) {
 					tri_min = tri;
 					dist2_min = dist2;
@@ -296,19 +296,19 @@ void VTree::traverse(VNode* vn, VElement* elm, VNode** vnode) const
 		return;
 	}
 
-	Vec3<REAL_TYPE> vtx = elm->get_pos();
+	Vec3<PL_REAL> vtx = elm->get_pos();
 #ifdef SQ_RADIUS
 	//float& sqdist = q->m_sqdist;
-	REAL_TYPE& sqdist = q->m_sqdist;
+	PL_REAL& sqdist = q->m_sqdist;
 #endif
 	AxisEnum axis = vn->get_axis();
 	//float x = vn->get_left()->get_bbox().max[axis];
-	REAL_TYPE x = vn->get_left()->get_bbox().max[axis];
+	PL_REAL x = vn->get_left()->get_bbox().max[axis];
 	if (vtx[axis] < x) {
 		traverse(vn->get_left(), elm, vnode);
 #ifdef SQ_RADIUS
 		//float d = x - vtx[axis];
-		REAL_TYPE d = x - vtx[axis];
+		PL_REAL d = x - vtx[axis];
 		if (d*d < sqdist) {
 			traverse(vn->get_right(), elm, vnode);
 		}
@@ -318,7 +318,7 @@ void VTree::traverse(VNode* vn, VElement* elm, VNode** vnode) const
 		traverse(vn->get_right(), elm, vnode);
 #ifdef SQ_RADIUS
 		//float d = vtx[axis] - x;
-		REAL_TYPE d = vtx[axis] - x;
+		PL_REAL d = vtx[axis] - x;
 		if (d*d < sqdist) {
 			traverse(vn->get_left(), elm, vnode);
 		}
@@ -373,10 +373,10 @@ void VTree::search_recursive(
 					// determine between bbox and 3 vertices of each triangle.
 					if (every == true) {
 						bool iscontain = true;
-						//const Vec3<REAL_TYPE> *temp = (*itr)->get_triangle()->get_vertex();
+						//const Vec3<PL_REAL> *temp = (*itr)->get_triangle()->get_vertex();
 						Vertex** temp=(*itr)->get_triangle()->get_vertex();
 						for (int i = 0; i < 3; i++) {
-							if (bbox.contain( (Vec3<REAL_TYPE>) *(temp[i]) ) == false)  {
+							if (bbox.contain( (Vec3<PL_REAL>) *(temp[i]) ) == false)  {
 								iscontain = false;
 								break;
 							}
@@ -435,8 +435,8 @@ void VTree::search_recursive(
 			PL_DBGOSH << "VTree::search_recursive:@@@--------at Node----------@@@" << std::endl;
 #endif
 
-			Vec3<REAL_TYPE> min = bbox.getPoint(0);
-			Vec3<REAL_TYPE> max = bbox.getPoint(7);
+			Vec3<PL_REAL> min = bbox.getPoint(0);
+			Vec3<PL_REAL> max = bbox.getPoint(7);
 			PL_DBGOSH << "VTree::search_recursive min(" << min << "),max(" << max << ")" << std::endl;
 #endif
 
@@ -470,7 +470,7 @@ void VTree::search_recursive(
 
 #ifdef SQ_RADIUS
 //POLYLIB_STAT VTree::create(float sqradius) {
-POLYLIB_STAT VTree::create(REAL_TYPE sqradius) {
+POLYLIB_STAT VTree::create(PL_REAL sqradius) {
 #else
 POLYLIB_STAT VTree::create(
 	int							max_elem, 
@@ -480,8 +480,8 @@ POLYLIB_STAT VTree::create(
 #endif
 
 #if 0
-		Vec3<REAL_TYPE> min=bbox.getPoint(0);
-		Vec3<REAL_TYPE> max=bbox.getPoint(7);
+		Vec3<PL_REAL> min=bbox.getPoint(0);
+		Vec3<PL_REAL> max=bbox.getPoint(7);
 		std::cout << __func__ << " min " <<min<<std::endl;
 		std::cout << __func__ << " max " <<max<<std::endl;
 #endif

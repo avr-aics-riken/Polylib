@@ -26,7 +26,7 @@ namespace PolylibNS{
 ///
 ////////////////////////////////////////////////////////////////////////////
 
-class Vertex :public Vec3<REAL_TYPE>{
+class Vertex :public Vec3<PL_REAL>{
 
 public:
 
@@ -39,7 +39,7 @@ public:
 	///
 	/// @param[in] vec 頂点ベクトル
 
-	Vertex(const Vec3<REAL_TYPE>& vec);
+	Vertex(const Vec3<PL_REAL>& vec);
 
 
 	/// コンストラクタ  
@@ -48,20 +48,20 @@ public:
 	/// @param[in] y 座標
 	/// @param[in] z 座標
 
-	Vertex(REAL_TYPE x,REAL_TYPE y,REAL_TYPE z);
+	Vertex(PL_REAL x,PL_REAL y,PL_REAL z);
 
 	///  index アクセス
 	///
 
-	virtual  REAL_TYPE& operator [](const AxisEnum& axis);
+	virtual  PL_REAL& operator [](const AxisEnum& axis);
 	///
 	///  index アクセス
 	///
 
-	virtual   const REAL_TYPE& operator [](const AxisEnum& axis) const;
+	virtual   const PL_REAL& operator [](const AxisEnum& axis) const;
 
 
-	// virtual   REAL_TYPE x() const{
+	// virtual   PL_REAL x() const{
 	//     return this->t[AXIS_X];
 	//   }
 
@@ -69,11 +69,11 @@ public:
 	///  2乗距離
 	///
 
-	virtual  REAL_TYPE distanceSquared(Vertex v);
+	virtual  PL_REAL distanceSquared(Vertex v);
 
 	///距離
 
-	virtual   REAL_TYPE distance(Vertex v);
+	virtual   PL_REAL distance(Vertex v);
 
 
 };

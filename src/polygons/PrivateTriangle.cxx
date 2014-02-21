@@ -27,7 +27,7 @@ PrivateTriangle::PrivateTriangle(){}
 /// @param[in] exid		三角形ポリゴンのユーザ定義ID。
 ///
 PrivateTriangle::PrivateTriangle(
-	//Vec3<REAL_TYPE>	vertex[3], 
+	//Vec3<PL_REAL>	vertex[3], 
 	Vertex*	vertex_ptr[3] ,
 	int		id,
 	int		exid
@@ -44,9 +44,9 @@ PrivateTriangle::PrivateTriangle(
 /// @param[in] id		三角形ポリゴンID。
 ///
 PrivateTriangle::PrivateTriangle(
-	//Vec3<REAL_TYPE>	vertex[3], 
+	//Vec3<PL_REAL>	vertex[3], 
 	Vertex*	vertex_ptr[3], 
-	Vec3<REAL_TYPE>	normal, 
+	Vec3<PL_REAL>	normal, 
 	int		id
 	) : Triangle(vertex_ptr, normal) {
 		m_id = id;
@@ -61,10 +61,10 @@ PrivateTriangle::PrivateTriangle(
 /// @param[in] id		三角形ポリゴンID。
 ///
 PrivateTriangle::PrivateTriangle(
-	//Vec3<REAL_TYPE>	vertex[3], 
+	//Vec3<PL_REAL>	vertex[3], 
 	Vertex*	vertex_ptr[3], 
-	Vec3<REAL_TYPE>	normal, 
-	REAL_TYPE	area, 
+	Vec3<PL_REAL>	normal, 
+	PL_REAL	area, 
 	int		id
 	) : Triangle(vertex_ptr, normal, area) {
 		m_id = id;
@@ -102,7 +102,7 @@ PrivateTriangle::PrivateTriangle(
 /// @param[in] id		三角形ポリゴンID。
 ///
 PrivateTriangle::PrivateTriangle(
-	REAL_TYPE		*dim,
+	PL_REAL		*dim,
 	int			id
 	){
 		PL_ERROS << "PrivateTriangle(T,int) is obsolete. !!!NOTHING IS DONE!!!" << std::endl;
@@ -144,7 +144,7 @@ PrivateTriangle::PrivateTriangle(
 /// @param[in] exid    三角形ポリゴンのユーザ定義ID。
 ///
 PrivateTriangle::PrivateTriangle(
-	REAL_TYPE	*dim,
+	PL_REAL	*dim,
 	int			id,
 	int			exid
 ){

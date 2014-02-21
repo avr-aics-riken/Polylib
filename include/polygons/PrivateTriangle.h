@@ -44,7 +44,7 @@ public:
 	/// @param[in] exid		三角形ポリゴンのユーザ定義ID。
 	///
 	PrivateTriangle(
-		//Vec3<REAL_TYPE>	vertex[3], 
+		//Vec3<PL_REAL>	vertex[3], 
 		Vertex*	vertex_ptr[3] ,
 		int		id,
 		int		exid
@@ -57,9 +57,9 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-		//Vec3<REAL_TYPE>	vertex[3], 
+		//Vec3<PL_REAL>	vertex[3], 
 		Vertex*	vertex_ptr[3], 
-		Vec3<REAL_TYPE>	normal, 
+		Vec3<PL_REAL>	normal, 
 		int		id
 		);
 
@@ -72,10 +72,10 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-		//Vec3<REAL_TYPE>	vertex[3], 
+		//Vec3<PL_REAL>	vertex[3], 
 		Vertex*	vertex_ptr[3], 
-		Vec3<REAL_TYPE>	normal, 
-		REAL_TYPE	area, 
+		Vec3<PL_REAL>	normal, 
+		PL_REAL	area, 
 		int		id
 		);
 
@@ -106,7 +106,7 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	PrivateTriangle(
-		REAL_TYPE		*dim,
+		PL_REAL		*dim,
 		int			id
 		);
 
@@ -118,7 +118,7 @@ public:
 	/// @param[in] exid    三角形ポリゴンのユーザ定義ID。
 	///
 	PrivateTriangle(
-		REAL_TYPE	*dim,
+		PL_REAL	*dim,
 		int		id,
 		int		exid
 		);

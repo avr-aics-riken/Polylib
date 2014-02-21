@@ -191,17 +191,17 @@ void VNode::split(const int& max_elem)
 	BBox left_bbox = m_bbox;
 	BBox right_bbox = m_bbox;
 
-	REAL_TYPE x = .5 * (m_bbox.min[m_axis] + m_bbox.max[m_axis]);
+	PL_REAL x = .5 * (m_bbox.min[m_axis] + m_bbox.max[m_axis]);
 	left_bbox.max[m_axis] = x;
 	right_bbox.min[m_axis] = x;
 
 	m_left->set_bbox(left_bbox);
 	m_right->set_bbox(right_bbox);
 
-	// Vec3<REAL_TYPE> lmin=left_bbox.getPoint(0);
-	// Vec3<REAL_TYPE> lmax=left_bbox.getPoint(7);
-	// Vec3<REAL_TYPE> rmin=right_bbox.getPoint(0);
-	// Vec3<REAL_TYPE> rmax=right_bbox.getPoint(7);
+	// Vec3<PL_REAL> lmin=left_bbox.getPoint(0);
+	// Vec3<PL_REAL> lmax=left_bbox.getPoint(7);
+	// Vec3<PL_REAL> rmin=right_bbox.getPoint(0);
+	// Vec3<PL_REAL> rmax=right_bbox.getPoint(7);
 	// std::cout<< __func__ << " nelement " <<m_vlist.size()<<std::endl;
 	// std::cout<< __func__ << " lmin " <<lmin<<std::endl;
 	// std::cout<< __func__ << " lmax " <<lmax<<std::endl;

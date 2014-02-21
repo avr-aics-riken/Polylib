@@ -30,10 +30,10 @@ MPIPolylib*
 POLYLIB_STAT
 	MPIPolylib::init_parallel_info(
 	MPI_Comm comm,
-	REAL_TYPE bpos[3], 
+	PL_REAL bpos[3], 
 	unsigned int bbsize[3], 
 	unsigned int gcsize[3], 
-	REAL_TYPE dx[3]
+	PL_REAL dx[3]
 )
 {
 	//#define DEBUG
@@ -60,16 +60,16 @@ POLYLIB_STAT
 	PL_DBGOSH << "m_myrank: " << m_myrank << " m_numproc: " << m_numproc << std::endl;
 #endif
 
-	REAL_TYPE bbsize_f[3], gcsize_f[3];
+	PL_REAL bbsize_f[3], gcsize_f[3];
 	for (i = 0; i < 3; i++) {
-		bbsize_f[i] = (REAL_TYPE)bbsize[i];
-		gcsize_f[i] = (REAL_TYPE)gcsize[i];
+		bbsize_f[i] = (PL_REAL)bbsize[i];
+		gcsize_f[i] = (PL_REAL)gcsize[i];
 	}
 
-	Vec3<REAL_TYPE> v_bbsize(bbsize_f[0],bbsize_f[1],bbsize_f[2]);
-	Vec3<REAL_TYPE> v_gcsize(gcsize_f[0],gcsize_f[1],gcsize_f[2]);
-	Vec3<REAL_TYPE> v_bpos(bpos[0],bpos[1],bpos[2]);
-	Vec3<REAL_TYPE> v_dx(dx[0],dx[1],dx[2]);
+	Vec3<PL_REAL> v_bbsize(bbsize_f[0],bbsize_f[1],bbsize_f[2]);
+	Vec3<PL_REAL> v_gcsize(gcsize_f[0],gcsize_f[1],gcsize_f[2]);
+	Vec3<PL_REAL> v_bpos(bpos[0],bpos[1],bpos[2]);
+	Vec3<PL_REAL> v_dx(dx[0],dx[1],dx[2]);
 
 	// 自PE領域情報を設定
 	m_myproc.m_comm = comm;
@@ -95,7 +95,7 @@ POLYLIB_STAT
 //#endif
 
 	// 送信データ作成
-	REAL_TYPE send_buf[12];
+	PL_REAL send_buf[12];
 	for (i = 0; i < 3; i++) {
 		send_buf[i] = v_bpos[i];
 	}
@@ -110,7 +110,7 @@ POLYLIB_STAT
 	}
 
 	// 受信領域確保
-	REAL_TYPE* recv_buf = new REAL_TYPE[12 * m_numproc];
+	PL_REAL* recv_buf = new PL_REAL[12 * m_numproc];
 
 	// Allgather通信を行う
 	//	if (MPI_Allgather(send_buf, 12, PL_MPI_REAL, recv_buf, 12, PL_MPI_REAL, comm) != MPI_SUCCESS) {
@@ -143,14 +143,14 @@ POLYLIB_STAT
 	//   return PLSTAT_MPI_ERROR;
 	// }
 
-	if(sizeof(REAL_TYPE)==4){
+	if(sizeof(PL_REAL)==4){
 		//PL_DBGOSH << __func__ << " float " << to_string((PL_REAL)) << std::endl;
 		if (MPI_Allgather(send_buf, 12, MPI_FLOAT, recv_buf, 12, MPI_FLOAT, comm) != MPI_SUCCESS) {
 			PL_ERROSH << "[ERROR]MPIPolylib::init_parallel_info():MPI_Allgather "
 				<< "faild." << std::endl;
 			return PLSTAT_MPI_ERROR;
 		}
-	} else if (sizeof(REAL_TYPE)==8){
+	} else if (sizeof(PL_REAL)==8){
 		//PL_DBGOSH << __func__ << " double  " << to_string((PL_REAL)) << std::endl;
 		if (MPI_Allgather(send_buf, 12, MPI_DOUBLE, recv_buf, 12, MPI_DOUBLE, comm) != MPI_SUCCESS) {
 			PL_ERROSH << "[ERROR]MPIPolylib::init_parallel_info():MPI_Allgather "
@@ -161,13 +161,13 @@ POLYLIB_STAT
 	} else {
 		PL_ERROSH << "[ERROR]MPIPolylib::init_parallel_info():MPI_Allgather "
 			<< "real type is not double nor float"<<std::endl;
-		PL_ERROSH << __func__ <<"sizeof(REAL_TYPE)" <<sizeof(REAL_TYPE) << std::endl;
+		PL_ERROSH << __func__ <<"sizeof(PL_REAL)" <<sizeof(PL_REAL) << std::endl;
 		return PLSTAT_MPI_ERROR;
 	}
 
 #ifdef DEBUG
 	PL_DBGOSH << __func__ <<m_myrank << std::endl;
-	PL_DBGOSH << __func__ <<"sizeof(REAL_TYPE)" <<sizeof(REAL_TYPE) << std::endl;
+	PL_DBGOSH << __func__ <<"sizeof(PL_REAL)" <<sizeof(PL_REAL) << std::endl;
 	PL_DBGOSH << __func__ <<"m_numproc" <<m_numproc << std::endl;
 
 	PL_DBGOSH << __func__ <<"recv_buf (" << std::endl;
@@ -241,7 +241,7 @@ POLYLIB_STAT
 POLYLIB_STAT
 	MPIPolylib::load_rank0(
 	std::string config_filename,
-	REAL_TYPE scale
+	PL_REAL scale
 	)
 {
 	//#define TIME_MEASURE
@@ -583,15 +583,15 @@ POLYLIB_STAT
 	int          *p_send_tria_ids_array;
 	std::vector<int>   send_tria_exids;
 	int          *p_send_tria_exids_array;
-	std::vector<REAL_TYPE> send_trias;
-	REAL_TYPE        *p_send_trias_array;
+	std::vector<PL_REAL> send_trias;
+	PL_REAL        *p_send_trias_array;
 
 	// 送信バッファ領域をMPI_WaitAll()後に纏めてdeleteするための
 	// 配列アドレス記憶用ベクタ
 	std::vector<int*>  send_num_trias_bufs;
 	std::vector<int*>  send_tria_ids_bufs;
 	std::vector<int*>  send_tria_exids_bufs;
-	std::vector<REAL_TYPE*> send_trias_bufs;
+	std::vector<PL_REAL*> send_trias_bufs;
 
 	// 送信用MPI_Reqeust配列を確保
 	MPI_Request *mpi_reqs = new MPI_Request[ m_neibour_procs.size() * 4 ]; // 隣接PEごとに4回Isendする
@@ -678,7 +678,7 @@ POLYLIB_STAT
 		}
 		// 三角形頂点リスト
 		if( send_trias.size() > 0 ) {
-			p_send_trias_array = new REAL_TYPE[ send_trias.size() ];
+			p_send_trias_array = new PL_REAL[ send_trias.size() ];
 		}
 		for( i=0; i<send_trias.size(); i++ ) {
 			p_send_trias_array[i] = send_trias[i];
@@ -735,8 +735,8 @@ POLYLIB_STAT
 		PL_DBGOSH << "sending data end" <<std::endl;
 #endif
 
-		if(sizeof(REAL_TYPE)==4){
-			PL_DBGOSH << __func__ << " float " << to_string((REAL_TYPE)) << std::endl;
+		if(sizeof(PL_REAL)==4){
+			PL_DBGOSH << __func__ << " float " << to_string((PL_REAL)) << std::endl;
 			if (MPI_Isend( p_send_trias_array,     send_trias.size(),
 				MPI_FLOAT, (*procs_itr)->m_rank, MPITAG_TRIAS,
 				m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
@@ -749,7 +749,7 @@ POLYLIB_STAT
 				PL_DBGOSH << "sending data p_send_trias_array success" <<std::endl;
 #endif
 			}
-		} else if (sizeof(REAL_TYPE)==8){
+		} else if (sizeof(PL_REAL)==8){
 			if (MPI_Isend( p_send_trias_array,     send_trias.size(),
 				MPI_DOUBLE, (*procs_itr)->m_rank, MPITAG_TRIAS,
 				m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
@@ -765,7 +765,7 @@ POLYLIB_STAT
 		} else {
 			PL_ERROSH << "[ERROR]MPIPolylib::init_parallel_info():MPI_Allgather "
 				<< "real type is not double nor float"<<std::endl;
-			PL_ERROSH << __func__ <<"sizeof(REAL_TYPE)" <<sizeof(REAL_TYPE) << std::endl;
+			PL_ERROSH << __func__ <<"sizeof(PL_REAL)" <<sizeof(PL_REAL) << std::endl;
 			return PLSTAT_MPI_ERROR;
 		}
 	}
@@ -863,9 +863,9 @@ POLYLIB_STAT
 		}
 
 		// 三角形リストを非同期受信
-		REAL_TYPE *p_triaarray = new REAL_TYPE[ total_tria_num*3*3 ];
+		PL_REAL *p_triaarray = new PL_REAL[ total_tria_num*3*3 ];
 
-		if(sizeof(REAL_TYPE)==4){
+		if(sizeof(PL_REAL)==4){
 
 			if (MPI_Irecv( p_triaarray, total_tria_num*3*3,
 				MPI_FLOAT, (*procs_itr)->m_rank,
@@ -881,7 +881,7 @@ POLYLIB_STAT
 				//}
 				// #endif	   
 			}
-		} else  if(sizeof(REAL_TYPE)==8){
+		} else  if(sizeof(PL_REAL)==8){
 			if (MPI_Irecv( p_triaarray, total_tria_num*3*3, MPI_DOUBLE, (*procs_itr)->m_rank,
 				MPITAG_TRIAS, m_mycomm, &mpi_req ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::migrate():MPI_Irecv,PL_MPI_REAL:"
@@ -1229,8 +1229,8 @@ POLYLIB_STAT
 	int          *p_send_tria_ids_array;
 	std::vector<int>   send_tria_exids;
 	int          *p_send_tria_exids_array;
-	std::vector<REAL_TYPE> send_trias;
-	REAL_TYPE        *p_send_trias_array;
+	std::vector<PL_REAL> send_trias;
+	PL_REAL        *p_send_trias_array;
 
 	// 全PEに対して
 	for (proc_itr = m_other_procs.begin(); proc_itr != m_other_procs.end(); proc_itr++) {
@@ -1300,7 +1300,7 @@ POLYLIB_STAT
 		}
 		// 三角形頂点座標リスト
 		if( send_trias.size() > 0 ) {
-			p_send_trias_array = new REAL_TYPE[ send_trias.size() ];
+			p_send_trias_array = new PL_REAL[ send_trias.size() ];
 		}
 		for( i=0; i<send_trias.size(); i++ ) {
 			p_send_trias_array[i] = send_trias[i];
@@ -1334,7 +1334,7 @@ POLYLIB_STAT
 				return PLSTAT_MPI_ERROR;
 		}
 
-		if(sizeof(REAL_TYPE)==4){
+		if(sizeof(PL_REAL)==4){
 			//PL_DBGOSH << "MPIPolylib::"<<__func__<<" float"<<std::endl;
 			if (MPI_Send( p_send_trias_array, send_trias.size(), MPI_FLOAT,
 				(*proc_itr)->m_rank, MPITAG_TRIAS, m_mycomm ) != MPI_SUCCESS) {
@@ -1343,7 +1343,7 @@ POLYLIB_STAT
 						<< "MPITAG_TRIAS faild." << std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
-		} else if(sizeof(REAL_TYPE)==8){
+		} else if(sizeof(PL_REAL)==8){
 			//PL_DBGOSH << "MPIPolylib::"<<__func__<<" double 1"<<std::endl;
 			if (MPI_Send( p_send_trias_array,     send_trias.size(),     MPI_DOUBLE,
 				(*proc_itr)->m_rank, MPITAG_TRIAS,     m_mycomm ) != MPI_SUCCESS) {
@@ -1398,7 +1398,7 @@ POLYLIB_STAT
 
 POLYLIB_STAT
 	MPIPolylib::pack_trias(
-	std::vector<REAL_TYPE>* p_vec,
+	std::vector<PL_REAL>* p_vec,
 	const std::vector<PrivateTriangle*>* p_trias
 	)
 {
@@ -1465,7 +1465,7 @@ POLYLIB_STAT
 
 POLYLIB_STAT
 	MPIPolylib::pack_tria_scalar_data(
-	std::vector<REAL_TYPE>* p_vec,
+	std::vector<PL_REAL>* p_vec,
 	const std::vector<PrivateTriangle*>* p_trias
 	)
 {
@@ -1503,7 +1503,7 @@ POLYLIB_STAT
 
 POLYLIB_STAT
 	MPIPolylib::pack_tria_vector_data(
-	std::vector<REAL_TYPE>* p_vec,
+	std::vector<PL_REAL>* p_vec,
 	const std::vector<PrivateTriangle*>* p_trias
 	)
 {
@@ -1530,7 +1530,7 @@ POLYLIB_STAT
 			for(unsigned int k=0;
 				k<dvtmp->DVM()->nvector();
 				k++) {
-					Vec3<REAL_TYPE> dvect;
+					Vec3<PL_REAL> dvect;
 					dvtmp->get_vector(k,&dvect);
 					for(int l=0;l<3;l++) {
 						// PL_DBGOSH<<__func__
@@ -1792,9 +1792,9 @@ POLYLIB_STAT
 //#endif
 
 	// 三角形リストをrank0から受信
-	REAL_TYPE *p_triaarray = new REAL_TYPE[ total_tria_num * 3 * 3 ];
+	PL_REAL *p_triaarray = new PL_REAL[ total_tria_num * 3 * 3 ];
 
-	if(sizeof(REAL_TYPE)==4){
+	if(sizeof(PL_REAL)==4){
 		//PL_DBGOSH << "MPIPolylib::"<<__func__<<" float"<<std::endl;
 		if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, 0, 
 			MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
@@ -1802,7 +1802,7 @@ POLYLIB_STAT
 					<< ":MPI_Recv,MPITAG_TRIAS faild." << std::endl;
 				return PLSTAT_MPI_ERROR;
 		}
-	} else  if(sizeof(REAL_TYPE)==8){
+	} else  if(sizeof(PL_REAL)==8){
 		//PL_DBGOSH << "MPIPolylib::"<<__func__<<" double 1"<<std::endl;
 		if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, 0, 
 			MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
@@ -1969,9 +1969,9 @@ POLYLIB_STAT
 #endif
 
 			// 三角形リストを受信
-			REAL_TYPE *p_triaarray = new REAL_TYPE[ total_tria_num * 3 * 3 ];
+			PL_REAL *p_triaarray = new PL_REAL[ total_tria_num * 3 * 3 ];
 
-			if(sizeof(REAL_TYPE)==4){
+			if(sizeof(PL_REAL)==4){
 				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, rank, 
 					MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
@@ -1979,7 +1979,7 @@ POLYLIB_STAT
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
-			} else if(sizeof(REAL_TYPE)==8){
+			} else if(sizeof(PL_REAL)==8){
 				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, rank, 
 					MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS)  {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
@@ -2180,14 +2180,14 @@ POLYLIB_STAT
 
 
 			// 三角形リストを受信
-			REAL_TYPE *p_triaarray = new REAL_TYPE[ total_tria_num * 3 * 3 ];
+			PL_REAL *p_triaarray = new PL_REAL[ total_tria_num * 3 * 3 ];
 
 
 #ifdef DEBUG
 			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIAS. before" << std::endl;
 #endif
 
-			if(sizeof(REAL_TYPE)==4){
+			if(sizeof(PL_REAL)==4){
 				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, rank, 
 					MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
@@ -2195,7 +2195,7 @@ POLYLIB_STAT
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
-			} else if(sizeof(REAL_TYPE)==8){
+			} else if(sizeof(PL_REAL)==8){
 				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, rank, 
 					MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS)  {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
@@ -2274,13 +2274,13 @@ POLYLIB_STAT
 
 
 			//  Dvertex scalar リストを受信
-			REAL_TYPE *p_tria_scalar_array = new REAL_TYPE[ total_tria_nscalar ];
+			PL_REAL *p_tria_scalar_array = new PL_REAL[ total_tria_nscalar ];
 
 #ifdef DEBUG
 			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_SCALAR. before " << total_tria_nscalar<<std::endl;
 #endif
 
-			if(sizeof(REAL_TYPE)==4){
+			if(sizeof(PL_REAL)==4){
 				if (MPI_Recv( p_tria_scalar_array, total_tria_nscalar, MPI_FLOAT, rank, 
 					MPITAG_TRIA_SCALAR, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
@@ -2288,7 +2288,7 @@ POLYLIB_STAT
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
-			} else if(sizeof(REAL_TYPE)==8){
+			} else if(sizeof(PL_REAL)==8){
 				if (MPI_Recv( p_tria_scalar_array, total_tria_nscalar, MPI_DOUBLE, rank, 
 					MPITAG_TRIA_SCALAR, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
@@ -2311,7 +2311,7 @@ POLYLIB_STAT
 #endif
 
 			//  Dvertex vector リストを受信
-			REAL_TYPE *p_tria_vector_array = new REAL_TYPE[ total_tria_nvector ];
+			PL_REAL *p_tria_vector_array = new PL_REAL[ total_tria_nvector ];
 
 
 #ifdef DEBUG
@@ -2319,7 +2319,7 @@ POLYLIB_STAT
 #endif
 
 
-			if(sizeof(REAL_TYPE)==4){
+			if(sizeof(PL_REAL)==4){
 				if (MPI_Recv( p_tria_vector_array, total_tria_nvector, MPI_FLOAT, rank, 
 					MPITAG_TRIA_VECTOR, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
@@ -2327,7 +2327,7 @@ POLYLIB_STAT
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
-			} else if(sizeof(REAL_TYPE)==8){
+			} else if(sizeof(PL_REAL)==8){
 				if (MPI_Recv( p_tria_vector_array, total_tria_nvector, MPI_DOUBLE, rank, 
 					MPITAG_TRIA_VECTOR, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
@@ -2477,8 +2477,8 @@ POLYLIB_STAT
 		int          *p_send_tria_ids_array;
 		std::vector<int>   send_tria_exids;
 		int          *p_send_tria_exids_array;
-		std::vector<REAL_TYPE> send_trias;
-		REAL_TYPE        *p_send_trias_array;
+		std::vector<PL_REAL> send_trias;
+		PL_REAL        *p_send_trias_array;
 
 		// 送信用一時データ初期化
 		p_trias = NULL;
@@ -2528,7 +2528,7 @@ POLYLIB_STAT
 		for( i=0; i<send_tria_exids.size(); i++ )
 			p_send_tria_exids_array[i] = send_tria_exids[i];
 
-		p_send_trias_array =     new REAL_TYPE[ send_trias.size() ];
+		p_send_trias_array =     new PL_REAL[ send_trias.size() ];
 		for( i=0; i<send_trias.size(); i++ )
 			p_send_trias_array[i] = send_trias[i];
 
@@ -2560,14 +2560,14 @@ POLYLIB_STAT
 				return PLSTAT_MPI_ERROR;
 		}
 
-		if(sizeof(REAL_TYPE)==4){
+		if(sizeof(PL_REAL)==4){
 			if (MPI_Send( p_send_trias_array,     send_trias.size(),   MPI_FLOAT, 0,
 				MPITAG_TRIAS,     m_mycomm ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0()"
 						<< ":MPI_Send,MPITAG_TRIAS faild." << std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
-		}else  if(sizeof(REAL_TYPE)==8){
+		}else  if(sizeof(PL_REAL)==8){
 			if (MPI_Send( p_send_trias_array,     send_trias.size(),   MPI_DOUBLE, 0,
 				MPITAG_TRIAS,     m_mycomm ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0()"
@@ -2612,16 +2612,16 @@ POLYLIB_STAT
 		int          *p_send_tria_ids_array;
 		std::vector<int>   send_tria_exids;
 		int          *p_send_tria_exids_array;
-		std::vector<REAL_TYPE> send_trias;
-		REAL_TYPE        *p_send_trias_array;
+		std::vector<PL_REAL> send_trias;
+		PL_REAL        *p_send_trias_array;
 
 		std::vector<int> send_tria_ndata;
 		int       *p_send_tria_ndata_array;
 
-		std::vector<REAL_TYPE> send_tria_scalar;
-		REAL_TYPE        *p_send_tria_scalar_array;
-		std::vector<REAL_TYPE> send_tria_vector;
-		REAL_TYPE        *p_send_tria_vector_array;
+		std::vector<PL_REAL> send_tria_scalar;
+		PL_REAL        *p_send_tria_scalar_array;
+		std::vector<PL_REAL> send_tria_vector;
+		PL_REAL        *p_send_tria_vector_array;
 
 
 		// 送信用一時データ初期化
@@ -2704,7 +2704,7 @@ POLYLIB_STAT
 		for( i=0; i<send_tria_exids.size(); i++ )
 			p_send_tria_exids_array[i] = send_tria_exids[i];
 
-		p_send_trias_array =     new REAL_TYPE[ send_trias.size() ];
+		p_send_trias_array =     new PL_REAL[ send_trias.size() ];
 		for( i=0; i<send_trias.size(); i++ )
 			p_send_trias_array[i] = send_trias[i];
 
@@ -2714,11 +2714,11 @@ POLYLIB_STAT
 		for( i=0; i<send_tria_ndata.size(); i++ )
 			p_send_tria_ndata_array[i] = send_tria_ndata[i];
 
-		p_send_tria_scalar_array = new REAL_TYPE[send_tria_scalar.size()];
+		p_send_tria_scalar_array = new PL_REAL[send_tria_scalar.size()];
 		for( i=0; i<send_tria_scalar.size(); i++ )
 			p_send_tria_scalar_array[i] = send_tria_scalar[i];
 
-		p_send_tria_vector_array = new REAL_TYPE[send_tria_vector.size()];
+		p_send_tria_vector_array = new PL_REAL[send_tria_vector.size()];
 		for( i=0; i<send_tria_vector.size(); i++ )
 			p_send_tria_vector_array[i] = send_tria_vector[i];
 
@@ -2750,14 +2750,14 @@ POLYLIB_STAT
 				return PLSTAT_MPI_ERROR;
 		}
 
-		if(sizeof(REAL_TYPE)==4){
+		if(sizeof(PL_REAL)==4){
 			if (MPI_Send( p_send_trias_array,     send_trias.size(),   MPI_FLOAT, 0,
 				MPITAG_TRIAS,     m_mycomm ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0_vtk()"
 						<< ":MPI_Send,MPITAG_TRIAS faild." << std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
-		}else  if(sizeof(REAL_TYPE)==8){
+		}else  if(sizeof(PL_REAL)==8){
 			if (MPI_Send( p_send_trias_array,     send_trias.size(),   MPI_DOUBLE, 0,
 				MPITAG_TRIAS,     m_mycomm ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0_vtk()"
@@ -2782,14 +2782,14 @@ POLYLIB_STAT
 		}
 
 		//scalar
-		if(sizeof(REAL_TYPE)==4){
+		if(sizeof(PL_REAL)==4){
 			if (MPI_Send( p_send_tria_scalar_array,     send_tria_scalar.size(),   MPI_FLOAT, 0,
 				MPITAG_TRIA_SCALAR,     m_mycomm ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0_vtk()"
 						<< ":MPI_Send,MPITAG_TRIAS faild." << std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
-		}else  if(sizeof(REAL_TYPE)==8){
+		}else  if(sizeof(PL_REAL)==8){
 			if (MPI_Send( p_send_tria_scalar_array,     send_tria_scalar.size(),   MPI_DOUBLE, 0,
 				MPITAG_TRIA_SCALAR,     m_mycomm ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0_vtk()"
@@ -2804,14 +2804,14 @@ POLYLIB_STAT
 		}
 
 		//vector
-		if(sizeof(REAL_TYPE)==4){
+		if(sizeof(PL_REAL)==4){
 			if (MPI_Send( p_send_tria_vector_array,     send_tria_vector.size(),   MPI_FLOAT, 0,
 				MPITAG_TRIA_VECTOR,     m_mycomm ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0_vtk()"
 						<< ":MPI_Send,MPITAG_TRIAS faild." << std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
-		}else  if(sizeof(REAL_TYPE)==8){
+		}else  if(sizeof(PL_REAL)==8){
 			if (MPI_Send( p_send_tria_vector_array,     send_tria_vector.size(),   MPI_DOUBLE, 0,
 				MPITAG_TRIA_VECTOR,     m_mycomm ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0_vtk()"

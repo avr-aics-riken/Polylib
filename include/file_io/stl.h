@@ -72,7 +72,7 @@ POLYLIB_STAT stl_a_load(
 	std::vector<PrivateTriangle*>	*tri_list, 
 	std::string 					fname,
 	int								*total,
-	REAL_TYPE							scale=1.0
+	PL_REAL							scale=1.0
 	);
 
 ///
@@ -103,7 +103,7 @@ POLYLIB_STAT stl_b_load(
 	std::vector<PrivateTriangle*>	*tri_list, 
 	std::string   fname,
 	int	*total,
-	REAL_TYPE	scale=1.0
+	PL_REAL	scale=1.0
 	);
 
 ///

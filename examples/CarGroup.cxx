@@ -10,7 +10,7 @@ CarGroup::CarGroup(){
 	this->m_trias_before_move = NULL;
 }
 
-CarGroup::CarGroup(REAL_TYPE tolerance){
+CarGroup::CarGroup(PL_REAL tolerance){
 	this->m_tolerance=tolerance;
 	this->m_parent	= 0;
 	this->m_polygons	= new TriMesh(tolerance);
@@ -86,7 +86,7 @@ POLYLIB_STAT CarGroup::move(PolylibMoveParams& params){
 	// ˆÚ“®—Ê
 	// X Ž²•ûŒü‚É 1step ‚ ‚½‚è params.m_delta_t ~ m_velocity ‚¾‚¯ˆÚ“®‚·‚é‚à‚Ì‚Æ‚·‚é.
 	//    PL_REAL move_pos = (params.m_next_step - params.m_current_step) *
-	REAL_TYPE move_pos = (params.m_next_step - params.m_current_step) *
+	PL_REAL move_pos = (params.m_next_step - params.m_current_step) *
 		this->m_velocity * params.m_delta_t;
 
 #ifdef DEBUG

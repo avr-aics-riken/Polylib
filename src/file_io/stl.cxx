@@ -74,7 +74,7 @@ POLYLIB_STAT stl_a_load(
 	std::vector<PrivateTriangle*>*tri_list, 
 	std::string	fname,
 	int	*total,
-	REAL_TYPE		scale
+	PL_REAL		scale
 	) {
 
 
@@ -101,8 +101,8 @@ POLYLIB_STAT stl_a_load(
 		int ivtx=0;
 
 		std::string token;
-		Vec3<REAL_TYPE> nml;
-		Vec3<REAL_TYPE> vtx[3];
+		Vec3<PL_REAL> nml;
+		Vec3<PL_REAL> vtx[3];
 
 		while (is >> token && !is.eof()) {
 
@@ -119,7 +119,7 @@ POLYLIB_STAT stl_a_load(
 				nml.normalize();
 			}
 			else if (token == "vertex") {
-				Vec3<REAL_TYPE> v;
+				Vec3<PL_REAL> v;
 				is >> v;
 				//std::cout <<"read " << n_vtx <<" "<< v <<std::endl ;
 				if (n_vtx < 3) {
@@ -283,7 +283,7 @@ POLYLIB_STAT stl_b_load(
 	std::vector<PrivateTriangle*> *tri_list, 
 	std::string fname,
 	int	*total,
-	REAL_TYPE	scale
+	PL_REAL	scale
 	) {
 		std::ifstream ifs(fname.c_str(), std::ios::in | std::ios::binary);
 		if (ifs.fail()) {
@@ -306,22 +306,22 @@ POLYLIB_STAT stl_b_load(
 			// one plane normal
 			float nml_f[3];
 			tt_read(ifs, nml_f, sizeof(float), 3, inv);
-			REAL_TYPE nml[3];
+			PL_REAL nml[3];
 			nml[0]=nml_f[0];
 			nml[1]=nml_f[1];
 			nml[2]=nml_f[2];
-			Vec3<REAL_TYPE> normal(nml);
+			Vec3<PL_REAL> normal(nml);
 
 			// three vertices
-			Vec3<REAL_TYPE> vertex[3];
+			Vec3<PL_REAL> vertex[3];
 			for (int j = 0; j < 3; j++) {
-				REAL_TYPE vtx[3];
+				PL_REAL vtx[3];
 				float vtx_f[3];
 				tt_read(ifs, vtx_f, sizeof(float), 3, inv);
 				vtx[0] = vtx_f[0] * scale;
 				vtx[1] = vtx_f[1] * scale;
 				vtx[2] = vtx_f[2] * scale;
-				Vec3<REAL_TYPE> _vertex(vtx);
+				Vec3<PL_REAL> _vertex(vtx);
 				vertex[j] = _vertex;
 			}
 
@@ -415,8 +415,8 @@ POLYLIB_STAT stl_b_save(
 		std::vector<PrivateTriangle*>::iterator itr = tri_list->begin();
 		for (uint m = 0; m < element; m++,itr++) {
 			// one plane normal
-			//    tt_write(ofs, (*itr)->get_normal().ptr(), sizeof(REAL_TYPE), 3, inv);
-			Vec3<REAL_TYPE> normal=(*itr)->get_normal();
+			//    tt_write(ofs, (*itr)->get_normal().ptr(), sizeof(PL_REAL), 3, inv);
+			Vec3<PL_REAL> normal=(*itr)->get_normal();
 			float float_normal[3];
 			float_normal[0]= normal[0];
 			float_normal[1]= normal[1];
@@ -451,12 +451,12 @@ POLYLIB_STAT stl_b_save(
 
 			tt_write(ofs, float_vertex, sizeof(float), 3, inv);
 
-			// tt_write(ofs, (*itr)->get_vertex()[0], sizeof(REAL_TYPE), 3, inv);
-			// tt_write(ofs, (*itr)->get_vertex()[1], sizeof(REAL_TYPE), 3, inv);
-			// tt_write(ofs, (*itr)->get_vertex()[2], sizeof(REAL_TYPE), 3, inv);
-			// tt_write(ofs, (*itr)->get_vertex()[0].ptr(), sizeof(REAL_TYPE), 3, inv);
-			// tt_write(ofs, (*itr)->get_vertex()[1].ptr(), sizeof(REAL_TYPE), 3, inv);
-			// tt_write(ofs, (*itr)->get_vertex()[2].ptr(), sizeof(REAL_TYPE), 3, inv);
+			// tt_write(ofs, (*itr)->get_vertex()[0], sizeof(PL_REAL), 3, inv);
+			// tt_write(ofs, (*itr)->get_vertex()[1], sizeof(PL_REAL), 3, inv);
+			// tt_write(ofs, (*itr)->get_vertex()[2], sizeof(PL_REAL), 3, inv);
+			// tt_write(ofs, (*itr)->get_vertex()[0].ptr(), sizeof(PL_REAL), 3, inv);
+			// tt_write(ofs, (*itr)->get_vertex()[1].ptr(), sizeof(PL_REAL), 3, inv);
+			// tt_write(ofs, (*itr)->get_vertex()[2].ptr(), sizeof(PL_REAL), 3, inv);
 
 			// ２バイト予備領域にユーザ定義IDを記録(Polylib-2.1より)
 			int exid = (*itr)->get_exid();

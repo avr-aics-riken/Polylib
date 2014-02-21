@@ -43,9 +43,9 @@ extern "C" {  // for C++
 /// 三角形ポリゴン情報構造体
 ///
 typedef struct {
-	REAL_TYPE m_vertex[9];	///< ３頂点座標
-	REAL_TYPE m_normal[3];	///< 法線ベクトル
-	REAL_TYPE m_area;		///< 面積
+	PL_REAL m_vertex[9];	///< ３頂点座標
+	PL_REAL m_normal[3];	///< 法線ベクトル
+	PL_REAL m_area;		///< 面積
 } TriangleStruct;
 
 ///
@@ -100,8 +100,8 @@ POLYLIB_STAT polylib_save(
 ///
 TriangleStruct** polylib_search_polygons(
 	char* group_name,
-	REAL_TYPE min_pos[3],
-	REAL_TYPE max_pos[3],
+	PL_REAL min_pos[3],
+	PL_REAL max_pos[3],
 	int every, 
 	int *num_tri,
 	POLYLIB_STAT *err);

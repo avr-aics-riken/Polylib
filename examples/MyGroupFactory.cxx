@@ -13,7 +13,7 @@
 
 
 
-PolygonGroup* MyGroupFactory::create_instance(std::string class_name,REAL_TYPE tolerance)
+PolygonGroup* MyGroupFactory::create_instance(std::string class_name,PL_REAL tolerance)
 {
 #ifdef DEBUG
 	PL_DBGOSH<< "in MyGroupFactory::create_instance called. "<<class_name<<std::endl;

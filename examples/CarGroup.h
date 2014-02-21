@@ -30,7 +30,7 @@ public:
 	static string get_class_name() ;
 	virtual string whoami();
 	CarGroup();
-	CarGroup(REAL_TYPE tolerance);
+	CarGroup(PL_REAL tolerance);
 protected:
 	double m_velocity;
 	POLYLIB_STAT move(PolylibMoveParams& params);

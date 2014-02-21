@@ -39,7 +39,7 @@ public:
 	///
 	/// return vertex.
 	///
-	Vec3<REAL_TYPE>* get_pos() const;
+	Vec3<PL_REAL>* get_pos() const;
 
 private:
 	///

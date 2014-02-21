@@ -38,7 +38,7 @@ public:
 	///
 	DVertexTriangle(
 		DVertex*	vertex_ptr[3], 
-		Vec3<REAL_TYPE>	normal, 
+		Vec3<PL_REAL>	normal, 
 		int		id
 		);
 	///
@@ -51,8 +51,8 @@ public:
 	///
 	DVertexTriangle(
 		DVertex*	vertex_ptr[3], 
-		Vec3<REAL_TYPE>	normal, 
-		REAL_TYPE	area, 
+		Vec3<PL_REAL>	normal, 
+		PL_REAL	area, 
 		int		id
 		) ;
 
@@ -84,7 +84,7 @@ public:
 	/// @param[in] id		三角形ポリゴンID。
 	///
 	DVertexTriangle(
-		REAL_TYPE		*dim,
+		PL_REAL		*dim,
 		int			id
 		);
 

@@ -29,13 +29,13 @@
 
 namespace PolylibNS{
 
-VertexList::VertexList(REAL_TYPE tolerance)
+VertexList::VertexList(PL_REAL tolerance)
 { 
 }
 
 /// コンストラクタ
 ///
-VertexList::VertexList(VertKDT* vkdt,REAL_TYPE tolerance){
+VertexList::VertexList(VertKDT* vkdt,PL_REAL tolerance){
 	m_vkdt = vkdt;
 	m_tolerance = tolerance;
 	m_tolerance_2=m_tolerance*m_tolerance;
@@ -184,12 +184,12 @@ void VertexList::index_map_clear(){
 
 
 /// 基準値を設定する
-void VertexList::set_tolerance(const REAL_TYPE tol){
+void VertexList::set_tolerance(const PL_REAL tol){
 	m_tolerance=tol;
 }
 
 /// 基準
-REAL_TYPE VertexList::tolerance() const {
+PL_REAL VertexList::tolerance() const {
 	return m_tolerance;
 }
 
@@ -215,11 +215,11 @@ VertexList::VertexList():m_tolerance(1.0e-10){
 	m_bbox.init();
 }
 /// コンストラクタ　基準値
-// VertexList(REAL_TYPE tol):m_tolerance(tol){
+// VertexList(PL_REAL tol):m_tolerance(tol){
 //   m_bbox.init();
 // }
 /// 基準値の取得
-REAL_TYPE VertexList::get_tolerance(){
+PL_REAL VertexList::get_tolerance(){
 	return m_tolerance;
 }
 
@@ -273,11 +273,11 @@ int VertexList::vtx_add_i(Vertex* v)
 {
 	//search same vertex point in the list.
 
-	//REAL_TYPE min_distance = 
+	//PL_REAL min_distance = 
 	// tempolary uses __DBL_MAX__
-	//    REAL_TYPE min_distance=__DBL_MAX__;
+	//    PL_REAL min_distance=__DBL_MAX__;
 
-	REAL_TYPE min_distance= (sizeof(REAL_TYPE)==4)?FLT_MAX:DBL_MAX ;	
+	PL_REAL min_distance= (sizeof(PL_REAL)==4)?FLT_MAX:DBL_MAX ;	
 
 	int index=0;
 	int isave=-1;
@@ -302,7 +302,7 @@ int VertexList::vtx_add_i(Vertex* v)
 			<< (*(*iter))[AXIS_Z] << ")" <<std::endl;
 #endif // DEBUG
 
-		REAL_TYPE d=(*iter)->distance(*v);
+		PL_REAL d=(*iter)->distance(*v);
 		//d=v->distance( *(*iter) );
 #ifdef DEBUG
 		std::cout<<min_distance <<" distance "<< d <<std::endl;
@@ -353,19 +353,19 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 {
 	//search same vertex point in the list.
 
-	//REAL_TYPE min_distance = 
+	//PL_REAL min_distance = 
 	// tempolary uses __DBL_MAX__
-	//    REAL_TYPE min_distance=__DBL_MAX__;
-	//REAL_TYPE min_distance=1.0e107;
+	//    PL_REAL min_distance=__DBL_MAX__;
+	//PL_REAL min_distance=1.0e107;
 
 	//    std::cout <<__func__<<" start "<< *v <<std::endl;
 
 	int index=0;
 	int isave=-1;
 	bool same_point_find=false;
-	//REAL_TYPE m_tolerance_2=m_tolerance*m_tolerance;
+	//PL_REAL m_tolerance_2=m_tolerance*m_tolerance;
 
-	Vec3<REAL_TYPE> vtmp=(Vec3<REAL_TYPE>) *v;
+	Vec3<PL_REAL> vtmp=(Vec3<PL_REAL>) *v;
 
 	// first check bbox
 	BBox bbox;
@@ -376,8 +376,8 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 		bbox=tmp;
 	}
 
-	// Vec3<REAL_TYPE> min=bbox.getPoint(0);
-	// Vec3<REAL_TYPE> max=bbox.getPoint(7);
+	// Vec3<PL_REAL> min=bbox.getPoint(0);
+	// Vec3<PL_REAL> max=bbox.getPoint(7);
 	// std::cout << __func__ << " min " <<min<<std::endl;
 	// std::cout << __func__ << " max " <<max<<std::endl;
 
@@ -387,7 +387,7 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 		m_vertex_list->push_back(v);
 		BBox newbbox;
 		for(int i=0; i<this->m_vertex_list->size();i++){
-			newbbox.add( (Vec3<REAL_TYPE>) *(*m_vertex_list)[i] );
+			newbbox.add( (Vec3<PL_REAL>) *(*m_vertex_list)[i] );
 		}
 		m_vkdt->create(newbbox,m_vertex_list );
 		return v;	   
@@ -409,7 +409,7 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 			}
 		} else {
 			//std::cout << __func__ << " nearest vertex found. " <<max<<std::endl;
-			REAL_TYPE distance = ((Vec3<REAL_TYPE>) (*nearest) - (Vec3<REAL_TYPE>) (*v)).lengthSquared();
+			PL_REAL distance = ((Vec3<PL_REAL>) (*nearest) - (Vec3<PL_REAL>) (*v)).lengthSquared();
 			// std::cout << "nearest "<< *nearest  << " add " << *v <<std::endl;
 			// std::cout << __func__ << " check distance "<<distance 
 			// 	      <<" "<< m_tolerance <<std::endl;
@@ -548,7 +548,7 @@ POLYLIB_STAT
 #endif  
 					//	PL_DBGOSH<< __func__<< " nearest point is found. "<< nearest <<std::endl;
 
-					REAL_TYPE distance2 = ((Vec3<REAL_TYPE>) (*nearest) - (Vec3<REAL_TYPE>) *(*vtx_itr)).lengthSquared();
+					PL_REAL distance2 = ((Vec3<PL_REAL>) (*nearest) - (Vec3<PL_REAL>) *(*vtx_itr)).lengthSquared();
 					if (distance2< m_tolerance_2){ // 同一頂点
 						remove_vtx_list->push_back( *vtx_itr);
 						(*vertex_map)[(*vtx_itr)] = const_cast<Vertex*>(nearest);

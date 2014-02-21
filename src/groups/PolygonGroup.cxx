@@ -298,8 +298,8 @@ void PolygonGroup::print_vertex() const{
 
 void PolygonGroup::show_bbox() const{
 	BBox bbox=m_polygons->get_bbox();
-	Vec3<REAL_TYPE> min=bbox.getPoint(0);
-	Vec3<REAL_TYPE> max=bbox.getPoint(7);
+	Vec3<PL_REAL> min=bbox.getPoint(0);
+	Vec3<PL_REAL> max=bbox.getPoint(7);
 	std::cout<< __func__ << " min " <<min<<std::endl;
 	std::cout<< __func__ << " max " <<max<<std::endl;
 
@@ -322,7 +322,7 @@ PolygonGroup::PolygonGroup() {
 }
 // public /////////////////////////////////////////////////////////////////////
 
-PolygonGroup::PolygonGroup(REAL_TYPE tolerance) {
+PolygonGroup::PolygonGroup(PL_REAL tolerance) {
 	m_parent	= 0;
 	m_polygons	= new TriMesh(tolerance);
 	m_movable	= false;
@@ -354,7 +354,7 @@ PolygonGroup::~PolygonGroup()
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT PolygonGroup::init(
-	const REAL_TYPE* vertlist,
+	const PL_REAL* vertlist,
 	const int* idlist,
 	const int* exidlist,
 	const int n_start_tri,
@@ -382,11 +382,11 @@ POLYLIB_STAT PolygonGroup::init(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT PolygonGroup::init_dvertex(
-	const REAL_TYPE* vertlist,
+	const PL_REAL* vertlist,
 	const int* idlist,
 	const int* exidlist,
-	const REAL_TYPE* scalarlist,
-	const REAL_TYPE* vectorlist,
+	const PL_REAL* scalarlist,
+	const PL_REAL* vectorlist,
 	const int n_start_tri,
 	const int n_start_id,
 	const int n_start_exid,
@@ -421,11 +421,11 @@ POLYLIB_STAT PolygonGroup::init_dvertex(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT PolygonGroup::add_dvertex(
-	const REAL_TYPE* vertlist,
+	const PL_REAL* vertlist,
 	const int* idlist,
 	const int* exidlist,
-	const REAL_TYPE* scalarlist,
-	const REAL_TYPE* vectorlist,
+	const PL_REAL* scalarlist,
+	const PL_REAL* vectorlist,
 	const int n_start_tri,
 	const int n_start_id,
 	const int n_start_exid,
@@ -544,7 +544,7 @@ POLYLIB_STAT PolygonGroup::build_group_tree(
 					class_name=value;
 				}
 
-				REAL_TYPE tolerance=m_tolerance;
+				PL_REAL tolerance=m_tolerance;
 				//TOLERANCE
 				leaf_iter=find(leaves.begin(),
 					leaves.end(),
@@ -704,7 +704,7 @@ POLYLIB_STAT PolygonGroup::build_polygon_tree()
 
 // public /////////////////////////////////////////////////////////////////////
 
-POLYLIB_STAT PolygonGroup::load_stl_file( REAL_TYPE scale )
+POLYLIB_STAT PolygonGroup::load_stl_file( PL_REAL scale )
 {
 	//#define DEBUG
 #ifdef DEBUG
@@ -939,7 +939,7 @@ const std::vector<PrivateTriangle*>*
 
 POLYLIB_STAT
 	PolygonGroup::add_triangles(
-	const REAL_TYPE* vertlist,
+	const PL_REAL* vertlist,
 	const int* idlist,
 	const int* exidlist,
 	const int n_start_tri,
@@ -1086,7 +1086,7 @@ POLYLIB_STAT PolygonGroup::show_group_info(
 		PL_DBGOSH << "  vertex vector list: " << std::endl;
 		std::vector<PrivateTriangle*>::iterator it;
 		for (it = tmp_list->begin(); it != tmp_list->end(); it++) {
-			//Vec3<REAL_TYPE>* vtx[3] = (*it)->get_vertex();
+			//Vec3<PL_REAL>* vtx[3] = (*it)->get_vertex();
 			Vertex** vtx = (*it)->get_vertex();
 			for (int i=0; i<3; i++) {
 				//	    PL_DBGOSH << "    id:" << i		   << " x:" << (*vtx)[i][0]
@@ -1096,7 +1096,7 @@ POLYLIB_STAT PolygonGroup::show_group_info(
 
 			}
 
-			// Vec3<REAL_TYPE> *vtx = (*it)->get_vertex();
+			// Vec3<PL_REAL> *vtx = (*it)->get_vertex();
 			// for (int i=0; i<3; i++) {
 			//   PL_DBGOSH << "    id:" << i		   << " x:" << vtx[i][0]
 			// 	    << " y:"	  << vtx[i][1] << " z:" << vtx[i][2] << std::endl;
@@ -1105,7 +1105,7 @@ POLYLIB_STAT PolygonGroup::show_group_info(
 
 		PL_DBGOSH << "  normal vector list: " << std::endl;
 		for (it = tmp_list->begin(); it != tmp_list->end(); it++) {
-			Vec3<REAL_TYPE> vtx = (*it)->get_normal();
+			Vec3<PL_REAL> vtx = (*it)->get_normal();
 			PL_DBGOSH << "    x:" << vtx[0] << " y:" << vtx[1] << " z:" << vtx[2] <<std::endl;
 		}
 
@@ -1119,9 +1119,9 @@ POLYLIB_STAT PolygonGroup::show_group_info(
 //// public? ///////////////////////
 // add keno 20120331
 
-REAL_TYPE PolygonGroup::get_group_area( void ) {
+PL_REAL PolygonGroup::get_group_area( void ) {
 
-	REAL_TYPE m_area=0.0, a;
+	PL_REAL m_area=0.0, a;
 
 	std::vector<PrivateTriangle*>* tmp_list = m_polygons->get_tri_list();
 
@@ -1144,19 +1144,19 @@ int PolygonGroup::get_group_num_tria( void ) {
 
 //// public? ///////////////////////
 
-POLYLIB_STAT PolygonGroup::rescale_polygons( REAL_TYPE scale )
+POLYLIB_STAT PolygonGroup::rescale_polygons( PL_REAL scale )
 {
 	std::vector<PrivateTriangle*>* tmp_list = m_polygons->get_tri_list();
 	std::vector<PrivateTriangle*>::iterator it;
 	for (it = tmp_list->begin(); it != tmp_list->end(); it++) {
 
 		Vertex** original = (*it)->get_vertex();
-		Vec3<REAL_TYPE> org[3];
+		Vec3<PL_REAL> org[3];
 		org[0]=*(original[0]);
 		org[1]=*(original[1]);
 		org[2]=*(original[2]);
 
-		Vec3<REAL_TYPE>  scaled[3];
+		Vec3<PL_REAL>  scaled[3];
 		scaled[0][0] = org[0][0] * scale;
 		scaled[0][1] = org[0][1] * scale;
 		scaled[0][2] = org[0][2] * scale;
@@ -1173,8 +1173,8 @@ POLYLIB_STAT PolygonGroup::rescale_polygons( REAL_TYPE scale )
 		}
 		(*it)->set_vertexes( vertex_ptr, true, true );
 
-		// Vec3<REAL_TYPE>* org = (*it)->get_vertex();
-		// Vec3<REAL_TYPE>  scaled[3];
+		// Vec3<PL_REAL>* org = (*it)->get_vertex();
+		// Vec3<PL_REAL>  scaled[3];
 		// scaled[0][0] = org[0][0] * scale;
 		// scaled[0][1] = org[0][1] * scale;
 		// scaled[0][2] = org[0][2] * scale;
@@ -1202,7 +1202,7 @@ POLYLIB_STAT PolygonGroup::set_all_exid_of_trias( int id )
 // public /////////////////////////////////////////////////////////////////////
 
 const PrivateTriangle* PolygonGroup::search_nearest(
-	const Vec3<REAL_TYPE>&    pos
+	const Vec3<PL_REAL>&    pos
 	) const {
 		return m_polygons->search_nearest(pos);
 }
@@ -1423,8 +1423,8 @@ POLYLIB_STAT
 
 POLYLIB_STAT
 	PolygonGroup::check_leaped(
-	Vec3<REAL_TYPE> origin,
-	Vec3<REAL_TYPE> cell_size
+	Vec3<PL_REAL> origin,
+	Vec3<PL_REAL> cell_size
 	)
 {
 #ifdef DEBUG
@@ -1467,16 +1467,16 @@ POLYLIB_STAT
 
 bool
 	PolygonGroup::is_far(
-	Vec3<REAL_TYPE> origin,
-	Vec3<REAL_TYPE> cell_size,
-	Vec3<REAL_TYPE> pos1,
-	Vec3<REAL_TYPE> pos2
+	Vec3<PL_REAL> origin,
+	Vec3<PL_REAL> cell_size,
+	Vec3<PL_REAL> pos1,
+	Vec3<PL_REAL> pos2
 	)
 {
 	for( int i=0; i<3; i++ ) {
 		// pos1所属ボクセルの起点座標を求める
-		REAL_TYPE p;
-		REAL_TYPE dist = pos1[i] - origin[i];
+		PL_REAL p;
+		PL_REAL dist = pos1[i] - origin[i];
 		if( dist >= 0 ) {
 			p = origin[i] + ((int(dist / cell_size[i])) * cell_size[i]);
 		}
@@ -1489,8 +1489,8 @@ bool
 		}
 
 		// 隣接ボクセルまで含んだ領域のmin/max
-		REAL_TYPE min = p - cell_size[i];
-		REAL_TYPE max = p + cell_size[i] * 2;
+		PL_REAL min = p - cell_size[i];
+		PL_REAL max = p + cell_size[i] * 2;
 
 		// pos2がmin-max間に含まれなければ真
 		if( pos2[i] < min || pos2[i] > max ) return true;
@@ -1697,7 +1697,7 @@ POLYLIB_STAT PolygonGroup::prepare_DVertex(int nscalar,int nvector){
 // public //
 
 
-DVertexTriangle* PolygonGroup::add_DVertex_Triangle(Vec3<REAL_TYPE>* v){
+DVertexTriangle* PolygonGroup::add_DVertex_Triangle(Vec3<PL_REAL>* v){
 	//#define DEBUG
 #ifdef DEBUG
 	PL_DBGOSH << "PolygonGroup::"<< __func__ << " this "<< this <<std::endl;

@@ -65,7 +65,7 @@ POLYLIB_STAT obj_a_load(
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname,
 	int	*total,
-	REAL_TYPE	scale=1.0
+	PL_REAL	scale=1.0
 	);
 
 /// 
@@ -96,7 +96,7 @@ POLYLIB_STAT obj_b_load(
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname,
 	int	*total,
-	REAL_TYPE	scale=1.0
+	PL_REAL	scale=1.0
 	);
 
 /// 
@@ -173,7 +173,7 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 	std::vector<PrivateTriangle*>*tri_list, 
 	std::string	fname,
 	int	*total,
-	REAL_TYPE scale );
+	PL_REAL scale );
 
 /////////////////////////////////////////////////////
 
@@ -203,7 +203,7 @@ POLYLIB_STAT obj_b_load(
 	std::vector<PrivateTriangle*> *tri_list, 
 	std::string fname,
 	int	*total,
-	REAL_TYPE	scale
+	PL_REAL	scale
 	);
 
 }// end of namespace PolylibNS

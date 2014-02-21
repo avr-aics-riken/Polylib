@@ -63,7 +63,7 @@ public:
 	///
 	/// Center position of bbox on triangle.
 	/// 
-	Vec3<REAL_TYPE> get_pos() const;
+	Vec3<PL_REAL> get_pos() const;
 
 	///
 	/// Bounding box of this triangle
@@ -78,7 +78,7 @@ private:
 	PrivateTriangle	*m_tri;
 
 	/// Center position of bbox on triangle.
-	Vec3<REAL_TYPE>			m_pos;
+	Vec3<PL_REAL>			m_pos;
 
 	/// Bounding box of this triangle
 	BBox			m_bbox;

@@ -78,15 +78,15 @@ polylib_save(
 TriangleStruct**
 polylib_search_polygons(
 						char* group_name,
-						REAL_TYPE min_pos[3],
-						REAL_TYPE max_pos[3],
+						PL_REAL min_pos[3],
+						PL_REAL max_pos[3],
 						int every,
 						int *num_tri,
 						POLYLIB_STAT *err
 						)
 {
 	//	PL_VEC3 c_min_pos,c_max_pos;
-	Vec3<REAL_TYPE> c_min_pos,c_max_pos;
+	Vec3<PL_REAL> c_min_pos,c_max_pos;
 	string c_group_name(group_name);
 
 	for(int i=0; i<3; i++){

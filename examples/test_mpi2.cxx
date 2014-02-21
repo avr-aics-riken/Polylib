@@ -23,10 +23,10 @@ using namespace PolylibNS;
 
 struct MyParallelInfo {
 	//  float bpos[3]; //基準座標
-	REAL_TYPE bpos[3]; //基準座標
+	PL_REAL bpos[3]; //基準座標
 	unsigned bbsize[3]; //number of voxel 計算領域
 	unsigned gcsize[3]; //number of guidecell voxel
-	REAL_TYPE dx[3]; //size of voxel
+	PL_REAL dx[3]; //size of voxel
 };
 
 static MyParallelInfo myParaInfos[4] = {

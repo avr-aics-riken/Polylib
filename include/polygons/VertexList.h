@@ -45,9 +45,9 @@ private:
 	/// Vertex の格納場所
 	std::vector<Vertex*>* m_vertex_list; 
 	/// 同一性チェックの基準値
-	REAL_TYPE m_tolerance; 
+	PL_REAL m_tolerance; 
 	/// 同一性チェックの基準値の2乗
-	REAL_TYPE m_tolerance_2;
+	PL_REAL m_tolerance_2;
 	/// Vertex  用KD木
 	VertKDT* m_vkdt; 
 
@@ -66,11 +66,11 @@ public:
 	/// コンストラクタ　基準値
 	VertexList();
 
-	VertexList(REAL_TYPE tolerance);
+	VertexList(PL_REAL tolerance);
 
 	/// コンストラクタ
 	///
-	VertexList(VertKDT* vkdt,REAL_TYPE tolerance);
+	VertexList(VertKDT* vkdt,PL_REAL tolerance);
 
 	/// デストラクタ
 	///
@@ -132,10 +132,10 @@ public:
 
 
 	/// 基準値を設定する
-	void set_tolerance(const REAL_TYPE tol);
+	void set_tolerance(const PL_REAL tol);
 
 	/// 基準
-	REAL_TYPE tolerance() const ;
+	PL_REAL tolerance() const ;
 
 	///  プリント
 	void print() const ;
@@ -144,7 +144,7 @@ public:
 
 
 	/// 基準値の取得
-	REAL_TYPE get_tolerance();
+	PL_REAL get_tolerance();
 
 	/// 重複頂点の削除
 	POLYLIB_STAT vertex_compaction(std::map<Vertex*,Vertex*>* vertex_map);

@@ -46,13 +46,13 @@ Vertex* VertKDTElem::get_vertex()
 ///
 /// return vertex.
 ///
-Vec3<REAL_TYPE>* VertKDTElem::get_pos() const
+Vec3<PL_REAL>* VertKDTElem::get_pos() const
 {
 	// PL_DBGOSH << __func__ << " " <<(*m_vertex)[0]
 	// 		<< " " <<(*m_vertex)[1]
 	// 		<< " " <<(*m_vertex)[2]
 	// 		<<std::endl;
-	return (Vec3<REAL_TYPE>*) m_vertex;
+	return (Vec3<PL_REAL>*) m_vertex;
 }
 
 }// end of namespace PolylibNS

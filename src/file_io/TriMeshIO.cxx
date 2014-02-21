@@ -84,7 +84,7 @@ POLYLIB_STAT TriMeshIO::load(
 	VertexList*	vertex_list, 
 	std::vector<PrivateTriangle*>	*tri_list, 
 	const std::map<std::string, std::string>	&fmap,
-	REAL_TYPE scale
+	PL_REAL scale
 	) {
 
 

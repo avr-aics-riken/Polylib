@@ -51,7 +51,7 @@ public:
 	/// コンストラクタ
 	///
 	/// @param[in] tolerance 頂点同一性チェックの基準値（距離）
-	PolygonGroup(REAL_TYPE tolerance);
+	PolygonGroup(PL_REAL tolerance);
 
 	///
 	/// デストラクタ
@@ -86,7 +86,7 @@ public:
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention TriMeshクラスのinit()参照。オーバーロードメソッドあり。
 
-	POLYLIB_STAT init(const REAL_TYPE* vertlist,
+	POLYLIB_STAT init(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
 		const int n_start_tri,
@@ -113,11 +113,11 @@ public:
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention TriMeshクラスのinit()参照。オーバーロードメソッドあり。
 
-	POLYLIB_STAT init_dvertex(const REAL_TYPE* vertlist,
+	POLYLIB_STAT init_dvertex(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
-		const REAL_TYPE* scalarlist,
-		const REAL_TYPE* vectorlist,
+		const PL_REAL* scalarlist,
+		const PL_REAL* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
 		const int n_start_exid,
@@ -149,11 +149,11 @@ public:
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention TriMeshクラスのinit()参照。オーバーロードメソッドあり。
 
-	POLYLIB_STAT add_dvertex(const REAL_TYPE* vertlist,
+	POLYLIB_STAT add_dvertex(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
-		const REAL_TYPE* scalarlist,
-		const REAL_TYPE* vectorlist,
+		const PL_REAL* scalarlist,
+		const PL_REAL* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
 		const int n_start_exid,
@@ -226,7 +226,7 @@ public:
 	///  @return	polygonへのpointer
 	///
 
-	DVertexTriangle* add_DVertex_Triangle(Vec3<REAL_TYPE>* v);
+	DVertexTriangle* add_DVertex_Triangle(Vec3<PL_REAL>* v);
 
 
 	//
@@ -253,7 +253,7 @@ public:
 	///  @return POLYLIB_STATで定義される値が返る。
 	///  @attention TriMeshクラスのimport()参照。
 	///
-	POLYLIB_STAT load_stl_file(REAL_TYPE scale=1.0);
+	POLYLIB_STAT load_stl_file(PL_REAL scale=1.0);
 
 	///
 	/// 三角形ポリゴンIDファイルからポリゴンIDを読み込み、m_internal_idに登録する。
@@ -396,7 +396,7 @@ public:
 	///  @return    検索されたポリゴン
 	///
 	const PrivateTriangle* search_nearest(
-		const Vec3<REAL_TYPE>&    pos
+		const Vec3<PL_REAL>&    pos
 		) const;
 
 	///
@@ -451,7 +451,7 @@ public:
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention TriMeshクラスのadd()参照。オーバーロードメソッドあり。
 	POLYLIB_STAT add_triangles(	
-		const REAL_TYPE* vertlist,
+		const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
 		const int n_start_tri,
@@ -483,10 +483,10 @@ public:
 	int get_group_num_tria( void );
 
 	/// ポリゴンの面積を積算して返す
-	REAL_TYPE get_group_area( void );
+	PL_REAL get_group_area( void );
 
 	/// ポリゴンの縮尺変換＆KD木再構築
-	POLYLIB_STAT rescale_polygons( REAL_TYPE scale );
+	POLYLIB_STAT rescale_polygons( PL_REAL scale );
 
 	///
 	/// グループ配下の全Triangleオブジェクトのm_exidを更新する。
@@ -736,8 +736,8 @@ protected:
 	///				処理後に呼ぶこと。
 	///
 	POLYLIB_STAT check_leaped(
-		Vec3<REAL_TYPE> origin,
-		Vec3<REAL_TYPE> cell_size
+		Vec3<PL_REAL> origin,
+		Vec3<PL_REAL> cell_size
 		);
 
 	///
@@ -750,10 +750,10 @@ protected:
 	///  @return	true:2点が隣接ボクセルよりも離れている。
 	///
 	bool is_far(
-		Vec3<REAL_TYPE> origin,
-		Vec3<REAL_TYPE> cell_size,
-		Vec3<REAL_TYPE> pos1,
-		Vec3<REAL_TYPE> pos2
+		Vec3<PL_REAL> origin,
+		Vec3<PL_REAL> cell_size,
+		Vec3<PL_REAL> pos1,
+		Vec3<PL_REAL> pos2
 		);
 
 
@@ -857,7 +857,7 @@ protected:
 	std::string							m_type;
 
 	///  頂点同一性チェックの判定基準 (追加 2013.09.03)
-	REAL_TYPE m_tolerance;
+	PL_REAL m_tolerance;
 
 private:
 	/// ユーザ定義id : (追加 2010.10.20)

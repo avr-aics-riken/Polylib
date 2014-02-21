@@ -39,7 +39,7 @@ DVertexTriangle::DVertexTriangle(
 ///
 DVertexTriangle::DVertexTriangle(
 	DVertex*	vertex_ptr[3], 
-	Vec3<REAL_TYPE>	normal, 
+	Vec3<PL_REAL>	normal, 
 	int		id
 	) : PrivateTriangle((Vertex**)vertex_ptr, normal,id) {
 
@@ -59,8 +59,8 @@ DVertexTriangle::DVertexTriangle(
 ///
 DVertexTriangle::DVertexTriangle(
 	DVertex*	vertex_ptr[3], 
-	Vec3<REAL_TYPE>	normal, 
-	REAL_TYPE	area, 
+	Vec3<PL_REAL>	normal, 
+	PL_REAL	area, 
 	int		id
 
 	) : PrivateTriangle((Vertex**)vertex_ptr, normal, area,id) {
@@ -102,7 +102,7 @@ DVertexTriangle::DVertexTriangle(
 /// @param[in] id		三角形ポリゴンID。
 ///
 DVertexTriangle::DVertexTriangle(
-	REAL_TYPE		*dim,
+	PL_REAL		*dim,
 	int			id
 	){
 		for( int i=0; i<3; i++ ) {

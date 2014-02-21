@@ -42,12 +42,12 @@ POLYLIB_STAT vtk_a_save(
 
 		os << "POINTS " << vertex_list->size();
 
-		if(sizeof(REAL_TYPE)==4){
+		if(sizeof(PL_REAL)==4){
 			os <<" float"<<std::endl;
-		} else if(sizeof(REAL_TYPE)==8) {
+		} else if(sizeof(PL_REAL)==8) {
 			os << " double"<<std::endl;
 		} else {
-			PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type sizeof(REAL_TYPE)="<<sizeof(REAL_TYPE) << std::endl;
+			PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type sizeof(PL_REAL)="<<sizeof(PL_REAL) << std::endl;
 			return PLSTAT_VTK_IO_ERROR;
 		}
 
@@ -147,12 +147,12 @@ POLYLIB_STAT vtk_a_save(
 
 			os << "SCALARS polylib_Scalar_data"<<i;
 
-			if(sizeof(REAL_TYPE)==4){
+			if(sizeof(PL_REAL)==4){
 				os <<" float"<<std::endl;
-			} else if(sizeof(REAL_TYPE)==8) {
+			} else if(sizeof(PL_REAL)==8) {
 				os << " double"<<std::endl;
 			} else {
-				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type with sizeof(REAL_TYPE)="<<sizeof(REAL_TYPE) << std::endl;
+				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type with sizeof(PL_REAL)="<<sizeof(PL_REAL) << std::endl;
 				return PLSTAT_VTK_IO_ERROR;
 			}
 			os<<"LOOKUP_TABLE default"<<std::endl;
@@ -182,12 +182,12 @@ POLYLIB_STAT vtk_a_save(
 
 			os << "VECTORS polylib_Vector_data"<<i; 
 
-			if(sizeof(REAL_TYPE)==4){
+			if(sizeof(PL_REAL)==4){
 				os <<" float"<<std::endl;
-			} else if(sizeof(REAL_TYPE)==8) {
+			} else if(sizeof(PL_REAL)==8) {
 				os << " double"<<std::endl;
 			} else {
-				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type with sizeof(REAL_TYPE)="<<sizeof(REAL_TYPE) << std::endl;
+				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type with sizeof(PL_REAL)="<<sizeof(PL_REAL) << std::endl;
 				return PLSTAT_VTK_IO_ERROR;
 			}
 
@@ -205,7 +205,7 @@ POLYLIB_STAT vtk_a_save(
 				PL_DBGOSH << __func__ <<"VECTOR "<<i << " " << dvm->nvector()<<std::endl;
 #endif // DEBUG
 
-				Vec3<REAL_TYPE> v;
+				Vec3<PL_REAL> v;
 
 #ifdef DEBUG
 				PL_DBGOSH << __func__ <<"VECTOR "<<i << " " << dvm->nvector()<<std::endl;
@@ -277,24 +277,24 @@ POLYLIB_STAT vtk_b_save(
 
 		ofs << "POINTS " << vertex_list->size();
 
-		if(sizeof(REAL_TYPE)==4){
+		if(sizeof(PL_REAL)==4){
 			ofs <<" float"<<std::endl;
-		} else if(sizeof(REAL_TYPE)==8) {
+		} else if(sizeof(PL_REAL)==8) {
 			ofs << " double"<<std::endl;
 		} else {
-			PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type sizeof(REAL_TYPE)="<<sizeof(REAL_TYPE) << std::endl;
+			PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type sizeof(PL_REAL)="<<sizeof(PL_REAL) << std::endl;
 			return PLSTAT_VTK_IO_ERROR;
 		}
 
 		// 頂点 v 出力
 		const std::vector<Vertex*>* vlistout=vertex_list->get_vertex_lists();
 		for(int i=0;i<vlistout->size();++i){
-			REAL_TYPE buffer[3];
+			PL_REAL buffer[3];
 			buffer[0]= (*((*vlistout)[i]))[0];
 			buffer[1]= (*((*vlistout)[i]))[1];
 			buffer[2]= (*((*vlistout)[i]))[2];
 
-			tt_write(ofs, buffer, sizeof(REAL_TYPE), 3, inv);
+			tt_write(ofs, buffer, sizeof(PL_REAL), 3, inv);
 
 		}
 		ofs << std::endl;
@@ -377,26 +377,26 @@ POLYLIB_STAT vtk_b_save(
 
 			ofs << "SCALARS polylib_Scalar_data "<<i;
 
-			if(sizeof(REAL_TYPE)==4){
+			if(sizeof(PL_REAL)==4){
 				ofs <<" float"<<std::endl;
-			} else if(sizeof(REAL_TYPE)==8) {
+			} else if(sizeof(PL_REAL)==8) {
 				ofs << " double"<<std::endl;
 			} else {
-				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type with sizeof(REAL_TYPE)="<<sizeof(REAL_TYPE) << std::endl;
+				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type with sizeof(PL_REAL)="<<sizeof(PL_REAL) << std::endl;
 				return PLSTAT_VTK_IO_ERROR;
 			}
 			ofs<<"LOOKUP_TABLE default"<<std::endl;
 			vlistout=vertex_list->get_vertex_lists();
 			for(int j=0;j<vlistout->size();++j){
 				DVertex *dv=dynamic_cast<DVertex*>( (*vlistout)[j] );
-				//      REAL_TYPE tmp=dv->get_scalar(i);
-				REAL_TYPE tmp=dv->get_scalar(i);
+				//      PL_REAL tmp=dv->get_scalar(i);
+				PL_REAL tmp=dv->get_scalar(i);
 
 #ifdef DEBUG
 				PL_DBGOSH << __func__ << " i,j "<<i<<" "<<j<<" "<<tmp <<std::endl;
 #endif
 
-				tt_write(ofs, &tmp,sizeof(REAL_TYPE),1,inv);
+				tt_write(ofs, &tmp,sizeof(PL_REAL),1,inv);
 			}
 			ofs <<std::endl;  
 		}
@@ -411,12 +411,12 @@ POLYLIB_STAT vtk_b_save(
 
 			ofs << "VECTORS polylib_Vector_data"<<i;
 
-			if(sizeof(REAL_TYPE)==4){
+			if(sizeof(PL_REAL)==4){
 				ofs <<" float"<<std::endl;
-			} else if(sizeof(REAL_TYPE)==8) {
+			} else if(sizeof(PL_REAL)==8) {
 				ofs << " double"<<std::endl;
 			} else {
-				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type with sizeof(REAL_TYPE)="<<sizeof(REAL_TYPE) << std::endl;
+				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong data type with sizeof(PL_REAL)="<<sizeof(PL_REAL) << std::endl;
 				return PLSTAT_VTK_IO_ERROR;
 			}
 			//  ofs<<"LOOKUP_TABLE default"<<std::endl;
@@ -424,17 +424,17 @@ POLYLIB_STAT vtk_b_save(
 			for(int j=0;j<vlistout->size();++j){
 
 				DVertex *dv=dynamic_cast<DVertex*>( (*vlistout)[j] );
-				Vec3<REAL_TYPE> vec3 ;
+				Vec3<PL_REAL> vec3 ;
 				dv->get_vector(i,&vec3);
 #ifdef DEBUG
 				PL_DBGOSH << __func__ << " i,j "<<i<<" "<<j<<" "<< vec3<<std::endl;
 #endif
 
-				REAL_TYPE ovector[3];
+				PL_REAL ovector[3];
 				ovector[0]=vec3[0];
 				ovector[1]=vec3[1];
 				ovector[2]=vec3[2];
-				tt_write(ofs, ovector,sizeof(REAL_TYPE),3,inv);
+				tt_write(ofs, ovector,sizeof(PL_REAL),3,inv);
 			}
 			ofs <<std::endl;  
 		}

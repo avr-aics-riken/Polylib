@@ -62,7 +62,7 @@ TriMesh::TriMesh()
 }
 // public /////////////////////////////////////////////////////////////////////
 
-TriMesh::TriMesh(REAL_TYPE tolerance)
+TriMesh::TriMesh(PL_REAL tolerance)
 {
 	m_vtree = NULL;
 	this->m_tri_list = NULL;
@@ -113,7 +113,7 @@ TriMesh::~TriMesh()
 
 // public /////////////////////////////////////////////////////////////////////
 
-void TriMesh::init(const REAL_TYPE* vertlist,
+void TriMesh::init(const PL_REAL* vertlist,
 	const int* idlist,
 	const int* exidlist,
 	const int n_start_tri,
@@ -168,11 +168,11 @@ void TriMesh::init(const REAL_TYPE* vertlist,
 
 // public /////////////////////////////////////////////////////////////////////
 
-void TriMesh::init_dvertex(const REAL_TYPE* vertlist,
+void TriMesh::init_dvertex(const PL_REAL* vertlist,
 	const int* idlist,
 	const int* exidlist,
-	const REAL_TYPE* scalarlist,
-	const REAL_TYPE* vectorlist,
+	const PL_REAL* scalarlist,
+	const PL_REAL* vectorlist,
 	const int n_start_tri,
 	const int n_start_id,
 	const int n_start_exid,
@@ -205,7 +205,7 @@ void TriMesh::init_dvertex(const REAL_TYPE* vertlist,
 		DVertex* vtx_tri[3];
 		for(int j=0;j<3;++j){
 			DVertex* dv=new DVertex(m_DVM_ptr);
-			Vec3<REAL_TYPE> vec(vertlist[id+j*3],vertlist[id+j*3+1],vertlist[id+j*3+2]);
+			Vec3<PL_REAL> vec(vertlist[id+j*3],vertlist[id+j*3+1],vertlist[id+j*3+2]);
 
 			Vertex* v=dv;
 
@@ -216,7 +216,7 @@ void TriMesh::init_dvertex(const REAL_TYPE* vertlist,
 				scalarindex++;
 			}
 			for(int ivector=0;ivector<m_DVM_ptr->nvector();ivector++){
-				Vec3<REAL_TYPE> data_vec(vectorlist[n_start_scalar+scalarindex],
+				Vec3<PL_REAL> data_vec(vectorlist[n_start_scalar+scalarindex],
 					vectorlist[n_start_scalar+scalarindex+1],
 					vectorlist[n_start_scalar+scalarindex+2]);
 				dv->set_vector(ivector,data_vec);
@@ -254,11 +254,11 @@ void TriMesh::init_dvertex(const REAL_TYPE* vertlist,
 
 // public /////////////////////////////////////////////////////////////////////
 
-void TriMesh::add_dvertex(const REAL_TYPE* vertlist,
+void TriMesh::add_dvertex(const PL_REAL* vertlist,
 	const int* idlist,
 	const int* exidlist,
-	const REAL_TYPE* scalarlist,
-	const REAL_TYPE* vectorlist,
+	const PL_REAL* scalarlist,
+	const PL_REAL* vectorlist,
 	const int n_start_tri,
 	const int n_start_id,
 	const int n_start_exid,
@@ -299,7 +299,7 @@ void TriMesh::add_dvertex(const REAL_TYPE* vertlist,
 		DVertex* vtx_tri[3];
 		for(int j=0;j<3;++j){
 			DVertex* dv=new DVertex(m_DVM_ptr);
-			Vec3<REAL_TYPE> vec(vertlist[id+j*3],
+			Vec3<PL_REAL> vec(vertlist[id+j*3],
 				vertlist[id+j*3+1],
 				vertlist[id+j*3+2]);
 
@@ -316,7 +316,7 @@ void TriMesh::add_dvertex(const REAL_TYPE* vertlist,
 				scalarindex++;
 			}
 			for(int ivector=0;ivector<m_DVM_ptr->nvector();ivector++){
-				Vec3<REAL_TYPE> data_vec(vectorlist[n_start_scalar+vectorindex],
+				Vec3<PL_REAL> data_vec(vectorlist[n_start_scalar+vectorindex],
 					vectorlist[n_start_scalar+vectorindex+1],
 					vectorlist[n_start_scalar+vectorindex+2]);
 
@@ -491,7 +491,7 @@ void TriMesh::init(const std::vector<PrivateTriangle*>* trias)
 
 // public /////////////////////////////////////////////////////////////////////
 
-void TriMesh::add(const REAL_TYPE* vertlist,
+void TriMesh::add(const PL_REAL* vertlist,
 	const int* idlist,
 	const int* exidlist,
 	const int n_start_tri,
@@ -627,7 +627,7 @@ void
 
 // public /////////////////////////////////////////////////////////////////////
 
-POLYLIB_STAT TriMesh::import(const std::map<std::string, std::string> fmap, REAL_TYPE scale)
+POLYLIB_STAT TriMesh::import(const std::map<std::string, std::string> fmap, PL_REAL scale)
 {
 
 	//      PL_DBGOSH << __func__ << " scale "<< scale <<std::endl;
@@ -687,7 +687,7 @@ POLYLIB_STAT TriMesh::build()
 #endif // DEBUG
 
 
-		//		const Vec3<REAL_TYPE>* vtx_arr = (*itr)->get_vertex();
+		//		const Vec3<PL_REAL>* vtx_arr = (*itr)->get_vertex();
 
 		Vertex** vtx_arr= (*itr)->get_vertex();
 #ifdef DEBUG
@@ -711,7 +711,7 @@ POLYLIB_STAT TriMesh::build()
 			//     }
 
 
-			bbox.add(  (Vec3<REAL_TYPE>) (*(vtx_arr[i])) );
+			bbox.add(  (Vec3<PL_REAL>) (*(vtx_arr[i])) );
 		}
 
 	}
@@ -719,8 +719,8 @@ POLYLIB_STAT TriMesh::build()
 	m_bbox = bbox;
 	//#define DEBUG
 #ifdef DEBUG
-	Vec3<REAL_TYPE> min = m_bbox.getPoint(0);
-	Vec3<REAL_TYPE> max = m_bbox.getPoint(7);
+	Vec3<PL_REAL> min = m_bbox.getPoint(0);
+	Vec3<PL_REAL> max = m_bbox.getPoint(7);
 	PL_DBGOSH << "TriMesh::build:min=(" <<min<< "),max=(" <<max<< ")" << std::endl;
 #endif
 	//PL_DBGOSH << "TriMesh::build:min=(" <<m_bbox.min<< "),max=(" <<m_bbox.max<< ")" << std::endl;
@@ -754,8 +754,8 @@ const std::vector<PrivateTriangle*> *TriMesh::search(
 	) const {
 		//#define DEBUG
 #ifdef DEBUG
-		Vec3<REAL_TYPE> min = bbox->getPoint(0);
-		Vec3<REAL_TYPE> max = bbox->getPoint(7);
+		Vec3<PL_REAL> min = bbox->getPoint(0);
+		Vec3<PL_REAL> max = bbox->getPoint(7);
 		PL_DBGOSH << "TriMesh::search:min=(" <<min<< "),max=(" <<max<< ")" << std::endl;
 #endif
 
@@ -785,15 +785,15 @@ const std::vector<PrivateTriangle*>* TriMesh::linear_search(
 		for (itr = this->m_tri_list->begin(); itr != this->m_tri_list->end(); itr++) {
 			BBox bbox;
 			bbox.init();
-			//const Vec3<REAL_TYPE>* vtx_arr = (*itr)->get_vertex();
+			//const Vec3<PL_REAL>* vtx_arr = (*itr)->get_vertex();
 			Vertex** vtx_arr = (*itr)->get_vertex();
 			for (int i = 0; i < 3; i++) {
-				bbox.add( (Vec3<REAL_TYPE>) *vtx_arr[i]);
+				bbox.add( (Vec3<PL_REAL>) *vtx_arr[i]);
 			}
 			if (every == true) {
-				if (q_bbox->contain( (Vec3<REAL_TYPE>) *vtx_arr[0]) == true && 
-					q_bbox->contain( (Vec3<REAL_TYPE>) *vtx_arr[1]) == true &&
-					q_bbox->contain( (Vec3<REAL_TYPE>) *vtx_arr[2]) == true)
+				if (q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[0]) == true && 
+					q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[1]) == true &&
+					q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[2]) == true)
 				{
 					tri_list->push_back(*itr);
 				}
@@ -828,22 +828,22 @@ POLYLIB_STAT TriMesh::linear_search(
 		for (itr = this->m_tri_list->begin(); itr != this->m_tri_list->end(); itr++) {
 			BBox bbox;
 			bbox.init();
-			//const Vec3<REAL_TYPE>* vtx_arr = (*itr)->get_vertex();
+			//const Vec3<PL_REAL>* vtx_arr = (*itr)->get_vertex();
 			Vertex** vtx_arr = (*itr)->get_vertex();
 
 			for (int i = 0; i < 3; i++) {
-				bbox.add( (Vec3<REAL_TYPE>) *vtx_arr[i]);
+				bbox.add( (Vec3<PL_REAL>) *vtx_arr[i]);
 			}
 			if (every == true) {
-				if (q_bbox->contain( (Vec3<REAL_TYPE>) *vtx_arr[0]) == true	&&
-					q_bbox->contain( (Vec3<REAL_TYPE>) *vtx_arr[1]) == true	&&
-					q_bbox->contain( (Vec3<REAL_TYPE>) *vtx_arr[2]) == true) {
+				if (q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[0]) == true	&&
+					q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[1]) == true	&&
+					q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[2]) == true) {
 						tri_list->push_back(*itr);
 #ifdef DEBUG
 						PL_DBGOSH << "TriMesh::linear_search:IN TRUE" << std::endl;
-						PL_DBGOSH << "     vertex 0:" << (Vec3<REAL_TYPE>) *vtx_arr[0] << std::endl;
-						PL_DBGOSH << "     vertex 1:" << (Vec3<REAL_TYPE>) *vtx_arr[1] << std::endl;
-						PL_DBGOSH << "     vertex 2:" << (Vec3<REAL_TYPE>) *vtx_arr[2] << std::endl;
+						PL_DBGOSH << "     vertex 0:" << (Vec3<PL_REAL>) *vtx_arr[0] << std::endl;
+						PL_DBGOSH << "     vertex 1:" << (Vec3<PL_REAL>) *vtx_arr[1] << std::endl;
+						PL_DBGOSH << "     vertex 2:" << (Vec3<PL_REAL>) *vtx_arr[2] << std::endl;
 #endif
 				}
 			}
@@ -877,7 +877,7 @@ POLYLIB_STAT TriMesh::linear_search(
 // public /////////////////////////////////////////////////////////////////////
 
 const PrivateTriangle* TriMesh::search_nearest(
-	const Vec3<REAL_TYPE>&    pos
+	const Vec3<PL_REAL>&    pos
 	) const {
 		return m_vtree->search_nearest(pos);
 }
@@ -1115,7 +1115,7 @@ POLYLIB_STAT TriMesh::replace_DVertex(int nscalar,int nvector){
 		PL_DBGOSH << __func__ << "3 1"<<std::endl;
 #endif
 
-		Vec3<REAL_TYPE> pos((*(*itr))[0],(*(*itr))[1],(*(*itr))[2]);
+		Vec3<PL_REAL> pos((*(*itr))[0],(*(*itr))[1],(*(*itr))[2]);
 
 #ifdef DEBUG
 		PL_DBGOSH << __func__ << "3 2"<< pos <<std::endl;
@@ -1257,7 +1257,7 @@ POLYLIB_STAT TriMesh::prepare_DVertex(int nscalar,int nvector){
 
 
 DVertexTriangle* 
-	TriMesh::add_DVertex_Triangle(Vec3<REAL_TYPE>* v)
+	TriMesh::add_DVertex_Triangle(Vec3<PL_REAL>* v)
 {
 
 	//#define DEBUG
@@ -1297,11 +1297,11 @@ DVertexTriangle*
 
 		//   if(m_DVM_ptr->size()==4){
 		// PL_DBGOSH << "TriMesh::"<< __func__<< " 2 1 1"<<std::endl;
-		//     DVertex<REAL_TYPE,float>* tmp = new DVertex<REAL_TYPE,float>(m_DVM_ptr) ;
+		//     DVertex<PL_REAL,float>* tmp = new DVertex<PL_REAL,float>(m_DVM_ptr) ;
 		// PL_DBGOSH << "TriMesh::"<< __func__<< " 2 1 1"<<std::endl;
 		//   }   else if(m_DVM_ptr->size()==8){
 		// PL_DBGOSH << "TriMesh::"<< __func__<< " 2 1 2"<<std::endl;
-		//     DVertex<REAL_TYPE,double>* tmp = new  DVertex<REAL_TYPE,double>(m_DVM_ptr);
+		//     DVertex<PL_REAL,double>* tmp = new  DVertex<PL_REAL,double>(m_DVM_ptr);
 		// PL_DBGOSH << "TriMesh::"<< __func__<< " 2 1 2"<<std::endl;
 		//     dv=tmp;
 		//   }

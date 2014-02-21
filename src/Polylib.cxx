@@ -93,7 +93,7 @@ void Polylib::set_factory(
 
 POLYLIB_STAT Polylib::load(
 	std::string	config_name,
-	REAL_TYPE	scale
+	PL_REAL	scale
 	) {
 		//#define DEBUG
 #ifdef DEBUG
@@ -333,8 +333,8 @@ POLYLIB_STAT Polylib::remove_leaf_group(const std::string name) {
 
 std::vector<Triangle*>* Polylib::search_polygons(
 	std::string		group_name, 
-	Vec3<REAL_TYPE>		min_pos, 
-	Vec3<REAL_TYPE>		max_pos, 
+	Vec3<PL_REAL>		min_pos, 
+	Vec3<PL_REAL>		max_pos, 
 	bool		every
 	) const {
 #ifdef DEBUG
@@ -374,7 +374,7 @@ POLYLIB_STAT Polylib::check_group_name(
 
 // public /////////////////////////////////////////////////////////////////////
 
-PolygonGroup *Polylib::create_polygon_group(std::string class_name,REAL_TYPE tolerance)
+PolygonGroup *Polylib::create_polygon_group(std::string class_name,PL_REAL tolerance)
 {
 	//#define DEBUG
 #ifdef DEBUG
@@ -520,7 +520,7 @@ PolygonGroup* Polylib::get_group(std::string name) const
 
 const Triangle* Polylib::search_nearest_polygon(
 	std::string	 group_name, 
-	const Vec3<REAL_TYPE>&	pos
+	const Vec3<PL_REAL>&	pos
 	) const {
 
 		PolygonGroup* pg = get_group(group_name);
@@ -539,7 +539,7 @@ const Triangle* Polylib::search_nearest_polygon(
 		pg_list2->push_back(pg);
 
 		const PrivateTriangle* tri_min = 0;
-		REAL_TYPE dist2_min = 0.0;
+		PL_REAL dist2_min = 0.0;
 
 		//対象ポリゴングループ毎に検索
 		std::vector<PolygonGroup*>::iterator it;
@@ -551,10 +551,10 @@ const Triangle* Polylib::search_nearest_polygon(
 
 					Vertex** v = tri->get_vertex();
 					
-					Vec3<REAL_TYPE> c(((*v[0])[0]+(*v[1])[0]+(*v[2])[0])/3.0,
+					Vec3<PL_REAL> c(((*v[0])[0]+(*v[1])[0]+(*v[2])[0])/3.0,
 						((*v[0])[1]+(*v[1])[1]+(*v[2])[1])/3.0,
 						((*v[0])[2]+(*v[1])[2]+(*v[2])[2])/3.0);
-					REAL_TYPE dist2 = (c - pos).lengthSquared();
+					PL_REAL dist2 = (c - pos).lengthSquared();
 					if (tri_min == 0 || dist2 < dist2_min) {
 						tri_min = tri;
 						dist2_min = dist2;
@@ -698,7 +698,7 @@ POLYLIB_STAT Polylib::make_group_tree(
 				std::string class_name = "PolygonGroup"; //default
 
 
-				REAL_TYPE tolerance = this->m_distance_tolerance;
+				PL_REAL tolerance = this->m_distance_tolerance;
 				if(leaves.size()!=0){
 					//class name 
 					std::vector<std::string>::iterator leaf_iter=find(leaves.begin(),
@@ -759,7 +759,7 @@ POLYLIB_STAT Polylib::make_group_tree(
 POLYLIB_STAT Polylib::load_with_idfile(
 	std::string		config_name,
 	ID_FORMAT	id_format,
-	REAL_TYPE		scale
+	PL_REAL		scale
 	) {
 #ifdef DEBUG
 		PL_DBGOSH << "Polylib::load_with_idfile() in." << std::endl;
@@ -782,7 +782,7 @@ POLYLIB_STAT Polylib::load_with_idfile(
 POLYLIB_STAT Polylib::load_polygons(
 	bool		with_id_file,
 	ID_FORMAT	id_format,
-	REAL_TYPE		scale
+	PL_REAL		scale
 	)
 {
 
@@ -1196,8 +1196,8 @@ PolygonGroup* Polylib::get_group(int internal_id) const
 
 std::vector<PrivateTriangle*>* Polylib::search_polygons(
 	std::string			group_name, 
-	Vec3<REAL_TYPE>			min_pos, 
-	Vec3<REAL_TYPE>			max_pos,
+	Vec3<PL_REAL>			min_pos, 
+	Vec3<PL_REAL>			max_pos,
 	bool			every,
 	bool			linear, 
 	POLYLIB_STAT	*ret
@@ -1429,7 +1429,7 @@ void Polylib::make_DVertex_PolygonGroup(
 
 DVertexTriangle* 
 	Polylib::add_DVertex_Triangle(std::string name,
-	Vec3<REAL_TYPE>* v){
+	Vec3<PL_REAL>* v){
 
 		//#define DEBUG
 #ifdef DEBUG

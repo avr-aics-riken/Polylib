@@ -82,7 +82,7 @@ Triangle::Triangle(
 Triangle::Triangle(
 	//Vec3	vertex[3], 
 	Vertex* vertex_ptr[3],
-	Vec3<REAL_TYPE>	normal
+	Vec3<PL_REAL>	normal
 	) {
 		m_vertex_ptr[0] = vertex_ptr[0];
 		m_vertex_ptr[1] = vertex_ptr[1];
@@ -104,8 +104,8 @@ Triangle::Triangle(
 	//Vec3	vertex[3], 
 
 	Vertex* vertex_ptr[3],
-	Vec3<REAL_TYPE>	normal, 
-	REAL_TYPE	area
+	Vec3<PL_REAL>	normal, 
+	PL_REAL	area
 	) {
 		m_vertex_ptr[0] = vertex_ptr[0];
 		m_vertex_ptr[1] = vertex_ptr[1];
@@ -154,7 +154,7 @@ void Triangle::set_vertexes(
 
 
 Vertex** Triangle::get_vertex() const {
-	//	return const_cast<Vec3<REAL_TYPE>*>(m_vertex_ptr);
+	//	return const_cast<Vec3<PL_REAL>*>(m_vertex_ptr);
 	return const_cast<Vertex**>( m_vertex_ptr);
 }
 
@@ -163,7 +163,7 @@ Vertex** Triangle::get_vertex() const {
 ///
 /// @return 法線ベクトル。
 ///
-Vec3<REAL_TYPE> Triangle::get_normal() const {
+Vec3<PL_REAL> Triangle::get_normal() const {
 	return m_normal;
 }
 
@@ -172,7 +172,7 @@ Vec3<REAL_TYPE> Triangle::get_normal() const {
 ///
 /// @return 面積。
 ///
-REAL_TYPE Triangle::get_area() const {
+PL_REAL Triangle::get_area() const {
 	// std::cout << __func__<<" " <<m_area<<std::endl;
 	return m_area;
 }
@@ -236,12 +236,12 @@ void Triangle::calc_normal() {
 /// 面積算出。
 ///
 void Triangle::calc_area() {
-	Vec3<REAL_TYPE> a = *(m_vertex_ptr[1]) - *(m_vertex_ptr[0]);
-	Vec3<REAL_TYPE> b = *(m_vertex_ptr[2]) - *(m_vertex_ptr[0]);
-	REAL_TYPE al = a.length();
-	REAL_TYPE bl = b.length();
-	REAL_TYPE ab = dot(a,b);
-	REAL_TYPE f = al*al*bl*bl - ab*ab;
+	Vec3<PL_REAL> a = *(m_vertex_ptr[1]) - *(m_vertex_ptr[0]);
+	Vec3<PL_REAL> b = *(m_vertex_ptr[2]) - *(m_vertex_ptr[0]);
+	PL_REAL al = a.length();
+	PL_REAL bl = b.length();
+	PL_REAL ab = dot(a,b);
+	PL_REAL f = al*al*bl*bl - ab*ab;
 	if(f<0.0) f=0.0;
 
 	m_area = 0.5*sqrt(f);

@@ -31,7 +31,7 @@ int main(int argc, char** argv ){
 
   //  pl_instance->load();
 
-  REAL_TYPE scale=1.0;
+  PL_REAL scale=1.0;
   std::string file="polylib_config_objfile_bin.tp";
 
   pl_instance->load(file,scale);

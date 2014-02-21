@@ -48,7 +48,7 @@ VElement::VElement(
 		m_tri = tri;
 		Vertex** tmp=tri->get_vertex();
 		for(int i=0; i<3; i++){
-			m_bbox.add( (Vec3<REAL_TYPE>) (*(tmp[i])) );
+			m_bbox.add( (Vec3<PL_REAL>) (*(tmp[i])) );
 		}
 		m_pos = m_bbox.center();
 }
@@ -67,7 +67,7 @@ PrivateTriangle* VElement::get_triangle()
 ///
 /// Center position of bbox on triangle.
 /// 
-Vec3<REAL_TYPE> VElement::get_pos() const {
+Vec3<PL_REAL> VElement::get_pos() const {
 	return m_pos;
 }
 

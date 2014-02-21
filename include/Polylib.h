@@ -53,22 +53,22 @@ class VertKDT;
 
 struct CalcAreaInfo {
 	/// 基点座標
-	Vec3<REAL_TYPE> m_bpos;
+	Vec3<PL_REAL> m_bpos;
 
 	/// 計算領域のボクセル数
-	Vec3<REAL_TYPE> m_bbsize;
+	Vec3<PL_REAL> m_bbsize;
 
 	/// ガイドセルのボクセル数
-	Vec3<REAL_TYPE> m_gcsize;
+	Vec3<PL_REAL> m_gcsize;
 
 	/// ボクセル１辺の長さ
-	Vec3<REAL_TYPE> m_dx;
+	Vec3<PL_REAL> m_dx;
 
 	/// ガイドセルを含めた担当領域の最小位置
-	Vec3<REAL_TYPE> m_gcell_min;
+	Vec3<PL_REAL> m_gcell_min;
 
 	/// ガイドセルを含めた担当領域の最大位置
-	Vec3<REAL_TYPE> m_gcell_max;
+	Vec3<PL_REAL> m_gcell_max;
 
 	/// ガイドセルを含めたBounding Box
 	BBox m_gcell_bbox;
@@ -141,7 +141,7 @@ public:
 	///
 	POLYLIB_STAT load(
 		std::string			config_name = "polylib_config.tpp",
-		REAL_TYPE				scale = 1.0
+		PL_REAL				scale = 1.0
 		);
 
 	///
@@ -217,8 +217,8 @@ public:
 	///
 	std::vector<Triangle*>* search_polygons(
 		std::string		group_name, 
-		Vec3<REAL_TYPE>			min_pos, 
-		Vec3<REAL_TYPE>			max_pos, 
+		Vec3<PL_REAL>			min_pos, 
+		Vec3<PL_REAL>			max_pos, 
 		bool			every
 		) const;
 
@@ -231,7 +231,7 @@ public:
 	///
 	const Triangle* search_nearest_polygon(
 		std::string group_name,
-		const Vec3<REAL_TYPE>&    pos
+		const Vec3<PL_REAL>&    pos
 		) const;
 
 	///
@@ -260,7 +260,7 @@ public:
 	///				ではない。
 	///
 	PolygonGroup *create_polygon_group(std::string class_name,
-		REAL_TYPE tolerance);
+		PL_REAL tolerance);
 
 	///
 	/// PolygonGroupの追加。
@@ -348,7 +348,7 @@ public:
 	/// @return 作成したポリゴンへのポインタ。
 	DVertexTriangle* 
 		add_DVertex_Triangle(std::string name,
-		Vec3<REAL_TYPE>* v);
+		Vec3<PL_REAL>* v);
 
 
 
@@ -402,7 +402,7 @@ protected:
 	POLYLIB_STAT load_with_idfile(
 		std::string		config_name,
 		ID_FORMAT		id_format,
-		REAL_TYPE			scale = 1.0
+		PL_REAL			scale = 1.0
 		);
 
 	///
@@ -420,7 +420,7 @@ protected:
 	POLYLIB_STAT load_polygons(
 		bool		with_id_file,
 		ID_FORMAT	id_format,
-		REAL_TYPE		scale = 1.0
+		PL_REAL		scale = 1.0
 		);
 
 	///
@@ -563,8 +563,8 @@ private:
 	///
 	std::vector<PrivateTriangle*> *search_polygons(
 		std::string		group_name, 
-		Vec3<REAL_TYPE>			min_pos, 
-		Vec3<REAL_TYPE>			max_pos,
+		Vec3<PL_REAL>			min_pos, 
+		Vec3<PL_REAL>			max_pos,
 		bool			every,
 		bool			linear, 
 		POLYLIB_STAT	*ret
@@ -600,7 +600,7 @@ protected:
 	TextParser* tp;
 
 	///   頂点を同一視する場合の基準値
-	REAL_TYPE m_distance_tolerance;
+	PL_REAL m_distance_tolerance;
 
 };
 

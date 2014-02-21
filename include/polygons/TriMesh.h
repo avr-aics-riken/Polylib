@@ -46,7 +46,7 @@ public:
 	/// コンストラクタ。
 	///
 	/// @param[in] tolerance 頂点同一性チェックの基準値
-	TriMesh(REAL_TYPE tolerance);
+	TriMesh(PL_REAL tolerance);
 
 	///
 	/// デストラクタ。
@@ -77,7 +77,7 @@ public:
 	///  @param[in] n_start_exid exidlistのid開始位置
 	///  @param[in] n_tri 加える三角形の数
 
-	void init(const REAL_TYPE* vertlist,
+	void init(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
 		const int n_start_tri,
@@ -104,11 +104,11 @@ public:
 	///  @param[in] n_scalar 頂点あたりのスカラーデータの数
 	///  @param[in] n_vector 頂点あたりのベクターデータの数
 
-	virtual void init_dvertex(const REAL_TYPE* vertlist,
+	virtual void init_dvertex(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
-		const REAL_TYPE* scalarlist,
-		const REAL_TYPE* vectorlist,
+		const PL_REAL* scalarlist,
+		const PL_REAL* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
 		const int n_start_exid,
@@ -144,7 +144,7 @@ public:
 	///  @param[in] n_start_exid exidlistのid開始位置
 	///  @param[in] n_tri 加える三角形の数
 
-	void add(const REAL_TYPE* vertlist,
+	void add(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
 		const int n_start_tri,
@@ -171,11 +171,11 @@ public:
 	///  @param[in] n_scalar 頂点あたりのスカラーデータの数
 	///  @param[in] n_vector 頂点あたりのベクターデータの数
 
-	virtual void add_dvertex(const REAL_TYPE* vertlist,
+	virtual void add_dvertex(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
-		const REAL_TYPE* scalarlist,
-		const REAL_TYPE* vectorlist,
+		const PL_REAL* scalarlist,
+		const PL_REAL* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
 		const int n_start_exid,
@@ -194,7 +194,7 @@ public:
 	///
 	POLYLIB_STAT import(
 		const std::map<std::string, std::string> fmap,
-		REAL_TYPE scale = 1.0
+		PL_REAL scale = 1.0
 		);
 
 	///
@@ -285,7 +285,7 @@ public:
 	///  @return 検索されたポリゴン
 	///
 	const PrivateTriangle* search_nearest(
-		const Vec3<REAL_TYPE>&    pos
+		const Vec3<PL_REAL>&    pos
 		) const;
 
 	///
@@ -320,7 +320,7 @@ public:
 	///  @return    polygonへのpointer
 	///
 
-	virtual DVertexTriangle* add_DVertex_Triangle(Vec3<REAL_TYPE>* v);
+	virtual DVertexTriangle* add_DVertex_Triangle(Vec3<PL_REAL>* v);
 	//
 	/// DVertex 追加作成後の重複頂点削除
 	/// 
@@ -405,7 +405,7 @@ private:
 	/// MAX要素数。
 	int		m_max_elements;
 	/// 2 点の同一性チェックのtolerance
-	REAL_TYPE m_tolerance ;
+	PL_REAL m_tolerance ;
 
 };// end of class
 

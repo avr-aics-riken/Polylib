@@ -23,10 +23,10 @@ using namespace PolylibNS;
 
 
 struct MyParallelInfo {
-	REAL_TYPE bpos[3]; //基準座標
+	PL_REAL bpos[3]; //基準座標
 	unsigned bbsize[3]; //number of voxel 計算領域
 	unsigned gcsize[3]; //number of guidecell voxel
-	REAL_TYPE dx[3]; //size of voxel
+	PL_REAL dx[3]; //size of voxel
 };
 
 static MyParallelInfo myParaInfos[2] = {
@@ -73,7 +73,7 @@ int main(int argc, char** argv ){
 	pl_instance->show_group_hierarchy();
 
 
-	Vec3<REAL_TYPE> vlist[3];
+	Vec3<PL_REAL> vlist[3];
 	double value=10.0*rank;
 
 	for (int itri=0;itri<2;itri++){
@@ -123,15 +123,15 @@ int main(int argc, char** argv ){
 
 			PL_DBGOSH << "set_vector" <<std::endl;
 
-			Vec3<REAL_TYPE> a(10,20+ii,30+ii+rank*100);
-			Vec3<REAL_TYPE> b(13,23+ii,33+ii+rank*100);
-			Vec3<REAL_TYPE> c(14,24+ii,34+ii+rank*100);
+			Vec3<PL_REAL> a(10,20+ii,30+ii+rank*100);
+			Vec3<PL_REAL> b(13,23+ii,33+ii+rank*100);
+			Vec3<PL_REAL> c(14,24+ii,34+ii+rank*100);
 
 			DVp->set_vector(0,a);
 			DVp->set_vector(1,b);
 			DVp->set_vector(2,c);
 
-			Vec3<REAL_TYPE> d,e,f;
+			Vec3<PL_REAL> d,e,f;
 			DVp->get_vector(0,&d);
 			DVp->get_vector(1,&e);
 			DVp->get_vector(2,&f);

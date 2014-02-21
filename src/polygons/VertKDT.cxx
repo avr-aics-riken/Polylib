@@ -103,17 +103,17 @@ void VertKDTNode::split(const int& max_elem)
 	BBox left_bbox = m_bbox;
 	BBox right_bbox = m_bbox;
 
-	REAL_TYPE x = .5 * (m_bbox.min[m_axis] + m_bbox.max[m_axis]);
+	PL_REAL x = .5 * (m_bbox.min[m_axis] + m_bbox.max[m_axis]);
 	left_bbox.max[m_axis] = x;
 	right_bbox.min[m_axis] = x;
 
 	m_left->set_bbox(left_bbox);
 	m_right->set_bbox(right_bbox);
 
-	// Vec3<REAL_TYPE> lmin=left_bbox.getPoint(0);
-	// Vec3<REAL_TYPE> lmax=left_bbox.getPoint(7);
-	// Vec3<REAL_TYPE> rmin=right_bbox.getPoint(0);
-	// Vec3<REAL_TYPE> rmax=right_bbox.getPoint(7);
+	// Vec3<PL_REAL> lmin=left_bbox.getPoint(0);
+	// Vec3<PL_REAL> lmax=left_bbox.getPoint(7);
+	// Vec3<PL_REAL> rmin=right_bbox.getPoint(0);
+	// Vec3<PL_REAL> rmax=right_bbox.getPoint(7);
 	// std::cout<< __func__ << " nelement " <<m_vlist.size()<<std::endl;
 	// std::cout<< __func__ << " lmin " <<lmin<<std::endl;
 	// std::cout<< __func__ << " lmax " <<lmax<<std::endl;
@@ -131,7 +131,7 @@ void VertKDTNode::split(const int& max_elem)
 	for (; itr != m_vlist.end(); itr++) {
 
 		Vertex* tmpvtx=(*itr)->get_vertex();
-		Vec3<REAL_TYPE> elempos=(Vec3<REAL_TYPE>) *tmpvtx;
+		Vec3<PL_REAL> elempos=(Vec3<PL_REAL>) *tmpvtx;
 		//    if ((*itr)->get_pos()[m_axis] < x) {
 		if (elempos[m_axis] < x) {
 			m_left->m_vlist.push_back((*itr));
@@ -236,7 +236,7 @@ unsigned int VertKDT::memory_size() {
 // public /////////////////////////////////////////////////////////////////////
 
 const Vertex* VertKDT::search_nearest(
-	const Vec3<REAL_TYPE>&	pos) const 
+	const Vec3<PL_REAL>&	pos) const 
 {
 	if (m_root == 0) {
 		std::cerr << "Polylib::VertKDT::Error" << std::endl;
@@ -254,7 +254,7 @@ const Vertex* VertKDT::search_nearest(
 
 const Vertex* VertKDT::search_nearest_recursive(
 	VertKDTNode   *vn,
-	const Vec3<REAL_TYPE>&	pos
+	const Vec3<PL_REAL>&	pos
 	) const 
 {
 	//#define DEBUG
@@ -262,14 +262,14 @@ const Vertex* VertKDT::search_nearest_recursive(
 	if (vn->is_leaf()) {
 		const Vertex* tri_min = 0;
 		//float dist2_min = 0.0;
-		REAL_TYPE dist2_min = 0.0;
+		PL_REAL dist2_min = 0.0;
 
 		// ノード内のポリゴンから最も近い物を探す(リニアサーチ)
 		std::vector<VertKDTElem*>::const_iterator itr = vn->get_vlist().begin();
 		for (; itr != vn->get_vlist().end(); itr++) {
 			const Vertex* tri = (*itr)->get_vertex();
-			Vec3<REAL_TYPE> c = (Vec3<REAL_TYPE>) (*tri);
-			REAL_TYPE dist2 = (c - pos).lengthSquared();
+			Vec3<PL_REAL> c = (Vec3<PL_REAL>) (*tri);
+			PL_REAL dist2 = (c - pos).lengthSquared();
 			if (tri_min == 0 || dist2 < dist2_min) {
 				tri_min = tri;
 				dist2_min = dist2;
@@ -320,7 +320,7 @@ POLYLIB_STAT VertKDT::add2(Vertex* v)
 
 	BBox rootbbox=get_root_bbox();
 
-	if(rootbbox.contain((Vec3<REAL_TYPE>) *v)){
+	if(rootbbox.contain((Vec3<PL_REAL>) *v)){
 		return add(v);
 	}else{
 
@@ -343,12 +343,12 @@ POLYLIB_STAT VertKDT::make_upper(Vertex* v)
 #endif// DEBUG
 
 	BBox rootbbox=get_root_bbox();
-	Vec3<REAL_TYPE> min=rootbbox.min;
-	Vec3<REAL_TYPE> max=rootbbox.max;
-	Vec3<REAL_TYPE> uppermin=rootbbox.min;
-	Vec3<REAL_TYPE> uppermax=rootbbox.max;
-	Vec3<REAL_TYPE> pairmin=rootbbox.min;
-	Vec3<REAL_TYPE> pairmax=rootbbox.max;
+	Vec3<PL_REAL> min=rootbbox.min;
+	Vec3<PL_REAL> max=rootbbox.max;
+	Vec3<PL_REAL> uppermin=rootbbox.min;
+	Vec3<PL_REAL> uppermax=rootbbox.max;
+	Vec3<PL_REAL> pairmin=rootbbox.min;
+	Vec3<PL_REAL> pairmax=rootbbox.max;
 
 	AxisEnum axis= m_root->get_axis();
 	AxisEnum upperaxis;
@@ -505,16 +505,16 @@ void VertKDT::traverse(VertKDTNode* vn, VertKDTElem* elm, VertKDTNode** vnode) c
 #endif
 
 
-	//Vec3<REAL_TYPE> vtx = elm->pos();
+	//Vec3<PL_REAL> vtx = elm->pos();
 	Vertex *tmpvtx =elm->get_vertex();
-	Vec3<REAL_TYPE> vtx = (Vec3<REAL_TYPE>) *tmpvtx;
+	Vec3<PL_REAL> vtx = (Vec3<PL_REAL>) *tmpvtx;
 #ifdef SQ_RADIUS
 	//float& sqdist = q->m_sqdist;
-	REAL_TYPE& sqdist = q->m_sqdist;
+	PL_REAL& sqdist = q->m_sqdist;
 #endif
 	AxisEnum axis = vn->get_axis();
 	//float x = vn->get_left()->get_bbox().max[axis];
-	REAL_TYPE x = vn->get_left()->get_bbox().max[axis];
+	PL_REAL x = vn->get_left()->get_bbox().max[axis];
 
 #ifdef DEBUG 
 	PL_DBGOSH<<"VertKDT::"<<__func__<<" traverse recursively "<<std::endl;
@@ -524,7 +524,7 @@ void VertKDT::traverse(VertKDTNode* vn, VertKDTElem* elm, VertKDTNode** vnode) c
 		traverse(vn->get_left(), elm, vnode);
 #ifdef SQ_RADIUS
 		//float d = x - vtx[axis];
-		REAL_TYPE d = x - vtx[axis];
+		PL_REAL d = x - vtx[axis];
 		if (d*d < sqdist) {
 			traverse(vn->get_right(), elm, vnode);
 		}
@@ -534,7 +534,7 @@ void VertKDT::traverse(VertKDTNode* vn, VertKDTElem* elm, VertKDTNode** vnode) c
 		traverse(vn->get_right(), elm, vnode);
 #ifdef SQ_RADIUS
 		//float d = vtx[axis] - x;
-		REAL_TYPE d = vtx[axis] - x;
+		PL_REAL d = vtx[axis] - x;
 		if (d*d < sqdist) {
 			traverse(vn->get_left(), elm, vnode);
 		}
@@ -560,12 +560,12 @@ void VertKDT::search_recursive(
 				// determine between bbox and 3 vertices of each triangle.
 
 				bool iscontain = true;
-				//const Vec3<REAL_TYPE> *temp = (*itr)->get_triangle()->get_vertex();
+				//const Vec3<PL_REAL> *temp = (*itr)->get_triangle()->get_vertex();
 
 				Vertex* temp=(*itr)->get_vertex();
 
 				for (int i = 0; i < 3; i++) {
-					if (bbox.contain( (Vec3<REAL_TYPE>) *(temp[i]) ) == false)  {
+					if (bbox.contain( (Vec3<PL_REAL>) *(temp[i]) ) == false)  {
 						iscontain = false;
 						break;
 					}
@@ -593,8 +593,8 @@ void VertKDT::search_recursive(
 		}
 
 #ifdef DEBUG_VTREE
-		Vec3<REAL_TYPE> min = bbox.getPoint(0);
-		Vec3<REAL_TYPE> max = bbox.getPoint(7);
+		Vec3<PL_REAL> min = bbox.getPoint(0);
+		Vec3<PL_REAL> max = bbox.getPoint(7);
 		PL_DBGOSH << "VertKDT::min(" << min << "),max(" << max << ")" << std::endl;
 #endif
 
@@ -626,7 +626,7 @@ void VertKDT::search_recursive(
 // private ////////////////////////////////////////////////////////////////////
 
 #ifdef SQ_RADIUS
-POLYLIB_STAT VertKDT::create(REAL_TYPE sqradius) {
+POLYLIB_STAT VertKDT::create(PL_REAL sqradius) {
 #else
 POLYLIB_STAT VertKDT::create(
 	int		max_elem, 
@@ -638,8 +638,8 @@ POLYLIB_STAT VertKDT::create(
 
 		m_n_create++;
 #if 0
-		Vec3<REAL_TYPE> min=bbox.getPoint(0);
-		Vec3<REAL_TYPE> max=bbox.getPoint(7);
+		Vec3<PL_REAL> min=bbox.getPoint(0);
+		Vec3<PL_REAL> max=bbox.getPoint(7);
 		std::cout << __func__ << " min " <<min<<std::endl;
 		std::cout << __func__ << " max " <<max<<std::endl;
 #endif

@@ -45,7 +45,7 @@ public:
 	///  @return	作成に失敗した場合はNULLが返る。
 	///
 	//	virtual PolygonGroup* create_instance(std::string class_name) {
-	virtual PolygonGroup* create_instance( std::string class_name,REAL_TYPE tolerance);
+	virtual PolygonGroup* create_instance( std::string class_name,PL_REAL tolerance);
 
 };
 

@@ -45,7 +45,7 @@ namespace PolylibNS {
 ///  @param[in] tri_list　三角形ポリゴンリストの領域。
 ///  @param[in]	fname	　ファイル名。
 ///
-///  REAL_TYPE は、頂点データの実数型
+///  PL_REAL は、頂点データの実数型
 
 
 
@@ -62,7 +62,7 @@ POLYLIB_STAT vtk_a_save(
 ///  @param[in] tri_list　三角形ポリゴンリストの領域。
 ///  @param[in]	fname	　ファイル名。
 ///
-///  REAL_TYPE は、頂点データの実数型
+///  PL_REAL は、頂点データの実数型
 ///  DT は、頂点データに付随するスカラーデータの型
 ///  
 

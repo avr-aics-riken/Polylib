@@ -97,7 +97,7 @@ public:
 	///  @return    検索されたポリゴン
 	///
 	const PrivateTriangle* search_nearest(
-		const Vec3<REAL_TYPE>&    pos
+		const Vec3<PL_REAL>&    pos
 		) const;
 
 	///
@@ -109,7 +109,7 @@ public:
 	///
 	const PrivateTriangle* search_nearest_recursive(
 		VNode       *vn, 
-		const Vec3<REAL_TYPE>&    pos
+		const Vec3<PL_REAL>&    pos
 		) const;
 
 	///

@@ -34,6 +34,6 @@ class MyGroupFactory:public PolygonGroupFactory{
 
 public:
 
-	PolygonGroup* create_instance(std::string class_name,REAL_TYPE tolerance);
+	PolygonGroup* create_instance(std::string class_name,PL_REAL tolerance);
 };
 #endif // MYGROUPFACTORY_H

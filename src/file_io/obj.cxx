@@ -70,7 +70,7 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 	std::vector<PrivateTriangle*>*tri_list, 
 	std::string	fname,
 	int	*total,
-	REAL_TYPE scale ) 
+	PL_REAL scale ) 
 {
 	// PL_DBGOSH << "fname " <<fname<<std::endl;
 	std::ifstream is(fname.c_str());
@@ -84,8 +84,8 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 	int ivtx=0;
 	int n_zero_area_tri=0;
 	std::string token;
-	Vec3<REAL_TYPE> nml;
-	Vec3<REAL_TYPE> vtx[3];
+	Vec3<PL_REAL> nml;
+	Vec3<PL_REAL> vtx[3];
 
 	while (is >> token && !is.eof()) {
 		if (token[0] == '#') { //comment through end of the line.
@@ -96,7 +96,7 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 			//PL_DBGOSH << "comment" <<s<<std::endl;
 		}
 		else if (token == "v") { //geometric vertices
-			//Vec3<REAL_TYPE> v;
+			//Vec3<PL_REAL> v;
 			Vertex* v=new Vertex();
 			is >> *v;
 			//vertex_list->vtx_add(v);
@@ -240,18 +240,18 @@ POLYLIB_STAT obj_a_save(
 		}
 
 		// 法線　vn 出力
-		std::map<Vertex*,Vec3<REAL_TYPE> > vnmap;
-		std::map<Vertex*,Vec3<REAL_TYPE> >::iterator vnmap_iter;
+		std::map<Vertex*,Vec3<PL_REAL> > vnmap;
+		std::map<Vertex*,Vec3<PL_REAL> >::iterator vnmap_iter;
 		std::vector<PrivateTriangle*>::iterator itr;
 
 		for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
 			Vertex** tmpvtx=(*itr)->get_vertex();
-			Vec3<REAL_TYPE> normal=(*itr)->get_normal();
+			Vec3<PL_REAL> normal=(*itr)->get_normal();
 			for(int i=0;i<3;++i){
 				// Vertex*  をkeyにして法線ベクトル（計算途中）を探し、無ければ加える。
 				vnmap_iter=vnmap.find(tmpvtx[i]);
 				if(vnmap_iter==vnmap.end()) {
-					Vec3<REAL_TYPE> newnormal(0,0,0);
+					Vec3<PL_REAL> newnormal(0,0,0);
 					vnmap[tmpvtx[i]]=newnormal;
 				}
 				// 頂点ごとに面法線の合計
@@ -263,7 +263,7 @@ POLYLIB_STAT obj_a_save(
 			vnmap_iter!=vnmap.end();
 			vnmap_iter++){
 
-				Vec3<REAL_TYPE> out = (vnmap_iter->second).normalize();
+				Vec3<PL_REAL> out = (vnmap_iter->second).normalize();
 
 #if SCIENTIFIC_OUT
 				os << "vn " << std::setprecision(6)<< scientific << out <<std::endl;
@@ -477,18 +477,18 @@ POLYLIB_STAT obj_bb_save(
 
 
 		// 法線　vn 出力
-		std::map<Vertex*,Vec3<REAL_TYPE> > vnmap;
-		std::map<Vertex*,Vec3<REAL_TYPE> >::iterator vnmap_iter;
+		std::map<Vertex*,Vec3<PL_REAL> > vnmap;
+		std::map<Vertex*,Vec3<PL_REAL> >::iterator vnmap_iter;
 		std::vector<PrivateTriangle*>::iterator itr;
 
 		for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
 			Vertex** tmpvtx=(*itr)->get_vertex();
-			Vec3<REAL_TYPE> normal=(*itr)->get_normal();
+			Vec3<PL_REAL> normal=(*itr)->get_normal();
 			for(int i=0;i<3;++i){
 				// Vertex*  をkeyにして法線ベクトル（計算途中）を探し、無ければ加える。
 				vnmap_iter=vnmap.find(tmpvtx[i]);
 				if(vnmap_iter==vnmap.end()) {
-					Vec3<REAL_TYPE> newnormal(0,0,0);
+					Vec3<PL_REAL> newnormal(0,0,0);
 					vnmap[tmpvtx[i]]=newnormal;
 				}
 				// 頂点ごとに面法線の合計
@@ -500,7 +500,7 @@ POLYLIB_STAT obj_bb_save(
 			vnmap_iter!=vnmap.end();
 			vnmap_iter++){
 
-				Vec3<REAL_TYPE> out = (vnmap_iter->second).normalize();
+				Vec3<PL_REAL> out = (vnmap_iter->second).normalize();
 				float tmp[3];
 				tmp[0]=out[0];
 				tmp[1]=out[1];
@@ -556,7 +556,7 @@ POLYLIB_STAT obj_b_load(
 	std::vector<PrivateTriangle*> *tri_list, 
 	std::string fname,
 	int	*total,
-	REAL_TYPE	scale
+	PL_REAL	scale
 	) {
 		std::ifstream ifs(fname.c_str(), std::ios::in | std::ios::binary);
 		if (ifs.fail()) {

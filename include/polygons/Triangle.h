@@ -63,7 +63,7 @@ public:
 	Triangle(
 		//Vec3	vertex[3], 
 		Vertex* vertex_ptr[3],
-		Vec3<REAL_TYPE>	normal
+		Vec3<PL_REAL>	normal
 		) ;
 
 	///
@@ -77,8 +77,8 @@ public:
 		//Vec3	vertex[3], 
 
 		Vertex* vertex_ptr[3],
-		Vec3<REAL_TYPE>	normal, 
-		REAL_TYPE	area
+		Vec3<PL_REAL>	normal, 
+		PL_REAL	area
 		) ;
 
 	//=======================================================================
@@ -119,13 +119,13 @@ public:
 	///
 	/// @return 法線ベクトル。
 	///
-	virtual Vec3<REAL_TYPE> get_normal() const ;
+	virtual Vec3<PL_REAL> get_normal() const ;
 	///
 	/// 面積を取得。
 	///
 	/// @return 面積。
 	///
-	virtual REAL_TYPE get_area() const ;
+	virtual PL_REAL get_area() const ;
 	///
 	/// ユーザ定義IDを設定。
 	///
@@ -164,17 +164,17 @@ protected:
 	// クラス変数
 	//=======================================================================
 	/// 三角形の頂点座標（反時計回りで並んでいる）。
-	//	Vec3<REAL_TYPE>	m_vertex[3];
+	//	Vec3<PL_REAL>	m_vertex[3];
 
 	/// changed with Vertex and VertexList class since Polylib version 3.0
 	/// 三角形の頂点座標（反時計回りで並んでいる）。
 	Vertex* m_vertex_ptr[3];
 
 	/// 三角形の法線ベクトル。
-	Vec3<REAL_TYPE>	m_normal;
+	Vec3<PL_REAL>	m_normal;
 
 	/// 三角形の面積。
-	REAL_TYPE	m_area;
+	PL_REAL	m_area;
 
 	/// 三角形のユーザ定義ID
 	int     m_exid;

@@ -14,6 +14,7 @@
 
 #include <float.h>
 
-#define REAL_TYPE PL_REAL
+// ビルド時に指定する実数マクロ名をそのまま利用するため以下コメントアウト 20140221 tkawanab
+// #define REAL_TYPE PL_REAL
 
 #endif // polylib_define_h

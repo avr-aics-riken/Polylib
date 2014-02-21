@@ -36,7 +36,7 @@ Vertex::Vertex(){}
 ///
 /// @param[in] vec 頂点ベクトル
 
-Vertex::Vertex(const Vec3<REAL_TYPE>& vec){
+Vertex::Vertex(const Vec3<PL_REAL>& vec){
 	this->t[0]=vec.t[0];
 	this->t[1]=vec.t[1];
 	this->t[2]=vec.t[2];
@@ -49,7 +49,7 @@ Vertex::Vertex(const Vec3<REAL_TYPE>& vec){
 /// @param[in] y 座標
 /// @param[in] z 座標
 
-Vertex::Vertex(REAL_TYPE x,REAL_TYPE y,REAL_TYPE z){
+Vertex::Vertex(PL_REAL x,PL_REAL y,PL_REAL z){
 	this->t[0]=x;
 	this->t[1]=y;
 	this->t[2]=z;
@@ -59,19 +59,19 @@ Vertex::Vertex(REAL_TYPE x,REAL_TYPE y,REAL_TYPE z){
 ///  index アクセス
 ///
 
-REAL_TYPE& Vertex::operator [](const AxisEnum& axis) { 
+PL_REAL& Vertex::operator [](const AxisEnum& axis) { 
 	return this->t[axis];
 }
 ///
 ///  index アクセス
 ///
 
-const REAL_TYPE& Vertex::operator [](const AxisEnum& axis) const {
+const PL_REAL& Vertex::operator [](const AxisEnum& axis) const {
 	return this->t[axis];
 }
 
 
-// virtual   REAL_TYPE x() const{
+// virtual   PL_REAL x() const{
 //     return this->t[AXIS_X];
 //   }
 
@@ -79,9 +79,9 @@ const REAL_TYPE& Vertex::operator [](const AxisEnum& axis) const {
 ///  2乗距離
 ///
 
-REAL_TYPE Vertex::distanceSquared(Vertex v)
+PL_REAL Vertex::distanceSquared(Vertex v)
 {
-	Vec3<REAL_TYPE> vdis(this->t[0]-v.t[0],this->t[1]-v.t[1],this->t[2]-v.t[2]);
+	Vec3<PL_REAL> vdis(this->t[0]-v.t[0],this->t[1]-v.t[1],this->t[2]-v.t[2]);
 
 #ifdef DEBUG
 	std::cout << "a("<<this->t[0]<<","
@@ -102,7 +102,7 @@ REAL_TYPE Vertex::distanceSquared(Vertex v)
 
 ///距離
 
-REAL_TYPE Vertex::distance(Vertex v){
+PL_REAL Vertex::distance(Vertex v){
 	return sqrt(distanceSquared(v));
 }
 

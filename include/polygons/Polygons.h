@@ -74,7 +74,7 @@ public:
 	///  @param[in] n_start_exid exidlistのid開始位置
 	///  @param[in] n_tri 加える三角形の数
 
-	virtual void init(const REAL_TYPE* vertlist,
+	virtual void init(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
 		const int n_start_tri,
@@ -102,11 +102,11 @@ public:
 	///  @param[in] n_scalar 頂点あたりのスカラーデータの数
 	///  @param[in] n_vector 頂点あたりのベクターデータの数
 
-	virtual void init_dvertex(const REAL_TYPE* vertlist,
+	virtual void init_dvertex(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
-		const REAL_TYPE* scalarlist,
-		const REAL_TYPE* vectorlist,
+		const PL_REAL* scalarlist,
+		const PL_REAL* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
 		const int n_start_exid,
@@ -139,7 +139,7 @@ public:
 	///  @param[in] n_start_exid exidlistのid開始位置
 	///  @param[in] n_tri 加える三角形の数
 
-	virtual void add(const REAL_TYPE* vertlist,
+	virtual void add(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
 		const int n_start_tri,
@@ -164,11 +164,11 @@ public:
 	///  @param[in] n_scalar 頂点あたりのスカラーデータの数
 	///  @param[in] n_vector 頂点あたりのベクターデータの数
 
-	virtual void add_dvertex(const REAL_TYPE* vertlist,
+	virtual void add_dvertex(const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
-		const REAL_TYPE* scalarlist,
-		const REAL_TYPE* vectorlist,
+		const PL_REAL* scalarlist,
+		const PL_REAL* vectorlist,
 		const int n_start_tri,
 		const int n_start_id,
 		const int n_start_exid,
@@ -188,7 +188,7 @@ public:
 	///
 	virtual POLYLIB_STAT import(
 		const std::map<std::string, std::string>	fname,
-		REAL_TYPE scale = 1.0
+		PL_REAL scale = 1.0
 		) = 0;
 
 	///
@@ -282,7 +282,7 @@ public:
 	///  @return    検索されたポリゴン
 	///
 	virtual const PrivateTriangle* search_nearest(
-		const Vec3<REAL_TYPE>&    pos
+		const Vec3<PL_REAL>&    pos
 		) const = 0;
 
 	///
@@ -315,7 +315,7 @@ public:
 	///  @return    polygonへのpointer
 	///
 
-	virtual DVertexTriangle* add_DVertex_Triangle(Vec3<REAL_TYPE>* v);
+	virtual DVertexTriangle* add_DVertex_Triangle(Vec3<PL_REAL>* v);
 
 	//
 	/// DVertex 追加作成後の重複頂点削除
@@ -397,7 +397,7 @@ protected:
 	std::vector<PrivateTriangle*>	*m_tri_list;
 	//	std::vector<Vertex*>	*m_vtx_list;
 	VertexList	*m_vertex_list;
-	REAL_TYPE tolerance;
+	PL_REAL tolerance;
 
 };
 

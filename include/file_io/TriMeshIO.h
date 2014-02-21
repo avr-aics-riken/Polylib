@@ -47,7 +47,7 @@ public:
 		VertexList*	vertex_list,
 		std::vector<PrivateTriangle*>	*tri_list,
 		const std::map<std::string, std::string>	&fmap,
-		REAL_TYPE scale = 1.0
+		PL_REAL scale = 1.0
 		);
 
 
