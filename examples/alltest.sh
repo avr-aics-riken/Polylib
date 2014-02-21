@@ -13,7 +13,7 @@ cd ..
 
 make clean
 
-./configure --prefix=$PREFIX --with-parser=$PARSER --with-ompi=$MPI --with-example=yes CXX=mpicxx CXXFLAGS="-O3 -Wall -fno-strict-aliasing" PL_REAL=$dname
+./configure --prefix=$PREFIX --with-parser=$PARSER --with-ompi=$MPI --with-example=yes CXX=mpicxx CXXFLAGS="-O3 -Wall -fno-strict-aliasing" --with-real=$dname
 
 make
 

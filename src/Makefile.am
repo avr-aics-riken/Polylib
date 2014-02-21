@@ -17,7 +17,7 @@ if SERIALTARGET
 #  libPOLY_a_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include
 #  libPOLY_a_SOURCES =  
   lib_LTLIBRARIES = libPOLY.la
-  libPOLY_la_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include -DPL_REAL=@PL_REAL@
+  libPOLY_la_CXXFLAGS = @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
 #  libPOLY_la_LDFLAGS = @LT_STATIC@
 #  libPOLY_la_LDFLAGS = 
    libPOLY_la_SOURCES = \
@@ -52,7 +52,7 @@ else
   # libMPIPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
   # libMPIPOLY_a_SOURCES = 
   lib_LTLIBRARIES = libMPIPOLY.la
-  libMPIPOLY_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include -DPL_REAL=@PL_REAL@
+  libMPIPOLY_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
 #  libMPIPOLY_la_LDFLAGS = @LT_STATIC@
   libMPIPOLY_la_SOURCES = \
      MPIPolylib.cxx \

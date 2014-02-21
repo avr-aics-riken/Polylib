@@ -16,6 +16,8 @@ REVISION HISTORY
 ------------------
 2014-02-21
 
+ r42 change implementation PL_TYPE [ver 3.3.2]
+
  r41 change REAL_TYPE Macro to avoid conflict with FFVC [ver 3.3.1]
 
  r40 Merge branch version3 to master [ve 3.3.0]

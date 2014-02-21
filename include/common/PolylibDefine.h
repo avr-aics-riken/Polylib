@@ -14,7 +14,15 @@
 
 #include <float.h>
 
-// ビルド時に指定する実数マクロ名をそのまま利用するため以下コメントアウト 20140221 tkawanab
-// #define REAL_TYPE PL_REAL
+/** 実数型の指定
+ * - デフォルトでは、PL_REAL=float
+ * - コンパイル時オプション-D_REAL_IS_DOUBLE_を付与することで
+ *   PL_REAL=doubleになる
+ */
+#ifdef _REAL_IS_DOUBLE_
+#define PL_REAL double
+#else
+#define PL_REAL float
+#endif
 
 #endif // polylib_define_h

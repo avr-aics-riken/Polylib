@@ -90,6 +90,9 @@ Configure options:
 
  --with-parser=TEXTPARSER_PATH
     Specify the directory path that is installed TextParser library.
+  
+ --with-real=(float|double)
+    This option allows to specify the type of real variable. The default is float.
 
 
  CXX=CXX_COMPILER
@@ -97,9 +100,6 @@ Configure options:
 
  CXXFLAGS=CXX_OPTIONS
     Specify compiler options.
-
- PL_REAL=(float|double)
-    Specify the type of floating variable. The default is double.
 
 
 
@@ -112,9 +112,9 @@ Here is some examples;
                 --with-mpich=/usr/local/mpich \
                 --with-parser=/usr/local/TextParser \
                 --with-example=yes \
+                --with-real=double \
                 CXX=/opt/intel/composerxe/bin/icpc \
-                CXXFLAGS="-O3 -Wall -fno-strict-aliasing" \
-                PL_REAL=double
+                CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 
 
 ## OpenMPI with wrapper compiler, default install directory, /wo example
@@ -123,8 +123,7 @@ Here is some examples;
                 --with-parser=/usr/local/FFV/TextParser \
                 --with-example=yes \
                 CXX=mpicxx \
-                CXXFLAGS="-O3 -Wall -fno-strict-aliasing" \
-                PL_REAL=float
+                CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 
 
 ## K-computer
@@ -133,8 +132,7 @@ Here is some examples;
                 --with-parser=/usr/local/TextParser \
                 --host=sparc64-unknown-linux-gnu \
                 CXX=mpiFCCpx \
-                CXXFLAGS="-Kfast,ocl,preex,simd=2,uxsimd,array_private,parallel,openmp" \
-                PL_REAL=float
+                CXXFLAGS="-Kfast,ocl,preex,simd=2,uxsimd,array_private,parallel,openmp"
 
 
 

@@ -22,7 +22,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 DISTCLEANFILES = *.tar.gz
 
-CXXFLAGS = -DPL_REAL=@PL_REAL@
+CXXFLAGS = @REAL_OPT@
 
 # to check libtool is upto date
 LIBTOOL_DEPS = @LIBTOOL_DEPS@

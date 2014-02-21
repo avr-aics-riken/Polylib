@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.57])
-AC_INIT([Polylib], [3.3.1], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [3.3.2], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -25,7 +25,7 @@ AC_CONFIG_MACRO_DIR([m4])
 #
 # revision No.
 #
-PL_REVISION="20140221_1600"
+PL_REVISION="20140221_2330"
 AC_SUBST(PL_REVISION)
 
 
@@ -166,26 +166,19 @@ AC_SUBST(PL_CFLAGS)
 PL_LDFLAGS="-L$PL_INST_DIR/lib"
 AC_SUBST(PL_LDFLAGS)
 
+
+
 #
-# handle PL_REAL
+# Type of REAL
 #
-# This valiable holds the type of real value in whole Polylib system.
-AC_MSG_CHECKING([\$(PL_REAL) real type to be used])
-# if it is "float" exactly, PL_REAL is defined to "float".
-# if it is not, PL_REAL is defined to "double" as default.
-if test x"$PL_REAL" = x"float"; then
-#do nothing
-AC_MSG_RESULT("$PL_REAL")
-AC_MSG_WARN([PL_REAL is set to float!])
-#    echo PL_REAL is set to float!
+AC_ARG_WITH(real, [AC_HELP_STRING([--with-real=(float|double)],[Specify real type [float]])], , with_real=float)
+AC_SUBST(REAL_OPT)
+
+if test x"$with_real" = x"double" ; then
+  REAL_OPT=-D_REAL_IS_DOUBLE_
 else
- PL_REAL="double"
-AC_MSG_RESULT("$PL_REAL")
+  REAL_OPT=
 fi
-
-AC_SUBST(PL_REAL)  we do not need PL_REAL for Makefiles
-AC_DEFINE_UNQUOTED(PL_REAL,$PL_REAL,[Real valiable type to whole Polylib.])
-
 
 
 
