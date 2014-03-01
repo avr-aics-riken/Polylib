@@ -105,6 +105,14 @@ Configure options:
 
 Here is some examples;
 
+## Intel compiler serial
+
+  $ ./configure --prefix=/usr/local/ASD \
+                --with-parser=/usr/local/ASD \
+                --with-example=no \
+                CXX=icpc \
+                CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
+
 
 ## Intel compiler and MPICH, and with example
  
@@ -117,7 +125,7 @@ Here is some examples;
                 CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 
 
-## OpenMPI with wrapper compiler, default install directory, /wo example
+## OpenMPI with wrapper compiler, default install directory, /w example
 
   $ ./configure --prefix=/usr/local/FFV/Polylib \
                 --with-parser=/usr/local/FFV/TextParser \

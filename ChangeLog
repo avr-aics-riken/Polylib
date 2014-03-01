@@ -13,13 +13,15 @@
 REVISION HISTORY
 ================
 
+ 
 ------------------
 2014-03-01
+ r44 suppress message by keno-2014-03-01 [ver 3.3.4]
+ 
  r43 change filename Version.h.in to polyVersion.h.in to avoid conflict with other version file [ver 3.3.3]
 
 ------------------
 2014-02-21
-
  r42 change implementation PL_TYPE [ver 3.3.2]
 
  r41 change REAL_TYPE Macro to avoid conflict with FFVC [ver 3.3.1]
@@ -28,31 +30,26 @@ REVISION HISTORY
 
 ------------------
 2014-02-11
-
  r39 add CC compiler wrapper script in configure.ac for NERSC Hopper [ver 2.7.4]
 
 ------------------
 2013-11-02
-
  r38 fix undistributed Triangle::m_exid at MPI [ver 2.7.3]
 
 ------------------
 2013-11-02
-
  r37 cleanup configure.ac [ver 2.7.2]
    - expire MPICH version
    - introduce subdir-objects in Makefile.am
 
 ------------------
 2013-10-11
-
  r36 improve precision of calculating normal vector [ver 2.7.1]
    - calculate Triangle::calc_normal() in double precision
    - add Polylib::get_leaf_groups()
  
 ------------------
 2013-10-02
-
  r35 modify to include string.h for strcpy in CMPIPolylib.cxx [ver 2.7.0]
  
  r34 modify for intel mpi [ver 2.6.9]
@@ -63,14 +60,12 @@ There are some commit operations from r30 to r33
 
 ------------------
 2013-09-16
-
  r30 Branch - ver 3.0.0
   - Package 3.0.0
   - update a user guide
 
 ------------------
 2013-07-20
-
  r29 update PolygonGroup::set_all_exid_of_trias() [ver 2.6.8]
   - set value to m_id, m_id_defined
 
@@ -79,24 +74,20 @@ There are some commit operations from r30 to r33
 
 ------------------
 2013-07-17
-
  r27 Merge [ver 2.6.6] 
   - add PolygonGroup::m_type. and  PolygonGroup::set_all_exid_of_trias()
 
 ------------------
 2013-07-15
-
  r26 update release style [ver 2.6.5]
   - with-example=no (default)
 
 ------------------
 2013-07-04
-
  r25 update INSTALL & README
 
 ------------------
 2013-06-27
-
  r24 update configure [ver 2.6.4]
 
  r23 update configure option [ver 2.6.3]
@@ -107,14 +98,12 @@ There are some commit operations from r30 to r33
 
 ------------------
 2013-06-26
-
  r20 bug fix configure.ac
 
  r19 change configure option
 
 ------------------
 2013-06-25
-
  r18 update README
 
  r17 ver 2.6.1
@@ -123,26 +112,22 @@ There are some commit operations from r30 to r33
 
 ------------------
 2013-06-24
-
  r15 ver 2.6 autotools version
 
  r14 make libMPIPOLY.a and libPOLY.a
 
 ------------------
 2013-06-24
-
  r13 ver 2.6 autotool version but only MPIPOLY
 
 ------------------
 2013-06-23
-
  r12 prepare autotools 2
 
  r11 prepare autotools
 
 ------------------
 2013-06-22
-
  r10 update AUTHORS
 
  r9 2.5
