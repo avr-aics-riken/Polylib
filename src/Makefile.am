@@ -124,7 +124,7 @@ nobase_include_HEADERS = \
   $(top_builddir)/include/polygons/VNode.h \
   $(top_builddir)/include/polygons/VTree.h \
   $(top_builddir)/include/util/time.h \
-  $(top_builddir)/include/Version.h
+  $(top_builddir)/include/polyVersion.h
 
 EXTRA_DIST = Makefile_hand depend.inc
 

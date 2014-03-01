@@ -27,7 +27,7 @@
 #include "common/Vec3.h"
 
 #include "TextParser.h"
-#include "Version.h"
+#include "polyVersion.h"
 
 //#define TIME_MEASURE
 #ifdef TIME_MEASURE

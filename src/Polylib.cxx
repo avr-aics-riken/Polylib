@@ -34,7 +34,7 @@
 
 
 #include "TextParser.h"
-#include "Version.h"
+#include "polyVersion.h"
 
 using namespace std;
 using namespace PolylibNS;

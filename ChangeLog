@@ -14,6 +14,10 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-03-01
+ r43 change filename Version.h.in to polyVersion.h.in to avoid conflict with other version file [ver 3.3.3]
+
+------------------
 2014-02-21
 
  r42 change implementation PL_TYPE [ver 3.3.2]
