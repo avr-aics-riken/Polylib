@@ -13,6 +13,10 @@
 RELEASE
 =======
 
+-------------
+Version 3.3.5   2014-03-04
+ - change output format for poly-config --versi
+ 
 -------------------------
 Version 3.3.4  2014-03-01
  - suppress PL:load message

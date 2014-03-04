@@ -13,7 +13,11 @@
 REVISION HISTORY
 ================
 
- 
+------------------
+2014-03-04
+ r45 version format [ver 3.3.5]
+  - change output format for poly-config --version
+  
 ------------------
 2014-03-01
  r44 suppress message by keno-2014-03-01 [ver 3.3.4]
