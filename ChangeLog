@@ -14,6 +14,10 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-03-05
+ r46 suppress debug write [ver 3.3.6]
+
+------------------
 2014-03-04
  r45 version format [ver 3.3.5]
   - change output format for poly-config --version

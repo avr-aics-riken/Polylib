@@ -83,7 +83,7 @@ POLYLIB_STAT
 	m_myproc.m_area.m_gcell_bbox.add(m_myproc.m_area.m_gcell_min);
 	m_myproc.m_area.m_gcell_bbox.add(m_myproc.m_area.m_gcell_max);
 
-//#ifdef DEBUG
+#ifdef DEBUG
 	PL_DBGOSH << "(my_rank:" << m_myrank << "):" <<"bpos      :" << v_bpos  << std::endl;
 	PL_DBGOSH << "(my_rank:" << m_myrank << "):" <<"bbsize    :" << v_bbsize << std::endl;
 	PL_DBGOSH << "(my_rank:" << m_myrank << "):" <<"gcsize    :" << v_gcsize << std::endl;
@@ -92,7 +92,7 @@ POLYLIB_STAT
 		 << m_myproc.m_area.m_gcell_min << std::endl; 
 	PL_DBGOSH << "(my_rank:" << m_myrank << "):" <<"gcell_max :"
 	 	 << m_myproc.m_area.m_gcell_max << std::endl;
-//#endif
+#endif
 
 	// 送信データ作成
 	PL_REAL send_buf[12];

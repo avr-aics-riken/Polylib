@@ -106,9 +106,9 @@ POLYLIB_STAT TriMeshIO::load(
 		for (it = fmap.begin(); it != fmap.end(); it++) {
 			std::string fname = it->first;
 			std::string fmt = it->second;
-
-			//PL_DBGOSH<< __func__<<" " << fname << " "<< fmt << std::endl; // keno-2014-03-01
-
+#ifdef DEBUG
+			PL_DBGOSH<< __func__<<" " << fname << " "<< fmt << std::endl; // keno-2014-03-01
+#endif
 			if (fmt == "") {
 				PL_ERROSH << "[ERROR]:TTriMeshIO::load():Unknown stl format." << std::endl;
 				ret = PLSTAT_NG;
