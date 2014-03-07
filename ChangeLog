@@ -14,6 +14,10 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-03-07
+ r47 suppress __func__ for FX in PolylibCommon.h [ver 3.3.7]
+
+------------------
 2014-03-05
  r46 suppress debug write [ver 3.3.6]
 

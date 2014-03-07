@@ -20,7 +20,11 @@
 #define PL_DEBGOSH std::cout
 
 #else
+
 #define PL_DEBGOSH std::cout
+#ifndef __func__
+#define __func__ __FILE__
+#endif
 
 #endif
 
