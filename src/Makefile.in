@@ -134,59 +134,6 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libMPIPOLY_la_LIBADD =
-am__libMPIPOLY_la_SOURCES_DIST = MPIPolylib.cxx Polylib.cxx \
-	c_lang/CMPIPolylib.cxx c_lang/CPolylib.cxx common/BBox.cxx \
-	file_io/stl.cxx file_io/obj.cxx file_io/vtk.cxx \
-	file_io/triangle_id.cxx file_io/TriMeshIO.cxx \
-	groups/PolygonGroup.cxx groups/PolygonGroupFactory.cxx \
-	polygons/DVertex.cxx polygons/DVertexManager.cxx \
-	polygons/DVertexTriangle.cxx polygons/Polygons.cxx \
-	polygons/PrivateTriangle.cxx polygons/Triangle.cxx \
-	polygons/TriMesh.cxx polygons/VElement.cxx polygons/Vertex.cxx \
-	polygons/VertexList.cxx polygons/VertKDT.cxx \
-	polygons/VertKDTElem.cxx polygons/VertKDTNode.cxx \
-	polygons/VNode.cxx polygons/VTree.cxx util/time.cxx
-am__dirstamp = $(am__leading_dot)dirstamp
-@SERIALTARGET_FALSE@am_libMPIPOLY_la_OBJECTS =  \
-@SERIALTARGET_FALSE@	libMPIPOLY_la-MPIPolylib.lo \
-@SERIALTARGET_FALSE@	libMPIPOLY_la-Polylib.lo \
-@SERIALTARGET_FALSE@	c_lang/libMPIPOLY_la-CMPIPolylib.lo \
-@SERIALTARGET_FALSE@	c_lang/libMPIPOLY_la-CPolylib.lo \
-@SERIALTARGET_FALSE@	common/libMPIPOLY_la-BBox.lo \
-@SERIALTARGET_FALSE@	file_io/libMPIPOLY_la-stl.lo \
-@SERIALTARGET_FALSE@	file_io/libMPIPOLY_la-obj.lo \
-@SERIALTARGET_FALSE@	file_io/libMPIPOLY_la-vtk.lo \
-@SERIALTARGET_FALSE@	file_io/libMPIPOLY_la-triangle_id.lo \
-@SERIALTARGET_FALSE@	file_io/libMPIPOLY_la-TriMeshIO.lo \
-@SERIALTARGET_FALSE@	groups/libMPIPOLY_la-PolygonGroup.lo \
-@SERIALTARGET_FALSE@	groups/libMPIPOLY_la-PolygonGroupFactory.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-DVertex.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-DVertexManager.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-DVertexTriangle.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-Polygons.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-PrivateTriangle.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-Triangle.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-TriMesh.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-VElement.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-Vertex.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-VertexList.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-VertKDT.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-VertKDTElem.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-VertKDTNode.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-VNode.lo \
-@SERIALTARGET_FALSE@	polygons/libMPIPOLY_la-VTree.lo \
-@SERIALTARGET_FALSE@	util/libMPIPOLY_la-time.lo
-libMPIPOLY_la_OBJECTS = $(am_libMPIPOLY_la_OBJECTS)
-AM_V_lt = $(am__v_lt_@AM_V@)
-am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
-am__v_lt_0 = --silent
-am__v_lt_1 = 
-libMPIPOLY_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
-	-o $@
-@SERIALTARGET_FALSE@am_libMPIPOLY_la_rpath = -rpath $(libdir)
 libPOLY_la_LIBADD =
 am__libPOLY_la_SOURCES_DIST = Polylib.cxx c_lang/CPolylib.cxx \
 	common/BBox.cxx file_io/stl.cxx file_io/obj.cxx \
@@ -199,6 +146,7 @@ am__libPOLY_la_SOURCES_DIST = Polylib.cxx c_lang/CPolylib.cxx \
 	polygons/VertexList.cxx polygons/VertKDT.cxx \
 	polygons/VertKDTElem.cxx polygons/VertKDTNode.cxx \
 	polygons/VNode.cxx polygons/VTree.cxx util/time.cxx
+am__dirstamp = $(am__leading_dot)dirstamp
 @SERIALTARGET_TRUE@am_libPOLY_la_OBJECTS = libPOLY_la-Polylib.lo \
 @SERIALTARGET_TRUE@	c_lang/libPOLY_la-CPolylib.lo \
 @SERIALTARGET_TRUE@	common/libPOLY_la-BBox.lo \
@@ -226,10 +174,62 @@ am__libPOLY_la_SOURCES_DIST = Polylib.cxx c_lang/CPolylib.cxx \
 @SERIALTARGET_TRUE@	polygons/libPOLY_la-VTree.lo \
 @SERIALTARGET_TRUE@	util/libPOLY_la-time.lo
 libPOLY_la_OBJECTS = $(am_libPOLY_la_OBJECTS)
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 libPOLY_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(libPOLY_la_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 @SERIALTARGET_TRUE@am_libPOLY_la_rpath = -rpath $(libdir)
+libPOLYmpi_la_LIBADD =
+am__libPOLYmpi_la_SOURCES_DIST = MPIPolylib.cxx Polylib.cxx \
+	c_lang/CMPIPolylib.cxx c_lang/CPolylib.cxx common/BBox.cxx \
+	file_io/stl.cxx file_io/obj.cxx file_io/vtk.cxx \
+	file_io/triangle_id.cxx file_io/TriMeshIO.cxx \
+	groups/PolygonGroup.cxx groups/PolygonGroupFactory.cxx \
+	polygons/DVertex.cxx polygons/DVertexManager.cxx \
+	polygons/DVertexTriangle.cxx polygons/Polygons.cxx \
+	polygons/PrivateTriangle.cxx polygons/Triangle.cxx \
+	polygons/TriMesh.cxx polygons/VElement.cxx polygons/Vertex.cxx \
+	polygons/VertexList.cxx polygons/VertKDT.cxx \
+	polygons/VertKDTElem.cxx polygons/VertKDTNode.cxx \
+	polygons/VNode.cxx polygons/VTree.cxx util/time.cxx
+@SERIALTARGET_FALSE@am_libPOLYmpi_la_OBJECTS =  \
+@SERIALTARGET_FALSE@	libPOLYmpi_la-MPIPolylib.lo \
+@SERIALTARGET_FALSE@	libPOLYmpi_la-Polylib.lo \
+@SERIALTARGET_FALSE@	c_lang/libPOLYmpi_la-CMPIPolylib.lo \
+@SERIALTARGET_FALSE@	c_lang/libPOLYmpi_la-CPolylib.lo \
+@SERIALTARGET_FALSE@	common/libPOLYmpi_la-BBox.lo \
+@SERIALTARGET_FALSE@	file_io/libPOLYmpi_la-stl.lo \
+@SERIALTARGET_FALSE@	file_io/libPOLYmpi_la-obj.lo \
+@SERIALTARGET_FALSE@	file_io/libPOLYmpi_la-vtk.lo \
+@SERIALTARGET_FALSE@	file_io/libPOLYmpi_la-triangle_id.lo \
+@SERIALTARGET_FALSE@	file_io/libPOLYmpi_la-TriMeshIO.lo \
+@SERIALTARGET_FALSE@	groups/libPOLYmpi_la-PolygonGroup.lo \
+@SERIALTARGET_FALSE@	groups/libPOLYmpi_la-PolygonGroupFactory.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-DVertex.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-DVertexManager.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-DVertexTriangle.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-Polygons.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-PrivateTriangle.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-Triangle.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-TriMesh.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-VElement.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-Vertex.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-VertexList.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-VertKDT.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-VertKDTElem.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-VertKDTNode.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-VNode.lo \
+@SERIALTARGET_FALSE@	polygons/libPOLYmpi_la-VTree.lo \
+@SERIALTARGET_FALSE@	util/libPOLYmpi_la-time.lo
+libPOLYmpi_la_OBJECTS = $(am_libPOLYmpi_la_OBJECTS)
+libPOLYmpi_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
+	-o $@
+@SERIALTARGET_FALSE@am_libPOLYmpi_la_rpath = -rpath $(libdir)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -264,9 +264,9 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(libMPIPOLY_la_SOURCES) $(libPOLY_la_SOURCES)
-DIST_SOURCES = $(am__libMPIPOLY_la_SOURCES_DIST) \
-	$(am__libPOLY_la_SOURCES_DIST)
+SOURCES = $(libPOLY_la_SOURCES) $(libPOLYmpi_la_SOURCES)
+DIST_SOURCES = $(am__libPOLY_la_SOURCES_DIST) \
+	$(am__libPOLYmpi_la_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -429,7 +429,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = subdir-objects
-@SERIALTARGET_FALSE@lib_LTLIBRARIES = libMPIPOLY.la
+@SERIALTARGET_FALSE@lib_LTLIBRARIES = libPOLYmpi.la
 
 #  lib_LIBRARIES = libPOLY.a
 #  libPOLY_a_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include
@@ -466,9 +466,9 @@ AUTOMAKE_OPTIONS = subdir-objects
 @SERIALTARGET_TRUE@     polygons/VTree.cxx \
 @SERIALTARGET_TRUE@     util/time.cxx
 
-@SERIALTARGET_FALSE@libMPIPOLY_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
-#  libMPIPOLY_la_LDFLAGS = @LT_STATIC@
-@SERIALTARGET_FALSE@libMPIPOLY_la_SOURCES = \
+@SERIALTARGET_FALSE@libPOLYmpi_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
+#  libPOLYmpi_la_LDFLAGS = @LT_STATIC@
+@SERIALTARGET_FALSE@libPOLYmpi_la_SOURCES = \
 @SERIALTARGET_FALSE@     MPIPolylib.cxx \
 @SERIALTARGET_FALSE@     Polylib.cxx \
 @SERIALTARGET_FALSE@     c_lang/CMPIPolylib.cxx \
@@ -614,9 +614,7 @@ c_lang/$(am__dirstamp):
 c_lang/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) c_lang/$(DEPDIR)
 	@: > c_lang/$(DEPDIR)/$(am__dirstamp)
-c_lang/libMPIPOLY_la-CMPIPolylib.lo: c_lang/$(am__dirstamp) \
-	c_lang/$(DEPDIR)/$(am__dirstamp)
-c_lang/libMPIPOLY_la-CPolylib.lo: c_lang/$(am__dirstamp) \
+c_lang/libPOLY_la-CPolylib.lo: c_lang/$(am__dirstamp) \
 	c_lang/$(DEPDIR)/$(am__dirstamp)
 common/$(am__dirstamp):
 	@$(MKDIR_P) common
@@ -624,7 +622,7 @@ common/$(am__dirstamp):
 common/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) common/$(DEPDIR)
 	@: > common/$(DEPDIR)/$(am__dirstamp)
-common/libMPIPOLY_la-BBox.lo: common/$(am__dirstamp) \
+common/libPOLY_la-BBox.lo: common/$(am__dirstamp) \
 	common/$(DEPDIR)/$(am__dirstamp)
 file_io/$(am__dirstamp):
 	@$(MKDIR_P) file_io
@@ -632,77 +630,6 @@ file_io/$(am__dirstamp):
 file_io/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) file_io/$(DEPDIR)
 	@: > file_io/$(DEPDIR)/$(am__dirstamp)
-file_io/libMPIPOLY_la-stl.lo: file_io/$(am__dirstamp) \
-	file_io/$(DEPDIR)/$(am__dirstamp)
-file_io/libMPIPOLY_la-obj.lo: file_io/$(am__dirstamp) \
-	file_io/$(DEPDIR)/$(am__dirstamp)
-file_io/libMPIPOLY_la-vtk.lo: file_io/$(am__dirstamp) \
-	file_io/$(DEPDIR)/$(am__dirstamp)
-file_io/libMPIPOLY_la-triangle_id.lo: file_io/$(am__dirstamp) \
-	file_io/$(DEPDIR)/$(am__dirstamp)
-file_io/libMPIPOLY_la-TriMeshIO.lo: file_io/$(am__dirstamp) \
-	file_io/$(DEPDIR)/$(am__dirstamp)
-groups/$(am__dirstamp):
-	@$(MKDIR_P) groups
-	@: > groups/$(am__dirstamp)
-groups/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) groups/$(DEPDIR)
-	@: > groups/$(DEPDIR)/$(am__dirstamp)
-groups/libMPIPOLY_la-PolygonGroup.lo: groups/$(am__dirstamp) \
-	groups/$(DEPDIR)/$(am__dirstamp)
-groups/libMPIPOLY_la-PolygonGroupFactory.lo: groups/$(am__dirstamp) \
-	groups/$(DEPDIR)/$(am__dirstamp)
-polygons/$(am__dirstamp):
-	@$(MKDIR_P) polygons
-	@: > polygons/$(am__dirstamp)
-polygons/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) polygons/$(DEPDIR)
-	@: > polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-DVertex.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-DVertexManager.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-DVertexTriangle.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-Polygons.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-PrivateTriangle.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-Triangle.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-TriMesh.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-VElement.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-Vertex.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-VertexList.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-VertKDT.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-VertKDTElem.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-VertKDTNode.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-VNode.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-polygons/libMPIPOLY_la-VTree.lo: polygons/$(am__dirstamp) \
-	polygons/$(DEPDIR)/$(am__dirstamp)
-util/$(am__dirstamp):
-	@$(MKDIR_P) util
-	@: > util/$(am__dirstamp)
-util/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) util/$(DEPDIR)
-	@: > util/$(DEPDIR)/$(am__dirstamp)
-util/libMPIPOLY_la-time.lo: util/$(am__dirstamp) \
-	util/$(DEPDIR)/$(am__dirstamp)
-
-libMPIPOLY.la: $(libMPIPOLY_la_OBJECTS) $(libMPIPOLY_la_DEPENDENCIES) $(EXTRA_libMPIPOLY_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(libMPIPOLY_la_LINK) $(am_libMPIPOLY_la_rpath) $(libMPIPOLY_la_OBJECTS) $(libMPIPOLY_la_LIBADD) $(LIBS)
-c_lang/libPOLY_la-CPolylib.lo: c_lang/$(am__dirstamp) \
-	c_lang/$(DEPDIR)/$(am__dirstamp)
-common/libPOLY_la-BBox.lo: common/$(am__dirstamp) \
-	common/$(DEPDIR)/$(am__dirstamp)
 file_io/libPOLY_la-stl.lo: file_io/$(am__dirstamp) \
 	file_io/$(DEPDIR)/$(am__dirstamp)
 file_io/libPOLY_la-obj.lo: file_io/$(am__dirstamp) \
@@ -713,10 +640,22 @@ file_io/libPOLY_la-triangle_id.lo: file_io/$(am__dirstamp) \
 	file_io/$(DEPDIR)/$(am__dirstamp)
 file_io/libPOLY_la-TriMeshIO.lo: file_io/$(am__dirstamp) \
 	file_io/$(DEPDIR)/$(am__dirstamp)
+groups/$(am__dirstamp):
+	@$(MKDIR_P) groups
+	@: > groups/$(am__dirstamp)
+groups/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) groups/$(DEPDIR)
+	@: > groups/$(DEPDIR)/$(am__dirstamp)
 groups/libPOLY_la-PolygonGroup.lo: groups/$(am__dirstamp) \
 	groups/$(DEPDIR)/$(am__dirstamp)
 groups/libPOLY_la-PolygonGroupFactory.lo: groups/$(am__dirstamp) \
 	groups/$(DEPDIR)/$(am__dirstamp)
+polygons/$(am__dirstamp):
+	@$(MKDIR_P) polygons
+	@: > polygons/$(am__dirstamp)
+polygons/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) polygons/$(DEPDIR)
+	@: > polygons/$(DEPDIR)/$(am__dirstamp)
 polygons/libPOLY_la-DVertex.lo: polygons/$(am__dirstamp) \
 	polygons/$(DEPDIR)/$(am__dirstamp)
 polygons/libPOLY_la-DVertexManager.lo: polygons/$(am__dirstamp) \
@@ -747,11 +686,72 @@ polygons/libPOLY_la-VNode.lo: polygons/$(am__dirstamp) \
 	polygons/$(DEPDIR)/$(am__dirstamp)
 polygons/libPOLY_la-VTree.lo: polygons/$(am__dirstamp) \
 	polygons/$(DEPDIR)/$(am__dirstamp)
+util/$(am__dirstamp):
+	@$(MKDIR_P) util
+	@: > util/$(am__dirstamp)
+util/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) util/$(DEPDIR)
+	@: > util/$(DEPDIR)/$(am__dirstamp)
 util/libPOLY_la-time.lo: util/$(am__dirstamp) \
 	util/$(DEPDIR)/$(am__dirstamp)
 
 libPOLY.la: $(libPOLY_la_OBJECTS) $(libPOLY_la_DEPENDENCIES) $(EXTRA_libPOLY_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(libPOLY_la_LINK) $(am_libPOLY_la_rpath) $(libPOLY_la_OBJECTS) $(libPOLY_la_LIBADD) $(LIBS)
+c_lang/libPOLYmpi_la-CMPIPolylib.lo: c_lang/$(am__dirstamp) \
+	c_lang/$(DEPDIR)/$(am__dirstamp)
+c_lang/libPOLYmpi_la-CPolylib.lo: c_lang/$(am__dirstamp) \
+	c_lang/$(DEPDIR)/$(am__dirstamp)
+common/libPOLYmpi_la-BBox.lo: common/$(am__dirstamp) \
+	common/$(DEPDIR)/$(am__dirstamp)
+file_io/libPOLYmpi_la-stl.lo: file_io/$(am__dirstamp) \
+	file_io/$(DEPDIR)/$(am__dirstamp)
+file_io/libPOLYmpi_la-obj.lo: file_io/$(am__dirstamp) \
+	file_io/$(DEPDIR)/$(am__dirstamp)
+file_io/libPOLYmpi_la-vtk.lo: file_io/$(am__dirstamp) \
+	file_io/$(DEPDIR)/$(am__dirstamp)
+file_io/libPOLYmpi_la-triangle_id.lo: file_io/$(am__dirstamp) \
+	file_io/$(DEPDIR)/$(am__dirstamp)
+file_io/libPOLYmpi_la-TriMeshIO.lo: file_io/$(am__dirstamp) \
+	file_io/$(DEPDIR)/$(am__dirstamp)
+groups/libPOLYmpi_la-PolygonGroup.lo: groups/$(am__dirstamp) \
+	groups/$(DEPDIR)/$(am__dirstamp)
+groups/libPOLYmpi_la-PolygonGroupFactory.lo: groups/$(am__dirstamp) \
+	groups/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-DVertex.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-DVertexManager.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-DVertexTriangle.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-Polygons.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-PrivateTriangle.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-Triangle.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-TriMesh.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-VElement.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-Vertex.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-VertexList.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-VertKDT.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-VertKDTElem.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-VertKDTNode.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-VNode.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+polygons/libPOLYmpi_la-VTree.lo: polygons/$(am__dirstamp) \
+	polygons/$(DEPDIR)/$(am__dirstamp)
+util/libPOLYmpi_la-time.lo: util/$(am__dirstamp) \
+	util/$(DEPDIR)/$(am__dirstamp)
+
+libPOLYmpi.la: $(libPOLYmpi_la_OBJECTS) $(libPOLYmpi_la_DEPENDENCIES) $(EXTRA_libPOLYmpi_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(libPOLYmpi_la_LINK) $(am_libPOLYmpi_la_rpath) $(libPOLYmpi_la_OBJECTS) $(libPOLYmpi_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -771,43 +771,28 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libMPIPOLY_la-MPIPolylib.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libMPIPOLY_la-Polylib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLY_la-Polylib.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@c_lang/$(DEPDIR)/libMPIPOLY_la-CMPIPolylib.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@c_lang/$(DEPDIR)/libMPIPOLY_la-CPolylib.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLYmpi_la-MPIPolylib.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPOLYmpi_la-Polylib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c_lang/$(DEPDIR)/libPOLY_la-CPolylib.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/libMPIPOLY_la-BBox.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c_lang/$(DEPDIR)/libPOLYmpi_la-CMPIPolylib.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c_lang/$(DEPDIR)/libPOLYmpi_la-CPolylib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/libPOLY_la-BBox.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libMPIPOLY_la-TriMeshIO.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libMPIPOLY_la-obj.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libMPIPOLY_la-stl.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libMPIPOLY_la-triangle_id.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libMPIPOLY_la-vtk.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/libPOLYmpi_la-BBox.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLY_la-TriMeshIO.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLY_la-obj.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLY_la-stl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLY_la-triangle_id.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLY_la-vtk.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@groups/$(DEPDIR)/libMPIPOLY_la-PolygonGroup.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@groups/$(DEPDIR)/libMPIPOLY_la-PolygonGroupFactory.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLYmpi_la-TriMeshIO.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLYmpi_la-obj.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLYmpi_la-stl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLYmpi_la-triangle_id.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@file_io/$(DEPDIR)/libPOLYmpi_la-vtk.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@groups/$(DEPDIR)/libPOLY_la-PolygonGroup.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@groups/$(DEPDIR)/libPOLY_la-PolygonGroupFactory.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-DVertex.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-DVertexManager.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-DVertexTriangle.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-Polygons.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-PrivateTriangle.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-TriMesh.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-Triangle.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-VElement.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-VNode.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-VTree.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-VertKDT.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-VertKDTElem.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-VertKDTNode.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-Vertex.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libMPIPOLY_la-VertexList.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@groups/$(DEPDIR)/libPOLYmpi_la-PolygonGroup.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@groups/$(DEPDIR)/libPOLYmpi_la-PolygonGroupFactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLY_la-DVertex.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLY_la-DVertexManager.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLY_la-DVertexTriangle.Plo@am__quote@
@@ -823,8 +808,23 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLY_la-VertKDTNode.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLY_la-Vertex.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLY_la-VertexList.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@util/$(DEPDIR)/libMPIPOLY_la-time.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-DVertex.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-DVertexManager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-DVertexTriangle.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-Polygons.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-PrivateTriangle.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-TriMesh.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-Triangle.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-VElement.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-VNode.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-VTree.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-VertKDT.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-VertKDTElem.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-VertKDTNode.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-Vertex.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@polygons/$(DEPDIR)/libPOLYmpi_la-VertexList.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@util/$(DEPDIR)/libPOLY_la-time.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@util/$(DEPDIR)/libPOLYmpi_la-time.Plo@am__quote@
 
 .cxx.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -849,202 +849,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
-
-libMPIPOLY_la-MPIPolylib.lo: MPIPolylib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT libMPIPOLY_la-MPIPolylib.lo -MD -MP -MF $(DEPDIR)/libMPIPOLY_la-MPIPolylib.Tpo -c -o libMPIPOLY_la-MPIPolylib.lo `test -f 'MPIPolylib.cxx' || echo '$(srcdir)/'`MPIPolylib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libMPIPOLY_la-MPIPolylib.Tpo $(DEPDIR)/libMPIPOLY_la-MPIPolylib.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MPIPolylib.cxx' object='libMPIPOLY_la-MPIPolylib.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o libMPIPOLY_la-MPIPolylib.lo `test -f 'MPIPolylib.cxx' || echo '$(srcdir)/'`MPIPolylib.cxx
-
-libMPIPOLY_la-Polylib.lo: Polylib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT libMPIPOLY_la-Polylib.lo -MD -MP -MF $(DEPDIR)/libMPIPOLY_la-Polylib.Tpo -c -o libMPIPOLY_la-Polylib.lo `test -f 'Polylib.cxx' || echo '$(srcdir)/'`Polylib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libMPIPOLY_la-Polylib.Tpo $(DEPDIR)/libMPIPOLY_la-Polylib.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Polylib.cxx' object='libMPIPOLY_la-Polylib.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o libMPIPOLY_la-Polylib.lo `test -f 'Polylib.cxx' || echo '$(srcdir)/'`Polylib.cxx
-
-c_lang/libMPIPOLY_la-CMPIPolylib.lo: c_lang/CMPIPolylib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT c_lang/libMPIPOLY_la-CMPIPolylib.lo -MD -MP -MF c_lang/$(DEPDIR)/libMPIPOLY_la-CMPIPolylib.Tpo -c -o c_lang/libMPIPOLY_la-CMPIPolylib.lo `test -f 'c_lang/CMPIPolylib.cxx' || echo '$(srcdir)/'`c_lang/CMPIPolylib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) c_lang/$(DEPDIR)/libMPIPOLY_la-CMPIPolylib.Tpo c_lang/$(DEPDIR)/libMPIPOLY_la-CMPIPolylib.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='c_lang/CMPIPolylib.cxx' object='c_lang/libMPIPOLY_la-CMPIPolylib.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o c_lang/libMPIPOLY_la-CMPIPolylib.lo `test -f 'c_lang/CMPIPolylib.cxx' || echo '$(srcdir)/'`c_lang/CMPIPolylib.cxx
-
-c_lang/libMPIPOLY_la-CPolylib.lo: c_lang/CPolylib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT c_lang/libMPIPOLY_la-CPolylib.lo -MD -MP -MF c_lang/$(DEPDIR)/libMPIPOLY_la-CPolylib.Tpo -c -o c_lang/libMPIPOLY_la-CPolylib.lo `test -f 'c_lang/CPolylib.cxx' || echo '$(srcdir)/'`c_lang/CPolylib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) c_lang/$(DEPDIR)/libMPIPOLY_la-CPolylib.Tpo c_lang/$(DEPDIR)/libMPIPOLY_la-CPolylib.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='c_lang/CPolylib.cxx' object='c_lang/libMPIPOLY_la-CPolylib.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o c_lang/libMPIPOLY_la-CPolylib.lo `test -f 'c_lang/CPolylib.cxx' || echo '$(srcdir)/'`c_lang/CPolylib.cxx
-
-common/libMPIPOLY_la-BBox.lo: common/BBox.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT common/libMPIPOLY_la-BBox.lo -MD -MP -MF common/$(DEPDIR)/libMPIPOLY_la-BBox.Tpo -c -o common/libMPIPOLY_la-BBox.lo `test -f 'common/BBox.cxx' || echo '$(srcdir)/'`common/BBox.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) common/$(DEPDIR)/libMPIPOLY_la-BBox.Tpo common/$(DEPDIR)/libMPIPOLY_la-BBox.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='common/BBox.cxx' object='common/libMPIPOLY_la-BBox.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o common/libMPIPOLY_la-BBox.lo `test -f 'common/BBox.cxx' || echo '$(srcdir)/'`common/BBox.cxx
-
-file_io/libMPIPOLY_la-stl.lo: file_io/stl.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libMPIPOLY_la-stl.lo -MD -MP -MF file_io/$(DEPDIR)/libMPIPOLY_la-stl.Tpo -c -o file_io/libMPIPOLY_la-stl.lo `test -f 'file_io/stl.cxx' || echo '$(srcdir)/'`file_io/stl.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libMPIPOLY_la-stl.Tpo file_io/$(DEPDIR)/libMPIPOLY_la-stl.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/stl.cxx' object='file_io/libMPIPOLY_la-stl.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libMPIPOLY_la-stl.lo `test -f 'file_io/stl.cxx' || echo '$(srcdir)/'`file_io/stl.cxx
-
-file_io/libMPIPOLY_la-obj.lo: file_io/obj.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libMPIPOLY_la-obj.lo -MD -MP -MF file_io/$(DEPDIR)/libMPIPOLY_la-obj.Tpo -c -o file_io/libMPIPOLY_la-obj.lo `test -f 'file_io/obj.cxx' || echo '$(srcdir)/'`file_io/obj.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libMPIPOLY_la-obj.Tpo file_io/$(DEPDIR)/libMPIPOLY_la-obj.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/obj.cxx' object='file_io/libMPIPOLY_la-obj.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libMPIPOLY_la-obj.lo `test -f 'file_io/obj.cxx' || echo '$(srcdir)/'`file_io/obj.cxx
-
-file_io/libMPIPOLY_la-vtk.lo: file_io/vtk.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libMPIPOLY_la-vtk.lo -MD -MP -MF file_io/$(DEPDIR)/libMPIPOLY_la-vtk.Tpo -c -o file_io/libMPIPOLY_la-vtk.lo `test -f 'file_io/vtk.cxx' || echo '$(srcdir)/'`file_io/vtk.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libMPIPOLY_la-vtk.Tpo file_io/$(DEPDIR)/libMPIPOLY_la-vtk.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/vtk.cxx' object='file_io/libMPIPOLY_la-vtk.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libMPIPOLY_la-vtk.lo `test -f 'file_io/vtk.cxx' || echo '$(srcdir)/'`file_io/vtk.cxx
-
-file_io/libMPIPOLY_la-triangle_id.lo: file_io/triangle_id.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libMPIPOLY_la-triangle_id.lo -MD -MP -MF file_io/$(DEPDIR)/libMPIPOLY_la-triangle_id.Tpo -c -o file_io/libMPIPOLY_la-triangle_id.lo `test -f 'file_io/triangle_id.cxx' || echo '$(srcdir)/'`file_io/triangle_id.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libMPIPOLY_la-triangle_id.Tpo file_io/$(DEPDIR)/libMPIPOLY_la-triangle_id.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/triangle_id.cxx' object='file_io/libMPIPOLY_la-triangle_id.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libMPIPOLY_la-triangle_id.lo `test -f 'file_io/triangle_id.cxx' || echo '$(srcdir)/'`file_io/triangle_id.cxx
-
-file_io/libMPIPOLY_la-TriMeshIO.lo: file_io/TriMeshIO.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libMPIPOLY_la-TriMeshIO.lo -MD -MP -MF file_io/$(DEPDIR)/libMPIPOLY_la-TriMeshIO.Tpo -c -o file_io/libMPIPOLY_la-TriMeshIO.lo `test -f 'file_io/TriMeshIO.cxx' || echo '$(srcdir)/'`file_io/TriMeshIO.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libMPIPOLY_la-TriMeshIO.Tpo file_io/$(DEPDIR)/libMPIPOLY_la-TriMeshIO.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/TriMeshIO.cxx' object='file_io/libMPIPOLY_la-TriMeshIO.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libMPIPOLY_la-TriMeshIO.lo `test -f 'file_io/TriMeshIO.cxx' || echo '$(srcdir)/'`file_io/TriMeshIO.cxx
-
-groups/libMPIPOLY_la-PolygonGroup.lo: groups/PolygonGroup.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT groups/libMPIPOLY_la-PolygonGroup.lo -MD -MP -MF groups/$(DEPDIR)/libMPIPOLY_la-PolygonGroup.Tpo -c -o groups/libMPIPOLY_la-PolygonGroup.lo `test -f 'groups/PolygonGroup.cxx' || echo '$(srcdir)/'`groups/PolygonGroup.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) groups/$(DEPDIR)/libMPIPOLY_la-PolygonGroup.Tpo groups/$(DEPDIR)/libMPIPOLY_la-PolygonGroup.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='groups/PolygonGroup.cxx' object='groups/libMPIPOLY_la-PolygonGroup.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o groups/libMPIPOLY_la-PolygonGroup.lo `test -f 'groups/PolygonGroup.cxx' || echo '$(srcdir)/'`groups/PolygonGroup.cxx
-
-groups/libMPIPOLY_la-PolygonGroupFactory.lo: groups/PolygonGroupFactory.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT groups/libMPIPOLY_la-PolygonGroupFactory.lo -MD -MP -MF groups/$(DEPDIR)/libMPIPOLY_la-PolygonGroupFactory.Tpo -c -o groups/libMPIPOLY_la-PolygonGroupFactory.lo `test -f 'groups/PolygonGroupFactory.cxx' || echo '$(srcdir)/'`groups/PolygonGroupFactory.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) groups/$(DEPDIR)/libMPIPOLY_la-PolygonGroupFactory.Tpo groups/$(DEPDIR)/libMPIPOLY_la-PolygonGroupFactory.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='groups/PolygonGroupFactory.cxx' object='groups/libMPIPOLY_la-PolygonGroupFactory.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o groups/libMPIPOLY_la-PolygonGroupFactory.lo `test -f 'groups/PolygonGroupFactory.cxx' || echo '$(srcdir)/'`groups/PolygonGroupFactory.cxx
-
-polygons/libMPIPOLY_la-DVertex.lo: polygons/DVertex.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-DVertex.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-DVertex.Tpo -c -o polygons/libMPIPOLY_la-DVertex.lo `test -f 'polygons/DVertex.cxx' || echo '$(srcdir)/'`polygons/DVertex.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-DVertex.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-DVertex.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/DVertex.cxx' object='polygons/libMPIPOLY_la-DVertex.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-DVertex.lo `test -f 'polygons/DVertex.cxx' || echo '$(srcdir)/'`polygons/DVertex.cxx
-
-polygons/libMPIPOLY_la-DVertexManager.lo: polygons/DVertexManager.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-DVertexManager.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-DVertexManager.Tpo -c -o polygons/libMPIPOLY_la-DVertexManager.lo `test -f 'polygons/DVertexManager.cxx' || echo '$(srcdir)/'`polygons/DVertexManager.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-DVertexManager.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-DVertexManager.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/DVertexManager.cxx' object='polygons/libMPIPOLY_la-DVertexManager.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-DVertexManager.lo `test -f 'polygons/DVertexManager.cxx' || echo '$(srcdir)/'`polygons/DVertexManager.cxx
-
-polygons/libMPIPOLY_la-DVertexTriangle.lo: polygons/DVertexTriangle.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-DVertexTriangle.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-DVertexTriangle.Tpo -c -o polygons/libMPIPOLY_la-DVertexTriangle.lo `test -f 'polygons/DVertexTriangle.cxx' || echo '$(srcdir)/'`polygons/DVertexTriangle.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-DVertexTriangle.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-DVertexTriangle.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/DVertexTriangle.cxx' object='polygons/libMPIPOLY_la-DVertexTriangle.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-DVertexTriangle.lo `test -f 'polygons/DVertexTriangle.cxx' || echo '$(srcdir)/'`polygons/DVertexTriangle.cxx
-
-polygons/libMPIPOLY_la-Polygons.lo: polygons/Polygons.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-Polygons.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-Polygons.Tpo -c -o polygons/libMPIPOLY_la-Polygons.lo `test -f 'polygons/Polygons.cxx' || echo '$(srcdir)/'`polygons/Polygons.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-Polygons.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-Polygons.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/Polygons.cxx' object='polygons/libMPIPOLY_la-Polygons.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-Polygons.lo `test -f 'polygons/Polygons.cxx' || echo '$(srcdir)/'`polygons/Polygons.cxx
-
-polygons/libMPIPOLY_la-PrivateTriangle.lo: polygons/PrivateTriangle.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-PrivateTriangle.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-PrivateTriangle.Tpo -c -o polygons/libMPIPOLY_la-PrivateTriangle.lo `test -f 'polygons/PrivateTriangle.cxx' || echo '$(srcdir)/'`polygons/PrivateTriangle.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-PrivateTriangle.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-PrivateTriangle.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/PrivateTriangle.cxx' object='polygons/libMPIPOLY_la-PrivateTriangle.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-PrivateTriangle.lo `test -f 'polygons/PrivateTriangle.cxx' || echo '$(srcdir)/'`polygons/PrivateTriangle.cxx
-
-polygons/libMPIPOLY_la-Triangle.lo: polygons/Triangle.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-Triangle.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-Triangle.Tpo -c -o polygons/libMPIPOLY_la-Triangle.lo `test -f 'polygons/Triangle.cxx' || echo '$(srcdir)/'`polygons/Triangle.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-Triangle.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-Triangle.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/Triangle.cxx' object='polygons/libMPIPOLY_la-Triangle.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-Triangle.lo `test -f 'polygons/Triangle.cxx' || echo '$(srcdir)/'`polygons/Triangle.cxx
-
-polygons/libMPIPOLY_la-TriMesh.lo: polygons/TriMesh.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-TriMesh.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-TriMesh.Tpo -c -o polygons/libMPIPOLY_la-TriMesh.lo `test -f 'polygons/TriMesh.cxx' || echo '$(srcdir)/'`polygons/TriMesh.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-TriMesh.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-TriMesh.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/TriMesh.cxx' object='polygons/libMPIPOLY_la-TriMesh.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-TriMesh.lo `test -f 'polygons/TriMesh.cxx' || echo '$(srcdir)/'`polygons/TriMesh.cxx
-
-polygons/libMPIPOLY_la-VElement.lo: polygons/VElement.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-VElement.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-VElement.Tpo -c -o polygons/libMPIPOLY_la-VElement.lo `test -f 'polygons/VElement.cxx' || echo '$(srcdir)/'`polygons/VElement.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-VElement.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-VElement.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VElement.cxx' object='polygons/libMPIPOLY_la-VElement.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-VElement.lo `test -f 'polygons/VElement.cxx' || echo '$(srcdir)/'`polygons/VElement.cxx
-
-polygons/libMPIPOLY_la-Vertex.lo: polygons/Vertex.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-Vertex.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-Vertex.Tpo -c -o polygons/libMPIPOLY_la-Vertex.lo `test -f 'polygons/Vertex.cxx' || echo '$(srcdir)/'`polygons/Vertex.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-Vertex.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-Vertex.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/Vertex.cxx' object='polygons/libMPIPOLY_la-Vertex.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-Vertex.lo `test -f 'polygons/Vertex.cxx' || echo '$(srcdir)/'`polygons/Vertex.cxx
-
-polygons/libMPIPOLY_la-VertexList.lo: polygons/VertexList.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-VertexList.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-VertexList.Tpo -c -o polygons/libMPIPOLY_la-VertexList.lo `test -f 'polygons/VertexList.cxx' || echo '$(srcdir)/'`polygons/VertexList.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-VertexList.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-VertexList.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VertexList.cxx' object='polygons/libMPIPOLY_la-VertexList.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-VertexList.lo `test -f 'polygons/VertexList.cxx' || echo '$(srcdir)/'`polygons/VertexList.cxx
-
-polygons/libMPIPOLY_la-VertKDT.lo: polygons/VertKDT.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-VertKDT.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-VertKDT.Tpo -c -o polygons/libMPIPOLY_la-VertKDT.lo `test -f 'polygons/VertKDT.cxx' || echo '$(srcdir)/'`polygons/VertKDT.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-VertKDT.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-VertKDT.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VertKDT.cxx' object='polygons/libMPIPOLY_la-VertKDT.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-VertKDT.lo `test -f 'polygons/VertKDT.cxx' || echo '$(srcdir)/'`polygons/VertKDT.cxx
-
-polygons/libMPIPOLY_la-VertKDTElem.lo: polygons/VertKDTElem.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-VertKDTElem.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-VertKDTElem.Tpo -c -o polygons/libMPIPOLY_la-VertKDTElem.lo `test -f 'polygons/VertKDTElem.cxx' || echo '$(srcdir)/'`polygons/VertKDTElem.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-VertKDTElem.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-VertKDTElem.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VertKDTElem.cxx' object='polygons/libMPIPOLY_la-VertKDTElem.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-VertKDTElem.lo `test -f 'polygons/VertKDTElem.cxx' || echo '$(srcdir)/'`polygons/VertKDTElem.cxx
-
-polygons/libMPIPOLY_la-VertKDTNode.lo: polygons/VertKDTNode.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-VertKDTNode.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-VertKDTNode.Tpo -c -o polygons/libMPIPOLY_la-VertKDTNode.lo `test -f 'polygons/VertKDTNode.cxx' || echo '$(srcdir)/'`polygons/VertKDTNode.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-VertKDTNode.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-VertKDTNode.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VertKDTNode.cxx' object='polygons/libMPIPOLY_la-VertKDTNode.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-VertKDTNode.lo `test -f 'polygons/VertKDTNode.cxx' || echo '$(srcdir)/'`polygons/VertKDTNode.cxx
-
-polygons/libMPIPOLY_la-VNode.lo: polygons/VNode.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-VNode.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-VNode.Tpo -c -o polygons/libMPIPOLY_la-VNode.lo `test -f 'polygons/VNode.cxx' || echo '$(srcdir)/'`polygons/VNode.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-VNode.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-VNode.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VNode.cxx' object='polygons/libMPIPOLY_la-VNode.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-VNode.lo `test -f 'polygons/VNode.cxx' || echo '$(srcdir)/'`polygons/VNode.cxx
-
-polygons/libMPIPOLY_la-VTree.lo: polygons/VTree.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libMPIPOLY_la-VTree.lo -MD -MP -MF polygons/$(DEPDIR)/libMPIPOLY_la-VTree.Tpo -c -o polygons/libMPIPOLY_la-VTree.lo `test -f 'polygons/VTree.cxx' || echo '$(srcdir)/'`polygons/VTree.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libMPIPOLY_la-VTree.Tpo polygons/$(DEPDIR)/libMPIPOLY_la-VTree.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VTree.cxx' object='polygons/libMPIPOLY_la-VTree.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libMPIPOLY_la-VTree.lo `test -f 'polygons/VTree.cxx' || echo '$(srcdir)/'`polygons/VTree.cxx
-
-util/libMPIPOLY_la-time.lo: util/time.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT util/libMPIPOLY_la-time.lo -MD -MP -MF util/$(DEPDIR)/libMPIPOLY_la-time.Tpo -c -o util/libMPIPOLY_la-time.lo `test -f 'util/time.cxx' || echo '$(srcdir)/'`util/time.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) util/$(DEPDIR)/libMPIPOLY_la-time.Tpo util/$(DEPDIR)/libMPIPOLY_la-time.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='util/time.cxx' object='util/libMPIPOLY_la-time.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libMPIPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o util/libMPIPOLY_la-time.lo `test -f 'util/time.cxx' || echo '$(srcdir)/'`util/time.cxx
 
 libPOLY_la-Polylib.lo: Polylib.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_la_CXXFLAGS) $(CXXFLAGS) -MT libPOLY_la-Polylib.lo -MD -MP -MF $(DEPDIR)/libPOLY_la-Polylib.Tpo -c -o libPOLY_la-Polylib.lo `test -f 'Polylib.cxx' || echo '$(srcdir)/'`Polylib.cxx
@@ -1227,6 +1031,202 @@ util/libPOLY_la-time.lo: util/time.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='util/time.cxx' object='util/libPOLY_la-time.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLY_la_CXXFLAGS) $(CXXFLAGS) -c -o util/libPOLY_la-time.lo `test -f 'util/time.cxx' || echo '$(srcdir)/'`util/time.cxx
+
+libPOLYmpi_la-MPIPolylib.lo: MPIPolylib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT libPOLYmpi_la-MPIPolylib.lo -MD -MP -MF $(DEPDIR)/libPOLYmpi_la-MPIPolylib.Tpo -c -o libPOLYmpi_la-MPIPolylib.lo `test -f 'MPIPolylib.cxx' || echo '$(srcdir)/'`MPIPolylib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPOLYmpi_la-MPIPolylib.Tpo $(DEPDIR)/libPOLYmpi_la-MPIPolylib.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MPIPolylib.cxx' object='libPOLYmpi_la-MPIPolylib.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o libPOLYmpi_la-MPIPolylib.lo `test -f 'MPIPolylib.cxx' || echo '$(srcdir)/'`MPIPolylib.cxx
+
+libPOLYmpi_la-Polylib.lo: Polylib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT libPOLYmpi_la-Polylib.lo -MD -MP -MF $(DEPDIR)/libPOLYmpi_la-Polylib.Tpo -c -o libPOLYmpi_la-Polylib.lo `test -f 'Polylib.cxx' || echo '$(srcdir)/'`Polylib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPOLYmpi_la-Polylib.Tpo $(DEPDIR)/libPOLYmpi_la-Polylib.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Polylib.cxx' object='libPOLYmpi_la-Polylib.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o libPOLYmpi_la-Polylib.lo `test -f 'Polylib.cxx' || echo '$(srcdir)/'`Polylib.cxx
+
+c_lang/libPOLYmpi_la-CMPIPolylib.lo: c_lang/CMPIPolylib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT c_lang/libPOLYmpi_la-CMPIPolylib.lo -MD -MP -MF c_lang/$(DEPDIR)/libPOLYmpi_la-CMPIPolylib.Tpo -c -o c_lang/libPOLYmpi_la-CMPIPolylib.lo `test -f 'c_lang/CMPIPolylib.cxx' || echo '$(srcdir)/'`c_lang/CMPIPolylib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) c_lang/$(DEPDIR)/libPOLYmpi_la-CMPIPolylib.Tpo c_lang/$(DEPDIR)/libPOLYmpi_la-CMPIPolylib.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='c_lang/CMPIPolylib.cxx' object='c_lang/libPOLYmpi_la-CMPIPolylib.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o c_lang/libPOLYmpi_la-CMPIPolylib.lo `test -f 'c_lang/CMPIPolylib.cxx' || echo '$(srcdir)/'`c_lang/CMPIPolylib.cxx
+
+c_lang/libPOLYmpi_la-CPolylib.lo: c_lang/CPolylib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT c_lang/libPOLYmpi_la-CPolylib.lo -MD -MP -MF c_lang/$(DEPDIR)/libPOLYmpi_la-CPolylib.Tpo -c -o c_lang/libPOLYmpi_la-CPolylib.lo `test -f 'c_lang/CPolylib.cxx' || echo '$(srcdir)/'`c_lang/CPolylib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) c_lang/$(DEPDIR)/libPOLYmpi_la-CPolylib.Tpo c_lang/$(DEPDIR)/libPOLYmpi_la-CPolylib.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='c_lang/CPolylib.cxx' object='c_lang/libPOLYmpi_la-CPolylib.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o c_lang/libPOLYmpi_la-CPolylib.lo `test -f 'c_lang/CPolylib.cxx' || echo '$(srcdir)/'`c_lang/CPolylib.cxx
+
+common/libPOLYmpi_la-BBox.lo: common/BBox.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT common/libPOLYmpi_la-BBox.lo -MD -MP -MF common/$(DEPDIR)/libPOLYmpi_la-BBox.Tpo -c -o common/libPOLYmpi_la-BBox.lo `test -f 'common/BBox.cxx' || echo '$(srcdir)/'`common/BBox.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) common/$(DEPDIR)/libPOLYmpi_la-BBox.Tpo common/$(DEPDIR)/libPOLYmpi_la-BBox.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='common/BBox.cxx' object='common/libPOLYmpi_la-BBox.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o common/libPOLYmpi_la-BBox.lo `test -f 'common/BBox.cxx' || echo '$(srcdir)/'`common/BBox.cxx
+
+file_io/libPOLYmpi_la-stl.lo: file_io/stl.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libPOLYmpi_la-stl.lo -MD -MP -MF file_io/$(DEPDIR)/libPOLYmpi_la-stl.Tpo -c -o file_io/libPOLYmpi_la-stl.lo `test -f 'file_io/stl.cxx' || echo '$(srcdir)/'`file_io/stl.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libPOLYmpi_la-stl.Tpo file_io/$(DEPDIR)/libPOLYmpi_la-stl.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/stl.cxx' object='file_io/libPOLYmpi_la-stl.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libPOLYmpi_la-stl.lo `test -f 'file_io/stl.cxx' || echo '$(srcdir)/'`file_io/stl.cxx
+
+file_io/libPOLYmpi_la-obj.lo: file_io/obj.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libPOLYmpi_la-obj.lo -MD -MP -MF file_io/$(DEPDIR)/libPOLYmpi_la-obj.Tpo -c -o file_io/libPOLYmpi_la-obj.lo `test -f 'file_io/obj.cxx' || echo '$(srcdir)/'`file_io/obj.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libPOLYmpi_la-obj.Tpo file_io/$(DEPDIR)/libPOLYmpi_la-obj.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/obj.cxx' object='file_io/libPOLYmpi_la-obj.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libPOLYmpi_la-obj.lo `test -f 'file_io/obj.cxx' || echo '$(srcdir)/'`file_io/obj.cxx
+
+file_io/libPOLYmpi_la-vtk.lo: file_io/vtk.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libPOLYmpi_la-vtk.lo -MD -MP -MF file_io/$(DEPDIR)/libPOLYmpi_la-vtk.Tpo -c -o file_io/libPOLYmpi_la-vtk.lo `test -f 'file_io/vtk.cxx' || echo '$(srcdir)/'`file_io/vtk.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libPOLYmpi_la-vtk.Tpo file_io/$(DEPDIR)/libPOLYmpi_la-vtk.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/vtk.cxx' object='file_io/libPOLYmpi_la-vtk.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libPOLYmpi_la-vtk.lo `test -f 'file_io/vtk.cxx' || echo '$(srcdir)/'`file_io/vtk.cxx
+
+file_io/libPOLYmpi_la-triangle_id.lo: file_io/triangle_id.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libPOLYmpi_la-triangle_id.lo -MD -MP -MF file_io/$(DEPDIR)/libPOLYmpi_la-triangle_id.Tpo -c -o file_io/libPOLYmpi_la-triangle_id.lo `test -f 'file_io/triangle_id.cxx' || echo '$(srcdir)/'`file_io/triangle_id.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libPOLYmpi_la-triangle_id.Tpo file_io/$(DEPDIR)/libPOLYmpi_la-triangle_id.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/triangle_id.cxx' object='file_io/libPOLYmpi_la-triangle_id.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libPOLYmpi_la-triangle_id.lo `test -f 'file_io/triangle_id.cxx' || echo '$(srcdir)/'`file_io/triangle_id.cxx
+
+file_io/libPOLYmpi_la-TriMeshIO.lo: file_io/TriMeshIO.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT file_io/libPOLYmpi_la-TriMeshIO.lo -MD -MP -MF file_io/$(DEPDIR)/libPOLYmpi_la-TriMeshIO.Tpo -c -o file_io/libPOLYmpi_la-TriMeshIO.lo `test -f 'file_io/TriMeshIO.cxx' || echo '$(srcdir)/'`file_io/TriMeshIO.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) file_io/$(DEPDIR)/libPOLYmpi_la-TriMeshIO.Tpo file_io/$(DEPDIR)/libPOLYmpi_la-TriMeshIO.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='file_io/TriMeshIO.cxx' object='file_io/libPOLYmpi_la-TriMeshIO.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o file_io/libPOLYmpi_la-TriMeshIO.lo `test -f 'file_io/TriMeshIO.cxx' || echo '$(srcdir)/'`file_io/TriMeshIO.cxx
+
+groups/libPOLYmpi_la-PolygonGroup.lo: groups/PolygonGroup.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT groups/libPOLYmpi_la-PolygonGroup.lo -MD -MP -MF groups/$(DEPDIR)/libPOLYmpi_la-PolygonGroup.Tpo -c -o groups/libPOLYmpi_la-PolygonGroup.lo `test -f 'groups/PolygonGroup.cxx' || echo '$(srcdir)/'`groups/PolygonGroup.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) groups/$(DEPDIR)/libPOLYmpi_la-PolygonGroup.Tpo groups/$(DEPDIR)/libPOLYmpi_la-PolygonGroup.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='groups/PolygonGroup.cxx' object='groups/libPOLYmpi_la-PolygonGroup.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o groups/libPOLYmpi_la-PolygonGroup.lo `test -f 'groups/PolygonGroup.cxx' || echo '$(srcdir)/'`groups/PolygonGroup.cxx
+
+groups/libPOLYmpi_la-PolygonGroupFactory.lo: groups/PolygonGroupFactory.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT groups/libPOLYmpi_la-PolygonGroupFactory.lo -MD -MP -MF groups/$(DEPDIR)/libPOLYmpi_la-PolygonGroupFactory.Tpo -c -o groups/libPOLYmpi_la-PolygonGroupFactory.lo `test -f 'groups/PolygonGroupFactory.cxx' || echo '$(srcdir)/'`groups/PolygonGroupFactory.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) groups/$(DEPDIR)/libPOLYmpi_la-PolygonGroupFactory.Tpo groups/$(DEPDIR)/libPOLYmpi_la-PolygonGroupFactory.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='groups/PolygonGroupFactory.cxx' object='groups/libPOLYmpi_la-PolygonGroupFactory.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o groups/libPOLYmpi_la-PolygonGroupFactory.lo `test -f 'groups/PolygonGroupFactory.cxx' || echo '$(srcdir)/'`groups/PolygonGroupFactory.cxx
+
+polygons/libPOLYmpi_la-DVertex.lo: polygons/DVertex.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-DVertex.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-DVertex.Tpo -c -o polygons/libPOLYmpi_la-DVertex.lo `test -f 'polygons/DVertex.cxx' || echo '$(srcdir)/'`polygons/DVertex.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-DVertex.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-DVertex.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/DVertex.cxx' object='polygons/libPOLYmpi_la-DVertex.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-DVertex.lo `test -f 'polygons/DVertex.cxx' || echo '$(srcdir)/'`polygons/DVertex.cxx
+
+polygons/libPOLYmpi_la-DVertexManager.lo: polygons/DVertexManager.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-DVertexManager.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-DVertexManager.Tpo -c -o polygons/libPOLYmpi_la-DVertexManager.lo `test -f 'polygons/DVertexManager.cxx' || echo '$(srcdir)/'`polygons/DVertexManager.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-DVertexManager.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-DVertexManager.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/DVertexManager.cxx' object='polygons/libPOLYmpi_la-DVertexManager.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-DVertexManager.lo `test -f 'polygons/DVertexManager.cxx' || echo '$(srcdir)/'`polygons/DVertexManager.cxx
+
+polygons/libPOLYmpi_la-DVertexTriangle.lo: polygons/DVertexTriangle.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-DVertexTriangle.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-DVertexTriangle.Tpo -c -o polygons/libPOLYmpi_la-DVertexTriangle.lo `test -f 'polygons/DVertexTriangle.cxx' || echo '$(srcdir)/'`polygons/DVertexTriangle.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-DVertexTriangle.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-DVertexTriangle.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/DVertexTriangle.cxx' object='polygons/libPOLYmpi_la-DVertexTriangle.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-DVertexTriangle.lo `test -f 'polygons/DVertexTriangle.cxx' || echo '$(srcdir)/'`polygons/DVertexTriangle.cxx
+
+polygons/libPOLYmpi_la-Polygons.lo: polygons/Polygons.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-Polygons.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-Polygons.Tpo -c -o polygons/libPOLYmpi_la-Polygons.lo `test -f 'polygons/Polygons.cxx' || echo '$(srcdir)/'`polygons/Polygons.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-Polygons.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-Polygons.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/Polygons.cxx' object='polygons/libPOLYmpi_la-Polygons.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-Polygons.lo `test -f 'polygons/Polygons.cxx' || echo '$(srcdir)/'`polygons/Polygons.cxx
+
+polygons/libPOLYmpi_la-PrivateTriangle.lo: polygons/PrivateTriangle.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-PrivateTriangle.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-PrivateTriangle.Tpo -c -o polygons/libPOLYmpi_la-PrivateTriangle.lo `test -f 'polygons/PrivateTriangle.cxx' || echo '$(srcdir)/'`polygons/PrivateTriangle.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-PrivateTriangle.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-PrivateTriangle.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/PrivateTriangle.cxx' object='polygons/libPOLYmpi_la-PrivateTriangle.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-PrivateTriangle.lo `test -f 'polygons/PrivateTriangle.cxx' || echo '$(srcdir)/'`polygons/PrivateTriangle.cxx
+
+polygons/libPOLYmpi_la-Triangle.lo: polygons/Triangle.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-Triangle.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-Triangle.Tpo -c -o polygons/libPOLYmpi_la-Triangle.lo `test -f 'polygons/Triangle.cxx' || echo '$(srcdir)/'`polygons/Triangle.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-Triangle.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-Triangle.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/Triangle.cxx' object='polygons/libPOLYmpi_la-Triangle.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-Triangle.lo `test -f 'polygons/Triangle.cxx' || echo '$(srcdir)/'`polygons/Triangle.cxx
+
+polygons/libPOLYmpi_la-TriMesh.lo: polygons/TriMesh.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-TriMesh.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-TriMesh.Tpo -c -o polygons/libPOLYmpi_la-TriMesh.lo `test -f 'polygons/TriMesh.cxx' || echo '$(srcdir)/'`polygons/TriMesh.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-TriMesh.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-TriMesh.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/TriMesh.cxx' object='polygons/libPOLYmpi_la-TriMesh.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-TriMesh.lo `test -f 'polygons/TriMesh.cxx' || echo '$(srcdir)/'`polygons/TriMesh.cxx
+
+polygons/libPOLYmpi_la-VElement.lo: polygons/VElement.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-VElement.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-VElement.Tpo -c -o polygons/libPOLYmpi_la-VElement.lo `test -f 'polygons/VElement.cxx' || echo '$(srcdir)/'`polygons/VElement.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-VElement.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-VElement.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VElement.cxx' object='polygons/libPOLYmpi_la-VElement.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-VElement.lo `test -f 'polygons/VElement.cxx' || echo '$(srcdir)/'`polygons/VElement.cxx
+
+polygons/libPOLYmpi_la-Vertex.lo: polygons/Vertex.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-Vertex.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-Vertex.Tpo -c -o polygons/libPOLYmpi_la-Vertex.lo `test -f 'polygons/Vertex.cxx' || echo '$(srcdir)/'`polygons/Vertex.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-Vertex.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-Vertex.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/Vertex.cxx' object='polygons/libPOLYmpi_la-Vertex.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-Vertex.lo `test -f 'polygons/Vertex.cxx' || echo '$(srcdir)/'`polygons/Vertex.cxx
+
+polygons/libPOLYmpi_la-VertexList.lo: polygons/VertexList.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-VertexList.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-VertexList.Tpo -c -o polygons/libPOLYmpi_la-VertexList.lo `test -f 'polygons/VertexList.cxx' || echo '$(srcdir)/'`polygons/VertexList.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-VertexList.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-VertexList.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VertexList.cxx' object='polygons/libPOLYmpi_la-VertexList.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-VertexList.lo `test -f 'polygons/VertexList.cxx' || echo '$(srcdir)/'`polygons/VertexList.cxx
+
+polygons/libPOLYmpi_la-VertKDT.lo: polygons/VertKDT.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-VertKDT.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-VertKDT.Tpo -c -o polygons/libPOLYmpi_la-VertKDT.lo `test -f 'polygons/VertKDT.cxx' || echo '$(srcdir)/'`polygons/VertKDT.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-VertKDT.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-VertKDT.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VertKDT.cxx' object='polygons/libPOLYmpi_la-VertKDT.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-VertKDT.lo `test -f 'polygons/VertKDT.cxx' || echo '$(srcdir)/'`polygons/VertKDT.cxx
+
+polygons/libPOLYmpi_la-VertKDTElem.lo: polygons/VertKDTElem.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-VertKDTElem.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-VertKDTElem.Tpo -c -o polygons/libPOLYmpi_la-VertKDTElem.lo `test -f 'polygons/VertKDTElem.cxx' || echo '$(srcdir)/'`polygons/VertKDTElem.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-VertKDTElem.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-VertKDTElem.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VertKDTElem.cxx' object='polygons/libPOLYmpi_la-VertKDTElem.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-VertKDTElem.lo `test -f 'polygons/VertKDTElem.cxx' || echo '$(srcdir)/'`polygons/VertKDTElem.cxx
+
+polygons/libPOLYmpi_la-VertKDTNode.lo: polygons/VertKDTNode.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-VertKDTNode.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-VertKDTNode.Tpo -c -o polygons/libPOLYmpi_la-VertKDTNode.lo `test -f 'polygons/VertKDTNode.cxx' || echo '$(srcdir)/'`polygons/VertKDTNode.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-VertKDTNode.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-VertKDTNode.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VertKDTNode.cxx' object='polygons/libPOLYmpi_la-VertKDTNode.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-VertKDTNode.lo `test -f 'polygons/VertKDTNode.cxx' || echo '$(srcdir)/'`polygons/VertKDTNode.cxx
+
+polygons/libPOLYmpi_la-VNode.lo: polygons/VNode.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-VNode.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-VNode.Tpo -c -o polygons/libPOLYmpi_la-VNode.lo `test -f 'polygons/VNode.cxx' || echo '$(srcdir)/'`polygons/VNode.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-VNode.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-VNode.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VNode.cxx' object='polygons/libPOLYmpi_la-VNode.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-VNode.lo `test -f 'polygons/VNode.cxx' || echo '$(srcdir)/'`polygons/VNode.cxx
+
+polygons/libPOLYmpi_la-VTree.lo: polygons/VTree.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT polygons/libPOLYmpi_la-VTree.lo -MD -MP -MF polygons/$(DEPDIR)/libPOLYmpi_la-VTree.Tpo -c -o polygons/libPOLYmpi_la-VTree.lo `test -f 'polygons/VTree.cxx' || echo '$(srcdir)/'`polygons/VTree.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) polygons/$(DEPDIR)/libPOLYmpi_la-VTree.Tpo polygons/$(DEPDIR)/libPOLYmpi_la-VTree.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='polygons/VTree.cxx' object='polygons/libPOLYmpi_la-VTree.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o polygons/libPOLYmpi_la-VTree.lo `test -f 'polygons/VTree.cxx' || echo '$(srcdir)/'`polygons/VTree.cxx
+
+util/libPOLYmpi_la-time.lo: util/time.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -MT util/libPOLYmpi_la-time.lo -MD -MP -MF util/$(DEPDIR)/libPOLYmpi_la-time.Tpo -c -o util/libPOLYmpi_la-time.lo `test -f 'util/time.cxx' || echo '$(srcdir)/'`util/time.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) util/$(DEPDIR)/libPOLYmpi_la-time.Tpo util/$(DEPDIR)/libPOLYmpi_la-time.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='util/time.cxx' object='util/libPOLYmpi_la-time.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPOLYmpi_la_CXXFLAGS) $(CXXFLAGS) -c -o util/libPOLYmpi_la-time.lo `test -f 'util/time.cxx' || echo '$(srcdir)/'`util/time.cxx
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1484,9 +1484,9 @@ uninstall-am: uninstall-libLTLIBRARIES uninstall-nobase_includeHEADERS
 	tags tags-am uninstall uninstall-am uninstall-libLTLIBRARIES \
 	uninstall-nobase_includeHEADERS
 
-@SERIALTARGET_FALSE@  # lib_LIBRARIES = libMPIPOLY.a
-@SERIALTARGET_FALSE@  # libMPIPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
-@SERIALTARGET_FALSE@  # libMPIPOLY_a_SOURCES = 
+@SERIALTARGET_FALSE@  # lib_LIBRARIES = libPOLYmpi.a
+@SERIALTARGET_FALSE@  # libPOLYmpi_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+@SERIALTARGET_FALSE@  # libPOLYmpi_a_SOURCES = 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -26,6 +26,10 @@
 #
 ##############################################################################
 
+####
+#### if you compile these tes programs on K/FX, remove -lstdc++ from LDADD lines
+####
+
 
 VPATH = @srcdir@
 am__is_gnu_make = test -n '$(MAKEFILE_LIST)' && test -n '$(MAKELEVEL)'
@@ -688,7 +692,7 @@ test_xyzrgb_statuette_stl_LDADD = \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
@@ -696,7 +700,7 @@ test_mpi_LDADD = \
 
 #    @TP_MPI_LDFLAGS@ -lstdc++
 test_mpi2_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
@@ -704,7 +708,7 @@ test_mpi2_LDADD = \
 
 #    @TP_MPI_LDFLAGS@ -lstdc++
 test_mpi3_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
@@ -712,37 +716,37 @@ test_mpi3_LDADD = \
 
 #    @TP_MPI_LDFLAGS@ -lstdc++
 test_mpi_xyzrgb1_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_xyzrgb2_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_xyzrgb4_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_xyzrgb8_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_DVertex_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_move_LDADD = \
-    -L$(top_builddir)/src/.libs -lMPIPOLY \
+    -L$(top_builddir)/src/.libs -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++

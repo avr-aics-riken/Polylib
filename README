@@ -61,7 +61,7 @@ $ make
 
 Generated archives are;
    libPOLY.a/la/dylib    : serial version
-   libMPIPOLY.a/la/dylib : MPI version
+   libPOLYmpi.a/la/dylib : MPI version
 
 
 

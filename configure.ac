@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.57])
-AC_INIT([Polylib], [3.3.7], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [3.3.8], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -25,9 +25,9 @@ AC_CONFIG_MACRO_DIR([m4])
 #
 # revision No.
 #
-PL_REVISION="20140307_1640"
+PL_REVISION="20140308_0030"
 AC_SUBST(PL_REVISION)
-
+
 
 PL_CXX="$CXX"
 AC_SUBST(PL_CXX)
@@ -150,7 +150,7 @@ dnl AC_SUBST(LT_STATIC)
 if test x"$enable_mpi" = x"none" ; then
   PL_LIBS="-lPOLY"
 else
-  PL_LIBS="-lMPIPOLY"
+  PL_LIBS="-lPOLYmpi"
 fi
 
 AC_SUBST(PL_LIBS)
@@ -227,7 +227,6 @@ AC_TYPE_SIZE_T
 #
 # Checks for library functions.
 #
-AC_FUNC_MALLOC
 AC_CHECK_FUNCS([gettimeofday memset strchr strstr strcpy])
 
 

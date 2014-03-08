@@ -48,13 +48,13 @@ if SERIALTARGET
      polygons/VTree.cxx \
      util/time.cxx
 else
-  # lib_LIBRARIES = libMPIPOLY.a
-  # libMPIPOLY_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
-  # libMPIPOLY_a_SOURCES = 
-  lib_LTLIBRARIES = libMPIPOLY.la
-  libMPIPOLY_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
-#  libMPIPOLY_la_LDFLAGS = @LT_STATIC@
-  libMPIPOLY_la_SOURCES = \
+  # lib_LIBRARIES = libPOLYmpi.a
+  # libPOLYmpi_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
+  # libPOLYmpi_a_SOURCES = 
+  lib_LTLIBRARIES = libPOLYmpi.la
+  libPOLYmpi_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
+#  libPOLYmpi_la_LDFLAGS = @LT_STATIC@
+  libPOLYmpi_la_SOURCES = \
      MPIPolylib.cxx \
      Polylib.cxx \
      c_lang/CMPIPolylib.cxx \

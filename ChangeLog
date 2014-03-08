@@ -14,6 +14,12 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-03-08
+ r48 remove AC_FUNC_MALLOC for FX/K [ver 3.3.8]
+  - In examples, if you compile these programs on K/FX, remove -lstdc++ from LDADD lines
+  - change library name from MPIPOLY to POLYmpi
+
+------------------
 2014-03-07
  r47 suppress __func__ for FX in PolylibCommon.h [ver 3.3.7]
 
