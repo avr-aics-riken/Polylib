@@ -10,11 +10,9 @@
 #include "polygons/VertKDTNode.h"
 #include "polygons/VertKDTElem.h"
 
+using namespace Vec3class;
 
 namespace PolylibNS{
-
-
-
 
 
 

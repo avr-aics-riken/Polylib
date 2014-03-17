@@ -22,6 +22,8 @@
 #include "polygons/Vertex.h"
 
 
+using namespace Vec3class;
+
 //#define DEBUG
 //#define VertexListDEBUG
 

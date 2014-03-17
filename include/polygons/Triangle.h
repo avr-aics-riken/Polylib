@@ -16,6 +16,8 @@
 #include "common/Vec3.h"
 #include "polygons/Vertex.h"
 
+using namespace Vec3class;
+
 namespace PolylibNS{
 
 ////////////////////////////////////////////////////////////////////////////

@@ -16,6 +16,8 @@
 #include "common/PolylibDefine.h"
 #include "common/Vec3.h"
 
+using namespace Vec3class;
+
 namespace PolylibNS{
 
 ////////////////////////////////////////////////////////////////////////////

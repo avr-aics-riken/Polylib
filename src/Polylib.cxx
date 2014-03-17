@@ -38,6 +38,7 @@
 
 using namespace std;
 using namespace PolylibNS;
+using namespace Vec3class;
 
 /// デバッグ用ランク番号グローバル文字列
 std::string PolylibNS::gs_rankno = "";

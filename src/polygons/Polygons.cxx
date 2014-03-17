@@ -20,7 +20,7 @@
 #include "polygons/DVertexTriangle.h"
 
 #include "common/tt.h"
-#include "common/axis.h"
+//#include "common/axis.h"
 
 #include "common/BBox.h"
 

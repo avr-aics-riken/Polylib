@@ -40,6 +40,8 @@
 #include <time.h>
 #endif
 
+using namespace Vec3class;
+
 namespace PolylibNS {
 
 class VertKDT;

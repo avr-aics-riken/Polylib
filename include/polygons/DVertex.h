@@ -20,6 +20,8 @@
 #include "polygons/Vertex.h"
 #include "polygons/DVertexManager.h"
 
+using namespace Vec3class;
+
 class DVertexManager;
 
 namespace PolylibNS{

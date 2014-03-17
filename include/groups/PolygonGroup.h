@@ -20,6 +20,8 @@
 #include <vector>
 #include <map>
 
+using namespace Vec3class;
+
 namespace PolylibNS {
 
 class TryMesh;

@@ -13,7 +13,9 @@
 #ifndef polylib_dvertex_manager_h
 #define polylib_dvertex_manager_h
 
-//#include "common/Vec3.h"
+#include "common/Vec3.h"
+
+using namespace Vec3class;
 
 namespace PolylibNS{
 

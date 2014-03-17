@@ -17,7 +17,8 @@
 #include "PolylibCommon.h"
 #include "common/Vec2.h"
 #include "common/Vec3.h"
-#include "common/axis.h"
+
+using namespace Vec3class;
 
 namespace PolylibNS {
 

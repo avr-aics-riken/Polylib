@@ -17,6 +17,8 @@
 #include "polygons/Vertex.h"
 #include "polygons/Triangle.h"
 
+using namespace Vec3class;
+
 namespace PolylibNS{
 
 

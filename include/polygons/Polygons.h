@@ -22,9 +22,9 @@
 #include <iomanip>
 #include <iostream>
 
+using namespace Vec3class;
 
 namespace PolylibNS {
-
 
 class BBox;
 class Triangle;

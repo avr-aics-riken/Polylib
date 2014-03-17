@@ -91,16 +91,13 @@ nobase_include_HEADERS = \
   $(top_builddir)/include/Polylib.h \
   $(top_builddir)/include/c_lang/CMPIPolylib.h \
   $(top_builddir)/include/c_lang/CPolylib.h \
-  $(top_builddir)/include/common/axis.h \
   $(top_builddir)/include/common/BBox.h \
   $(top_builddir)/include/common/PolylibCommon.h \
   $(top_builddir)/include/common/PolylibDefine.h \
   $(top_builddir)/include/common/PolylibStat.h \
   $(top_builddir)/include/common/tt.h \
   $(top_builddir)/include/common/Vec2.h \
-  $(top_builddir)/include/common/vec3_func.h \
   $(top_builddir)/include/common/Vec3.h \
-  $(top_builddir)/include/common/vec3f_func.h \
   $(top_builddir)/include/file_io/stl.h \
   $(top_builddir)/include/file_io/obj.h \
   $(top_builddir)/include/file_io/vtk.h \
@@ -127,4 +124,3 @@ nobase_include_HEADERS = \
   $(top_builddir)/include/polyVersion.h
 
 EXTRA_DIST = Makefile_hand depend.inc
-

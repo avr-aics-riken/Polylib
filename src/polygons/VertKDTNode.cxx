@@ -9,6 +9,7 @@
 #include "polygons/VertexList.h"
 #include "polygons/VertKDTElem.h"
 
+using namespace Vec3class;
 
 namespace PolylibNS{
 

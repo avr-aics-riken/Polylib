@@ -8,6 +8,7 @@
 #include "polygons/Vertex.h"
 #include "polygons/VertexList.h"
 
+using namespace Vec3class;
 
 namespace PolylibNS{
 
