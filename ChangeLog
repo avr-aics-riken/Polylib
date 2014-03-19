@@ -14,6 +14,11 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-03-19
+ r50 suppress to generate shared library [ver 3.4.0]
+  - comment out by SO
+ 
+------------------
 2014-03-17
  r49 introduce common namespace of Vec3class [ver 3.3.9]
   - include axis.h in Vec3.h 

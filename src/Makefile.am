@@ -13,14 +13,14 @@
 AUTOMAKE_OPTIONS = subdir-objects
 
 if SERIALTARGET
-#  lib_LIBRARIES = libPOLY.a
-#  libPOLY_a_CXXFLAGS = @TP_CFLAGS@ -I$(top_builddir)/include
-#  libPOLY_a_SOURCES =  
-  lib_LTLIBRARIES = libPOLY.la
-  libPOLY_la_CXXFLAGS = @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
+#  lib_LTLIBRARIES = libPOLY.la
+#  libPOLY_la_CXXFLAGS = @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
 #  libPOLY_la_LDFLAGS = @LT_STATIC@
 #  libPOLY_la_LDFLAGS = 
-   libPOLY_la_SOURCES = \
+#  libPOLY_la_SOURCES =
+lib_LIBRARIES = libPOLY.a
+libPOLY_a_CXXFLAGS = @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
+libPOLY_a_SOURCES = \
      Polylib.cxx \
      c_lang/CPolylib.cxx \
      common/BBox.cxx \
@@ -48,13 +48,13 @@ if SERIALTARGET
      polygons/VTree.cxx \
      util/time.cxx
 else
-  # lib_LIBRARIES = libPOLYmpi.a
-  # libPOLYmpi_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ -I$(top_builddir)/include
-  # libPOLYmpi_a_SOURCES = 
-  lib_LTLIBRARIES = libPOLYmpi.la
-  libPOLYmpi_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
+#  lib_LTLIBRARIES = libPOLYmpi.la
+#  libPOLYmpi_la_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
 #  libPOLYmpi_la_LDFLAGS = @LT_STATIC@
-  libPOLYmpi_la_SOURCES = \
+#  libPOLYmpi_la_SOURCES =
+lib_LIBRARIES = libPOLYmpi.a
+libPOLYmpi_a_CXXFLAGS = @MPI_CFLAGS@ @TP_CFLAGS@ @REAL_OPT@ -I$(top_builddir)/include
+libPOLYmpi_a_SOURCES = \
      MPIPolylib.cxx \
      Polylib.cxx \
      c_lang/CMPIPolylib.cxx \

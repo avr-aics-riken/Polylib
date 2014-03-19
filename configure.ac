@@ -14,18 +14,18 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.57])
-AC_INIT([Polylib], [3.3.9], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [3.4.0], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
 
 # add to switch libtool
-AC_CONFIG_MACRO_DIR([m4])
+#AC_CONFIG_MACRO_DIR([m4]) // SO
 
 #
 # revision No.
 #
-PL_REVISION="20140317_1530"
+PL_REVISION="20140319_1430"
 AC_SUBST(PL_REVISION)
 
 
@@ -111,8 +111,6 @@ if test x"$with_parser" != x"none" ; then
   TP_DIR=$with_parser;
   TP_CFLAGS=`$TP_DIR/bin/tp-config --cflags`
   TP_LDFLAGS=`$TP_DIR/bin/tp-config --libs`
-#  TP_MPI_LDFLAGS=`$TP_DIR/bin/tp-config --mpi-libs`
-
 else
   echo "  Error: TextParser library is not specified."
   echo "         Specify --with-parser option."
@@ -130,21 +128,22 @@ AC_ARG_WITH(example, [AC_HELP_STRING([--with-example=(no|yes)],[make example [no
 
 
 #
-# enable/unenable shared library
+# enable/disable shared library // SO
 #
-dnl AC_ARG_ENABLE(shared, [AC_HELP_STRING([--enable-shared=(yes|no)],[make shared library [yes]])], , enable_shared=yes)
+#dnl AC_ARG_ENABLE(shared, [AC_HELP_STRING([--enable-shared=(no|yes)],[make shared library [yes]])], , enable_shared=no)
 
-dnl if test "$enable_shared" != "yes" ; then
-dnl LT_STATIC="-static"
-dnl else
-dnl LT_STATIC=""
-dnl fi
-dnl AC_SUBST(LT_STATIC)
+#dnl if test "$enable_shared" != "yes" ; then
+#dnl LT_STATIC="-static"
+#dnl else
+#dnl LT_STATIC=""
+#dnl fi
+#dnl AC_SUBST(LT_STATIC)
+
+
 
 #
 # Polylib special flags
 #
-
 
 
 if test x"$enable_mpi" = x"none" ; then
@@ -199,11 +198,12 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_MAKE_SET
-#AC_PROG_RANLIB
-# add to switch libtool
-AC_PROG_LIBTOOL
-AM_PROG_LIBTOOL
-AC_SUBST(LIBTOOL_DEPS)
+AC_PROG_RANLIB
+
+# add to switch libtool // SO
+#AC_PROG_LIBTOOL
+#AM_PROG_LIBTOOL
+#AC_SUBST(LIBTOOL_DEPS)
 
 #
 # Checks for libraries.

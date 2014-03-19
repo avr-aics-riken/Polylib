@@ -107,8 +107,8 @@ Here is some examples;
 
 ## Intel compiler serial
 
-  $ ./configure --prefix=/usr/local/ASD \
-                --with-parser=/usr/local/ASD \
+  $ ./configure --prefix=/usr/local/Polylib \
+                --with-parser=/usr/local/TextParser \
                 --with-example=no \
                 CXX=icpc \
                 CXXFLAGS="-O3 -Wall -fno-strict-aliasing"

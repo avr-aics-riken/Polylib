@@ -168,74 +168,75 @@ test_mpi_move_SOURCES  = \
 test_mpi_move_CXXFLAGS = -I$(top_builddir)/include @TP_CFLAGS@ @MPI_CFLAGS@ @REAL_OPT@
 
 
-test_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
-    @MPI_LDFLAGS@ \
-    @MPI_LIBS@ \
-    @TP_LDFLAGS@ -lstdc++
+# //SO
+#test_LDADD = \
+#    -L$(top_builddir)/src/.libs -lPOLY \
+#    @MPI_LDFLAGS@ \
+#    @MPI_LIBS@ \
+#    @TP_LDFLAGS@ -lstdc++
 
-# test_LDADD = \
-#     -L$(top_builddir)/src -lPOLY \
-#     @MPI_LDFLAGS@ \
-#     @MPI_LIBS@ \
-#     @TP_LDFLAGS@
+test_LDADD = \
+     -L$(top_builddir)/src -lPOLY \
+     @MPI_LDFLAGS@ \
+     @MPI_LIBS@ \
+     @TP_LDFLAGS@
 
 test2_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_vtx_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_obj_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_obj2_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_obj3_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_obj4_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_read_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_vtx_float_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_DVertex_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_xyzrgb_statuette_stl_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLY \
+    -L$(top_builddir)/src -lPOLY \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
@@ -244,7 +245,7 @@ test_xyzrgb_statuette_stl_LDADD = \
 
 
 test_mpi_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
@@ -252,7 +253,7 @@ test_mpi_LDADD = \
 #    @TP_MPI_LDFLAGS@ -lstdc++
 
 test_mpi2_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
@@ -260,7 +261,7 @@ test_mpi2_LDADD = \
 #    @TP_MPI_LDFLAGS@ -lstdc++
 
 test_mpi3_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
@@ -269,39 +270,39 @@ test_mpi3_LDADD = \
 
 
 test_mpi_xyzrgb1_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 
 test_mpi_xyzrgb2_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 
 test_mpi_xyzrgb4_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_xyzrgb8_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_DVertex_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
 
 test_mpi_move_LDADD = \
-    -L$(top_builddir)/src/.libs -lPOLYmpi \
+    -L$(top_builddir)/src -lPOLYmpi \
     @MPI_LDFLAGS@ \
     @MPI_LIBS@ \
     @TP_LDFLAGS@ -lstdc++
