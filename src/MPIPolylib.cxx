@@ -1767,13 +1767,13 @@ POLYLIB_STAT
 				<< ":MPI_Recv,MPITAG_TRIA_IDS faild." << std::endl;
 			return PLSTAT_MPI_ERROR;
 	}
-//#ifdef DEBUG
+#ifdef DEBUG
 	PL_DBGOSH << "    pidarray:(";
 	for( i=0; i<total_tria_num; i++ ) {
 		PL_DBGOS << p_idarray[i] << ",";
 	}
 	PL_DBGOS << ")" << std::endl;
-//#endif
+#endif
 
 	// 三角形のユーザ定義IDリストをrank0から受信
 	int *p_exidarray = new int[ total_tria_num ];
@@ -1783,13 +1783,13 @@ POLYLIB_STAT
 				<< ":MPI_Recv,MPITAG_TRIA_EXIDS faild." << std::endl;
 			return PLSTAT_MPI_ERROR;
 	}
-//#ifdef DEBUG
+#ifdef DEBUG
 	PL_DBGOSH << "    pexidarray:(";
 	for( i=0; i<total_tria_num; i++ ) {
 		PL_DBGOS << p_exidarray[i] << ",";
 	}
 	PL_DBGOS << ")" << std::endl;
-//#endif
+#endif
 
 	// 三角形リストをrank0から受信
 	PL_REAL *p_triaarray = new PL_REAL[ total_tria_num * 3 * 3 ];
