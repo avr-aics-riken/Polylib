@@ -15,6 +15,9 @@ REVISION HISTORY
 
 ------------------
 2014-03-23
+ r53 update polylib-config [ver 3.4.3]
+  - add include/common
+
  r52 update Vec3.h [ver 3.4.2]
   - change notation : t[3] >> x,y,z
 

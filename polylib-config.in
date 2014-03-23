@@ -62,7 +62,7 @@ EOF
       ;;
 
     --cflags)
-      echo @PL_CFLAGS@ @REAL_OPT@
+      echo @PL_CFLAGS@ @PL_CFLAGS@/common @REAL_OPT@
       ;;
 
     --libs)

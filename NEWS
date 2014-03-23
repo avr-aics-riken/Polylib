@@ -14,6 +14,10 @@ RELEASE
 =======
 
 -------------
+Version 3.4.3   2014-03-23
+ - update polylib-config
+
+-------------
 Version 3.4.2   2014-03-23
  - update Vec3.h
 
