@@ -138,16 +138,16 @@ POLYLIB_STAT CarGroup::move(PolylibMoveParams& params){
 	/* f      //Vec3<T> **last_vtx = tria->get_vertex(); */
 	/*       Vertex<T> **last_vtx = tria->get_vertex(); */
 	/*       Vec3<T> moved_vtx[3]; */
-	/*       // X 座標 (t[0]) のみ更新 */
-	/*       moved_vtx[0].t[0] = last_vtx[0].t[0] + move_pos; */
-	/*       moved_vtx[1].t[0] = last_vtx[1].t[0] + move_pos; */
-	/*       moved_vtx[2].t[0] = last_vtx[2].t[0] + move_pos; */
-	/*       moved_vtx[0].t[1] = last_vtx[0].t[1]; */
-	/*       moved_vtx[1].t[1] = last_vtx[1].t[1]; */
-	/*       moved_vtx[2].t[1] = last_vtx[2].t[1]; */
-	/*       moved_vtx[0].t[2] = last_vtx[0].t[2]; */
-	/*       moved_vtx[1].t[2] = last_vtx[1].t[2]; */
-	/*       moved_vtx[2].t[2] = last_vtx[2].t[2]; */
+	/*       // X 座標 (x) のみ更新 */
+	/*       moved_vtx[0].x = last_vtx[0].x + move_pos; */
+	/*       moved_vtx[1].x = last_vtx[1].x + move_pos; */
+	/*       moved_vtx[2].x = last_vtx[2].x + move_pos; */
+	/*       moved_vtx[0].y = last_vtx[0].y; */
+	/*       moved_vtx[1].y = last_vtx[1].y; */
+	/*       moved_vtx[2].y = last_vtx[2].y; */
+	/*       moved_vtx[0].z = last_vtx[0].z; */
+	/*       moved_vtx[1].z = last_vtx[1].z; */
+	/*       moved_vtx[2].z = last_vtx[2].z; */
 
 	/*       // 移動後の頂点座標を設定.法線ベクトルも再計算 */
 	/*       tria->set_vertexes( moved_vtx, true, false ); */

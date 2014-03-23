@@ -220,9 +220,9 @@ void Triangle::calc_normal() {
 	// double演算に変更 2013.10.10 tkawanab
 
 	Vec3<double> vd[3];
-	vd[0].assign( m_vertex_ptr[0]->t[0], m_vertex_ptr[0]->t[1], m_vertex_ptr[0]->t[2] );
-	vd[1].assign( m_vertex_ptr[1]->t[0], m_vertex_ptr[1]->t[1], m_vertex_ptr[1]->t[2] );
-	vd[2].assign( m_vertex_ptr[2]->t[0], m_vertex_ptr[2]->t[1], m_vertex_ptr[2]->t[2] );
+	vd[0].assign( m_vertex_ptr[0]->x, m_vertex_ptr[0]->y, m_vertex_ptr[0]->z );
+	vd[1].assign( m_vertex_ptr[1]->x, m_vertex_ptr[1]->y, m_vertex_ptr[1]->z );
+	vd[2].assign( m_vertex_ptr[2]->x, m_vertex_ptr[2]->y, m_vertex_ptr[2]->z );
 
 	Vec3<double> ad = vd[1] - vd[0];
 	Vec3<double> bd = vd[2] - vd[0];

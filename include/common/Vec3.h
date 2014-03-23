@@ -18,7 +18,7 @@
 
 /**
  * @file   Vec3.h
- * @brief  Vec3<T> class Header
+ * @brief  version 1.0 2014-03-23
  * @author aics
  */
 
@@ -32,7 +32,7 @@
 
 #include <iostream>
 #include <math.h>
-
+//#include <stdexcept>
 
 namespace Vec3class {
   
@@ -50,94 +50,110 @@ typedef enum {
 template<typename T>
 class Vec3 {
 public:
-	Vec3(T v = 0)			{ t[0] = t[1] = t[2] = v; }
-	Vec3(T _x, T _y, T _z)	{ t[0]=_x; t[1]=_y; t[2]=_z; }
-	Vec3(const T v[3])		{ t[0] = v[0]; t[1] = v[1]; t[2] = v[2]; }
+  
+  T x, y, z;
+  
+	Vec3(T v = 0)			      { x = y = z = v; }
+	Vec3(T _x, T _y, T _z)	{ x=_x;  y=_y;  z=_z; }
+	Vec3(const T v[3])		  { x = v[0];  y = v[1];  z = v[2]; }
+  Vec3(const Vec3& v) : x(v.x), y(v.y), z(v.z) {}
 
 	Vec3<T>& assign(T _x, T _y, T _z) { 
-		t[0]=_x; t[1]=_y; t[2]=_z; 
+		x=_x; y=_y; z=_z; 
 		return *this; 
 	}
 
-	operator       T*()       { return &t[0]; }
-	operator const T*() const { return &t[0]; }
-	T* ptr()       { return &t[0]; }
-	const T* ptr() const { return &t[0]; }
+	operator       T*()       { return &x; }
+	operator const T*() const { return &x; }
+	T* ptr()       { return &x; }
+	const T* ptr() const { return &x; }
 
 
 
-	T& operator [](const AxisEnum& axis) { 
-		return t[axis];
+	T& operator [](const AxisEnum& axis) {
+    return (&x)[axis];
+    /*
+    switch (axis) {
+      case 0: return x;
+      case 1: return y;
+      case 2: return z;
+      default: throw std::out_of_range("Vec3 index must be 0, 1, or 2");
+    }*/
 	}
 	const T& operator [](const AxisEnum& axis) const {
-		return t[axis];
+    return (&x)[axis];
+    /*
+    switch (axis) {
+      case 0: return x;
+      case 1: return y;
+      case 2: return z;
+      default: throw std::out_of_range("Vec3 index must be 0, 1, or 2");
+    }*/
 	}
-
-
 
 
 	Vec3<T>& operator+=(const Vec3<T>& v) {
-		t[0] += v.t[0]; t[1] += v.t[1]; t[2] += v.t[2]; 
+		x += v.x; y += v.y; z += v.z; 
 		return *this;
 	}
 
 	Vec3<T>& operator-=(const Vec3<T>& v) {
-		t[0] -= v.t[0]; t[1] -= v.t[1]; t[2] -= v.t[2]; 
+		x -= v.x; y -= v.y; z -= v.z; 
 		return *this;
 	}
 
 	Vec3<T>& operator*=(const Vec3<T>& v) {
-		t[0] *= v.t[0]; t[1] *= v.t[1]; t[2] *= v.t[2]; 
+		x *= v.x; y *= v.y; z *= v.z; 
 		return *this;
 	}
 
 	Vec3<T>& operator/=(const Vec3<T>& v) {
-		t[0] /= v.t[0]; t[1]/= v.t[1]; t[2] /= v.t[2]; 
+		x /= v.x; y/= v.y; z /= v.z; 
 		return *this;
 	}
 
 	Vec3<T>& operator*=(T s) {
-		t[0] *= s; t[1] *= s; t[2] *= s; 
+		x *= s; y *= s; z *= s; 
 		return *this;
 	}
 
 	Vec3<T>& operator/=(T s) {
 		T inv = 1./s;
-		t[0] *= inv; t[1] *= inv; t[2] *= inv; 
+		x *= inv; y *= inv; z *= inv; 
 		return *this;
 	}
 
 	Vec3<T> operator+(const Vec3<T>& v) const {
-		return Vec3<T>(t[0] + v.t[0], t[1] + v.t[1], t[2] + v.t[2]);
+		return Vec3<T>(x + v.x, y + v.y, z + v.z);
 	}
 
 	Vec3<T> operator-(const Vec3<T>& v) const {
-		return Vec3<T>(t[0] - v.t[0], t[1] - v.t[1], t[2] - v.t[2]);
+		return Vec3<T>(x - v.x, y - v.y, z - v.z);
 	}
 
 	Vec3<T> operator*(const Vec3<T>& v) const {
-		return Vec3<T>(t[0] * v.t[0], t[1] * v.t[1], t[2] * v.t[2]);
+		return Vec3<T>(x * v.x, y * v.y, z * v.z);
 	}
 
 	Vec3<T> operator/(const Vec3<T>& v) const {
-		return Vec3<T>(t[0] / v.t[0], t[1] / v.t[1], t[2] / v.t[2]);
+		return Vec3<T>(x / v.x, y / v.y, z / v.z);
 	}
 
 	Vec3<T> operator*(T s) const {
-		return Vec3<T>(t[0] * s, t[1] * s, t[2] * s);
+		return Vec3<T>(x * s, y * s, z * s);
 	}
 
 	Vec3<T> operator/(T s) const {
 		T inv = 1./s;
-		return Vec3<T>(t[0] * inv, t[1] * inv, t[2] * inv);
+		return Vec3<T>(x * inv, y * inv, z * inv);
 	}
 
 	Vec3<T> operator-() const {
-		return Vec3<T>(-t[0], -t[1], -t[2]);
+		return Vec3<T>(-x, -y, -z);
 	}
 
 	bool operator==(const Vec3<T>& v) const {
-		return t[0] == v.t[0] && t[1] == v.t[1] && t[2] == v.t[2];
+		return x == v.x && y == v.y && z == v.z;
 	}
 
 	bool operator!=(const Vec3<T>& v) const {
@@ -149,7 +165,7 @@ public:
 	static Vec3<T> zaxis() { return Vec3<T>(0, 0, 1); }
 
 	T lengthSquared() const { 
-		return t[0] * t[0] + t[1] * t[1] + t[2] *t [2]; 
+		return x*x + y*y + z*z;
 	}
 
 	T length() const { return sqrt(lengthSquared()); }
@@ -170,10 +186,7 @@ public:
 			return *this;
 	}
 
-	T average() const { return (t[0] + t[1] + t[2])/3.f; }
-  
-	T t[3];
-  T x, y, z;
+	T average() const { return (x + y + z)/3.f; }
 };
 
 //=========================================================================
@@ -191,7 +204,7 @@ typedef Vec3<double>        Vec3d;
 
 template <typename T>
 inline Vec3<T> operator*(T s, const Vec3<T>& v) {
-	return Vec3<T>(s*v.t[0], s*v.t[1], s*v.t[2]);
+	return Vec3<T>(s*v.x, s*v.y, s*v.z);
 }
   
 template <typename T>
@@ -201,14 +214,14 @@ inline Vec3<T> multi(const Vec3<T>& a, const Vec3<T>& b) {
   
 template <typename T>
 inline T dot(const Vec3<T>& a, const Vec3<T>& b) {
-	return a.t[0] * b.t[0] + a.t[1] * b.t[1] + a.t[2] * b.t[2];
+	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
   
 template <typename T>
 inline Vec3<T> cross(const Vec3<T>& a, const Vec3<T>& b) {
-	return Vec3<T>(a.t[1] * b.t[2] - a.t[2] * b.t[1],
-		a.t[2] * b.t[0] - a.t[0] * b.t[2],
-		a.t[0] * b.t[1] - a.t[1] * b.t[0]);
+	return Vec3<T>(a.y * b.z - a.z * b.y,
+		a.z * b.x - a.x * b.z,
+		a.x * b.y - a.y * b.x);
 }
   
 template <typename T>
@@ -246,17 +259,17 @@ inline std::ostream& operator<<(std::ostream& os, const Vec3<T>& v)
 
 inline std::istream& operator>>(std::istream& is, Vec3uc& v) 
 {
-	int x[3];
-	is >> x[0] >> x[1] >> x[2];
-	v[0]=x[0]; v[1]=x[1]; v[2]=x[2];
+	int t[3];
+	is >> t[0] >> t[1] >> t[2];
+	v[0]=t[0]; v[1]=t[1]; v[2]=t[2];
 	return is;
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Vec3uc& v) 
 {
-	int x[3];
-	x[0]=v[0]; x[1]=v[1]; x[2]=v[2];
-	os << x[0] << " " << x[1] << " " << x[2];
+	int t[3];
+	t[0]=v[0]; t[1]=v[1]; t[2]=v[2];
+	os << t[0] << " " << t[1] << " " << t[2];
 	return os;
 }
 

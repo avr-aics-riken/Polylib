@@ -39,9 +39,9 @@ Vertex::Vertex(){}
 /// @param[in] vec 頂点ベクトル
 
 Vertex::Vertex(const Vec3<PL_REAL>& vec){
-	this->t[0]=vec.t[0];
-	this->t[1]=vec.t[1];
-	this->t[2]=vec.t[2];
+	this->x=vec.x;
+	this->y=vec.y;
+	this->z=vec.z;
 }
 
 
@@ -52,9 +52,9 @@ Vertex::Vertex(const Vec3<PL_REAL>& vec){
 /// @param[in] z 座標
 
 Vertex::Vertex(PL_REAL x,PL_REAL y,PL_REAL z){
-	this->t[0]=x;
-	this->t[1]=y;
-	this->t[2]=z;
+	this->x=x;
+	this->y=y;
+	this->z=z;
 
 }
 
@@ -62,14 +62,17 @@ Vertex::Vertex(PL_REAL x,PL_REAL y,PL_REAL z){
 ///
 
 PL_REAL& Vertex::operator [](const AxisEnum& axis) { 
-	return this->t[axis];
+	//return this->t[axis]; // keno 2014-03-23
+  return (&x)[axis];
 }
+
 ///
 ///  index アクセス
 ///
 
 const PL_REAL& Vertex::operator [](const AxisEnum& axis) const {
-	return this->t[axis];
+	//return this->t[axis]; // keno 2014-03-23
+  return (&x)[axis];
 }
 
 
@@ -83,18 +86,18 @@ const PL_REAL& Vertex::operator [](const AxisEnum& axis) const {
 
 PL_REAL Vertex::distanceSquared(Vertex v)
 {
-	Vec3<PL_REAL> vdis(this->t[0]-v.t[0],this->t[1]-v.t[1],this->t[2]-v.t[2]);
+	Vec3<PL_REAL> vdis(this->x-v.x,this->y-v.y,this->z-v.z);
 
 #ifdef DEBUG
-	std::cout << "a("<<this->t[0]<<","
-		<<this->t[1]<<","
-		<<this->t[2]<<")"
-		<< " b("<<v.t[0]<<","
-		<<v.t[1]<<","
-		<<v.t[2]<<")"
-		<< " c("<<vdis.t[0]<<","
-		<<vdis.t[1]<<","
-		<<vdis.t[2]<<")"
+	std::cout << "a("<<this->x<<","
+		<<this->y<<","
+		<<this->z<<")"
+		<< " b("<<v.x<<","
+		<<v.y<<","
+		<<v.z<<")"
+		<< " c("<<vdis.x<<","
+		<<vdis.y<<","
+		<<vdis.z<<")"
 		<<std::endl;
 #endif // DEBUG
 

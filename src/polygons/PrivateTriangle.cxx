@@ -119,11 +119,11 @@ PrivateTriangle::PrivateTriangle(
 // #endif
 // 		for( int i=0; i<3; i++ ) {
 // 		  PL_DBGOSH << "PrivateTriangle  0 i ."<<i << std::endl;
-// 		  this->m_vertex_ptr[i]->t[0] = *dim++;
+// 		  this->m_vertex_ptr[i]->x = *dim++;
 // 		  PL_DBGOSH << "PrivateTriangle  1 i ."<<i << std::endl;
-// 		  this->m_vertex_ptr[i]->t[1] = *dim++;
+// 		  this->m_vertex_ptr[i]->y = *dim++;
 // 		  PL_DBGOSH << "PrivateTriangle  2 i ."<<i << std::endl;
-// 		  this->m_vertex_ptr[i]->t[2] = *dim++;
+// 		  this->m_vertex_ptr[i]->z = *dim++;
 // 		  PL_DBGOSH << "PrivateTriangle  3 i ."<<i << std::endl;
 // 		}
 // 		m_id = id;
@@ -151,9 +151,9 @@ PrivateTriangle::PrivateTriangle(
 	PL_ERROS << "PrivateTriangle(T,int,int) is obsolete. !!!NOTHING IS DONE!!!" << std::endl;
 #if 0
 	for( int i=0; i<3; i++ ) {
-		m_vertex[i].t[0] = *dim++;
-		m_vertex[i].t[1] = *dim++;
-		m_vertex[i].t[2] = *dim++;
+		m_vertex[i].x = *dim++;
+		m_vertex[i].y = *dim++;
+		m_vertex[i].z = *dim++;
 	}
 	m_id = id;
 	m_exid = exid;

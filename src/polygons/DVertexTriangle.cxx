@@ -106,9 +106,9 @@ DVertexTriangle::DVertexTriangle(
 	int			id
 	){
 		for( int i=0; i<3; i++ ) {
-			this->m_vertex_ptr[i]->t[0] = *dim++;
-			this->m_vertex_ptr[i]->t[1] = *dim++;
-			this->m_vertex_ptr[i]->t[2] = *dim++;
+			this->m_vertex_ptr[i]->x = *dim++;
+			this->m_vertex_ptr[i]->y = *dim++;
+			this->m_vertex_ptr[i]->z = *dim++;
 		}
 		this->m_id = id;
 		this->calc_normal();

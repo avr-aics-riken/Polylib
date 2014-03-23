@@ -112,9 +112,9 @@ AxisEnum BBox::getMaxAxis(PL_REAL& length) const {
 /// @return 含まれる場合はtrue。他はfalse。
 ///
 bool BBox::contain(const Vec3<PL_REAL>& pos) const {
-	if (min.t[0] <= pos.t[0] && pos.t[0] <= max.t[0] &&
-		min.t[1] <= pos.t[1] && pos.t[1] <= max.t[1] &&
-		min.t[2] <= pos.t[2] && pos.t[2] <= max.t[2]) {
+	if (min.x <= pos.x && pos.x <= max.x &&
+		min.y <= pos.y && pos.y <= max.y &&
+		min.z <= pos.z && pos.z <= max.z) {
 			return true;
 	}
 	else {
@@ -129,9 +129,9 @@ bool BBox::contain(const Vec3<PL_REAL>& pos) const {
 /// @return 交差する場合はtrue。他はfalse。
 ///
 bool BBox::crossed(const BBox& bbox) const {
-	if (max.t[0] < bbox.min.t[0] || bbox.max.t[0] < min.t[0]) return false;
-	if (max.t[1] < bbox.min.t[1] || bbox.max.t[1] < min.t[1]) return false;
-	if (max.t[2] < bbox.min.t[2] || bbox.max.t[2] < min.t[2]) return false;
+	if (max.x < bbox.min.x || bbox.max.x < min.x) return false;
+	if (max.y < bbox.min.y || bbox.max.y < min.y) return false;
+	if (max.z < bbox.min.z || bbox.max.z < min.z) return false;
 	return true;
 }
 
