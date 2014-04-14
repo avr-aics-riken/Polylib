@@ -225,6 +225,26 @@ public:
 		) const;
 
 	///
+	/// 三角形ポリゴンの検索。
+	/// 位置ベクトルmin_posとmax_posにより特定される矩形領域に含まれる、
+	/// 三角形ポリゴンをinput_triasで与えられた三角形ポリゴン集合から探索する。
+	///
+	///  @param[in] input_trias	入力三角形ポリゴンのリスト。
+	///  @param[in] min_pos		抽出する矩形領域の最小値。
+	///  @param[in] max_pos		抽出する矩形領域の最大値。
+	///  @param[in] every		true:3頂点が全て検索領域に含まれるものを抽出。
+	///   						false:3頂点の一部でも検索領域と重なるものを抽出。
+	///  @return	抽出した三角形ポリゴンのvector。
+	///  @attention 返却した三角形ポリゴンは、削除不可。vectorは要削除。
+	///
+	std::vector<Triangle*>* search_polygons(
+		std::vector<Triangle*>*	input_trias, 
+		Vec3<PL_REAL>			min_pos, 
+		Vec3<PL_REAL>			max_pos, 
+		bool			every
+		);
+
+	///
 	/// 指定した点に最も近い三角形ポリゴンの検索。
 	///
 	///  @param[in] group_name	抽出グループ名。
