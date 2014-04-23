@@ -14,6 +14,11 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-04-23
+ r54 update Vec3.h [ver 3.4.4]
+  - add typedef vec3r
+
+------------------
 2014-03-23
  r53 update polylib-config [ver 3.4.3]
   - add include/common
