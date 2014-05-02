@@ -14,6 +14,14 @@ RELEASE
 =======
 
 -------------
+Version 3.4.5   2014-05-02
+ - suppress debug message
+
+-------------
+Version 3.4.4   2014-04-23
+ - Vec3r
+ 
+-------------
 Version 3.4.3   2014-03-23
  - update polylib-config
 

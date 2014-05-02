@@ -14,6 +14,10 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-05-02
+ r55 suppress extra debug message at pack_tria_ids() in MPIPolylib.cxx [ver 3.4.5]
+ 
+------------------
 2014-04-23
  r54 update Vec3.h [ver 3.4.4]
   - add typedef vec3r

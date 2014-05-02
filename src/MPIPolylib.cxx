@@ -1564,7 +1564,7 @@ POLYLIB_STAT
 
 	// 出力配列に、三角形IDを順に追加
 	for( unsigned int i=0; i<p_trias->size(); i++ ) {
-std::cout << p_trias->at(i)->get_id() << ",";
+    //std::cout << p_trias->at(i)->get_id() << ",";
 		p_vec->push_back( p_trias->at(i)->get_id() );
 	}
 	return PLSTAT_OK;
