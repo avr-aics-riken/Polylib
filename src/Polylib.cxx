@@ -950,7 +950,7 @@ POLYLIB_STAT Polylib::save_with_rankno(
 
 		// ランク番号の整形
 		char	rank_no[16];
-		int		fig = (int)log10((double)maxrank) + 1;
+		int		fig = (maxrank > 0) ? (int)log10((double)maxrank) + 1 : 1;
 		sprintf(rank_no, "%0*d", fig, myrank);
 
 #ifdef DEBUG
