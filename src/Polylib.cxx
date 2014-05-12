@@ -347,6 +347,45 @@ std::vector<Triangle*>* Polylib::search_polygons(
 }
 
 // public /////////////////////////////////////////////////////////////////////
+// for branch 'recursive_search'
+std::vector<Triangle*>* Polylib::search_polygons(
+	std::vector<Triangle*>*  input_trias,
+	Vec3<PL_REAL>		min_pos, 
+	Vec3<PL_REAL>		max_pos, 
+	bool		every
+) {
+	std::vector<Triangle*>		   *ret_list = new std::vector<Triangle*>;
+	std::vector<Triangle*>::iterator itr;
+	BBox q_bbox;
+	q_bbox.init();
+	q_bbox.add( min_pos );
+	q_bbox.add( max_pos );
+
+	for (itr = input_trias->begin(); itr != input_trias->end(); itr++) {
+		Vertex** vtx_arr = (*itr)->get_vertex();
+		if (every == true) {
+			if (q_bbox.contain( (Vec3<PL_REAL>) *vtx_arr[0]) == true && 
+				q_bbox.contain( (Vec3<PL_REAL>) *vtx_arr[1]) == true &&
+				q_bbox.contain( (Vec3<PL_REAL>) *vtx_arr[2]) == true)
+			{
+				ret_list->push_back(*itr);
+			}
+		}
+		else {
+			BBox bbox;
+			bbox.init();
+			for (int i = 0; i < 3; i++) {
+				bbox.add( (Vec3<PL_REAL>) *vtx_arr[i]);
+			}
+			if (bbox.crossed(q_bbox) == true) {
+				ret_list->push_back(*itr);
+			}
+		}
+	}
+	return ret_list;
+}
+
+// public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT Polylib::check_group_name(
 	const std::string	&name, 
