@@ -461,6 +461,7 @@ void TriMesh::init(const std::vector<PrivateTriangle*>* trias)
 				(*itr)->get_area(),
 				(*itr)->get_id()
 				);
+			tri->set_exid((*itr)->get_exid());
 			this->m_tri_list->push_back(tri);
 		}
 		catch (char* str) {
