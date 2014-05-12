@@ -13,6 +13,7 @@
 #ifndef polylib_h
 #define polylib_h
 #include <string.h>
+#include <string>
 #include <vector>
 #include <iostream>
 #include "polygons/Polygons.h"
@@ -40,6 +41,7 @@
 #include <time.h>
 #endif
 
+using namespace std;
 using namespace Vec3class;
 
 namespace PolylibNS {

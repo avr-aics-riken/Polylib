@@ -18,10 +18,10 @@
 #define _POLYLIB_VERSION_H_
 
 /** POLYLIBライブラリのバージョン */
-#define PL_VERSION_NO  "3.4.5"
+#define PL_VERSION_NO  "3.4.6"
 
 /** POLYLIBライブラリのリビジョン */
-#define PL_REVISION    "20140502_1000"
+#define PL_REVISION    "20140512_1200"
 
 #endif /* _POLYLIB_VERSION_H_ */
 

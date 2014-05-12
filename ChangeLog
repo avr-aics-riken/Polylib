@@ -14,6 +14,16 @@ REVISION HISTORY
 ================
 
 ------------------
+2014-05-12
+ r56 update & bug fix [ver 3.4.6]
+  - bug
+    > Polylib::save_with_rankno for maxrank=0
+    > Add exid copy in TriMesh::init(trias)
+  - add a method
+    > search_polygons()
+
+
+------------------
 2014-05-02
  r55 suppress extra debug message at pack_tria_ids() in MPIPolylib.cxx [ver 3.4.5]
  
