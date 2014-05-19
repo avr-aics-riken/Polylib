@@ -14,8 +14,6 @@
 #ifndef MPIPolylib_h
 #define MPIPolylib_h
 
-#define to_string( s )  # s
-
 #include "mpi.h"
 #include <exception>
 #include <typeinfo>

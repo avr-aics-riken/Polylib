@@ -736,7 +736,7 @@ POLYLIB_STAT
 #endif
 
 		if(sizeof(PL_REAL)==4){
-			PL_DBGOSH << __func__ << " float " << to_string((PL_REAL)) << std::endl;
+			//PL_DBGOSH << __func__ << " float " << to_string((PL_REAL)) << std::endl;
 			if (MPI_Isend( p_send_trias_array,     send_trias.size(),
 				MPI_FLOAT, (*procs_itr)->m_rank, MPITAG_TRIAS,
 				m_mycomm, &mpi_reqs[reqs_pos++] ) != MPI_SUCCESS) {
