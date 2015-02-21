@@ -1060,7 +1060,7 @@ void TriMesh::vtx_compaction()
 
 				(*itr)->set_vertexes(tmp_list,true,true);
 
-				if((*itr)->get_area()==0){ //zero area check
+				if((*itr)->get_area()==0.0){ //zero area check
 					PL_DBGOSH << __func__ 
 						<< " Warning : polygon contains a triangle that its area is zero." << std::endl;
 					PL_DBGOSH <<  "vertex0 ("<< *(tmp_list[0]) <<")"<<std::endl;

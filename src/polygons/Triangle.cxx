@@ -233,18 +233,22 @@ void Triangle::calc_normal() {
 }
 
 ///
-/// 面積算出。
+/// 面積算出。 double に変更 2015-02-21 keno
 ///
 void Triangle::calc_area() {
-	Vec3<PL_REAL> a = *(m_vertex_ptr[1]) - *(m_vertex_ptr[0]);
-	Vec3<PL_REAL> b = *(m_vertex_ptr[2]) - *(m_vertex_ptr[0]);
-	PL_REAL al = a.length();
-	PL_REAL bl = b.length();
-	PL_REAL ab = dot(a,b);
-	PL_REAL f = al*al*bl*bl - ab*ab;
-	if(f<0.0) f=0.0;
+  Vec3<double> vd[3];
+  vd[0].assign( m_vertex_ptr[0]->x, m_vertex_ptr[0]->y, m_vertex_ptr[0]->z );
+  vd[1].assign( m_vertex_ptr[1]->x, m_vertex_ptr[1]->y, m_vertex_ptr[1]->z );
+  vd[2].assign( m_vertex_ptr[2]->x, m_vertex_ptr[2]->y, m_vertex_ptr[2]->z );
+  
+  Vec3<double> a = vd[1] - vd[0];
+  Vec3<double> b = vd[2] - vd[0];
 
-	m_area = 0.5*sqrt(f);
+	double ab = dot(a,b);
+	double f = a.lengthSquared()*b.lengthSquared() - ab*ab;
+	if (f<0.0) f=0.0;
+
+	m_area = (PL_REAL)0.5*sqrt(f);
 	// std::cout << "a("<<a<<") b("<<b<<")"<<std::endl;
 	// std::cout << __func__ <<" "<<m_area <<" "<< f << " " << al << " "<< bl << " "<< ab <<std::endl;
 }

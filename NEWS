@@ -14,6 +14,10 @@ RELEASE
 =======
 
 -------------
+Version 3.4.8   2015-02-21
+- bug fix of get_area()
+
+-------------
 Version 3.4.6   2014-05-12
  - bug fix & add a new function
 

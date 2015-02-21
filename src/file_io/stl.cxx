@@ -168,7 +168,7 @@ POLYLIB_STAT stl_a_load(
 
 					PrivateTriangle* tri = new PrivateTriangle(tmpvertlist, nml, n_tri);
 					//  面積が0 になる場合にはWarning.
-					if(tri->get_area()==0){
+					if(tri->get_area()==0.0){
 						PL_DBGOSH << __func__ 
 							<< " Warning :  stl file contains a triangle of the area is zero." << std::endl;
 						PL_DBGOSH <<  "vertex0 ("<< *(tmpvertlist[0]) <<")"<<std::endl;
@@ -364,7 +364,7 @@ POLYLIB_STAT stl_b_load(
 			PrivateTriangle *tri = new PrivateTriangle(vtx_ptr_list, normal, n_tri);
 			//std::cout << "fff" <<std::endl;
 			//  面積が0 になる場合にはWarning.
-			if(tri->get_area()==0){
+			if(tri->get_area()==0.0){
 				PL_DBGOSH <<  __func__ 
 					<< " Warning :  stl file contains a triangle of the area is zero." << std::endl;
 				PL_DBGOSH <<  "vertex0 ("<< *(vtx_ptr_list[0]) <<")"<<std::endl;

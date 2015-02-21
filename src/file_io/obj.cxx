@@ -137,7 +137,7 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 
 
 			PrivateTriangle* tri = new PrivateTriangle(tmpvertlist, n_tri);
-			if(tri->get_area()==0){
+			if(tri->get_area()==0.0){
 
 				PL_DBGOSH << __func__ 
 					<< " Warning :  obj file contains a triangle of the area is zero." << std::endl;
@@ -669,7 +669,7 @@ POLYLIB_STAT obj_b_load(
 			PrivateTriangle* tri=new PrivateTriangle(tmpvlist,
 				exid);
 
-			if(tri->get_area()==0){
+			if(tri->get_area()==0.0){
 				PL_DBGOSH << __func__ 
 					<< " Warning :  obj file contains a triangle of the area is zero." << std::endl;
 				PL_DBGOSH <<  "vertex0 ("<< *(tmpvlist[0]) <<")"<<std::endl;
