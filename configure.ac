@@ -35,7 +35,7 @@ AC_SUBST(PL_CXX)
 enable_mpi="none"
 
 # if a wrapper compiler is used, "enable_mpi" is empty, but parallel.
-# wrappers like mpicxx, mpicc, mpiCC, mpic++, mpiFCCpx are taking into consideration, if not add in case.
+# wrappers like mpicxx, mpicc, mpiCC, mpic++, mpiicc, mpiicpc, mpiFCCpx are taking into consideration, if not add in case.
 # CC is for Hopper
 
 case "$PL_CXX" in
@@ -43,6 +43,8 @@ case "$PL_CXX" in
   mpicc)    enable_mpi="mpi" ;;
   mpiCC)    enable_mpi="mpi" ;;
   mpic++)   enable_mpi="mpi" ;;
+  mpiicc)   enable_mpi="mpi" ;;
+  mpiicpc)  enable_mpi="mpi" ;;
   mpiFCCpx) enable_mpi="mpi" ;;
   CC)       enable_mpi="mpi" ;;
 esac
