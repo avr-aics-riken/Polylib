@@ -4,7 +4,7 @@
  * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
  * All rights reserved.
  * 
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
+ * Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
  * All rights reserved.
  *
  */
@@ -12,6 +12,12 @@
 
 REVISION HISTORY
 ================
+
+------------------
+2015-03-14
+r59 update year
+- add mpiicc, mpiicpc
+- update description of INSTALL >> ${FFV_HOME}
 
 ------------------
 2015-02-21

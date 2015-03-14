@@ -4,7 +4,7 @@
  * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
  * All rights reserved.
  * 
- * Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
+ * Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
  * All rights reserved.
  *
  */
@@ -54,6 +54,7 @@ HOW TO COMPILE
 
 1. with configure
 
+$ export FFV_HOME=/hogehoge
 $ ./configure [options]
 $ make
 # make install
@@ -107,8 +108,8 @@ Here is some examples;
 
 ## Intel compiler serial
 
-  $ ./configure --prefix=/usr/local/Polylib \
-                --with-parser=/usr/local/TextParser \
+  $ ./configure --prefix=${FFV_HOME}/Polylib \
+                --with-parser=${FFV_HOME}/TextParser \
                 --with-example=no \
                 CXX=icpc \
                 CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
@@ -116,9 +117,9 @@ Here is some examples;
 
 ## Intel compiler and MPICH, and with example
  
-  $ ./configure --prefix=/usr/local/Polylib \
+  $ ./configure --prefix=${FFV_HOME}/Polylib \
                 --with-mpich=/usr/local/mpich \
-                --with-parser=/usr/local/TextParser \
+                --with-parser=${FFV_HOME}/TextParser \
                 --with-example=yes \
                 --with-real=double \
                 CXX=/opt/intel/composerxe/bin/icpc \
@@ -127,8 +128,8 @@ Here is some examples;
 
 ## OpenMPI with wrapper compiler, default install directory, /w example
 
-  $ ./configure --prefix=/usr/local/FFV/Polylib \
-                --with-parser=/usr/local/FFV/TextParser \
+  $ ./configure --prefix=${FFV_HOME}/Polylib \
+                --with-parser=${FFV_HOME}/TextParser \
                 --with-example=yes \
                 CXX=mpicxx \
                 CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
@@ -136,8 +137,8 @@ Here is some examples;
 
 ## K-computer
 
-  $ ./configure --prefix=$1 \
-                --with-parser=/usr/local/TextParser \
+  $ ./configure --prefix=${FFV_HOME}/Polylib \
+                --with-parser=${FFV_HOME}/TextParser \
                 --host=sparc64-unknown-linux-gnu \
                 CXX=mpiFCCpx \
                 CXXFLAGS="-Kfast,ocl,preex,simd=2,uxsimd,array_private,parallel,openmp"

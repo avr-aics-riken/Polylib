@@ -5,7 +5,7 @@
 # Copyright (c) 2010-2011 VCAD System Research Program, RIKEN. 
 # All rights reserved.
 # 
-# Copyright (c) 2012-2014 Advanced Institute for Computational Science, RIKEN.
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
 # All rights reserved.
 #
 ##############################################################################
@@ -14,7 +14,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.57])
-AC_INIT([Polylib], [3.4.8], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [3.4.9], [keno@riken.jp],[Polylib])
 AM_INIT_AUTOMAKE()
 AC_CONFIG_SRCDIR([src/MPIPolylib.cxx])
 AC_CONFIG_HEADERS([config.h])
@@ -25,7 +25,7 @@ AC_CONFIG_HEADERS([config.h])
 #
 # revision No.
 #
-PL_REVISION="20150221_1500"
+PL_REVISION="20150314_1600"
 AC_SUBST(PL_REVISION)
 
 
