@@ -15,7 +15,7 @@
 
 AC_PREREQ([2.57])
 
-AC_INIT([Polylib], [3.5.0], [keno@riken.jp],[Polylib])
+AC_INIT([Polylib], [3.5.1], [keno@riken.jp],[Polylib])
 
 echo "----------------------------------------"
 echo "Running Polylib Configure Script"
@@ -68,7 +68,7 @@ AM_INIT_AUTOMAKE()
 #
 # revision No.
 #
-PL_REVISION="20150609_1500"
+PL_REVISION="20150610_2200"
 AC_SUBST(PL_REVISION)
 
 
