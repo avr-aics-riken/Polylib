@@ -96,11 +96,10 @@ $ ../configure --prefix=${FFV_HOME}/Polylib \
                CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 
 
-## OpenMPI with wrapper compiler, default install directory, /w example
+## OpenMPI with wrapper compiler, default install directory, /wo example
 
 $ ../configure --prefix=${FFV_HOME}/Polylib \
                --with-parser=${FFV_HOME}/TextParser \
-               --with-example=yes \
                CXX=mpicxx \
                CXXFLAGS="-O3 -Wall -fno-strict-aliasing"
 

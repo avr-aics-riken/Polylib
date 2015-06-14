@@ -16,7 +16,7 @@ SUBDIRS = @MAKE_SUB_DIRS@
 bin_SCRIPTS    = polylib-config
 CLEANFILES     = $(bin_SCRIPTS)
 EXTRA_DIST     = polylib-config.in LICENSE Makefile_hand doc/doxygen/Doxyfile \
-                 BUILD_DIR/.gitkeep
+                 BUILD_DIR/.gitkeep examples
 dist_data_DATA = AUTHORS COPYING ChangeLog README LICENSE
 
 #ACLOCAL_AMFLAGS = -I m4 // SO

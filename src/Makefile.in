@@ -474,41 +474,41 @@ AUTOMAKE_OPTIONS = subdir-objects
 @SERIALTARGET_FALSE@     util/time.cxx
 
 nobase_include_HEADERS = \
-  $(top_srcdir)/include/MPIPolylib.h \
-  $(top_srcdir)/include/Polylib.h \
-  $(top_srcdir)/include/c_lang/CMPIPolylib.h \
-  $(top_srcdir)/include/c_lang/CPolylib.h \
-  $(top_srcdir)/include/common/BBox.h \
-  $(top_srcdir)/include/common/PolylibCommon.h \
-  $(top_srcdir)/include/common/PolylibDefine.h \
-  $(top_srcdir)/include/common/PolylibStat.h \
-  $(top_srcdir)/include/common/tt.h \
-  $(top_srcdir)/include/common/Vec2.h \
-  $(top_srcdir)/include/common/Vec3.h \
-  $(top_srcdir)/include/file_io/stl.h \
-  $(top_srcdir)/include/file_io/obj.h \
-  $(top_srcdir)/include/file_io/vtk.h \
-  $(top_srcdir)/include/file_io/triangle_id.h \
-  $(top_srcdir)/include/file_io/TriMeshIO.h \
-  $(top_srcdir)/include/groups/PolygonGroup.h \
-  $(top_srcdir)/include/groups/PolygonGroupFactory.h \
-  $(top_srcdir)/include/polygons/DVertex.h \
-  $(top_srcdir)/include/polygons/DVertexManager.h \
-  $(top_srcdir)/include/polygons/DVertexTriangle.h \
-  $(top_srcdir)/include/polygons/Polygons.h \
-  $(top_srcdir)/include/polygons/PrivateTriangle.h \
-  $(top_srcdir)/include/polygons/Triangle.h \
-  $(top_srcdir)/include/polygons/TriMesh.h \
-  $(top_srcdir)/include/polygons/VElement.h \
-  $(top_srcdir)/include/polygons/Vertex.h \
-  $(top_srcdir)/include/polygons/VertexList.h \
-  $(top_srcdir)/include/polygons/VertKDT.h \
-  $(top_srcdir)/include/polygons/VertKDTElem.h \
-  $(top_srcdir)/include/polygons/VertKDTNode.h \
-  $(top_srcdir)/include/polygons/VNode.h \
-  $(top_srcdir)/include/polygons/VTree.h \
-  $(top_srcdir)/include/util/time.h \
-  $(top_srcdir)/include/polyVersion.h
+  ../include/MPIPolylib.h \
+  ../include/Polylib.h \
+  ../include/c_lang/CMPIPolylib.h \
+  ../include/c_lang/CPolylib.h \
+  ../include/common/BBox.h \
+  ../include/common/PolylibCommon.h \
+  ../include/common/PolylibDefine.h \
+  ../include/common/PolylibStat.h \
+  ../include/common/tt.h \
+  ../include/common/Vec2.h \
+  ../include/common/Vec3.h \
+  ../include/file_io/stl.h \
+  ../include/file_io/obj.h \
+  ../include/file_io/vtk.h \
+  ../include/file_io/triangle_id.h \
+  ../include/file_io/TriMeshIO.h \
+  ../include/groups/PolygonGroup.h \
+  ../include/groups/PolygonGroupFactory.h \
+  ../include/polygons/DVertex.h \
+  ../include/polygons/DVertexManager.h \
+  ../include/polygons/DVertexTriangle.h \
+  ../include/polygons/Polygons.h \
+  ../include/polygons/PrivateTriangle.h \
+  ../include/polygons/Triangle.h \
+  ../include/polygons/TriMesh.h \
+  ../include/polygons/VElement.h \
+  ../include/polygons/Vertex.h \
+  ../include/polygons/VertexList.h \
+  ../include/polygons/VertKDT.h \
+  ../include/polygons/VertKDTElem.h \
+  ../include/polygons/VertKDTNode.h \
+  ../include/polygons/VNode.h \
+  ../include/polygons/VTree.h \
+  ../include/util/time.h \
+  ../include/polyVersion.h
 
 EXTRA_DIST = Makefile_hand depend.inc
 all: all-am
