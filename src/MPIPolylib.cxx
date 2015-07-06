@@ -366,6 +366,147 @@ POLYLIB_STAT
 	//#undef DEBUG
 }
 
+//////////////////////////////////////////////
+POLYLIB_STAT
+    MPIPolylib::load_only_in_rank0(
+    std::string config_filename,
+    PL_REAL scale
+    )
+{
+    //#define TIME_MEASURE
+#ifdef TIME_MEASURE
+    double time1=0;
+    double time2=0;
+    time1=MPI_Wtime();
+
+#endif // TIME_MEASURE
+
+    //#define DEBUG
+#ifdef DEBUG
+    PL_DBGOSH << m_myrank << ": " << "MPIPolylib::load_only_in_rank0() in. " << std::endl;
+#endif
+    POLYLIB_STAT ret;
+    std::string       config_contents;
+
+    // for tp
+    try {
+        //PolylibConfig base(config_filename);
+        this->tp->read(config_filename);
+
+#ifdef DEBUG
+        PL_DBGOSH << m_myrank << ": " << "MPIPolylib::load_only_in_rank0() tp->read end. " << std::endl;
+#endif
+
+
+        //ret = make_group_tree(&base);
+        // only on rank0 ?
+        ret = this->make_group_tree(this->tp);
+
+#ifdef DEBUG
+        PL_DBGOSH << m_myrank << ": " << "MPIPolylib::load_only_in_rank0() make_group_tree end. " << std::endl;
+#endif
+
+        if( ret != PLSTAT_OK ) return ret;
+    }
+    catch( POLYLIB_STAT e ){
+        return e;
+    }
+
+    if( m_myrank == 0 ) {
+
+        // ポリゴン情報を構築 (三角形IDファイルは不要なので、第二引数はダミー)
+
+#ifdef DEBUG
+        PL_DBGOSH << m_myrank << ": " << "MPIPolylib::load_only_in_rank0() load_polygons start. " << std::endl;
+#endif
+
+        if( (ret = this->load_polygons(false, ID_BIN, scale)) != PLSTAT_OK ) {
+            PL_ERROSH << "[ERROR]MPIPolylib::load_only_in_rank0():load_polygons() faild."
+                <<" returns:" << PolylibStat2::String(ret) << std::endl;
+            return ret;
+        }
+
+
+#ifdef TIME_MEASURE
+        time2=MPI_Wtime();
+#endif // TIME_MEASURE
+
+#ifdef DEBUG
+        PL_DBGOSH << m_myrank << ": " << "MPIPolylib::load_only_in_rank0() load_polygons end. " << std::endl;
+#endif
+    }
+
+#ifdef TIME_MEASURE
+    PL_DBGOSH << m_myrank << ": " << "MPIPolylib::load_only_in_rank0() time measure" << std::endl;
+    PL_DBGOSH << m_myrank << ":time1 " << time1 << std::endl;
+    PL_DBGOSH << m_myrank << ":time2 " << time2-time1 << std::endl;
+#endif // TIME_MEASURE
+    return PLSTAT_OK;
+}
+
+POLYLIB_STAT
+    MPIPolylib::distribute_only_from_rank0(
+    )
+{
+    //#define TIME_MEASURE
+#ifdef TIME_MEASURE
+    double time3=0;
+    double time4=0;
+#endif // TIME_MEASURE
+
+    POLYLIB_STAT ret;
+
+    if( m_myrank == 0 ) {
+
+        // ポリゴン情報を他PEへ配信する。
+        if( (ret = send_polygons_to_all()) != PLSTAT_OK ) {
+            PL_ERROSH << "[ERROR]MPIPolylib::distribute_only_from_rank0():send_polygons_to_all()"
+                <<" faild. returns:" << PolylibStat2::String(ret) << std::endl;
+            return ret;
+        }
+
+#ifdef TIME_MEASURE
+        time3=MPI_Wtime();
+#endif // TIME_MEASURE
+
+#ifdef DEBUG
+        PL_DBGOSH << m_myrank << ": " << "MPIPolylib::distribute_only_from_rank0() send_polyons_to_all. " << std::endl;
+#endif
+
+        // 他PE領域ポリゴン情報を削除して自領域分のみでデータ構造再構築
+        if( (ret = erase_outbounded_polygons()) != PLSTAT_OK ) {
+#ifdef DEBUG
+            PL_DBGOSH << m_myrank << ": " << "MPIPolylib::distribute_only_from_rank0() erase_outbounded_polygons.  failed" << std::endl;
+#endif
+
+            PL_ERROSH << "[ERROR]MPIPolylib::distribute_only_from_rank0():erase_outbounded_polygons()"
+                <<" faild. returns:" << PolylibStat2::String(ret) << std::endl;
+            return ret;
+        }
+
+#ifdef DEBUG
+        PL_DBGOSH << m_myrank << ": " << "MPIPolylib::distribute_only_from_rank0() erase_outbounded_polygons. " << std::endl;
+#endif
+
+    } else { //for other rank
+
+        // ポリゴン情報をrank0から受信する。
+        if( (ret = receive_polygons_from_rank0()) != PLSTAT_OK ) {
+            PL_ERROSH << "[ERROR]MPIPolylib::distribute_only_from_rank0():receive_polygons_from_rank0()"
+                <<" faild. returns:" << PolylibStat2::String(ret) << std::endl;
+            return ret;
+        }
+    }
+
+#ifdef TIME_MEASURE
+    time4=MPI_Wtime();
+    PL_DBGOSH << m_myrank << ": " << "MPIPolylib::distribute_only_from_rank0() time measure" << std::endl;
+    PL_DBGOSH << m_myrank << ":time3 " << time3 << std::endl;
+    PL_DBGOSH << m_myrank << ":time4 " << time4-time3 << std::endl;
+#endif // TIME_MEASURE
+
+    return PLSTAT_OK;
+}
 
 // public /////////////////////////////////////////////////////////////////////
 
