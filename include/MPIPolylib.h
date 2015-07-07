@@ -130,6 +130,30 @@ public:
 		);
 
 	///
+	/// rank0によるデータ読み込みとデータ構築のみ行う
+	/// 指定された設定ファイルをrank0にて読み込み、グループ階層構造の構築
+	/// およびポリゴンデータの構築を行う。
+	/// グループ階層構造およびポリゴンデータの各rank分配は行わない。
+	///
+	/// @param[in] config_filename	初期化ファイル名。未指定時はデフォルトファイルを読む。
+	/// @return	POLYLIB_STATで定義される値が返る。
+	///
+	POLYLIB_STAT
+		load_only_in_rank0(
+		std::string config_filename = "",
+		PL_REAL scale = 1.0
+		);
+
+	///
+	/// load_only_in_rank0()により構築されたポリゴンデータを
+	/// 各rankへの分配のみ行う。
+	///
+	///
+	POLYLIB_STAT
+		distribute_only_from_rank0(
+		);
+
+	///
 	/// 全rank並列でのデータ構築。
 	/// 指定された設定ファイルを各rankにて読み込み、グループ階層構造の構築、
 	/// およびポリゴンデータの構築を行う。
