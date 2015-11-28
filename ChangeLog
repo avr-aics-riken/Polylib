@@ -14,6 +14,11 @@ REVISION HISTORY
 ================
 
 --------------------------
+2015-11-28
+r64 --with-comp becomes essential
+- change configure.ac, INSTALL, and NEWS
+
+--------------------------
 2015-07-07
 r63 add altenative API for load_rank0
 
