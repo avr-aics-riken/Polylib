@@ -28,6 +28,7 @@
 
 #include <fstream>
 #include <string>
+#include <cstring>
 #include <vector>
 #include <iomanip>
 #include "common/tt.h"
@@ -35,6 +36,7 @@
 #include "file_io/TriMeshIO.h"
 #include "file_io/obj.h"
 #include "file_io/stl.h"
+
 
 namespace PolylibNS {
 
