@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_trimesh_h
@@ -221,7 +227,7 @@ public:
 	///  @attention	オーバーロードメソッドあり。
 	///
 	const std::vector<PrivateTriangle*>* search(
-		BBox	*bbox, 
+		BBox	*bbox,
 		bool	every
 		) const;
 
@@ -256,7 +262,7 @@ public:
 	///  @attention MPIPolylib内での利用が目的なので、ユーザは使用しないこと。
 	///
 	const std::vector<PrivateTriangle*>* linear_search(
-		BBox	*q_bbox, 
+		BBox	*q_bbox,
 		bool	every
 		) const;
 
@@ -273,7 +279,7 @@ public:
 	///  @attention	オーバーロードメソッドあり。
 	///
 	POLYLIB_STAT linear_search(
-		BBox							*q_bbox, 
+		BBox							*q_bbox,
 		bool							every,
 		std::vector<PrivateTriangle*>	*tri_list
 		) const;
@@ -315,7 +321,7 @@ public:
 
 	//
 	/// DVertex 追加作成用
-	/// 
+	///
 	/// @param[in] v 頂点座標（３点）
 	///  @return    polygonへのpointer
 	///
@@ -323,7 +329,7 @@ public:
 	virtual DVertexTriangle* add_DVertex_Triangle(Vec3<PL_REAL>* v);
 	//
 	/// DVertex 追加作成後の重複頂点削除
-	/// 
+	///
 	///
 
 	virtual void finalize_DVertex();
@@ -380,7 +386,7 @@ private:
 	void replace_vertex_list(VertexList *vlist);
 
 
-	/// 
+	///
 	/// 重複頂点の削除
 	///
 	//    virtual void vtx_compaction();

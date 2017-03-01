@@ -1,3 +1,20 @@
+/*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
+*/
+
 #ifndef polylib_VertKDTNode_h
 #define polylib_VertKDTNode_h
 #include <vector>
@@ -39,21 +56,21 @@ public:
 
 	///
 	/// ノードがリーフかどうか判定する。
-	/// 
+	///
 	/// @return true=リーフ/false=リーフでない。
-	///  
+	///
 	bool is_leaf() const;
 
 	///
 	/// BBoxの値を取得
-	/// 
+	///
 	/// @return bbox。
 	///
 	BBox get_bbox() const;
 
 	///
 	/// BBoxの値を設定
-	/// 
+	///
 	/// @param[in] bbox。
 
 
@@ -74,7 +91,7 @@ public:
 	///
 	void set_bbox_search(const VertKDTElem* p) ;
 
-	/// 
+	///
 	/// 左のNodeを取得。
 	///
 	/// @return 左のNode。
@@ -160,7 +177,7 @@ private:
 	BBox					m_bbox_search;
 
 
-};// end of class 
+};// end of class
 
 }// end of namespace PolylibNS
 #endif //polylib_VertKDTNode_h

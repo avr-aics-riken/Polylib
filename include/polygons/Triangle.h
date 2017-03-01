@@ -1,13 +1,18 @@
-// -*- Mode: c++ -*-
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_triangle_h
@@ -63,7 +68,7 @@ public:
 	/// @attention 面積はvertexを元に自動計算される。
 	///
 	Triangle(
-		//Vec3	vertex[3], 
+		//Vec3	vertex[3],
 		Vertex* vertex_ptr[3],
 		Vec3<PL_REAL>	normal
 		) ;
@@ -76,10 +81,10 @@ public:
 	/// @param[in] area		ポリゴンの面積。
 	///
 	Triangle(
-		//Vec3	vertex[3], 
+		//Vec3	vertex[3],
 
 		Vertex* vertex_ptr[3],
-		Vec3<PL_REAL>	normal, 
+		Vec3<PL_REAL>	normal,
 		PL_REAL	area
 		) ;
 
@@ -94,9 +99,9 @@ public:
 	/// @param[in] calc_area	面積を再計算するか？
 	///
 	virtual void set_vertexes(
-		//Vec3	vertex[3], 
+		//Vec3	vertex[3],
 		Vertex* vertex_ptr[3],
-		bool	calc_normal, 
+		bool	calc_normal,
 		bool	calc_area
 		) ;
 
@@ -189,4 +194,3 @@ protected:
 } //namespace PolylibNS
 
 #endif  // polylib_triangle_h
-

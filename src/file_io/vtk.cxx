@@ -1,12 +1,18 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
  */
 
 #include "file_io/vtk.h"
@@ -18,7 +24,7 @@ namespace PolylibNS {
 /////////////////////////////////////////////////////
 
 POLYLIB_STAT vtk_a_save(
-	VertexList* vertex_list, 
+	VertexList* vertex_list,
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname
 	){
@@ -38,7 +44,7 @@ POLYLIB_STAT vtk_a_save(
 		PL_DBGOSH << __func__ <<"Header" <<std::endl;
 #endif // DEBUG
 
-		//header 
+		//header
 
 		os << "# vtk DataFile Version 2.0" <<std::endl;
 		os << " title "<<std::endl;
@@ -81,7 +87,7 @@ POLYLIB_STAT vtk_a_save(
 
 		// CELLS
 		os << "CELLS " << tri_list->size() << " "<< 4*tri_list->size()<<std::endl;
-		std::vector<PrivateTriangle*>::size_type index=0;  
+		std::vector<PrivateTriangle*>::size_type index=0;
 		std::vector<PrivateTriangle*>::iterator itr;
 		for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
 			Vertex** tmpvtx=(*itr)->get_vertex();
@@ -95,7 +101,7 @@ POLYLIB_STAT vtk_a_save(
 
 
 			if(i0==-1 || i1==-1 || i2==-1) {
-				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong vertex id " 
+				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong vertex id "
 					<< i0 << " "<< i1 << " "<< i2 << " "<< std::endl;
 			}
 			// vertex indexes are start from 0
@@ -113,19 +119,19 @@ POLYLIB_STAT vtk_a_save(
 		PL_DBGOSH << __func__ <<"CELLS_TYPES" <<std::endl;
 #endif // DEBUG
 
-		os << "CELL_TYPES " << tri_list->size() <<std::endl;  
+		os << "CELL_TYPES " << tri_list->size() <<std::endl;
 
 		for(std::vector<PrivateTriangle*>::size_type i=0;
 			i<tri_list->size();i++){
 				os<< "5";
 				if ( (i+1)%10==0){
-					os<< std::endl;  
+					os<< std::endl;
 				} else {
 					os<<" ";
 				}
 
 		}
-		os <<std::endl;  
+		os <<std::endl;
 
 
 #ifdef DEBUG
@@ -147,7 +153,7 @@ POLYLIB_STAT vtk_a_save(
 			nvector_tmp=dvm->nvector();
 		}
 
-		os << "POINT_DATA " << vertex_list->size() <<std::endl;  
+		os << "POINT_DATA " << vertex_list->size() <<std::endl;
 #ifdef DEBUG
 		PL_DBGOSH << __func__ <<"SCALAR "<<nscalar_tmp <<std::endl;
 #endif // DEBUG
@@ -189,7 +195,7 @@ POLYLIB_STAT vtk_a_save(
 			PL_DBGOSH << __func__ <<"VECTOR "<<i << " " << nvector_tmp<<std::endl;
 #endif // DEBUG
 
-			os << "VECTORS polylib_Vector_data"<<i; 
+			os << "VECTORS polylib_Vector_data"<<i;
 
 			if(sizeof(PL_REAL)==4){
 				os <<" float"<<std::endl;
@@ -226,7 +232,7 @@ POLYLIB_STAT vtk_a_save(
 				PL_DBGOSH << __func__ <<"VECTOR "<<i << " " << v<<std::endl;
 #endif // DEBUG
 
-#if SCIENTIFIC_OUT  
+#if SCIENTIFIC_OUT
 				os <<  std::setprecision(6)<< scientific << v <<std::endl;
 #else
 				os <<  std::setprecision(6)<< v <<std::endl;
@@ -251,7 +257,7 @@ POLYLIB_STAT vtk_a_save(
 ///////////////////////////////////////////////////////////////
 
 POLYLIB_STAT vtk_b_save(
-	VertexList* vertex_list, 
+	VertexList* vertex_list,
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname){
 
@@ -269,7 +275,7 @@ POLYLIB_STAT vtk_b_save(
 		}
 		int inv = tt_check_machine_endian() == TT_LITTLE_ENDIAN ? 0 : 1;
 
-		// header 
+		// header
 
 
 		ofs << "# vtk DataFile Version 2.0" <<std::endl;
@@ -316,7 +322,7 @@ POLYLIB_STAT vtk_b_save(
 		//cells
 
 		ofs << "CELLS " << tri_list->size() << " "<< 4*tri_list->size()<<std::endl;
-		std::vector<PrivateTriangle*>::size_type index=0;  
+		std::vector<PrivateTriangle*>::size_type index=0;
 		std::vector<PrivateTriangle*>::iterator itr;
 		for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
 			Vertex** tmpvtx=(*itr)->get_vertex();
@@ -330,7 +336,7 @@ POLYLIB_STAT vtk_b_save(
 
 
 			if(i0==-1 || i1==-1 || i2==-1) {
-				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong vertex id " 
+				PL_ERROSH << "[ERROR]vtk:vtk_a_save():wrong vertex id "
 					<< i0 << " "<< i1 << " "<< i2 << " "<< std::endl;
 			}
 			// vertex indexes are start from 0
@@ -347,9 +353,9 @@ POLYLIB_STAT vtk_b_save(
 				4, inv);
 
 
-			index++;    
+			index++;
 		}
-		ofs <<std::endl;  
+		ofs <<std::endl;
 
 
 #ifdef DEBUG
@@ -361,7 +367,7 @@ POLYLIB_STAT vtk_b_save(
 		vertex_list->index_map_clear();
 
 		//celltypes
-		ofs << "CELL_TYPES " << tri_list->size() <<std::endl;  
+		ofs << "CELL_TYPES " << tri_list->size() <<std::endl;
 
 		for(std::vector<PrivateTriangle*>::size_type i=0;
 			i<tri_list->size();i++){
@@ -369,7 +375,7 @@ POLYLIB_STAT vtk_b_save(
 				tt_write(ofs,&tmp,sizeof(int),1,inv);
 				//tt_write(ofs,tmp,sizeof(tmp),1,inv);
 		}
-		ofs <<std::endl;  
+		ofs <<std::endl;
 
 
 
@@ -378,7 +384,7 @@ POLYLIB_STAT vtk_b_save(
 #endif
 
 		//pointdata
-		ofs << "POINT_DATA " << vertex_list->size() <<std::endl;  
+		ofs << "POINT_DATA " << vertex_list->size() <<std::endl;
 		DVertex* dv=dynamic_cast<DVertex*>(vlistout->at(0));
 		DVertexManager* dvm=dv->DVM();
 
@@ -407,7 +413,7 @@ POLYLIB_STAT vtk_b_save(
 
 				tt_write(ofs, &tmp,sizeof(PL_REAL),1,inv);
 			}
-			ofs <<std::endl;  
+			ofs <<std::endl;
 		}
 
 #ifdef DEBUG
@@ -445,7 +451,7 @@ POLYLIB_STAT vtk_b_save(
 				ovector[2]=vec3[2];
 				tt_write(ofs, ovector,sizeof(PL_REAL),3,inv);
 			}
-			ofs <<std::endl;  
+			ofs <<std::endl;
 		}
 
 

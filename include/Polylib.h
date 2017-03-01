@@ -1,13 +1,18 @@
-/* -- Mode: c++ --*/
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_h
@@ -220,9 +225,9 @@ public:
 	///  @attention 返却した三角形ポリゴンは、削除不可。vectorは要削除。
 	///
 	std::vector<Triangle*>* search_polygons(
-		std::string		group_name, 
-		Vec3<PL_REAL>			min_pos, 
-		Vec3<PL_REAL>			max_pos, 
+		std::string		group_name,
+		Vec3<PL_REAL>			min_pos,
+		Vec3<PL_REAL>			max_pos,
 		bool			every
 		) const;
 
@@ -240,9 +245,9 @@ public:
 	///  @attention 返却した三角形ポリゴンは、削除不可。vectorは要削除。
 	///
 	std::vector<Triangle*>* search_polygons(
-		std::vector<Triangle*>*	input_trias, 
-		Vec3<PL_REAL>			min_pos, 
-		Vec3<PL_REAL>			max_pos, 
+		std::vector<Triangle*>*	input_trias,
+		Vec3<PL_REAL>			min_pos,
+		Vec3<PL_REAL>			max_pos,
 		bool			every
 		);
 
@@ -268,7 +273,7 @@ public:
 	///				ではない。
 	///
 	POLYLIB_STAT check_group_name(
-		const std::string	&pg_name, 
+		const std::string	&pg_name,
 		const std::string	&parent_path
 		);
 
@@ -352,7 +357,7 @@ public:
 	/// 指定された名前のポリゴングループが存在しない場合は、
 	/// 指定された階層にポリゴングループを新規に作成する。
 	/// DTは、データの型である。
-	/// 
+	///
 	/// @param[in] group_name ポリゴングループの名称
 	/// @param[in] nscalar スカラーデータ数
 	/// @param[in] nvector ベクトルデータ数
@@ -366,11 +371,11 @@ public:
 
 	/// 新規にDVertexを持つ三角形ポリゴンを追加する。
 	///
-	/// @param[in] name ポリゴンを追加するポリゴングループの名称。 
+	/// @param[in] name ポリゴンを追加するポリゴングループの名称。
 	/// @param[in] v   ポリゴンの各頂点　0?2
 	///
 	/// @return 作成したポリゴンへのポインタ。
-	DVertexTriangle* 
+	DVertexTriangle*
 		add_DVertex_Triangle(std::string name,
 		Vec3<PL_REAL>* v);
 
@@ -487,7 +492,7 @@ protected:
 	POLYLIB_STAT setfilepath( std::map<std::string,std::string>& stl_fname_map);
 
 
-	/// map  
+	/// map
 	///
 	///　
 	///　
@@ -549,7 +554,7 @@ protected:
 	///  @param[in] fp	出力先ファイル。指定されて行ければ、標準出力へ出力する。
 	///
 	void show_group_name(
-		PolygonGroup	*p, 
+		PolygonGroup	*p,
 		std::string		tab,
 		FILE			*fp
 		);
@@ -573,7 +578,7 @@ private:
 	/// 三角形ポリゴンの検索。
 	/// 位置ベクトルmin_posとmax_posにより特定される矩形領域に含まれる、
 	/// 三角形ポリゴンをgroup_nameで指定されたグループの下から探索する。
-	/// 
+	///
 	///  @param[in]  group_name	抽出グループ名
 	///  @param[in]  min_pos	抽出する矩形領域の最小値
 	///  @param[in]  max_pos	抽出する矩形領域の最大値
@@ -586,11 +591,11 @@ private:
 	///  @attention	publicなsearch_polygons()は内部で本関数を利用している。
 	///
 	std::vector<PrivateTriangle*> *search_polygons(
-		std::string		group_name, 
-		Vec3<PL_REAL>			min_pos, 
+		std::string		group_name,
+		Vec3<PL_REAL>			min_pos,
 		Vec3<PL_REAL>			max_pos,
 		bool			every,
-		bool			linear, 
+		bool			linear,
 		POLYLIB_STAT	*ret
 		) const;
 
@@ -601,7 +606,7 @@ private:
 	///  @param[out] pg	抽出した子孫ポリゴングループのリスト
 	///
 	void search_group(
-		PolygonGroup				*p, 
+		PolygonGroup				*p,
 		std::vector<PolygonGroup*>	*pg
 		) const;
 

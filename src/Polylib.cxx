@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 
@@ -52,7 +58,7 @@ namespace PolylibNS {
 */
 std::string Polylib::getVersionInfo()
 {
-	std::string str(PL_VERSION_NO);
+	std::string str(PL_VERSION);
 	return str;
 }
 
@@ -90,7 +96,7 @@ void Polylib::set_factory(
 
 /// TextParser
 // public /////////////////////////////////////////////////////////////////////
-// 
+//
 
 POLYLIB_STAT Polylib::load(
 	std::string	config_name,
@@ -211,7 +217,7 @@ POLYLIB_STAT Polylib::save(
 
 
 
-			// update stl filepath 
+			// update stl filepath
 			// clear file path first
 			stat=clearfilepath(tp);
 
@@ -333,9 +339,9 @@ POLYLIB_STAT Polylib::remove_leaf_group(const std::string name) {
 // public /////////////////////////////////////////////////////////////////////
 
 std::vector<Triangle*>* Polylib::search_polygons(
-	std::string		group_name, 
-	Vec3<PL_REAL>		min_pos, 
-	Vec3<PL_REAL>		max_pos, 
+	std::string		group_name,
+	Vec3<PL_REAL>		min_pos,
+	Vec3<PL_REAL>		max_pos,
 	bool		every
 	) const {
 #ifdef DEBUG
@@ -350,8 +356,8 @@ std::vector<Triangle*>* Polylib::search_polygons(
 // for branch 'recursive_search'
 std::vector<Triangle*>* Polylib::search_polygons(
 	std::vector<Triangle*>*  input_trias,
-	Vec3<PL_REAL>		min_pos, 
-	Vec3<PL_REAL>		max_pos, 
+	Vec3<PL_REAL>		min_pos,
+	Vec3<PL_REAL>		max_pos,
 	bool		every
 ) {
 	std::vector<Triangle*>		   *ret_list = new std::vector<Triangle*>;
@@ -364,7 +370,7 @@ std::vector<Triangle*>* Polylib::search_polygons(
 	for (itr = input_trias->begin(); itr != input_trias->end(); itr++) {
 		Vertex** vtx_arr = (*itr)->get_vertex();
 		if (every == true) {
-			if (q_bbox.contain( (Vec3<PL_REAL>) *vtx_arr[0]) == true && 
+			if (q_bbox.contain( (Vec3<PL_REAL>) *vtx_arr[0]) == true &&
 				q_bbox.contain( (Vec3<PL_REAL>) *vtx_arr[1]) == true &&
 				q_bbox.contain( (Vec3<PL_REAL>) *vtx_arr[2]) == true)
 			{
@@ -388,14 +394,14 @@ std::vector<Triangle*>* Polylib::search_polygons(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT Polylib::check_group_name(
-	const std::string	&name, 
+	const std::string	&name,
 	const std::string	&path
 	) {
 #ifdef DEBUG
 		PL_DBGOSH << "Polylib::check_group_name() in." << std::endl;
 #endif
 		if (name.empty() == true) {
-			PL_ERROSH << "[ERROR]Polylib::check_group_name():Group name is empty." 
+			PL_ERROSH << "[ERROR]Polylib::check_group_name():Group name is empty."
 				<< std::endl;
 			return PLSTAT_GROUP_NAME_EMPTY;
 		}
@@ -404,7 +410,7 @@ POLYLIB_STAT Polylib::check_group_name(
 		for (it = m_pg_list.begin(); it != m_pg_list.end(); it++) {
 			if ((*it)->get_name() == name && (*it)->get_parent_path() == path) {
 				PL_ERROSH << "[ERROR]Polylib::check_group_name():Group name is "
-					<< "duplicate:name:" << name << "," << "path:" << path 
+					<< "duplicate:name:" << name << "," << "path:" << path
 					<< std::endl;
 				return PLSTAT_GROUP_NAME_DUP;
 			}
@@ -510,7 +516,7 @@ unsigned int Polylib::used_memory_size()
 #ifdef DEBUG
 			PL_DBGOSH << "Polylib::used_memory_size:PrivateTriangle num=" << tri_list->size() << std::endl;
 #endif
-			size += tri_list->size() * 
+			size += tri_list->size() *
 				(sizeof(PrivateTriangle)+sizeof(PrivateTriangle*));
 			VertexList* vertexlist=(*pg)->get_vertexlist();
 			size += vertexlist->size() * (sizeof(Vertex)+sizeof(Vertex*));
@@ -559,13 +565,13 @@ PolygonGroup* Polylib::get_group(std::string name) const
 // public /////////////////////////////////////////////////////////////////////
 
 const Triangle* Polylib::search_nearest_polygon(
-	std::string	 group_name, 
+	std::string	 group_name,
 	const Vec3<PL_REAL>&	pos
 	) const {
 
 		PolygonGroup* pg = get_group(group_name);
 		if (pg == 0) {
-			PL_ERROSH << "[ERROR]Polylib::search_polygons():Group not found: " 
+			PL_ERROSH << "[ERROR]Polylib::search_polygons():Group not found: "
 				<< group_name << std::endl;
 			return 0;
 		}
@@ -590,7 +596,7 @@ const Triangle* Polylib::search_nearest_polygon(
 				if (tri) {
 
 					Vertex** v = tri->get_vertex();
-					
+
 					Vec3<PL_REAL> c(((*v[0])[0]+(*v[1])[0]+(*v[2])[0])/3.0,
 						((*v[0])[1]+(*v[1])[1]+(*v[2])[1])/3.0,
 						((*v[0])[2]+(*v[1])[2]+(*v[2])[2])/3.0);
@@ -676,7 +682,7 @@ POLYLIB_STAT Polylib::make_group_tree(
 		TextParserError status = TP_NO_ERROR;
 
 		// 念のため階層構造の最上位へ
-		std::string cur;	
+		std::string cur;
 		tp->currentNode(cur);
 		//std::cout << __func__<< " 1 "<< cur <<std::endl;
 		if(cur != "/Polylib") {
@@ -684,7 +690,7 @@ POLYLIB_STAT Polylib::make_group_tree(
 			tp->currentNode(cur);
 			//std::cout << __func__<<" 2 "<< cur <<std::endl;
 			if(status!=TP_NO_ERROR){
-				PL_ERROSH << 
+				PL_ERROSH <<
 					"[ERROR]Polylib::make_group_tree(TextParser):Root node not found."
 					<< std::endl;
 				return PLSTAT_CONFIG_ERROR;
@@ -697,7 +703,7 @@ POLYLIB_STAT Polylib::make_group_tree(
 		std::vector<std::string> leaves;
 		tp->getLeaves(leaves);
 		if(leaves.size()!=0){
-			std::vector<std::string>::iterator 
+			std::vector<std::string>::iterator
 				leaf_iter=find(leaves.begin(),
 				leaves.end(),
 				PolygonGroup::ATT_NAME_TOLERANCE);
@@ -716,22 +722,22 @@ POLYLIB_STAT Polylib::make_group_tree(
 
 		// loop over node recurcively.
 		PolygonGroup *pg;
-		for(std::vector<std::string>::iterator nodes_iter = nodes.begin(); 
+		for(std::vector<std::string>::iterator nodes_iter = nodes.begin();
 			nodes_iter != nodes.end();
 			nodes_iter++){
 
 				status = tp->changeNode(*nodes_iter);
 				tp->currentNode(current_node);
-#ifdef DEBUG	  
+#ifdef DEBUG
 				PL_DBGOSH<<"current_node "<< current_node <<  std::endl;
-#endif // DEBUG	  
+#endif // DEBUG
 				std::vector<std::string> nodes;
 				std::vector<std::string> leaves;
 
 				tp->getNodes(nodes);
 				tp->getLabels(leaves);
 
-				// comment out by T. Suzuki Hulinks Inc. 
+				// comment out by T. Suzuki Hulinks Inc.
 				// To fix examples/test_mpi2. Please check it later. 2013/7/31
 				//if(nodes.size()==0 && leaves.size()==0){ return PLSTAT_CONFIG_ERROR;}
 
@@ -740,7 +746,7 @@ POLYLIB_STAT Polylib::make_group_tree(
 
 				PL_REAL tolerance = this->m_distance_tolerance;
 				if(leaves.size()!=0){
-					//class name 
+					//class name
 					std::vector<std::string>::iterator leaf_iter=find(leaves.begin(),
 						leaves.end(),
 						PolygonGroup::ATT_NAME_CLASS);
@@ -781,12 +787,12 @@ POLYLIB_STAT Polylib::make_group_tree(
 
 				// 配下のタグを取得して、PolygonGroupツリーを作成
 				//	  POLYLIB_STAT res = pg->build_group_tree(this, NULL, elem);
-				//  
+				//
 				POLYLIB_STAT res = pg->build_group_tree(this, NULL, tp);
 				if (res != PLSTAT_OK) return res;
 				status = tp->changeNode("..");
 
-		} 
+		}
 
 		return PLSTAT_OK;
 		//#undef DEBUG
@@ -924,7 +930,7 @@ char* Polylib::polylib_config_save_file(
 	std::string rank_no,
 	std::string extend){
 
-#define POLYLIB_CONFIG_NAME		"polylib_config"  
+#define POLYLIB_CONFIG_NAME		"polylib_config"
 #define POLYLIB_CONFIG_EXT		"tp"
 
 #ifdef DEBUG
@@ -952,7 +958,7 @@ char* Polylib::polylib_config_save_file(
 }
 
 
-//TextParser version 
+//TextParser version
 // protected //////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT Polylib::save_with_rankno(
@@ -1028,13 +1034,13 @@ POLYLIB_STAT Polylib::save_with_rankno(
 		setfilepath(stl_fname_map);
 		//cout << "after setfilepath" <<std::endl;
 
-		// 定義ファイルの保存	
+		// 定義ファイルの保存
 
 
 		char	*config_name = save_config_file(rank_no, my_extend, stl_format);
-#ifdef DEBUG	
+#ifdef DEBUG
 		PL_DBGOSH << __FUNCTION__ << " config_name "<< config_name << std::endl;
-#endif 
+#endif
 #ifdef DEBUG
 		PL_DBGOSH << "Polylib::save_with_rankno() config_name " << config_name << std::endl;
 #endif
@@ -1110,7 +1116,7 @@ POLYLIB_STAT Polylib::clearfilepath(TextParser* tp_ptr){
 	std::vector<std::string>::iterator leaf_iter=find(leaves.begin(),leaves.end(),"filepath");
 	if(leaf_iter!=leaves.end()){ // 見つかったら
 		tp_ptr->deleteLeaf("filepath");
-	} 
+	}
 	leaves.clear();
 	tp_ptr->getLabels(leaves);
 
@@ -1176,7 +1182,7 @@ void Polylib::create_tp_structure(std::map<std::string,std::string> &stl_fname_m
 // 2010.10.20 引数FILE *追加。
 
 void Polylib::show_group_name(
-	PolygonGroup	*pg, 
+	PolygonGroup	*pg,
 	std::string			tab,
 	FILE			*fp
 	){
@@ -1198,7 +1204,7 @@ void Polylib::show_group_name(
 		}
 		else {
 			// 出力先が指定されていれば、そちらに出力
-			fprintf(fp, "%sPolylib::show_group_name:%s%s%s:%s:%d:%s:%s\n", 
+			fprintf(fp, "%sPolylib::show_group_name:%s%s%s:%s:%d:%s:%s\n",
 				gs_rankno.c_str(),		tab.c_str(),
 				(pg->get_parent_path().empty() == true) ? "+" : "",
 				pg->get_name().c_str(),	pg->acq_file_name().c_str(),
@@ -1235,11 +1241,11 @@ PolygonGroup* Polylib::get_group(int internal_id) const
 // private ////////////////////////////////////////////////////////////////////
 
 std::vector<PrivateTriangle*>* Polylib::search_polygons(
-	std::string			group_name, 
-	Vec3<PL_REAL>			min_pos, 
+	std::string			group_name,
+	Vec3<PL_REAL>			min_pos,
 	Vec3<PL_REAL>			max_pos,
 	bool			every,
-	bool			linear, 
+	bool			linear,
 	POLYLIB_STAT	*ret
 	) const {
 #ifdef DEBUG
@@ -1249,7 +1255,7 @@ std::vector<PrivateTriangle*>* Polylib::search_polygons(
 		PolygonGroup* pg = get_group(group_name);
 
 		if (pg == 0) {
-			PL_ERROSH << "[ERROR]Polylib::search_polygons():Group not found: " 
+			PL_ERROSH << "[ERROR]Polylib::search_polygons():Group not found: "
 				<< group_name << std::endl;
 			*ret = PLSTAT_GROUP_NOT_FOUND;
 			return tri_list;
@@ -1325,7 +1331,7 @@ std::vector<PrivateTriangle*>* Polylib::search_polygons(
 // private ////////////////////////////////////////////////////////////////////
 
 void Polylib::search_group(
-	PolygonGroup			*p, 
+	PolygonGroup			*p,
 	std::vector<PolygonGroup*>	*pg
 	) const {
 #ifdef DEBUG
@@ -1354,8 +1360,8 @@ void Polylib::make_DVertex_PolygonGroup(
 
 		std::string parent_name=group_name;
 		std::string daughter_name;
-		//  std::string::size_type index=daughter_name.find("/");  
-		std::string::size_type index=parent_name.rfind("/");  
+		//  std::string::size_type index=daughter_name.find("/");
+		std::string::size_type index=parent_name.rfind("/");
 		std::vector<std::string> path_list;
 
 		//path_list.push_back(daughter_name);
@@ -1369,7 +1375,7 @@ void Polylib::make_DVertex_PolygonGroup(
 			parent_name=parent_name.substr(0,index);
 			path_list.push_back(parent_name);
 			//    PL_DBGOSH << "list "<<parent_name << " "<< path_list.size() <<std::endl;
-			index=parent_name.find("/");  
+			index=parent_name.find("/");
 		}
 
 		//  PL_DBGOSH << "list check"<<std::endl;
@@ -1420,7 +1426,7 @@ void Polylib::make_DVertex_PolygonGroup(
 
 		if(pg_instance==NULL){
 #ifdef DEBUG
-			PL_DBGOSH << "Polylib::"<< __func__ <<" polygon group " 
+			PL_DBGOSH << "Polylib::"<< __func__ <<" polygon group "
 				<< group_name << " is not found."<< std::endl;
 #endif
 			pg_instance=
@@ -1445,14 +1451,14 @@ void Polylib::make_DVertex_PolygonGroup(
 			pg_instance = get_group(group_name);
 			pg_instance->prepare_DVertex(nscalar,nvector);
 #ifdef DEBUG
-			PL_DBGOSH << "Polylib::"<< __func__ 
+			PL_DBGOSH << "Polylib::"<< __func__
 				<<" gp  " << group_name <<" end " <<get_group(group_name)<<std::endl;
 #endif
 
 
 		} else {
 #ifdef DEBUG
-			PL_DBGOSH << "Polylib::"<< __func__ <<" polygon group " 
+			PL_DBGOSH << "Polylib::"<< __func__ <<" polygon group "
 				<< group_name << " is found."<< std::endl;
 #endif
 			pg_instance->replace_DVertex(nscalar,nvector);
@@ -1467,7 +1473,7 @@ void Polylib::make_DVertex_PolygonGroup(
 
 ////////////////////////////////////////////////
 
-DVertexTriangle* 
+DVertexTriangle*
 	Polylib::add_DVertex_Triangle(std::string name,
 	Vec3<PL_REAL>* v){
 
@@ -1487,7 +1493,7 @@ DVertexTriangle*
 		if( pg_instance!=NULL)  ret = pg_instance->add_DVertex_Triangle(v);
 
 #ifdef DEBUG
-		PL_DBGOSH << "Polylib::"<< __func__ 
+		PL_DBGOSH << "Polylib::"<< __func__
 			<<" v0 "<<v[0]
 		<<" v1 "<<v[1]
 		<<" v2 "<<v[2]
@@ -1508,4 +1514,3 @@ void Polylib::finalize_DVertex(std::string name){
 }
 
 } //namespace PolylibNS
-

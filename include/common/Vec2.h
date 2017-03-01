@@ -1,16 +1,22 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
-#ifndef vec2_h
-#define vec2_h
+#ifndef _vec2_h_
+#define _vec2_h_
 
 #include <iostream>
 #include <math.h>
@@ -193,5 +199,4 @@ inline bool lessVec2f(const Vec2f& a, const Vec2f& b) {
 
 } //namespace PolylibNS
 
-#endif  // vec2_h
-
+#endif  // _vec2_h_

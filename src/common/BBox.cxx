@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #include "common/BBox.h"
@@ -44,9 +50,9 @@ void BBox::setMinMax(const Vec3<PL_REAL>& _min, const Vec3<PL_REAL>& _max) {
 
 void BBox::add(const Vec3<PL_REAL>& v) {
 	// PL_DBGOSH << "BBox::"<<__func__
-	// 	    << " "<< v[0] 
-	// 	    << " "<< v[1] 
-	// 	    << " "<< v[2] 
+	// 	    << " "<< v[0]
+	// 	    << " "<< v[1]
+	// 	    << " "<< v[2]
 	// 	    <<std::endl;
 
 	min[0] = std::min(min[0], v[0]);
@@ -63,7 +69,7 @@ void BBox::add(const Vec3<PL_REAL>& v) {
 	//PL_DBGOSH << "BBox::"<<__func__<<std::endl;
 }
 
-Vec3<PL_REAL> BBox::getPoint(int idx) const 
+Vec3<PL_REAL> BBox::getPoint(int idx) const
 {
 	int x, y, z;
 	Vec3<PL_REAL> p = min;
@@ -76,14 +82,14 @@ Vec3<PL_REAL> BBox::getPoint(int idx) const
 	return p;
 }
 
-Vec3<PL_REAL> BBox::center() const 
-{ 
-	return ((PL_REAL)(0.5) * (min + max)); 
+Vec3<PL_REAL> BBox::center() const
+{
+	return ((PL_REAL)(0.5) * (min + max));
 }
 
-Vec3<PL_REAL> BBox::size() const 
-{ 
-	return max - min; 
+Vec3<PL_REAL> BBox::size() const
+{
+	return max - min;
 }
 
 PL_REAL BBox::xsize() const { return max[0] - min[0]; }
@@ -317,10 +323,10 @@ void BBox::getFace(int axis_id, Vec3<PL_REAL> face[2][2]) const {
 			face[i][j] = getPoint(p_minmax[axis_id][i][j]);
 #ifdef DEBUG
 			std::cout.setf(std::ios::scientific, std::ios::floatfield);
-			std::cout << "get_face[" 
+			std::cout << "get_face["
 				<< axis_id << "][" << i << "][" << j << "] "
-				<< p_minmax[axis_id][i][j] << ": " 
-				<< face[i][j][0] << " " << face[i][j][1] << " " 
+				<< p_minmax[axis_id][i][j] << ": "
+				<< face[i][j][0] << " " << face[i][j][1] << " "
 				<< face[i][j][2] << std::endl;
 			std::cout.unsetf(std::ios::scientific);
 #endif
@@ -344,10 +350,10 @@ void BBox::getSide(int axis_id, Vec3<PL_REAL> side[4][2]) const {
 			side[i][j] = getPoint(p_minmax[axis_id][i][j]);
 #ifdef DEBUG
 			std::cout.setf(std::ios::scientific, std::ios::floatfield);
-			std::cout << "get_side[" 
+			std::cout << "get_side["
 				<< axis_id << "][" << i << "][" << j << "] "
-				<< p_minmax[axis_id][i][j] << ": " 
-				<< side[i][j][0] << " " << side[i][j][1] << " " 
+				<< p_minmax[axis_id][i][j] << ": "
+				<< side[i][j][0] << " " << side[i][j][1] << " "
 				<< side[i][j][2] << std::endl;
 			std::cout.unsetf(std::ios::scientific);
 #endif
@@ -356,4 +362,3 @@ void BBox::getSide(int axis_id, Vec3<PL_REAL> side[4][2]) const {
 }
 
 } // namespace PolylibNS
-

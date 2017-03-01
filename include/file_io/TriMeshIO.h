@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef mesh_io_h
@@ -63,7 +69,7 @@ public:
 	static POLYLIB_STAT save(
 		VertexList* vertex_list,
 		std::vector<PrivateTriangle*>	*tri_list,
-		std::string				fname, 
+		std::string				fname,
 		std::string 				fmt = ""
 		);
 
@@ -87,7 +93,7 @@ public:
 	static const std::string FMT_STL_B;		///< バイナリファイル
 	static const std::string FMT_STL_BB;	///< バイナリファイル
 	static const std::string FMT_OBJ_A;		///< ascii
-	static const std::string FMT_OBJ_AA;	///< ascii 
+	static const std::string FMT_OBJ_AA;	///< ascii
 	static const std::string FMT_OBJ_B;		///< binary
 	static const std::string FMT_OBJ_BB;	///< binary
 	static const std::string FMT_VTK_A;	///< vtk ascii

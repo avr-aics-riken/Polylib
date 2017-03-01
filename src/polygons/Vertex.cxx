@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 #include "polygons/Vertex.h"
 
@@ -23,18 +29,18 @@ namespace PolylibNS{
 ///
 /// クラス:vertex
 ///   polygon の頂点クラス。
-/// 
+///
 ///
 ////////////////////////////////////////////////////////////////////////////
 
 
 
-/// コンストラクタ  
+/// コンストラクタ
 ///
 ///
 Vertex::Vertex(){}
 
-/// コンストラクタ  
+/// コンストラクタ
 ///
 /// @param[in] vec 頂点ベクトル
 
@@ -45,7 +51,7 @@ Vertex::Vertex(const Vec3<PL_REAL>& vec){
 }
 
 
-/// コンストラクタ  
+/// コンストラクタ
 ///
 /// @param[in] x 座標
 /// @param[in] y 座標
@@ -61,7 +67,7 @@ Vertex::Vertex(PL_REAL x,PL_REAL y,PL_REAL z){
 ///  index アクセス
 ///
 
-PL_REAL& Vertex::operator [](const AxisEnum& axis) { 
+PL_REAL& Vertex::operator [](const AxisEnum& axis) {
 	//return this->t[axis]; // keno 2014-03-23
   return (&x)[axis];
 }
@@ -113,5 +119,3 @@ PL_REAL Vertex::distance(Vertex v){
 
 
 }
-
-

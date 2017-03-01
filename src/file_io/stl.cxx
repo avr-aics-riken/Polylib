@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 
@@ -70,8 +76,8 @@ char *stl_get_ext(const std::string path) {
 //////////////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT stl_a_load(
-	VertexList* vertex_list, 
-	std::vector<PrivateTriangle*>*tri_list, 
+	VertexList* vertex_list,
+	std::vector<PrivateTriangle*>*tri_list,
 	std::string	fname,
 	int	*total,
 	PL_REAL		scale
@@ -169,10 +175,10 @@ POLYLIB_STAT stl_a_load(
 					PrivateTriangle* tri = new PrivateTriangle(tmpvertlist, nml, n_tri);
 					//  面積が0 になる場合にはWarning.
 					if(tri->get_area()==0.0){
-						PL_DBGOSH << __func__ 
+						PL_DBGOSH << __func__
 							<< " Warning :  stl file contains a triangle of the area is zero." << std::endl;
 						PL_DBGOSH <<  "vertex0 ("<< *(tmpvertlist[0]) <<")"<<std::endl;
-						PL_DBGOSH <<  "vertex1 ("<< *(tmpvertlist[1]) <<")"<<std::endl;	
+						PL_DBGOSH <<  "vertex1 ("<< *(tmpvertlist[1]) <<")"<<std::endl;
 						PL_DBGOSH <<  "vertex2 ("<< *(tmpvertlist[2]) <<")"<<std::endl;
 
 					}
@@ -229,7 +235,7 @@ POLYLIB_STAT stl_a_load(
 //////////////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT stl_a_save(
-	std::vector<PrivateTriangle*> *tri_list, 
+	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname
 	) {
 		std::ofstream os(fname.c_str());
@@ -244,19 +250,19 @@ POLYLIB_STAT stl_a_save(
 		std::vector<PrivateTriangle*>::iterator itr;
 		for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
 #if SCIENTIFIC_OUT
-			os	<< "  facet " << "normal " << std::setprecision(6) << scientific 
+			os	<< "  facet " << "normal " << std::setprecision(6) << scientific
 				<< (*itr)->get_normal() << std::endl;
 #else
-			os	<< "  facet " << "normal " << std::setprecision(6) 
+			os	<< "  facet " << "normal " << std::setprecision(6)
 				<< (*itr)->get_normal() << std::endl;
 #endif
 			os << "	outer " << "loop" << std::endl;
 			for (int j = 0; j < 3; j++) {
 #if SCIENTIFIC_OUT
-				os	<< "	  vertex " << std::setprecision(6) << scientific 
+				os	<< "	  vertex " << std::setprecision(6) << scientific
 					<< *(((*itr)->get_vertex())[j]) << std::endl;
 #else
-				os	<< "	  vertex " << std::setprecision(6) 
+				os	<< "	  vertex " << std::setprecision(6)
 					<< *(((*itr)->get_vertex())[j]) << std::endl;
 #endif
 			}
@@ -280,7 +286,7 @@ POLYLIB_STAT stl_a_save(
 
 POLYLIB_STAT stl_b_load(
 	VertexList *vertex_list,
-	std::vector<PrivateTriangle*> *tri_list, 
+	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname,
 	int	*total,
 	PL_REAL	scale
@@ -365,10 +371,10 @@ POLYLIB_STAT stl_b_load(
 			//std::cout << "fff" <<std::endl;
 			//  面積が0 になる場合にはWarning.
 			if(tri->get_area()==0.0){
-				PL_DBGOSH <<  __func__ 
+				PL_DBGOSH <<  __func__
 					<< " Warning :  stl file contains a triangle of the area is zero." << std::endl;
 				PL_DBGOSH <<  "vertex0 ("<< *(vtx_ptr_list[0]) <<")"<<std::endl;
-				PL_DBGOSH <<  "vertex1 ("<< *(vtx_ptr_list[1]) <<")"<<std::endl;	
+				PL_DBGOSH <<  "vertex1 ("<< *(vtx_ptr_list[1]) <<")"<<std::endl;
 				PL_DBGOSH <<  "vertex2 ("<< *(vtx_ptr_list[2]) <<")"<<std::endl;
 
 
@@ -393,7 +399,7 @@ POLYLIB_STAT stl_b_load(
 //////////////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT stl_b_save(
-	std::vector<PrivateTriangle*> *tri_list, 
+	std::vector<PrivateTriangle*> *tri_list,
 	std::string 		fname
 	) {
 
@@ -545,5 +551,3 @@ void tt_write(std::ostream& os, const void* _data, int size, int n, int inv)
 
 
 } //namespace PolylibNS
-
-

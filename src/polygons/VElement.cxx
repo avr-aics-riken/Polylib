@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #include "polygons/VElement.h"
@@ -39,7 +45,7 @@ VElement::~VElement()
 {
 }
 
-// VElement 
+// VElement
 // public /////////////////////////////////////////////////////////////////////
 
 VElement::VElement(
@@ -59,14 +65,14 @@ VElement::VElement(
 ///
 /// triangle。
 ///
-PrivateTriangle* VElement::get_triangle() 
+PrivateTriangle* VElement::get_triangle()
 {
 	return m_tri;
 }
 
 ///
 /// Center position of bbox on triangle.
-/// 
+///
 Vec3<PL_REAL> VElement::get_pos() const {
 	return m_pos;
 }
@@ -74,5 +80,3 @@ Vec3<PL_REAL> VElement::get_pos() const {
 
 
 } //namespace PolylibNS
-
-

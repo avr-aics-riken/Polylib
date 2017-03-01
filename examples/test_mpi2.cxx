@@ -1,13 +1,20 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
+
 
 #include "mpi.h"
 #include <iostream>
@@ -89,16 +96,16 @@ int main(int argc, char** argv ){
 
 	string  config_filename;
 	if(rank ==0) {
-		config_filename = "polylib_config_0_20130731174205.tpp";
+		config_filename = "config/polylib_config_0.tpp";
 
 	} else if(rank ==1) {
-		config_filename = "polylib_config_1_20130731174205.tpp";
+		config_filename = "config/polylib_config_1.tpp";
 
 	} else if(rank ==2) {
-		config_filename = "polylib_config_2_20130731174205.tpp";
+		config_filename = "config/polylib_config_2.tpp";
 
 	} else if(rank ==3) {
-		config_filename = "polylib_config_3_20130731174205.tpp";
+		config_filename = "config/polylib_config_3.tpp";
 
 	} else {
 		cerr << "ERROR! wrong rank "<<rank <<endl;

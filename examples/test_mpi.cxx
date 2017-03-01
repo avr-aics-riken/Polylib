@@ -1,13 +1,20 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
+
 
 #include "mpi.h"
 #include <iostream>
@@ -70,7 +77,7 @@ int main(int argc, char** argv ){
 	cout << "program at 2 on rank :"<<rank<<endl;
 
 	if(stat !=PLSTAT_OK) return -1;
-	stat=p_polylib->load_rank0("./polylib_config.tp");
+	stat=p_polylib->load_rank0("config/polylib_config.tp");
 
 	cout << "program at 3 on rank :"<<rank<<endl;
 	// stat=p_polylib->load_rank0("./polylib_config2.tpp");

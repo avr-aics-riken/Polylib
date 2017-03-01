@@ -1,3 +1,20 @@
+/*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
+*/
+
 #include "polygons/VertKDTElem.h"
 
 #include <vector>
@@ -22,12 +39,12 @@ namespace PolylibNS{
 ////////////////////////////////////////////////////////////////////////////
 
 
-/// 
+///
 /// コンストラクタ。
 ///
-/// @param[in] 
+/// @param[in]
 /// @attention ポインタを格納するが、参照のみ。deleteは行わない。
-/// 
+///
 VertKDTElem::VertKDTElem(Vertex* vertex)
 {
 	m_vertex=vertex;
@@ -57,4 +74,3 @@ Vec3<PL_REAL>* VertKDTElem::get_pos() const
 }
 
 }// end of namespace PolylibNS
-

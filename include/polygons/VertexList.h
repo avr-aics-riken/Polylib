@@ -1,10 +1,18 @@
-// -*- Mode:c++ -*-
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_vertexlist_h
@@ -36,7 +44,7 @@ class VertKDT;
 ///
 /// クラス:vertex_list
 ///   polygon の頂点クラスVertex  を収めるクラス。
-/// 
+///
 ///
 ////////////////////////////////////////////////////////////////////////////
 
@@ -45,13 +53,13 @@ class VertexList{
 
 private:
 	/// Vertex の格納場所
-	std::vector<Vertex*>* m_vertex_list; 
+	std::vector<Vertex*>* m_vertex_list;
 	/// 同一性チェックの基準値
-	PL_REAL m_tolerance; 
+	PL_REAL m_tolerance;
 	/// 同一性チェックの基準値の2乗
 	PL_REAL m_tolerance_2;
 	/// Vertex  用KD木
-	VertKDT* m_vkdt; 
+	VertKDT* m_vkdt;
 
 	/// KD木生成用BBox
 	BBox m_bbox;
@@ -118,7 +126,7 @@ public:
 	BBox get_bbox() const ;
 
 	/// 三角形ポリゴンの面出力時、頂点の番号を取得する場合に、番号のテーブルを準備する。
-	/// 
+	///
 	///  後始末は index_map_clear()で行う。
 	void prepare_num_out();
 
@@ -142,7 +150,7 @@ public:
 	///  プリント
 	void print() const ;
 
-	// setter and getter  for tolerance  
+	// setter and getter  for tolerance
 
 
 	/// 基準値の取得

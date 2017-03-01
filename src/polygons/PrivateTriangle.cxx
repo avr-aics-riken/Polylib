@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 #include "polygons/PrivateTriangle.h"
 #include "common/PolylibCommon.h"
@@ -27,7 +33,7 @@ PrivateTriangle::PrivateTriangle(){}
 /// @param[in] exid		三角形ポリゴンのユーザ定義ID。
 ///
 PrivateTriangle::PrivateTriangle(
-	//Vec3<PL_REAL>	vertex[3], 
+	//Vec3<PL_REAL>	vertex[3],
 	Vertex*	vertex_ptr[3] ,
 	int		id,
 	int		exid
@@ -44,9 +50,9 @@ PrivateTriangle::PrivateTriangle(
 /// @param[in] id		三角形ポリゴンID。
 ///
 PrivateTriangle::PrivateTriangle(
-	//Vec3<PL_REAL>	vertex[3], 
-	Vertex*	vertex_ptr[3], 
-	Vec3<PL_REAL>	normal, 
+	//Vec3<PL_REAL>	vertex[3],
+	Vertex*	vertex_ptr[3],
+	Vec3<PL_REAL>	normal,
 	int		id
 	) : Triangle(vertex_ptr, normal) {
 		m_id = id;
@@ -61,10 +67,10 @@ PrivateTriangle::PrivateTriangle(
 /// @param[in] id		三角形ポリゴンID。
 ///
 PrivateTriangle::PrivateTriangle(
-	//Vec3<PL_REAL>	vertex[3], 
-	Vertex*	vertex_ptr[3], 
-	Vec3<PL_REAL>	normal, 
-	PL_REAL	area, 
+	//Vec3<PL_REAL>	vertex[3],
+	Vertex*	vertex_ptr[3],
+	Vec3<PL_REAL>	normal,
+	PL_REAL	area,
 	int		id
 	) : Triangle(vertex_ptr, normal, area) {
 		m_id = id;
@@ -77,7 +83,7 @@ PrivateTriangle::PrivateTriangle(
 /// @param[in] id		三角形ポリゴンID。
 ///
 PrivateTriangle::PrivateTriangle(
-	const Triangle	tri, 
+	const Triangle	tri,
 	int			id
 	) : Triangle(tri) {
 		m_id = id;
@@ -87,10 +93,10 @@ PrivateTriangle::PrivateTriangle(
 /// コンストラクタ。
 ///
 /// @param[in] tri		ポリゴン。
-/// 
+///
 ///
 PrivateTriangle::PrivateTriangle(
-	const PrivateTriangle &tri 
+	const PrivateTriangle &tri
 	) : Triangle(tri) {
 		m_id = tri.m_id;
 }
@@ -171,7 +177,7 @@ PrivateTriangle::PrivateTriangle(
 ///
 ///  @param[in] id	三角形ポリゴンID。
 ///
-void PrivateTriangle::set_id(int id)				
+void PrivateTriangle::set_id(int id)
 {
 	m_id = id;
 }
@@ -181,11 +187,10 @@ void PrivateTriangle::set_id(int id)
 ///
 ///  @return 三角形ポリゴンID。
 ///
-int PrivateTriangle::get_id() const				
+int PrivateTriangle::get_id() const
 {
 	return m_id;
 }
 
 
 } //namespace PolylibNS
-

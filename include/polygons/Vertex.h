@@ -1,13 +1,18 @@
-// -*- Mode:c++ -*-
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_vertex_h
@@ -24,7 +29,7 @@ namespace PolylibNS{
 ///
 /// クラス:vertex
 ///   polygon の頂点クラス。
-/// 
+///
 ///
 ////////////////////////////////////////////////////////////////////////////
 
@@ -32,19 +37,19 @@ class Vertex :public Vec3<PL_REAL>{
 
 public:
 
-	/// コンストラクタ  
+	/// コンストラクタ
 	///
 	///
 	Vertex();
 
-	/// コンストラクタ  
+	/// コンストラクタ
 	///
 	/// @param[in] vec 頂点ベクトル
 
 	Vertex(const Vec3<PL_REAL>& vec);
 
 
-	/// コンストラクタ  
+	/// コンストラクタ
 	///
 	/// @param[in] x 座標
 	/// @param[in] y 座標

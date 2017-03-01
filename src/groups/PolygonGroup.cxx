@@ -1,13 +1,18 @@
-// -*- Mode: c++ -*-
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #include "groups/PolygonGroup.h"
@@ -291,7 +296,7 @@ size_t PolygonGroup::get_num_of_trias_before_move() {
 
 ///
 /// test function for Vertex test
-/// 
+///
 void PolygonGroup::print_vertex() const{
 	m_polygons->print_vertex();
 }
@@ -462,7 +467,7 @@ POLYLIB_STAT PolygonGroup::add_dvertex(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT PolygonGroup::init(
-	const std::vector<PrivateTriangle*>	*tri_list, 
+	const std::vector<PrivateTriangle*>	*tri_list,
 	bool clear
 	) {
 		//#define DEBUG
@@ -516,8 +521,8 @@ POLYLIB_STAT PolygonGroup::build_group_tree(
 				error=tp->changeNode(*nodes_iter);
 				if(error!=TP_NO_ERROR){
 					PL_ERROSH << "[ERROR]PolygonGroup::build_group_tree():"
-						<< " TextParser error " 
-						<< tp->TextParserErrorHandler(error,"can not move to ") 
+						<< " TextParser error "
+						<< tp->TextParserErrorHandler(error,"can not move to ")
 						<< (*nodes_iter) << std::endl;
 					return PLSTAT_CONFIG_ERROR;
 				}
@@ -526,8 +531,8 @@ POLYLIB_STAT PolygonGroup::build_group_tree(
 				error=tp->getLeaves(leaves,1);
 				if(error!=TP_NO_ERROR){
 					PL_ERROSH << "[ERROR]PolygonGroup::build_group_tree():"
-						<< " TextParser error " 
-						<< tp->TextParserErrorHandler(error,"can not get leaves ") 
+						<< " TextParser error "
+						<< tp->TextParserErrorHandler(error,"can not get leaves ")
 						<< (*nodes_iter) << std::endl;
 					return PLSTAT_CONFIG_ERROR;
 				}
@@ -562,7 +567,7 @@ POLYLIB_STAT PolygonGroup::build_group_tree(
 
 				PolygonGroup* pg;
 				pg = polylib->create_polygon_group(class_name,tolerance);
-				polylib->add_pg_list(pg);	
+				polylib->add_pg_list(pg);
 				if (pg == NULL) {
 					PL_ERROSH << "[ERROR]PolygonGroup::build_group_tree():"
 						<< "Unknown Class name:" << class_name << "." << std::endl;
@@ -597,12 +602,12 @@ POLYLIB_STAT PolygonGroup::build_group_tree(
 		std::string parent_name;
 		std::string daughter_name;
 
-		if(index!=std::string::npos){ 
-			//  "/" found 
+		if(index!=std::string::npos){
+			//  "/" found
 			parent_name=path.substr(0,index);
 			daughter_name=path.substr(index+1);
 #ifdef DEBUG
-			PL_DBGOSH << "Polylib::"<< __func__ 
+			PL_DBGOSH << "Polylib::"<< __func__
 				<<" parent " << parent_name
 				<<" daughter " << daughter_name<<std::endl;
 #endif
@@ -622,12 +627,12 @@ POLYLIB_STAT PolygonGroup::build_group_tree(
 			PolygonGroup* pg;
 			std::string class_name="PolygonGroup";
 			pg = polylib->create_polygon_group(class_name,m_tolerance);
-			polylib->add_pg_list(pg);	
+			polylib->add_pg_list(pg);
 
 			return pg->build_group_tree(polylib,this,daughter_name);
 
 		} else {
-			//  "/" not found 
+			//  "/" not found
 
 
 
@@ -748,15 +753,15 @@ POLYLIB_STAT PolygonGroup::load_id_file(
 
 		// no stl file, no id file.
 		if(m_file_name.size() == 0 ){
-			return PLSTAT_OK;	
+			return PLSTAT_OK;
 		}
 
 		// IDはsave_id()関数で一括して出力されるので、ファイル数は必ず1個
 
 		if (m_file_name.size() != 1) {
-			PL_ERROSH << "[ERROR]PolygonGroup::load_id_file():Num of files mismatch:" 
+			PL_ERROSH << "[ERROR]PolygonGroup::load_id_file():Num of files mismatch:"
 				<< m_file_name.size() << std::endl;
-			return PLSTAT_NG;	
+			return PLSTAT_NG;
 		}
 		std::string	fname	= m_file_name.begin()->first;
 		int		pos		= fname.find_last_of(".");
@@ -833,7 +838,7 @@ POLYLIB_STAT PolygonGroup::move(
 // public /////////////////////////////////////////////////////////////////////
 
 const std::vector<PrivateTriangle*>* PolygonGroup::search(
-	BBox	*bbox, 
+	BBox	*bbox,
 	bool	every
 	) const {
 		return m_polygons->search(bbox, every);
@@ -842,8 +847,8 @@ const std::vector<PrivateTriangle*>* PolygonGroup::search(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT PolygonGroup::search(
-	BBox						*bbox, 
-	bool						every, 
+	BBox						*bbox,
+	bool						every,
 	std::vector<PrivateTriangle*>	*tri_list
 	) const {
 		return m_polygons->search(bbox, every, tri_list);
@@ -852,7 +857,7 @@ POLYLIB_STAT PolygonGroup::search(
 // public /////////////////////////////////////////////////////////////////////
 
 const std::vector<PrivateTriangle*>* PolygonGroup::linear_search(
-	BBox	*bbox, 
+	BBox	*bbox,
 	bool	every
 	) const {
 		return m_polygons->linear_search(bbox, every);
@@ -861,8 +866,8 @@ const std::vector<PrivateTriangle*>* PolygonGroup::linear_search(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT PolygonGroup::linear_search(
-	BBox						*bbox, 
-	bool						every, 
+	BBox						*bbox,
+	bool						every,
 	std::vector<PrivateTriangle*>	*tri_list
 	) const {
 		return m_polygons->linear_search(bbox, every, tri_list);
@@ -1062,7 +1067,7 @@ POLYLIB_STAT PolygonGroup::show_group_info(
 
 		if (m_file_name.size() > 0) {
 			std::map<std::string, std::string>::iterator it = m_file_name.begin();
-			for (; it != m_file_name.end(); it++) 
+			for (; it != m_file_name.end(); it++)
 				PL_DBGOSH << "  file name: " << (*it).first << std::endl;
 		}
 		else {
@@ -1212,7 +1217,7 @@ const PrivateTriangle* PolygonGroup::search_nearest(
 
 POLYLIB_STAT PolygonGroup::setup_attribute (
 	Polylib					*polylib,
-	PolygonGroup			*parent, 
+	PolygonGroup			*parent,
 	TextParser* tp
 	) {
 		//#define DEBUG
@@ -1241,7 +1246,7 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 			//PL_DBGOS << __func__ << " there is a class_name "<< class_name<<std::endl;
 		}
 
-		// id 
+		// id
 		std::string id_string = "";
 		leaf_iter = find(leaves.begin(),leaves.end(),ATT_NAME_ID);
 
@@ -1282,7 +1287,7 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 			if(leaf_iter!=leaves.end()) {
 				tp_error=tp->getValue((*leaf_iter),movable_string);
 
-				m_movable = tp->convertBool(movable_string,&ierror);		
+				m_movable = tp->convertBool(movable_string,&ierror);
 				//PL_DBGOS << __func__ << " is movavle ? true or false  "
 				//<< m_movable <<std::endl;
 			}
@@ -1315,24 +1320,24 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 
 				ss << tmpstring <<"["<<index<<"]";
 				ss >> tmpstring;
-#ifdef DEBUG      
+#ifdef DEBUG
 				PL_DBGOS << __func__<< " multi stl files "<< tmpstring << " "<<*leaf_iter<<std::endl;
-#endif //DEBUG      
+#endif //DEBUG
 
 				leaf_iter = find(leaf_iter,leaves.end(),tmpstring);
 				if(leaf_iter == leaves.end()) break;
 				tp_error=tp->getValue((*leaf_iter),fname);
 
-#ifdef DEBUG      
+#ifdef DEBUG
 				PL_DBGOS << __func__ << " STLfiles " << index <<" " << fname <<std::endl;
-#endif //DEBUG      
+#endif //DEBUG
 
 				std::string format = TriMeshIO::input_file_format(fname);
 				if (format.empty()) {
 					PL_ERROSH << "[ERROR]PolygonGroup::setup_attribute():Unknown"
 						<< "extention: fname[]=" << fname << std::endl;
 					return PLSTAT_UNKNOWN_STL_FORMAT;
-				}             
+				}
 
 				m_file_name.insert(std::map<std::string, std::string>::value_type(fname, format));
 				index++;
@@ -1352,7 +1357,7 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 					PL_ERROSH << "[ERROR]PolygonGroup::setup_attribute():Unknown"
 						<< "extention: fname=" << fname << std::endl;
 					return PLSTAT_UNKNOWN_STL_FORMAT;
-				}             
+				}
 
 				m_file_name.insert(std::map<std::string, std::string>::value_type(fname, format));
 			}
@@ -1365,9 +1370,9 @@ POLYLIB_STAT PolygonGroup::setup_attribute (
 			m_parent_path	= parent->acq_fullpath();
 			parent->add_children(this);
 		} else {
-#ifdef DEBUG	  
+#ifdef DEBUG
 			PL_DBGOSH << "parent is root."<<pg_name<<std::endl;
-#endif // DEBUG	  
+#endif // DEBUG
 		}
 
 		// その他の属性を設定
@@ -1451,7 +1456,7 @@ POLYLIB_STAT
 						<< " before:(" << m_trias_before_move->at(i)->get_vertex()[j]
 					<< ") after:(" << p_trias->at(i)->get_vertex()[j]
 					<< ")" << std::endl;
-			}	
+			}
 		}
 		// 移動前三角形インスタンスはもう不要なので削除
 		delete m_trias_before_move->at(i);
@@ -1543,7 +1548,7 @@ char *PolygonGroup::mk_stl_fname(
 			sprintf(fname2, "%s_%s.%s", fname1, extend.c_str(), prefix.c_str());
 		}
 		else {
-			sprintf(fname2, "%s_%s_%s.%s", fname1, rank_no.c_str(), extend.c_str(), 
+			sprintf(fname2, "%s_%s_%s.%s", fname1, rank_no.c_str(), extend.c_str(),
 				prefix.c_str());
 		}
 		//#define DEBUG
@@ -1574,8 +1579,8 @@ char *PolygonGroup::mk_stl_fname(
 		// グループ名のフルパスを取得して、/を_に置き換え
 		strcpy(fname1, acq_fullpath().c_str());
 
-		// std::cout <<__func__ <<"else" <<TriMeshIO::FMT_VTK_A <<" "<<*format 
-		// 	    << " " << ( TriMeshIO::FMT_VTK_A == *format) 
+		// std::cout <<__func__ <<"else" <<TriMeshIO::FMT_VTK_A <<" "<<*format
+		// 	    << " " << ( TriMeshIO::FMT_VTK_A == *format)
 		// 	    <<std::endl;
 
 
@@ -1622,7 +1627,7 @@ char *PolygonGroup::mk_stl_fname(
 			sprintf(fname2, "%s_%s.%s", fname1, extend.c_str(), prefix.c_str());
 		}
 		else {
-			sprintf(fname2, "%s_%s_%s.%s", fname1, rank_no.c_str(), extend.c_str(), 
+			sprintf(fname2, "%s_%s_%s.%s", fname1, rank_no.c_str(), extend.c_str(),
 				prefix.c_str());
 		}
 
@@ -1724,4 +1729,3 @@ void PolygonGroup::finalize_DVertex(){
 }
 
 } //namespace PolylibNS
-

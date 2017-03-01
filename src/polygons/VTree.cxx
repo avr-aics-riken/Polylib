@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #include "polygons/VTree.h"
@@ -19,10 +25,10 @@
 namespace PolylibNS {
 
 ////////////////////////////////////////////////////////////////////////////
-///  
+///
 /// VNodeクラス
 /// KD木構造のノードクラスです。
-///  
+///
 ////////////////////////////////////////////////////////////////////////////
 
 
@@ -34,8 +40,8 @@ namespace PolylibNS {
 // public /////////////////////////////////////////////////////////////////////
 
 VTree::VTree(
-	int							max_elem, 
-	const BBox					bbox, 
+	int							max_elem,
+	const BBox					bbox,
 	std::vector<PrivateTriangle*>	*tri_list
 	) {
 		m_root = NULL;
@@ -63,7 +69,7 @@ void VTree::destroy()
 
 
 std::vector<PrivateTriangle*>* VTree::search(
-	BBox	*bbox, 
+	BBox	*bbox,
 	bool	every
 	) const {
 		//#define DEBUG_VTREE
@@ -122,8 +128,8 @@ std::vector<PrivateTriangle*>* VTree::search(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT VTree::search(
-	BBox						*bbox, 
-	bool						every, 
+	BBox						*bbox,
+	bool						every,
 	std::vector<PrivateTriangle*>	*tri_list
 	) const {
 #ifdef DEBUG_VTREE
@@ -144,7 +150,7 @@ POLYLIB_STAT VTree::search(
 
 #ifdef DEBUG_VTREE
 		for (; itr != vlist.end(); itr++) {
-			PL_DBGOSH << "VTree::search:tid=" << (*itr)->get_triangle()->get_id() 
+			PL_DBGOSH << "VTree::search:tid=" << (*itr)->get_triangle()->get_id()
 				<< std::endl;
 		}
 #endif
@@ -182,19 +188,19 @@ unsigned int VTree::memory_size() {
 	unsigned int	poly_cnt = 0;		// ポリゴン数
 	unsigned int	size;
 
-	if ((vnode = m_root->get_left()) != NULL) {; 
+	if ((vnode = m_root->get_left()) != NULL) {;
 	node_count(vnode, &node_cnt, &poly_cnt);
 	}
 #ifdef DEBUG_VTREE
-	PL_DBGOSH << "VTree::memory_size1():node,poly=" << node_cnt << "," 
+	PL_DBGOSH << "VTree::memory_size1():node,poly=" << node_cnt << ","
 		<< poly_cnt << std::endl;
 #endif
 
-	if ((vnode = m_root->get_right()) != NULL) {; 
+	if ((vnode = m_root->get_right()) != NULL) {;
 	node_count(vnode, &node_cnt, &poly_cnt);
 	}
 #ifdef DEBUG_VTREE
-	PL_DBGOSH << "VTree::memory_size2():node,poly=" << node_cnt << "," 
+	PL_DBGOSH << "VTree::memory_size2():node,poly=" << node_cnt << ","
 		<< poly_cnt << std::endl;
 #endif
 
@@ -329,33 +335,33 @@ void VTree::traverse(VNode* vn, VElement* elm, VNode** vnode) const
 // private ////////////////////////////////////////////////////////////////////
 
 void VTree::search_recursive(
-	VNode				*vn, 
-	const BBox			&bbox, 
-	bool				every, 
+	VNode				*vn,
+	const BBox			&bbox,
+	bool				every,
 	std::vector<VElement*>	*vlist
 	) const {
 		//#define DEBUG_VTREE
 #ifdef DEBUG_VTREE
 		try{
-			PL_DBGOSH << "VTree::search_recursive:@@@----------------------@@@ " 
+			PL_DBGOSH << "VTree::search_recursive:@@@----------------------@@@ "
 				<< vn << " " << vn->get_left() << " "<< vn->get_right()<< std::endl;
 #endif
 			if (vn->is_leaf()) {
 #ifdef DEBUG_VTREE
-				PL_DBGOSH << "VTree::search_recursive:@@@--------at leaf----------@@@" 
+				PL_DBGOSH << "VTree::search_recursive:@@@--------at leaf----------@@@"
 					<< vn << " " << vn->get_left() << " "<< vn->get_right()<< std::endl;
 #endif
 				std::vector<VElement*>::const_iterator itr = vn->get_vlist().begin();
 #ifdef DEBUG_VTREE
-				PL_DBGOSH << "VTree::search_recursive:" 
+				PL_DBGOSH << "VTree::search_recursive:"
 					<< vn->get_vlist().size() << std::endl;
 #endif
 				for (; itr != vn->get_vlist().end(); itr++) {
 
 #ifdef DEBUG_VTREE
-					PL_DBGOSH << "VTree::search_recursive: itr " 
-						<< *itr 
-						<< " "<<(*itr)->get_triangle() 		  
+					PL_DBGOSH << "VTree::search_recursive: itr "
+						<< *itr
+						<< " "<<(*itr)->get_triangle()
 						<< " "<<(*itr)->get_triangle()->get_vertex()<< std::endl;
 					PL_DBGOSH << "VTree::search_recursive: v0"
 						<<*((*itr)->get_triangle()->get_vertex()[0])<< std::endl;
@@ -411,9 +417,9 @@ void VTree::search_recursive(
 
 						//PL_DBGOSH << "VTree::search_recursive: reached? " <<std::endl;
 #ifdef DEBUG_VTREE
-						PL_DBGOSH << "VTree::search_recursive: min " 
+						PL_DBGOSH << "VTree::search_recursive: min "
 							<< e_bbox.min<< " max "
-							<<e_bbox.max<< " " 
+							<<e_bbox.max<< " "
 							<< e_bbox.crossed(bbox) <<std::endl;
 #endif
 
@@ -421,7 +427,7 @@ void VTree::search_recursive(
 
 				}
 #ifdef USE_DEPTH
-				PL_DBGOSH << "VTree::search_recursive:depth=" << vn->get_depth() 
+				PL_DBGOSH << "VTree::search_recursive:depth=" << vn->get_depth()
 					<< ",elem= " << vn->get_vlist().size() << std::endl;
 #endif
 #ifdef DEBUG_VTREE
@@ -473,8 +479,8 @@ void VTree::search_recursive(
 POLYLIB_STAT VTree::create(PL_REAL sqradius) {
 #else
 POLYLIB_STAT VTree::create(
-	int							max_elem, 
-	const BBox					bbox, 
+	int							max_elem,
+	const BBox					bbox,
 	std::vector<PrivateTriangle*>	*tri_list
 	) {
 #endif
@@ -505,8 +511,8 @@ POLYLIB_STAT VTree::create(
 			// the vtx didn't find in the tree
 			// add a new vertex
 			if (vnode == NULL) {
-				PL_ERROSH 
-					<< "[ERROR]VTree::create():Can't find appropriate node" 
+				PL_ERROSH
+					<< "[ERROR]VTree::create():Can't find appropriate node"
 					<< std::endl;
 				return PLSTAT_NODE_NOT_FIND;
 			}
@@ -550,8 +556,8 @@ POLYLIB_STAT VTree::create(
 // private ////////////////////////////////////////////////////////////////////
 
 void VTree::node_count(
-	VNode			*parent, 
-	unsigned int	*node_cnt, 
+	VNode			*parent,
+	unsigned int	*node_cnt,
 	unsigned int	*tri_cnt
 	) {
 		VNode	*vnode;
@@ -560,7 +566,7 @@ void VTree::node_count(
 #ifdef DEBUG_VTREE
 		PL_DBGOSH << "VTree::node_count1():" << *node_cnt << std::endl;
 #endif
-		if ((vnode = parent->get_left()) != NULL) {; 
+		if ((vnode = parent->get_left()) != NULL) {;
 		(*node_cnt)++;
 		node_count(vnode, node_cnt, tri_cnt);
 		} else {
@@ -570,7 +576,7 @@ void VTree::node_count(
 		PL_DBGOSH << "VTree::node_count2():" << *node_cnt << std::endl;
 #endif
 
-		if ((vnode = parent->get_right()) != NULL) {; 
+		if ((vnode = parent->get_right()) != NULL) {;
 		(*node_cnt)++;
 		node_count(vnode, node_cnt, tri_cnt);
 		}
@@ -581,6 +587,3 @@ void VTree::node_count(
 
 
 } //namespace PolylibNS
-
-
-

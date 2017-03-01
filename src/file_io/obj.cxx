@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 
@@ -66,11 +72,11 @@ bool is_obj_a(std::string path)
 // POLYLIB_STAT obj_a_load VertexList version.
 //////////////////////////////////////////////////////////////////////////////
 
-POLYLIB_STAT obj_a_load(VertexList* vertex_list, 
-	std::vector<PrivateTriangle*>*tri_list, 
+POLYLIB_STAT obj_a_load(VertexList* vertex_list,
+	std::vector<PrivateTriangle*>*tri_list,
 	std::string	fname,
 	int	*total,
-	PL_REAL scale ) 
+	PL_REAL scale )
 {
 	// PL_DBGOSH << "fname " <<fname<<std::endl;
 	std::ifstream is(fname.c_str());
@@ -104,7 +110,7 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 			vertex_list->vtx_add_nocheck(v);
 			//PL_DBGOSH << "vertex " <<*v<<std::endl;
 		}
-		else if (token == "f") {	  // face 
+		else if (token == "f") {	  // face
 			int ii[3];
 			for(int i=0;i<3;i++){
 				std::stringstream ss;
@@ -122,7 +128,7 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 				ss>>ii[i];
 				if (vertex_list->size() < ii[i]){
 					PL_ERROSH << "[ERROR]obj:obj_a_load():error reading file " << fname << std::endl;
-					PL_ERROSH << "Face uses bigger vertex id than the size of vertex list. " << i << " " <<ii[i]<< std::endl;  
+					PL_ERROSH << "Face uses bigger vertex id than the size of vertex list. " << i << " " <<ii[i]<< std::endl;
 
 					return PLSTAT_OBJ_IO_ERROR;
 				}
@@ -139,7 +145,7 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 			PrivateTriangle* tri = new PrivateTriangle(tmpvertlist, n_tri);
 			if(tri->get_area()==0.0){
 
-				PL_DBGOSH << __func__ 
+				PL_DBGOSH << __func__
 					<< " Warning :  obj file contains a triangle of the area is zero." << std::endl;
 				PL_DBGOSH <<  "vertex0 ("<< *(tmpvertlist[0]) <<")"<<std::endl;
 				PL_DBGOSH <<  "vertex1 ("<< *(tmpvertlist[1]) <<")"<<std::endl;
@@ -152,22 +158,22 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 			n_tri++;
 
 		}
-		else if (token == "g") {	//groupname 
+		else if (token == "g") {	//groupname
 			std::string s;
 			is >> s;
-		}	else if (token == "vn") { 
+		}	else if (token == "vn") {
 			std::string s;
 			getline(is,s);
 			//	is >> s;
 			//PL_DBGOSH << "vn " <<s<<std::endl;
 
-		}	else if (token == "vp") { 
+		}	else if (token == "vp") {
 			std::string s;
 			getline(is,s);
 			//	is >> s;
 			//PL_DBGOSH << "vp " <<s<<std::endl;
 
-		}	else if (token == "vt") { 
+		}	else if (token == "vt") {
 			std::string s;
 			getline(is,s);
 			//	is >> s;
@@ -218,7 +224,7 @@ POLYLIB_STAT obj_a_load(VertexList* vertex_list,
 /////////////////////////////////////////////////////
 
 POLYLIB_STAT obj_a_save(
-	VertexList* vertex_list, 
+	VertexList* vertex_list,
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname
 	){
@@ -287,12 +293,12 @@ POLYLIB_STAT obj_a_save(
 
 
 			if(i0==-1 || i1==-1 || i2==-1) {
-				PL_ERROSH << "[ERROR]obj:obj_a_save():wrong vertex id " 
+				PL_ERROSH << "[ERROR]obj:obj_a_save():wrong vertex id "
 					<< i0 << " "<< i1 << " "<< i2 << " "<< std::endl;
 			}
-			os << "f " 
-				<< (i0+1)<<"//"<< (i0+1) << " " 
-				<< (i1+1)<<"//"<< (i1+1) << " " 
+			os << "f "
+				<< (i0+1)<<"//"<< (i0+1) << " "
+				<< (i1+1)<<"//"<< (i1+1) << " "
 				<< (i2+1)<<"//"<< (i2+1) << std::endl;
 		}
 
@@ -303,7 +309,7 @@ POLYLIB_STAT obj_a_save(
 ///////////////////////////////////////////////////////////////
 
 POLYLIB_STAT obj_b_save(
-	VertexList* vertex_list, 
+	VertexList* vertex_list,
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname){
 
@@ -378,7 +384,7 @@ POLYLIB_STAT obj_b_save(
 #endif
 
 		vertex_list->prepare_num_out();
-		// 面 f 出力 
+		// 面 f 出力
 		std::vector<PrivateTriangle*>::iterator itr;
 		for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
 			Vertex** tmpvtx=(*itr)->get_vertex();
@@ -400,7 +406,7 @@ POLYLIB_STAT obj_b_save(
 
 
 			if(index[0]==-1 || index[1]==-1 || index[2]==-1) {
-				PL_ERROSH << "[ERROR]obj:obj_b_save():wrong vertex id " 
+				PL_ERROSH << "[ERROR]obj:obj_b_save():wrong vertex id "
 					<< index[0] << " "<< index[1] << " "<< index[2] << " "<< std::endl;
 			}
 			// index starts from 1
@@ -439,7 +445,7 @@ POLYLIB_STAT obj_b_save(
 ///////////////////////////////////////////////////////////////
 
 POLYLIB_STAT obj_bb_save(
-	VertexList* vertex_list, 
+	VertexList* vertex_list,
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname){
 
@@ -510,7 +516,7 @@ POLYLIB_STAT obj_bb_save(
 
 		}
 
-		// 面 f 出力 
+		// 面 f 出力
 		//  std::vector<PrivateTriangle*>::iterator itr;
 		for (itr = tri_list->begin(); itr != tri_list->end(); itr++) {
 			Vertex** tmpvtx=(*itr)->get_vertex();
@@ -523,7 +529,7 @@ POLYLIB_STAT obj_bb_save(
 			index[2]=vertex_list->vtx_index(tmpvtx[2]);
 
 			if(index[0]==-1 || index[1]==-1 || index[2]==-1) {
-				PL_ERROSH << "[ERROR]obj:obj_bb_save():wrong vertex id " 
+				PL_ERROSH << "[ERROR]obj:obj_bb_save():wrong vertex id "
 					<< index[0] << " "<< index[1] << " "<< index[2] << " "<< std::endl;
 			}
 			// index starts from 1
@@ -553,7 +559,7 @@ POLYLIB_STAT obj_bb_save(
 
 POLYLIB_STAT obj_b_load(
 	VertexList *vertex_list,
-	std::vector<PrivateTriangle*> *tri_list, 
+	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname,
 	int	*total,
 	PL_REAL	scale
@@ -590,16 +596,16 @@ POLYLIB_STAT obj_b_load(
 		if(icheck!=0){
 			icheck2 = strncmp( buf, "OBJ_BIN TRIA COND_ID",20);
 			if(icheck2!=0){
-				PL_ERROSH << "[ERROR]obj:obj_b_load():Error in loading: " << fname 
+				PL_ERROSH << "[ERROR]obj:obj_b_load():Error in loading: " << fname
 					<<" file header error!!" << std::endl;
-				return PLSTAT_OBJ_IO_ERROR; 
+				return PLSTAT_OBJ_IO_ERROR;
 			}
 		} else {
 			withnormal=true;
 		}
 
 #ifdef DEBUG
-		PL_DBGOSH << __func__ << " withnormal"<< withnormal 
+		PL_DBGOSH << __func__ << " withnormal"<< withnormal
 			<< " " << icheck
 			<< " " << icheck2
 			<<std::endl;
@@ -626,7 +632,7 @@ POLYLIB_STAT obj_b_load(
 			(*v)[0]=float_vertex[0];
 			(*v)[1]=float_vertex[1];
 			(*v)[2]=float_vertex[2];
-			// 
+			//
 			//	  Vertex* tmp=vertex_list->vtx_add_KDT(v);
 			//	  Vertex* tmp=vertex_list->vtx_add_nocheck(v);
 			vertex_list->vtx_add_nocheck(v);
@@ -642,7 +648,7 @@ POLYLIB_STAT obj_b_load(
 			for(ulong i=0;i<element_vertex;++i){
 				float float_vertex[3];
 				tt_read(ifs, float_vertex, sizeof(float), 3, inv);
-			}	  
+			}
 		}
 
 
@@ -670,10 +676,10 @@ POLYLIB_STAT obj_b_load(
 				exid);
 
 			if(tri->get_area()==0.0){
-				PL_DBGOSH << __func__ 
+				PL_DBGOSH << __func__
 					<< " Warning :  obj file contains a triangle of the area is zero." << std::endl;
 				PL_DBGOSH <<  "vertex0 ("<< *(tmpvlist[0]) <<")"<<std::endl;
-				PL_DBGOSH <<  "vertex1 ("<< *(tmpvlist[1]) <<")"<<std::endl;	
+				PL_DBGOSH <<  "vertex1 ("<< *(tmpvlist[1]) <<")"<<std::endl;
 				PL_DBGOSH <<  "vertex2 ("<< *(tmpvlist[2]) <<")"<<std::endl;
 				n_zero_area_tri++;
 			}
@@ -696,4 +702,3 @@ POLYLIB_STAT obj_b_load(
 
 
 }// end of namespace PolylibNS
-

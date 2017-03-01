@@ -1,3 +1,20 @@
+/*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
+*/
+
 #include "polygons/VertKDT.h"
 
 #include <vector>
@@ -42,7 +59,7 @@ void VertKDT::set_root_bbox(const BBox& box){
 ///  @return	POLYLIB_STATで定義される値が返る。
 ///
 POLYLIB_STAT VertKDT::create(
-	const BBox	bbox, 
+	const BBox	bbox,
 	std::vector<Vertex*>* vert_list
 	){
 
@@ -51,7 +68,7 @@ POLYLIB_STAT VertKDT::create(
 }
 
 
-// 
+//
 int VertKDT::n_create(){
 	return m_n_create;
 }
@@ -166,10 +183,10 @@ void VertKDTNode::split(const int& max_elem)
 // public /////////////////////////////////////////////////////////////////////
 
 VertKDT::VertKDT(
-	int	max_elem, 
-	const BBox	bbox, 
-	std::vector<Vertex*>* vert_list) 
-	//		       VertexList* vert_list) 
+	int	max_elem,
+	const BBox	bbox,
+	std::vector<Vertex*>* vert_list)
+	//		       VertexList* vert_list)
 {
 	m_root = NULL;
 	create(max_elem, bbox, vert_list);
@@ -207,20 +224,20 @@ unsigned int VertKDT::memory_size() {
 	unsigned int	poly_cnt = 0;		// ポリゴン数
 	unsigned int	size;
 
-	if ((vnode = m_root->get_left()) != NULL) {; 
+	if ((vnode = m_root->get_left()) != NULL) {;
 	node_count(vnode, &node_cnt, &poly_cnt);
 	}
 	//#define DEBUG_VTREE
 #ifdef DEBUG_VTREE
-	PL_DBGOSH << "VertKDT::memory_size1():node,poly=" << node_cnt << "," 
+	PL_DBGOSH << "VertKDT::memory_size1():node,poly=" << node_cnt << ","
 		<< poly_cnt << std::endl;
 #endif
 
-	if ((vnode = m_root->get_right()) != NULL) {; 
+	if ((vnode = m_root->get_right()) != NULL) {;
 	node_count(vnode, &node_cnt, &poly_cnt);
 	}
 #ifdef DEBUG_VTREE
-	PL_DBGOSH << "VertKDT::memory_size2():node,poly=" << node_cnt << "," 
+	PL_DBGOSH << "VertKDT::memory_size2():node,poly=" << node_cnt << ","
 		<< poly_cnt << std::endl;
 #endif
 
@@ -234,7 +251,7 @@ unsigned int VertKDT::memory_size() {
 // public /////////////////////////////////////////////////////////////////////
 
 const Vertex* VertKDT::search_nearest(
-	const Vec3<PL_REAL>&	pos) const 
+	const Vec3<PL_REAL>&	pos) const
 {
 	if (m_root == 0) {
 		std::cerr << "Polylib::VertKDT::Error" << std::endl;
@@ -253,7 +270,7 @@ const Vertex* VertKDT::search_nearest(
 const Vertex* VertKDT::search_nearest_recursive(
 	VertKDTNode   *vn,
 	const Vec3<PL_REAL>&	pos
-	) const 
+	) const
 {
 	//#define DEBUG
 
@@ -313,7 +330,7 @@ POLYLIB_STAT VertKDT::add2(Vertex* v)
 {
 	//#define DEBUG
 #ifdef DEBUG
-	PL_DBGOSH << "VertKDT::"<<__func__ << " "<< *v << std::endl;    
+	PL_DBGOSH << "VertKDT::"<<__func__ << " "<< *v << std::endl;
 #endif// DEBUG
 
 	BBox rootbbox=get_root_bbox();
@@ -323,7 +340,7 @@ POLYLIB_STAT VertKDT::add2(Vertex* v)
 	}else{
 
 #ifdef DEBUG
-		PL_DBGOSH << "VertKDT::"<<__func__ << " "<< *v << std::endl;    
+		PL_DBGOSH << "VertKDT::"<<__func__ << " "<< *v << std::endl;
 #endif// DEBUG
 
 		make_upper(v);
@@ -337,7 +354,7 @@ POLYLIB_STAT VertKDT::make_upper(Vertex* v)
 
 	//#define DEBUG
 #ifdef DEBUG
-	PL_DBGOSH << "VertKDT::"<<__func__ << " "<< *v<< std::endl;    
+	PL_DBGOSH << "VertKDT::"<<__func__ << " "<< *v<< std::endl;
 #endif// DEBUG
 
 	BBox rootbbox=get_root_bbox();
@@ -381,13 +398,13 @@ POLYLIB_STAT VertKDT::make_upper(Vertex* v)
 
 
 #ifdef DEBUG
-	PL_DBGOSH << "VertKDT::"<<__func__ << " min "<< min<< std::endl;    
-	PL_DBGOSH << "VertKDT::"<<__func__ << " max "<< max<< std::endl;    
-	PL_DBGOSH << "VertKDT::"<<__func__ << " uppermin "<< uppermin<< std::endl;    
-	PL_DBGOSH << "VertKDT::"<<__func__ << " uppermax "<< uppermax<< std::endl;    
-	PL_DBGOSH << "VertKDT::"<<__func__ << " pairmin "<< pairmin<< std::endl;    
-	PL_DBGOSH << "VertKDT::"<<__func__ << " pairmax "<< pairmax<< std::endl;    
-	PL_DBGOSH << "VertKDT::"<<__func__ << " length "<< rootbbox.length(upperaxis)<< std::endl;    
+	PL_DBGOSH << "VertKDT::"<<__func__ << " min "<< min<< std::endl;
+	PL_DBGOSH << "VertKDT::"<<__func__ << " max "<< max<< std::endl;
+	PL_DBGOSH << "VertKDT::"<<__func__ << " uppermin "<< uppermin<< std::endl;
+	PL_DBGOSH << "VertKDT::"<<__func__ << " uppermax "<< uppermax<< std::endl;
+	PL_DBGOSH << "VertKDT::"<<__func__ << " pairmin "<< pairmin<< std::endl;
+	PL_DBGOSH << "VertKDT::"<<__func__ << " pairmax "<< pairmax<< std::endl;
+	PL_DBGOSH << "VertKDT::"<<__func__ << " length "<< rootbbox.length(upperaxis)<< std::endl;
 	//  int a;
 	//  std::cin >> a;
 #endif// DEBUG
@@ -475,7 +492,7 @@ void VertKDT::traverse(VertKDTNode* vn, VertKDTElem* elm, VertKDTNode** vnode) c
 {
 
 	//#define DEBUG
-#ifdef DEBUG 
+#ifdef DEBUG
 	PL_DBGOSH<<"VertKDT::"<<__func__<<" start"<<std::endl;
 #endif
 
@@ -486,7 +503,7 @@ void VertKDT::traverse(VertKDTNode* vn, VertKDTElem* elm, VertKDTNode** vnode) c
 	vn->set_bbox_search(elm);
 	// --- ims --->
 
-#ifdef DEBUG 
+#ifdef DEBUG
 	PL_DBGOSH<<"VertKDT::"<<__func__<<" set_bbox_search "<<std::endl;
 #endif
 
@@ -498,7 +515,7 @@ void VertKDT::traverse(VertKDTNode* vn, VertKDTElem* elm, VertKDTNode** vnode) c
 		return;
 	}
 
-#ifdef DEBUG 
+#ifdef DEBUG
 	PL_DBGOSH<<"VertKDT::"<<__func__<<" vn is not leaf "<<std::endl;
 #endif
 
@@ -514,7 +531,7 @@ void VertKDT::traverse(VertKDTNode* vn, VertKDTElem* elm, VertKDTNode** vnode) c
 	//float x = vn->get_left()->get_bbox().max[axis];
 	PL_REAL x = vn->get_left()->get_bbox().max[axis];
 
-#ifdef DEBUG 
+#ifdef DEBUG
 	PL_DBGOSH<<"VertKDT::"<<__func__<<" traverse recursively "<<std::endl;
 #endif
 
@@ -543,10 +560,10 @@ void VertKDT::traverse(VertKDTNode* vn, VertKDTElem* elm, VertKDTNode** vnode) c
 // private ////////////////////////////////////////////////////////////////////
 
 void VertKDT::search_recursive(
-	VertKDTNode				*vn, 
-	const BBox			&bbox, 
+	VertKDTNode				*vn,
+	const BBox			&bbox,
 	std::vector<VertKDTElem*>	*vlist
-	) const 
+	) const
 {
 #ifdef DEBUG_VTREE
 	try{
@@ -581,7 +598,7 @@ void VertKDT::search_recursive(
 
 			}
 #ifdef USE_DEPTH
-			PL_DBGOSH << "VertKDT::search_recursive:depth=" << vn->get_depth() 
+			PL_DBGOSH << "VertKDT::search_recursive:depth=" << vn->get_depth()
 				<< ",elem= " << vn->get_vlist().size() << std::endl;
 #endif
 #ifdef DEBUG_VTREE
@@ -627,8 +644,8 @@ void VertKDT::search_recursive(
 POLYLIB_STAT VertKDT::create(PL_REAL sqradius) {
 #else
 POLYLIB_STAT VertKDT::create(
-	int		max_elem, 
-	const BBox	bbox, 
+	int		max_elem,
+	const BBox	bbox,
 	std::vector<Vertex*>*	vert_list
 	//VertexList*	vert_list
 	) {
@@ -667,8 +684,8 @@ POLYLIB_STAT VertKDT::create(
 				// the vtx didn't find in the tree
 				// add a new vertex
 				if (vnode == NULL) {
-					PL_ERROSH 
-						<< "[ERROR]VertKDT::create():Can't find appropriate node" 
+					PL_ERROSH
+						<< "[ERROR]VertKDT::create():Can't find appropriate node"
 						<< std::endl;
 					return PLSTAT_NODE_NOT_FIND;
 				}
@@ -711,8 +728,8 @@ POLYLIB_STAT VertKDT::create(
 // private ////////////////////////////////////////////////////////////////////
 
 void VertKDT::node_count(
-	VertKDTNode			*parent, 
-	unsigned int	*node_cnt, 
+	VertKDTNode			*parent,
+	unsigned int	*node_cnt,
 	unsigned int	*tri_cnt
 	) {
 		VertKDTNode	*vnode;
@@ -720,7 +737,7 @@ void VertKDT::node_count(
 #ifdef DEBUG_VTREE
 		PL_DBGOSH << "VertKDT::node_count1():" << *node_cnt << std::endl;
 #endif
-		if ((vnode = parent->get_left()) != NULL) {; 
+		if ((vnode = parent->get_left()) != NULL) {;
 		(*node_cnt)++;
 		node_count(vnode, node_cnt, tri_cnt);
 		}
@@ -730,11 +747,10 @@ void VertKDT::node_count(
 #ifdef DEBUG_VTREE
 		PL_DBGOSH << "VertKDT::node_count2():" << *node_cnt << std::endl;
 #endif
-		if ((vnode = parent->get_right()) != NULL) {; 
+		if ((vnode = parent->get_right()) != NULL) {;
 		(*node_cnt)++;
 		node_count(vnode, node_cnt, tri_cnt);
 		}
 }
 
 }// end of namespace PolylibNS
-

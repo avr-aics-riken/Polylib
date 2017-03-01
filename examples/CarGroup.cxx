@@ -1,3 +1,20 @@
+/*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
+*/
+
 #include "CarGroup.h"
 #include "polygons/Vertex.h"
 #include "polygons/VertexList.h"
@@ -20,7 +37,7 @@ CarGroup::CarGroup(PL_REAL tolerance){
 	this->m_tolerance=tolerance;
 }
 
-string CarGroup::get_class_name() 
+string CarGroup::get_class_name()
 {
 	return "CarGroup";
 }
@@ -75,7 +92,7 @@ POLYLIB_STAT CarGroup::move(PolylibMoveParams& params){
 #endif // DEBUG
 
 
-	// ˆø”ƒ`ƒFƒbƒN
+	// ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 	if (params.m_current_step == params.m_next_step) return PLSTAT_OK;
 	if (params.m_current_step > params.m_next_step) return PLSTAT_NG;
 	if (params.m_delta_t <= 0.0) return PLSTAT_NG;
@@ -83,8 +100,8 @@ POLYLIB_STAT CarGroup::move(PolylibMoveParams& params){
 
 
 
-	// ˆÚ“®—Ê
-	// X Ž²•ûŒü‚É 1step ‚ ‚½‚è params.m_delta_t ~ m_velocity ‚¾‚¯ˆÚ“®‚·‚é‚à‚Ì‚Æ‚·‚é.
+	// ï¿½Ú“ï¿½ï¿½ï¿½
+	// X ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1step ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ params.m_delta_t ï¿½~ m_velocity ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½ï¿½ï¿½.
 	//    PL_REAL move_pos = (params.m_next_step - params.m_current_step) *
 	PL_REAL move_pos = (params.m_next_step - params.m_current_step) *
 		this->m_velocity * params.m_delta_t;
@@ -107,7 +124,7 @@ POLYLIB_STAT CarGroup::move(PolylibMoveParams& params){
 
 	for (int i =0;i<vertexlist->size();++i) {
 		Vertex* v = (*vertexlist)[i];
-		PL_DBGOSH << "CarGroup::move() "<< i <<" "<< vertexlist->size() 
+		PL_DBGOSH << "CarGroup::move() "<< i <<" "<< vertexlist->size()
 			<< " point "<< *v <<std::endl;
 		/* PL_DBGOSH << "CarGroup::move() x "<< (*v)[0] <<std::endl; */
 		/* PL_DBGOSH << "CarGroup::move() y "<< (*v)[1] <<std::endl; */
@@ -119,7 +136,7 @@ POLYLIB_STAT CarGroup::move(PolylibMoveParams& params){
 		/* PL_DBGOSH << "CarGroup::move() y "<< (*v)[1] <<std::endl; */
 		/* PL_DBGOSH << "CarGroup::move() z "<< (*v)[2] <<std::endl; */
 
-		PL_DBGOSH << "CarGroup::move() after "<< i <<" "<< vertexlist->size() 
+		PL_DBGOSH << "CarGroup::move() after "<< i <<" "<< vertexlist->size()
 			<< " point "<< *v <<std::endl;
 
 		//#undef DEBUG
@@ -129,16 +146,16 @@ POLYLIB_STAT CarGroup::move(PolylibMoveParams& params){
 
 
 
-	// ŽOŠpŒ`ƒŠƒXƒg‚ðŽæ“¾
+	// ï¿½Oï¿½pï¿½`ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½æ“¾
 	/*    std::vector<PrivateTriangle<T>*>* tria_list = this->m_polygons->get_tri_list(); */
 	/*     typename std::vector<PrivateTriangle<T>*>::iterator it; */
-	/*     // ŽOŠpŒ`ƒŠƒXƒg“à‚Ì‘S‚Ä‚ÌŽOŠpŒ`‚É‚Â‚¢‚Ä’¸“_À•W‚ðXV */
+	/*     // ï¿½Oï¿½pï¿½`ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Ì‘Sï¿½Ä‚ÌŽOï¿½pï¿½`ï¿½É‚Â‚ï¿½ï¿½Ä’ï¿½ï¿½_ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Xï¿½V */
 	/*     for (it=tria_list->begin(); it!=tria_list->end(); it++) { */
 	/*       PrivateTriangle<T> *tria = (*it); */
 	/* f      //Vec3<T> **last_vtx = tria->get_vertex(); */
 	/*       Vertex<T> **last_vtx = tria->get_vertex(); */
 	/*       Vec3<T> moved_vtx[3]; */
-	/*       // X À•W (x) ‚Ì‚ÝXV */
+	/*       // X ï¿½ï¿½ï¿½W (x) ï¿½Ì‚ÝXï¿½V */
 	/*       moved_vtx[0].x = last_vtx[0].x + move_pos; */
 	/*       moved_vtx[1].x = last_vtx[1].x + move_pos; */
 	/*       moved_vtx[2].x = last_vtx[2].x + move_pos; */
@@ -149,12 +166,12 @@ POLYLIB_STAT CarGroup::move(PolylibMoveParams& params){
 	/*       moved_vtx[1].z = last_vtx[1].z; */
 	/*       moved_vtx[2].z = last_vtx[2].z; */
 
-	/*       // ˆÚ“®Œã‚Ì’¸“_À•W‚ðÝ’è.–@üƒxƒNƒgƒ‹‚àÄŒvŽZ */
+	/*       // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½Ì’ï¿½ï¿½_ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Ý’ï¿½.ï¿½@ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ÄŒvï¿½Z */
 	/*       tria->set_vertexes( moved_vtx, true, false ); */
 
 	/*     } */
-	/*     // ’¸“_À•W‚ªˆÚ“®‚µ‚½‚±‚Æ‚É‚æ‚è,KD –Ø‚ÌÄ\’z‚ª•K—v. */
-	/*     // —vÄ\’zƒtƒ‰ƒO‚ð—§‚Ä‚é. */
+	/*     // ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚É‚ï¿½ï¿½ï¿½,KD ï¿½Ø‚ÌÄ\ï¿½zï¿½ï¿½ï¿½Kï¿½v. */
+	/*     // ï¿½vï¿½Ä\ï¿½zï¿½tï¿½ï¿½ï¿½Oï¿½ð—§‚Ä‚ï¿½. */
 	this->m_need_rebuild = true;
 
 #ifdef DEBUG
@@ -190,5 +207,3 @@ POLYLIB_STAT CarGroup::mk_param_tag(
 
 										return PolygonGroup::mk_param_tag(tp,rank_no,extend,format);
 }
-
-
