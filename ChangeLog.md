@@ -3,6 +3,24 @@
 ## REVISION HISTORY
 
 ---
+- 2017-03-04  Version 3.6.3
+  - test gcc >> test_DVertex.cpp faied.
+  - Tested.
+
+|Compiler|Serial|Ex.|MPI |Ex.|
+|:--|:--:|:--:|:--:|:--:|
+|Intel 17.0.1 |ok|ok|ok|0%|
+|GNU 6.2.0    |ok|x|||
+|fx10         ||||–|
+|K            ||||–|
+
+
+---
+- 2017-03-02  Version 3.6.2
+  - modify structure of include files
+
+
+---
 - 2017-03-01  Version 3.6.1
   - add `#include <cstring>` into src/file_io/obj.cxx for SuSE linux
 
@@ -11,14 +29,6 @@
 - 2017-03-01  Version 3.6.0
   - cmake Version
   - All examples for MPI failed.
-  - Tested.
-
-  |Compiler|Serial|Ex.|MPI |Ex.|
-  |:--|:--:|:--:|:--:|:--:|
-  |Intel 17.0.1 |ok|ok|ok|0%|
-  |GNU 6.2.0    |||||
-  |fx10         ||||–|
-  |K            ||||–|
 
 
 ---
