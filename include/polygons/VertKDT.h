@@ -1,3 +1,20 @@
+/*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
+*/
+
 #ifndef polylib_vertkdt_h
 #define polylib_vertkdt_h
 #include <vector>
@@ -32,8 +49,8 @@ public:
 	/// @param[in] bbox VertKDTのbox範囲。
 	/// @param[in] vert_list 木構造の元になるvertexのリスト
 	///
-	VertKDT(int max_elem, 
-		const BBox bbox, 
+	VertKDT(int max_elem,
+		const BBox bbox,
 		std::vector<Vertex*>* vert_list);
 	//	    VertexList* vert_list);
 	//	    VertexList* vert_list);
@@ -75,7 +92,7 @@ public:
 	///  @return    検索されたVertex
 	///
 	const Vertex* search_nearest_recursive(
-		VertKDTNode       *vn, 
+		VertKDTNode       *vn,
 		const Vec3<PL_REAL>&    pos
 		) const;
 
@@ -129,12 +146,12 @@ public:
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT create(
-		const BBox	bbox, 
+		const BBox	bbox,
 		std::vector<Vertex*>* vert_list
 		);
 
 
-	// 
+	//
 	int n_create();
 
 
@@ -147,8 +164,8 @@ private:
 	///  @param[in,out] vnode 検索結果。
 	///
 	void traverse(
-		VertKDTNode	*vn, 
-		VertKDTElem	*elm, 
+		VertKDTNode	*vn,
+		VertKDTElem	*elm,
 		VertKDTNode	**vnode
 		) const;
 
@@ -160,8 +177,8 @@ private:
 	///  @param[in,out]	vlist	検索結果配列へのポインタ。
 	///
 	void search_recursive(
-		VertKDTNode	*vn, 
-		const BBox	&bbox, 
+		VertKDTNode	*vn,
+		const BBox	&bbox,
 		std::vector<VertKDTElem*>	*vlist
 		) const;
 
@@ -173,8 +190,8 @@ private:
 	///  @param[in] vertex_list	木構造の元になるVertexのリスト。
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
-	POLYLIB_STAT create(int	max_elem, 
-		const BBox	bbox, 
+	POLYLIB_STAT create(int	max_elem,
+		const BBox	bbox,
 		//VertexList* vert_list
 		std::vector<Vertex*>* vert_list
 		);
@@ -188,8 +205,8 @@ private:
 	///  @param[out] poly_cnt	ポリゴン数。
 	///
 	void node_count(
-		VertKDTNode	*vnode, 
-		unsigned int	*node_cnt, 
+		VertKDTNode	*vnode,
+		unsigned int	*node_cnt,
 		unsigned int	*poly_cnt
 		);
 
@@ -206,7 +223,7 @@ private:
 #ifdef DEBUG_VERTKDT
 	std::vector<VertKDTNode*> m_vnode;
 #endif
-};// end of class 
+};// end of class
 
 }// end of namespace PolylibNS
 #endif //polylib_vertkdt_h

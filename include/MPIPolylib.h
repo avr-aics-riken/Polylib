@@ -1,13 +1,18 @@
-// -*- Mode: c++ -*-
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 
@@ -164,7 +169,7 @@ public:
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
-		load_parallel( 
+		load_parallel(
 		std::string config_filename = "",
 		ID_FORMAT	id_format = ID_BIN
 		);
@@ -311,7 +316,7 @@ protected:
 
 	///
 	/// グループID＆グループ内三角形数の送信情報を作成。
-	/// 
+	///
 	/// @param[in,out] p_vec 情報追加先ベクタ
 	/// @param[in] group_id グループID
 	/// @param[in] p_trias グループ内三角形リスト
@@ -326,7 +331,7 @@ protected:
 
 	///
 	/// 三角形の送信情報を作成。
-	/// 
+	///
 	/// @param[in,out] p_vec 情報追加先ベクタ
 	/// @param[in] p_trias グループ内三角形リスト
 	/// @return	POLYLIB_STATで定義される値が返る。
@@ -339,7 +344,7 @@ protected:
 
 	///
 	/// DVertex三角形のデータ数を作成
-	/// 
+	///
 	/// @param[in,out] p_vec 情報追加先ベクタ
 	/// @param[in] p_trias グループ内三角形リスト
 	/// @return	POLYLIB_STATで定義される値が返る。
@@ -352,7 +357,7 @@ protected:
 
 	///
 	/// DVertex三角形のスカラーデータ送信情報を作成。
-	/// 
+	///
 	/// @param[in,out] p_vec 情報追加先ベクタ
 	/// @param[in] p_trias グループ内三角形リスト
 	/// @return	POLYLIB_STATで定義される値が返る。
@@ -365,7 +370,7 @@ protected:
 
 	///
 	/// DVertex三角形のベクターデータ送信情報を作成。
-	/// 
+	///
 	/// @param[in,out] p_vec 情報追加先ベクタ
 	/// @param[in] p_trias グループ内三角形リスト
 	/// @return	POLYLIB_STATで定義される値が返る。
@@ -379,7 +384,7 @@ protected:
 
 	///
 	/// 三角形IDの送信情報を作成。
-	/// 
+	///
 	/// @param[in,out] p_vec 情報追加先ベクタ
 	/// @param[in] p_trias グループ内三角形リスト
 	/// @return	POLYLIB_STATで定義される値が返る。
@@ -392,7 +397,7 @@ protected:
 
 	///
 	/// 三角形のユーザ定義IDの送信情報を作成。
-	/// 
+	///
 	/// @param[in,out] p_vec 情報追加先ベクタ
 	/// @param[in] p_trias グループ内三角形リスト
 	/// @return  POLYLIB_STATで定義される値が返る。
@@ -406,7 +411,7 @@ protected:
 	///
 	/// 自領域内ポリゴンのみ抽出してポリゴン情報を再構築。
 	/// migrate実行後に行う。
-	/// 
+	///
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT
@@ -422,7 +427,7 @@ protected:
 
 	///
 	/// 自領域に必要なポリゴン情報をrank0から受信
-	/// 
+	///
 	/// @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT

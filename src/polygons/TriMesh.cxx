@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 
@@ -457,7 +463,7 @@ void TriMesh::init(const std::vector<PrivateTriangle*>* trias)
 			/* vmap[tmpvert[2]]=1; */
 			//    PrivateTriangle* tri=new PrivateTriangle( (*itr)->get_vertex(),
 			PrivateTriangle* tri=new PrivateTriangle( tmpvert_in,
-				(*itr)->get_normal(), 
+				(*itr)->get_normal(),
 				(*itr)->get_area(),
 				(*itr)->get_id()
 				);
@@ -536,11 +542,11 @@ void TriMesh::add(const PL_REAL* vertlist,
 		if(vtx_tri[0]!=NULL &&vtx_tri[1]!=NULL &&vtx_tri[2]!=NULL){
 			//PL_DBGOSH << __func__  << " Vertex pointer is checked."<<std::endl;
 		} else {
-			PL_ERROSH << __func__ 
+			PL_ERROSH << __func__
 				<< " NULL pointer "<< vtx_tri[0]
 			<<" "<< vtx_tri[1]
 			<<" "<< vtx_tri[2]<<std::endl;
-		} 
+		}
 
 		PrivateTriangle* tri=new PrivateTriangle(vtx_tri,idlist[id2],exidlist[id3]);
 
@@ -564,7 +570,7 @@ void TriMesh::add(const PL_REAL* vertlist,
 	// Vertex および PrivateTriangle が delete されていない。
 	// 2013-Jan.-10th T. Suzuki
 
-#ifdef DEBUG     
+#ifdef DEBUG
 	for(int i=0;i<this->m_tri_list->size();++i){
 		PL_DBGOSH << " before id "<<(*this->m_tri_list)[i]->get_id() <<std::endl;
 	}
@@ -572,8 +578,8 @@ void TriMesh::add(const PL_REAL* vertlist,
 
 	// ID重複ぶんを削除
 	this->m_tri_list->erase(
-		std::unique(this->m_tri_list->begin(), 
-		this->m_tri_list->end(), 
+		std::unique(this->m_tri_list->begin(),
+		this->m_tri_list->end(),
 		PrivTriaEqual()),
 		this->m_tri_list->end());
 
@@ -642,7 +648,7 @@ POLYLIB_STAT TriMesh::import(const std::map<std::string, std::string> fmap, PL_R
 		this->m_tri_list, fmap, scale);
 	if(ret!=PLSTAT_OK) return ret;
 
-	vtx_compaction();		
+	vtx_compaction();
 
 	return ret;
 
@@ -750,7 +756,7 @@ int TriMesh::triangles_num() {
 // public /////////////////////////////////////////////////////////////////////
 
 const std::vector<PrivateTriangle*> *TriMesh::search(
-	BBox	*bbox, 
+	BBox	*bbox,
 	bool	every
 	) const {
 		//#define DEBUG
@@ -767,8 +773,8 @@ const std::vector<PrivateTriangle*> *TriMesh::search(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT TriMesh::search(
-	BBox						*bbox, 
-	bool						every, 
+	BBox						*bbox,
+	bool						every,
 	std::vector<PrivateTriangle*>	*tri_list
 	) const {
 		return m_vtree->search(bbox, every, tri_list);
@@ -777,7 +783,7 @@ POLYLIB_STAT TriMesh::search(
 // public /////////////////////////////////////////////////////////////////////
 
 const std::vector<PrivateTriangle*>* TriMesh::linear_search(
-	BBox	*q_bbox, 
+	BBox	*q_bbox,
 	bool	every
 	) const {
 		std::vector<PrivateTriangle*>		   *tri_list = new std::vector<PrivateTriangle*>;
@@ -792,7 +798,7 @@ const std::vector<PrivateTriangle*>* TriMesh::linear_search(
 				bbox.add( (Vec3<PL_REAL>) *vtx_arr[i]);
 			}
 			if (every == true) {
-				if (q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[0]) == true && 
+				if (q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[0]) == true &&
 					q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[1]) == true &&
 					q_bbox->contain( (Vec3<PL_REAL>) *vtx_arr[2]) == true)
 				{
@@ -818,8 +824,8 @@ const std::vector<PrivateTriangle*>* TriMesh::linear_search(
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT TriMesh::linear_search(
-	BBox						*q_bbox, 
-	bool						every, 
+	BBox						*q_bbox,
+	bool						every,
 	std::vector<PrivateTriangle*>	*tri_list
 	) const {
 		if (tri_list == NULL) return PLSTAT_ARGUMENT_NULL;
@@ -865,7 +871,7 @@ POLYLIB_STAT TriMesh::linear_search(
 			}
 #ifdef DEBUG
 			for (int i=0; i<8; i++) {
-				PL_DBGOSH << "TriMesh::linear_search:q_box[" << i << "]:" 
+				PL_DBGOSH << "TriMesh::linear_search:q_box[" << i << "]:"
 					<< q_bbox->getPoint(i) << std::endl;
 			}
 			PL_DBGOSH << "TriMesh::linear_searc:" << " id:" << (*itr)->get_id()
@@ -1043,7 +1049,7 @@ void TriMesh::vtx_compaction()
 #endif
 				if((*vtx_map)[tmp_list[i]]==tmp_list[i]){
 					// do nothing
-				} else { // substitute 
+				} else { // substitute
 #ifdef DEBUG
 					if(counter<10)
 						PL_DBGOSH << "pointer swaped old "<<tmp_list[i]<< " new "<<(*vtx_map)[tmp_list[i]]<<std::endl;
@@ -1061,7 +1067,7 @@ void TriMesh::vtx_compaction()
 				(*itr)->set_vertexes(tmp_list,true,true);
 
 				if((*itr)->get_area()==0.0){ //zero area check
-					PL_DBGOSH << __func__ 
+					PL_DBGOSH << __func__
 						<< " Warning : polygon contains a triangle that its area is zero." << std::endl;
 					PL_DBGOSH <<  "vertex0 ("<< *(tmp_list[0]) <<")"<<std::endl;
 					PL_DBGOSH <<  "vertex1 ("<< *(tmp_list[1]) <<")"<<std::endl;
@@ -1154,7 +1160,7 @@ POLYLIB_STAT TriMesh::replace_DVertex(int nscalar,int nvector){
 	PL_DBGOSH << __func__ << " 4"<<std::endl;
 #endif
 
-	std::vector<PrivateTriangle*>* 
+	std::vector<PrivateTriangle*>*
 		tmp_dvertex_tri_list=new std::vector<PrivateTriangle*>;
 
 	//  三角形リストの頂点ポインタ付け替え
@@ -1241,14 +1247,14 @@ POLYLIB_STAT TriMesh::prepare_DVertex(int nscalar,int nvector){
 	init_vertex_list();
 	m_DVM_ptr = new DVertexManager(nscalar,nvector);
 #ifdef DEBUG
-	PL_DBGOSH << __func__ 
+	PL_DBGOSH << __func__
 		<< " nscalar="<<m_DVM_ptr->nscalar()
 		<< " nvector="<<m_DVM_ptr->nvector()
-		//<< " size="<<m_DVM_ptr->size() 
+		//<< " size="<<m_DVM_ptr->size()
 		<< " this " <<this
 		<< std::endl;
 #endif
-	//#undef DEBUG   
+	//#undef DEBUG
 
 
 
@@ -1257,7 +1263,7 @@ POLYLIB_STAT TriMesh::prepare_DVertex(int nscalar,int nvector){
 /////////////////////////
 
 
-DVertexTriangle* 
+DVertexTriangle*
 	TriMesh::add_DVertex_Triangle(Vec3<PL_REAL>* v)
 {
 
@@ -1271,8 +1277,8 @@ DVertexTriangle*
 	<< std::endl;
 #endif
 
-	//   Vertex* vtx_list[3];   
-	DVertex* vtx_list[3];   
+	//   Vertex* vtx_list[3];
+	DVertex* vtx_list[3];
 	//PL_DBGOSH << "TriMesh::"<< __func__<< " 1" << " this "<<this <<std::endl;
 	for(int i=0;i<3;i++){
 		Vertex* dv;
@@ -1281,7 +1287,7 @@ DVertexTriangle*
 		if(m_DVM_ptr==NULL){
 			PL_DBGOSH << __func__  << "m_DVM_ptr is NULL"<<std::endl;
 		}else {
-			PL_DBGOSH << __func__ 
+			PL_DBGOSH << __func__
 				<< " nscalar="<<m_DVM_ptr->nscalar()
 				<< " nvector="<<m_DVM_ptr->nvector()
 				//<< " size="<<m_DVM_ptr->size()
@@ -1406,13 +1412,13 @@ DVertexManager* TriMesh::DVM() const {
 ///
 /// @return KD木クラス。
 ///
-bool TriMesh::hasDVertex() const 
+bool TriMesh::hasDVertex() const
 {
 	if(m_DVM_ptr==NULL) return false;
 	return true;
 }
 
-void TriMesh::print_memory_size() const 
+void TriMesh::print_memory_size() const
 {
 	unsigned int memsize_vtree=m_vtree->memory_size();
 	unsigned int memsize_vkdt=m_vertKDT->memory_size();
@@ -1427,7 +1433,7 @@ void TriMesh::print_memory_size() const
 	PL_DBGOSH<< "TriMesh::"<<__FUNCTION__<<std::endl;
 #else
 	PL_DBGOSH<< "TriMesh::"<<__func__<<std::endl;
-#endif      
+#endif
 	PL_DBGOSH<< "size of VertexList      "<< memsize_vt_list<<std::endl;
 	PL_DBGOSH<< "size of VertKDT         "<<memsize_vkdt<<std::endl;
 	PL_DBGOSH<< "size of PrivateTriangle "<<memsize_pt_list<<std::endl;
@@ -1438,5 +1444,3 @@ void TriMesh::print_memory_size() const
 
 
 } //namespace PolylibNS
-
-

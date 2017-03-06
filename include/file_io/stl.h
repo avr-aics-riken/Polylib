@@ -1,13 +1,18 @@
-/* -- Mode: c++ --*/
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef stl_h
@@ -25,7 +30,7 @@
 
 
 
-#if HAVE_STRING_H 
+#if HAVE_STRING_H
 #include <string.h>
 #else
 // write some code here
@@ -58,7 +63,7 @@ class PrivateTriangle;
 
 ///
 /// ASCIIモードのSTLファイルを読み込み、VertexList, tri_listに三角形ポリゴン情報を設定する。
-/// 
+///
 ///
 ///  @param[in,out] vertex_list 頂点リストの領域。
 ///  @param[in,out] tri_list	三角形ポリゴンリストの領域。
@@ -68,8 +73,8 @@ class PrivateTriangle;
 ///
 
 POLYLIB_STAT stl_a_load(
-	VertexList* vertex_list, 
-	std::vector<PrivateTriangle*>	*tri_list, 
+	VertexList* vertex_list,
+	std::vector<PrivateTriangle*>	*tri_list,
 	std::string 					fname,
 	int								*total,
 	PL_REAL							scale=1.0
@@ -84,7 +89,7 @@ POLYLIB_STAT stl_a_load(
 ///
 
 POLYLIB_STAT stl_a_save(
-	std::vector<PrivateTriangle*>	*tri_list, 
+	std::vector<PrivateTriangle*>	*tri_list,
 	std::string 					fname
 	);
 
@@ -100,7 +105,7 @@ POLYLIB_STAT stl_a_save(
 
 POLYLIB_STAT stl_b_load(
 	VertexList *vertex_list,
-	std::vector<PrivateTriangle*>	*tri_list, 
+	std::vector<PrivateTriangle*>	*tri_list,
 	std::string   fname,
 	int	*total,
 	PL_REAL	scale=1.0
@@ -115,7 +120,7 @@ POLYLIB_STAT stl_b_load(
 ///
 
 POLYLIB_STAT stl_b_save(
-	std::vector<PrivateTriangle*> *tri_list, 
+	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname
 	);
 
@@ -124,7 +129,7 @@ POLYLIB_STAT stl_b_save(
 ///
 ///  @param[in] STLファイルのフルパス名。
 ///  @return	true:アスキー形式 / false:バイナリ形式。
-/// 
+///
 bool is_stl_a(
 	std::string		path
 	);
@@ -156,4 +161,3 @@ char *stl_get_ext(
 } //namespace PolylibNS
 
 #endif  // stl_h
-

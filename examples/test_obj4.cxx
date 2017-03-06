@@ -1,13 +1,20 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
+*/
+
 #include <string>
 #include <iostream>
 #include "Polylib.h"
@@ -39,7 +46,7 @@ int main(int argc, char** argv ){
   cout<< "test 2" << endl;
 
   pl_instance->show_group_hierarchy();
- 
+
   cout<< "test 3" << endl;
 
 

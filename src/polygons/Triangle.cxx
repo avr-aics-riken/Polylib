@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 #include "polygons/Triangle.h"
 #include "common/PolylibCommon.h"
@@ -52,8 +58,8 @@ Triangle::Triangle(
 	Vertex* vertex_ptr[3]
 ) {
 
-	if(vertex_ptr[0]!=NULL && 
-		vertex_ptr[1]!=NULL && 
+	if(vertex_ptr[0]!=NULL &&
+		vertex_ptr[1]!=NULL &&
 		vertex_ptr[2]!=NULL ){
 
 			m_vertex_ptr[0] = vertex_ptr[0];
@@ -80,7 +86,7 @@ Triangle::Triangle(
 /// @attention 面積はvertexを元に自動計算される。
 ///
 Triangle::Triangle(
-	//Vec3	vertex[3], 
+	//Vec3	vertex[3],
 	Vertex* vertex_ptr[3],
 	Vec3<PL_REAL>	normal
 	) {
@@ -101,10 +107,10 @@ Triangle::Triangle(
 /// @param[in] area		ポリゴンの面積。
 ///
 Triangle::Triangle(
-	//Vec3	vertex[3], 
+	//Vec3	vertex[3],
 
 	Vertex* vertex_ptr[3],
-	Vec3<PL_REAL>	normal, 
+	Vec3<PL_REAL>	normal,
 	PL_REAL	area
 	) {
 		m_vertex_ptr[0] = vertex_ptr[0];
@@ -127,9 +133,9 @@ Triangle::Triangle(
 /// @param[in] calc_area	面積を再計算するか？
 ///
 void Triangle::set_vertexes(
-	//Vec3	vertex[3], 
+	//Vec3	vertex[3],
 	Vertex* vertex_ptr[3],
-	bool	calc_normal_bool, 
+	bool	calc_normal_bool,
 	bool	calc_area_bool
 	) {
 		m_vertex_ptr[0] = vertex_ptr[0];
@@ -240,7 +246,7 @@ void Triangle::calc_area() {
   vd[0].assign( m_vertex_ptr[0]->x, m_vertex_ptr[0]->y, m_vertex_ptr[0]->z );
   vd[1].assign( m_vertex_ptr[1]->x, m_vertex_ptr[1]->y, m_vertex_ptr[1]->z );
   vd[2].assign( m_vertex_ptr[2]->x, m_vertex_ptr[2]->y, m_vertex_ptr[2]->z );
-  
+
   Vec3<double> a = vd[1] - vd[0];
   Vec3<double> b = vd[2] - vd[0];
 
@@ -254,4 +260,3 @@ void Triangle::calc_area() {
 }
 
 } //namespace PolylibNS
-

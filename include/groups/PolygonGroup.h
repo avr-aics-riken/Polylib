@@ -1,13 +1,18 @@
-// -*- Mode: c++ -*-
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_polygongroup_h
@@ -70,7 +75,7 @@ public:
 	///  @attention TriMeshクラスのinit()参照。オーバーロードメソッドあり。
 	///
 	POLYLIB_STAT init(
-		const std::vector<PrivateTriangle*>		*tri_list, 
+		const std::vector<PrivateTriangle*>		*tri_list,
 		bool									clear = true
 		);
 
@@ -187,7 +192,7 @@ public:
 	//
 	/// PolygonGroupツリーの作成。DVertex 新規作成用
 	/// name で表されたパスにポリゴンツリーを再帰的に作成する。
-	/// 
+	///
 	///
 	///  @param[in] polylib Polygonクラスのインスタンス
 	///  @param[in] parent	親グループ
@@ -203,7 +208,7 @@ public:
 
 	//
 	/// DVertex 追加作成用
-	/// 
+	///
 	/// @param[in] nscalar スカラーデータ数
 	/// @param[in] nvector ベクターデータ数
 	///  @return	POLYLIB_STATで定義される値が返る。
@@ -213,7 +218,7 @@ public:
 
 	//
 	/// DVertex 追加作成用
-	/// 
+	///
 	/// @param[in] nscalar スカラーデータ数
 	/// @param[in] nvector ベクターデータ数
 	///  @return	POLYLIB_STATで定義される値が返る。
@@ -223,7 +228,7 @@ public:
 
 	//
 	/// DVertex 追加作成用
-	/// 
+	///
 	/// @param[in] v 頂点座標（３点）
 	///  @return	polygonへのpointer
 	///
@@ -292,7 +297,7 @@ public:
 	///  @param[in] extend		ファイル名に付加する自由文字列。
 	///  @param[in] id_format	三角形IDファイルの出力形式。
 	///  @return	POLYLIB_STATで定義される値が返る。
-	/// 
+	///
 	POLYLIB_STAT save_id_file(
 		std::string 	rank_no,
 		std::string		extend,
@@ -305,7 +310,7 @@ public:
 	/// デフォルトでは何もしない。
 	/// CarGroup.cxx の例を参照.
 	///
-	///  @param[in] pointer to TextParser 
+	///  @param[in] pointer to TextParser
 	///  @param[in] rank_no	ファイル名に付加するランク番号。
 	///  @param[in] extend	ファイル名に付加する自由文字列。
 	///  @param[in] format	STLファイルフォーマット。
@@ -341,7 +346,7 @@ public:
 	///  @attention オーバーロードメソッドあり。
 	///
 	const std::vector<PrivateTriangle*>* search(
-		BBox	*bbox, 
+		BBox	*bbox,
 		bool	every
 		) const;
 
@@ -356,8 +361,8 @@ public:
 	///  @attention オーバーロードメソッドあり。
 	///
 	POLYLIB_STAT search(
-		BBox							*bbox, 
-		bool							every, 
+		BBox							*bbox,
+		bool							every,
 		std::vector<PrivateTriangle*>	*tri_list
 		) const;
 
@@ -371,7 +376,7 @@ public:
 	///  @attention	オーバーロードメソッドあり。
 	///
 	const std::vector<PrivateTriangle*>* linear_search(
-		BBox	*bbox, 
+		BBox	*bbox,
 		bool	every
 		) const;
 
@@ -386,12 +391,12 @@ public:
 	///  @attention	オーバーロードメソッドあり。
 	///
 	POLYLIB_STAT linear_search(
-		BBox							*bbox, 
-		bool							every, 
+		BBox							*bbox,
+		bool							every,
 		std::vector<PrivateTriangle*>	*tri_list
 		) const;
 
-	/// 
+	///
 	/// KD木探索により、指定位置に最も近いポリゴンを検索する。
 	///
 	///  @param[in]     pos     指定位置
@@ -452,7 +457,7 @@ public:
 	///  @param[in] n_tri 加える三角形の数
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///  @attention TriMeshクラスのadd()参照。オーバーロードメソッドあり。
-	POLYLIB_STAT add_triangles(	
+	POLYLIB_STAT add_triangles(
 		const PL_REAL* vertlist,
 		const int* idlist,
 		const int* exidlist,
@@ -673,7 +678,7 @@ public:
 
 	///
 	/// test function for Vertex test
-	/// 
+	///
 	void print_vertex() const;
 
 	void show_bbox() const;
@@ -695,7 +700,7 @@ protected:
 
 	///
 	/// 設定ファイルから取得したPolygonGroupの情報をインスタンスにセットする。
-	/// 
+	///
 	/// "filepath" に関して、先にfilepathが複数　(filepath[0])が存在するかどうか
 	///  をチェックして、複数ならばその処理を行い、filepath の処理は終了する。
 	///  複数でないことが分かったら、filepath が単体で存在するかをチェックして、

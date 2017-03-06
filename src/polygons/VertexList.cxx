@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 
@@ -31,7 +37,7 @@ using namespace Vec3class;
 namespace PolylibNS{
 
 VertexList::VertexList(PL_REAL tolerance)
-{ 
+{
 }
 
 /// コンストラクタ
@@ -100,7 +106,7 @@ Vertex* VertexList::ith(long i) {
 	return (*m_vertex_list)[i];
 } //!< i番目Vertexを取り出す。
 
-// int ith(Vertex* vtx_ptr) const { 
+// int ith(Vertex* vtx_ptr) const {
 //   int i;
 //   for(i=0;i<this->m_vertex_list->size();++i ){
 //     if(vtx_ptr==this->m_vertex_list[i]) return i;
@@ -110,8 +116,8 @@ Vertex* VertexList::ith(long i) {
 //   return -1;
 // } //!< i番目Vertexを取り出す。
 
-long VertexList::ith(Vertex* vtx_ptr) const 
-{ 
+long VertexList::ith(Vertex* vtx_ptr) const
+{
 	long i;
 	for(i=0;i<this->m_vertex_list->size();++i ){
 		if(vtx_ptr== (*m_vertex_list)[i]) return i;
@@ -133,8 +139,8 @@ std::vector<Vertex*>::size_type VertexList::size()
 }
 
 /// bbox をVertKDTへ設定
-void VertexList::set_bbox() 
-{ 
+void VertexList::set_bbox()
+{
 	//std::cout << __func__ <<std::endl;
 	m_vkdt->set_root_bbox(m_bbox);
 	//1std::cout << __func__ <<std::endl;
@@ -146,7 +152,7 @@ BBox VertexList::get_bbox() const {
 }
 
 /// 三角形ポリゴンの面出力時、頂点の番号を取得する場合に、番号のテーブルを準備する。
-/// 
+///
 ///  後始末は index_map_clear()で行う。
 void VertexList::prepare_num_out()
 {
@@ -195,20 +201,20 @@ PL_REAL VertexList::tolerance() const {
 }
 
 ///  プリント
-void VertexList::print() const 
+void VertexList::print() const
 {
 	for(int i=0;i<this->m_vertex_list->size();++i){
 
 		Vertex& test=*(m_vertex_list->at(i));
 
-		PL_DBGOS << "VertexList "<<i 
-			<< " "<<test[AXIS_X] 
-		<< " "<<test[AXIS_Y] 
+		PL_DBGOS << "VertexList "<<i
+			<< " "<<test[AXIS_X]
+		<< " "<<test[AXIS_Y]
 		<< " "<<test[AXIS_Z] <<std::endl;;
 	}
 }
 
-// setter and getter  for tolerance  
+// setter and getter  for tolerance
 
 
 /// コンストラクタ　基準値
@@ -230,8 +236,8 @@ PL_REAL VertexList::get_tolerance(){
 
 void VertexList::vtx_clear(){
 	if(m_vertex_list->size()!=0){
-		for(std::vector<Vertex*>::iterator iter=this->m_vertex_list->begin(); 
-			iter!=this->m_vertex_list->end(); 
+		for(std::vector<Vertex*>::iterator iter=this->m_vertex_list->begin();
+			iter!=this->m_vertex_list->end();
 			++iter)
 		{
 			//std::cout <<"deleting"<<std::endl;
@@ -246,25 +252,25 @@ void VertexList::vtx_add_nocheck(Vertex* v)
 
 #ifdef  VertexListDEBUG
 	if(m_pointer_count.count(v)==0){
-		PL_DBGOSH << "VertexList::"<<__func__ << " new pointer " << v <<std::endl;    
+		PL_DBGOSH << "VertexList::"<<__func__ << " new pointer " << v <<std::endl;
 		m_pointer_count[v]=1;
 	} else {
-		PL_DBGOSH << "VertexList::"<<__func__ << " same pointer " << v << " Why?"<<std::endl;    
+		PL_DBGOSH << "VertexList::"<<__func__ << " same pointer " << v << " Why?"<<std::endl;
 		m_pointer_count[v]+=1; //why?
 	}
 #endif
 
-	//PL_DBGOSH << "VertexList::"<<__func__ << " new pointer " << v <<std::endl;    
+	//PL_DBGOSH << "VertexList::"<<__func__ << " new pointer " << v <<std::endl;
 
 	m_bbox.add( *v);
 
-	// PL_DBGOSH << "VertexList::"<<__func__ << " new pointer " 
+	// PL_DBGOSH << "VertexList::"<<__func__ << " new pointer "
 	// 	      << (*v)[0]<< " "
 	// 	      << (*v)[1]<< " "
 	// 	      << (*v)[2]<< " "
-	// 	      <<std::endl;    
+	// 	      <<std::endl;
 	m_vertex_list->push_back( v);
-	//    PL_DBGOSH << "VertexList::"<<__func__ << " new pointer " << v <<std::endl;    
+	//    PL_DBGOSH << "VertexList::"<<__func__ << " new pointer " << v <<std::endl;
 
 }
 
@@ -274,11 +280,11 @@ int VertexList::vtx_add_i(Vertex* v)
 {
 	//search same vertex point in the list.
 
-	//PL_REAL min_distance = 
+	//PL_REAL min_distance =
 	// tempolary uses __DBL_MAX__
 	//    PL_REAL min_distance=__DBL_MAX__;
 
-	PL_REAL min_distance= (sizeof(PL_REAL)==4)?FLT_MAX:DBL_MAX ;	
+	PL_REAL min_distance= (sizeof(PL_REAL)==4)?FLT_MAX:DBL_MAX ;
 
 	int index=0;
 	int isave=-1;
@@ -286,20 +292,20 @@ int VertexList::vtx_add_i(Vertex* v)
 
 
 #ifdef DEBUG
-	std::cout<< "vertex v=("<< (*v)[AXIS_X] << ", " 
-		<< (*v)[AXIS_Y] << ", " 
-		<< (*v)[AXIS_Z] << ")" 
+	std::cout<< "vertex v=("<< (*v)[AXIS_X] << ", "
+		<< (*v)[AXIS_Y] << ", "
+		<< (*v)[AXIS_Z] << ")"
 		<< " size of list "  << this->m_vertex_list->size()
 		<<std::endl;
 #endif // DEBUG
 
 	for(std::vector<Vertex*>::iterator
-		iter=this->m_vertex_list->begin();   
+		iter=this->m_vertex_list->begin();
 		iter!=this->m_vertex_list->end();
 	++iter){
 #ifdef DEBUG
-		std::cout<< "comp ("<< (*(*iter))[AXIS_X] << ", " 
-			<< (*(*iter))[AXIS_Y] << ", " 
+		std::cout<< "comp ("<< (*(*iter))[AXIS_X] << ", "
+			<< (*(*iter))[AXIS_Y] << ", "
 			<< (*(*iter))[AXIS_Z] << ")" <<std::endl;
 #endif // DEBUG
 
@@ -336,7 +342,7 @@ int VertexList::vtx_add_i(Vertex* v)
 #endif // DEBUG
 		isave=m_vertex_list->size();
 		m_vertex_list->push_back(v);
-	}   
+	}
 	return isave;
 }
 
@@ -347,14 +353,14 @@ Vertex* VertexList::vtx_add(Vertex* v)
 	int index= vtx_add_i(v);
 
 	return m_vertex_list->at(index);
- 
-} 
+
+}
 
 Vertex* VertexList::vtx_add_KDT(Vertex* v)
 {
 	//search same vertex point in the list.
 
-	//PL_REAL min_distance = 
+	//PL_REAL min_distance =
 	// tempolary uses __DBL_MAX__
 	//    PL_REAL min_distance=__DBL_MAX__;
 	//PL_REAL min_distance=1.0e107;
@@ -382,7 +388,7 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 	// std::cout << __func__ << " min " <<min<<std::endl;
 	// std::cout << __func__ << " max " <<max<<std::endl;
 
-	if( !bbox.contain(vtmp) ){ 
+	if( !bbox.contain(vtmp) ){
 		//std::cout << __func__ << " out of bbox " <<max<<std::endl;
 		// if vertex is out of BBox create KD tree again.
 		m_vertex_list->push_back(v);
@@ -391,7 +397,7 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 			newbbox.add( (Vec3<PL_REAL>) *(*m_vertex_list)[i] );
 		}
 		m_vkdt->create(newbbox,m_vertex_list );
-		return v;	   
+		return v;
 	} else {
 		//std::cout << __func__ << " in the bbox " <<max<<std::endl;
 		const Vertex* nearest=this->m_vkdt->search_nearest(vtmp);
@@ -403,16 +409,16 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 				return v;
 			} else {
 				//std::cout << __func__ << " add vertex to kdt, failed. " <<max<<std::endl;
-				PL_ERROSH 
-					<< "[ERROR]VertList::vtx_add_KDT():Can't find appropriate node" 
+				PL_ERROSH
+					<< "[ERROR]VertList::vtx_add_KDT():Can't find appropriate node"
 					<< std::endl;
-				return 0; 
+				return 0;
 			}
 		} else {
 			//std::cout << __func__ << " nearest vertex found. " <<max<<std::endl;
 			PL_REAL distance = ((Vec3<PL_REAL>) (*nearest) - (Vec3<PL_REAL>) (*v)).lengthSquared();
 			// std::cout << "nearest "<< *nearest  << " add " << *v <<std::endl;
-			// std::cout << __func__ << " check distance "<<distance 
+			// std::cout << __func__ << " check distance "<<distance
 			// 	      <<" "<< m_tolerance <<std::endl;
 			if (distance< m_tolerance_2){
 				//std::cout << __func__ << " same vertex. " <<max<<std::endl;
@@ -425,11 +431,11 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 					return v;
 				} else {
 					//std::cout << __func__ << " add vertex to kdt, failed. " <<max<<std::endl;
-					PL_ERROSH 
-						<< "[ERROR]VertList::vtx_add_KDT():Can't find appropriate node" 
+					PL_ERROSH
+						<< "[ERROR]VertList::vtx_add_KDT():Can't find appropriate node"
 						<< std::endl;
 
-					return 0; 
+					return 0;
 				}
 			}
 		}
@@ -437,13 +443,13 @@ Vertex* VertexList::vtx_add_KDT(Vertex* v)
 	}
 	std::cout <<__func__<<" end "<< *v <<std::endl;
 	// never happens...
-	return 0;   
+	return 0;
 
 }
 
 //// public //////////////////////////////////////
 
-POLYLIB_STAT 
+POLYLIB_STAT
 	VertexList::vertex_compaction(
 	std::map<Vertex*,Vertex*> *vertex_map
 	)
@@ -496,14 +502,14 @@ POLYLIB_STAT
 #endif
 				save_vtx_list->push_back(*vtx_itr);
 				(*vertex_map)[*vtx_itr]=*vtx_itr;
-				if(m_vkdt !=NULL &&  m_vkdt->add(*vtx_itr)==PLSTAT_OK){ 
+				if(m_vkdt !=NULL &&  m_vkdt->add(*vtx_itr)==PLSTAT_OK){
 #ifdef DEBUG
 					PL_DBGOSH<< __func__<< " the first time add pointer to KD tree. "<<(*vtx_itr) <<  std::endl;
 #endif
 
 				} else {
-					PL_ERROSH 
-						<< "[ERROR]VertList::vertex_compaction():Can't find appropriate node" 
+					PL_ERROSH
+						<< "[ERROR]VertList::vertex_compaction():Can't find appropriate node"
 						<< std::endl;
 					return PLSTAT_NG;
 				}
@@ -525,7 +531,7 @@ POLYLIB_STAT
 
 				if(nearest==0){
 
-					if(m_vkdt->add(*vtx_itr)==PLSTAT_OK){ 
+					if(m_vkdt->add(*vtx_itr)==PLSTAT_OK){
 						//nearest point not found. buggy??
 
 #ifdef DEBUG
@@ -535,8 +541,8 @@ POLYLIB_STAT
 						save_vtx_list->push_back(*vtx_itr);
 						(*vertex_map)[*vtx_itr]=*vtx_itr;
 					} else {
-						PL_ERROSH 
-							<< "[ERROR]VertList::vertex_compaction():Can't find appropriate node" 
+						PL_ERROSH
+							<< "[ERROR]VertList::vertex_compaction():Can't find appropriate node"
 							<< std::endl;
 						return PLSTAT_NG;
 					}
@@ -546,7 +552,7 @@ POLYLIB_STAT
 
 #ifdef DEBUG
 					PL_DBGOSH<< __func__<< " nearest point is found."<<std::endl;
-#endif  
+#endif
 					//	PL_DBGOSH<< __func__<< " nearest point is found. "<< nearest <<std::endl;
 
 					PL_REAL distance2 = ((Vec3<PL_REAL>) (*nearest) - (Vec3<PL_REAL>) *(*vtx_itr)).lengthSquared();
@@ -572,8 +578,8 @@ POLYLIB_STAT
 						(*vertex_map)[*vtx_itr]=(*vtx_itr);
 
 						if(m_vkdt->add(*vtx_itr)!=PLSTAT_OK){
-							PL_ERROSH 
-								<< "[ERROR]VertList::vertex_compaction():Can't find appropriate node" 
+							PL_ERROSH
+								<< "[ERROR]VertList::vertex_compaction():Can't find appropriate node"
 								<< std::endl;
 							return PLSTAT_NG;
 						}
@@ -587,8 +593,8 @@ POLYLIB_STAT
 
 
 #ifdef DEBUG
-	PL_DBGOSH<< __func__<< " size "<< m_vertex_list->size() 
-		<< " to "<< save_vtx_list->size() 
+	PL_DBGOSH<< __func__<< " size "<< m_vertex_list->size()
+		<< " to "<< save_vtx_list->size()
 		<< " delete "<< remove_vtx_list->size()  <<std::endl;
 #endif
 
@@ -629,13 +635,13 @@ POLYLIB_STAT
 	imap){
 		if( (*imap).second<0 ) {
 			PL_DBGOSH<< __func__<< " delete 2 times "<< (*imap).first
-				<< " " << (*imap).second 
+				<< " " << (*imap).second
 				<< std::endl;
 		} else if((*imap).second==0 ) {
 			delete ((*imap).first);
 		}
 
-	} 
+	}
 #endif
 	//#undef  VertexListDEBUG
 
@@ -650,4 +656,3 @@ POLYLIB_STAT
 
 
 } //end of namespace PolylibNS
-

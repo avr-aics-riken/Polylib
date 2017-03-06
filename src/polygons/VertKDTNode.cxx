@@ -1,3 +1,20 @@
+/*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
+*/
+
 #include "polygons/VertKDTNode.h"
 
 #include <vector>
@@ -24,17 +41,17 @@ namespace PolylibNS{
 
 ///
 /// ノードがリーフかどうか判定する。
-/// 
+///
 /// @return true=リーフ/false=リーフでない。
-///  
-bool VertKDTNode::is_leaf() const 
+///
+bool VertKDTNode::is_leaf() const
 {
 	return m_left == 0;
 }
 
 ///
 /// BBoxの値を取得
-/// 
+///
 /// @return bbox。
 ///
 BBox VertKDTNode::get_bbox() const {
@@ -43,7 +60,7 @@ BBox VertKDTNode::get_bbox() const {
 
 ///
 /// BBoxの値を設定
-/// 
+///
 /// @param[in] bbox。
 
 
@@ -77,7 +94,7 @@ void VertKDTNode::set_bbox_search(const VertKDTElem* p) {
 	//       PL_DBGOSH<<__func__<<" end"<<std::endl;
 }
 
-/// 
+///
 /// 左のNodeを取得。
 ///
 /// @return 左のNode。
@@ -158,4 +175,3 @@ void VertKDTNode::set_right_node(VertKDTNode* rnode){
 
 
 }// end of namespace PolylibNS
-

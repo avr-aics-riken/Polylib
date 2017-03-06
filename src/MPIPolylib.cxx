@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #include "MPIPolylib.h"
@@ -30,9 +36,9 @@ MPIPolylib*
 POLYLIB_STAT
 	MPIPolylib::init_parallel_info(
 	MPI_Comm comm,
-	PL_REAL bpos[3], 
-	unsigned int bbsize[3], 
-	unsigned int gcsize[3], 
+	PL_REAL bpos[3],
+	unsigned int bbsize[3],
+	unsigned int gcsize[3],
 	PL_REAL dx[3]
 )
 {
@@ -89,7 +95,7 @@ POLYLIB_STAT
 	PL_DBGOSH << "(my_rank:" << m_myrank << "):" <<"gcsize    :" << v_gcsize << std::endl;
 	PL_DBGOSH << "(my_rank:" << m_myrank << "):" <<"dx        :" << v_dx << std::endl;
 	PL_DBGOSH << "(my_rank:" << m_myrank << "):" <<"gcell_min :"
-		 << m_myproc.m_area.m_gcell_min << std::endl; 
+		 << m_myproc.m_area.m_gcell_min << std::endl;
 	PL_DBGOSH << "(my_rank:" << m_myrank << "):" <<"gcell_max :"
 	 	 << m_myproc.m_area.m_gcell_max << std::endl;
 #endif
@@ -191,10 +197,10 @@ POLYLIB_STAT
 		}
 		for (i = 0; i < 3; i++) {
 			v_bbsize[i] = recv_buf[3 + i + 12*irank];
-		} 
+		}
 		for (i = 0; i < 3; i++) {
 			v_gcsize[i] = recv_buf[6 + i + 12*irank];
-		} 
+		}
 		for (i = 0; i < 3; i++) {
 			v_dx[i]	= recv_buf[9 + i + 12*irank];
 		}
@@ -296,7 +302,7 @@ POLYLIB_STAT
 		if( (ret = this->load_polygons(false, ID_BIN, scale)) != PLSTAT_OK ) {
 			PL_ERROSH << "[ERROR]MPIPolylib::load_rank0():load_polygons() faild."
 				<<" returns:" << PolylibStat2::String(ret) << std::endl;
-			return ret; 
+			return ret;
 		}
 
 
@@ -511,7 +517,7 @@ POLYLIB_STAT
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT
-	MPIPolylib::load_parallel( 
+	MPIPolylib::load_parallel(
 	std::string config_filename,
 	ID_FORMAT	id_format
 	)
@@ -532,7 +538,7 @@ POLYLIB_STAT
 	return PLSTAT_OK;
 }
 
-// new version 
+// new version
 // public /////////////////////////////////////////////////////////////////////
 
 POLYLIB_STAT
@@ -550,7 +556,7 @@ POLYLIB_STAT
 
 	if( m_myrank == 0 ) {
 		// 他rankからポリゴン情報を受信
-		if(stl_format==TriMeshIO::FMT_VTK_A || 
+		if(stl_format==TriMeshIO::FMT_VTK_A ||
 			stl_format==TriMeshIO::FMT_VTK_B){ // VTK output
 
 #ifdef DEBUG
@@ -594,7 +600,7 @@ POLYLIB_STAT
 	else {
 
 		// rank0へポリゴン情報を送信
-		if(stl_format==TriMeshIO::FMT_VTK_A || 
+		if(stl_format==TriMeshIO::FMT_VTK_A ||
 			stl_format==TriMeshIO::FMT_VTK_B){ // VTK output
 
 				if( (ret = send_polygons_to_rank0_vtk()) != PLSTAT_OK ) {
@@ -603,7 +609,7 @@ POLYLIB_STAT
 					return ret;
 				}
 
-		} else { // nomal 
+		} else { // nomal
 
 #ifdef DEBUG
 			PL_DBGOSH << "MPIPolylib::save_rank0() send_polygons_to_rank0" << std::endl;
@@ -616,8 +622,8 @@ POLYLIB_STAT
 			} else {
 #ifdef DEBUG
 				PL_DBGOSH << "MPIPolylib::save_rank0() send_polygons_to_rank0 end rank " << m_myrank<< std::endl;
-#endif    
-			} 
+#endif
+			}
 		}
 	}
 	return PLSTAT_OK;
@@ -836,9 +842,9 @@ POLYLIB_STAT
 		PL_DBGOSH << "sending polygons rank:" << m_myrank <<  "->rank:"
 			<< (*procs_itr)->m_rank << " ";
 		for( i=0; i< send_num_trias.size(); i+=2 ) {
-			PL_DBGOS << "(gid:" << send_num_trias[i] 
+			PL_DBGOS << "(gid:" << send_num_trias[i]
 			<< ",num_tria:" << send_num_trias[i+1] << ")";
-			PL_DBGOS << " (gid:" << p_send_num_trias_array[i] 
+			PL_DBGOS << " (gid:" << p_send_num_trias_array[i]
 			<< ",num_tria:" << p_send_num_trias_array[i+1] << ")";
 
 		}
@@ -941,7 +947,7 @@ POLYLIB_STAT
 		PL_DBGOSH << "receiving polygons rank:" << (*procs_itr)->m_rank
 			<<  "->rank:" << m_myrank << " ";
 		for( i=0; i< this->m_pg_list.size()*2-1; i+=2 ) {
-			PL_DBGOS << "(gid:" << p_intarray[i] 
+			PL_DBGOS << "(gid:" << p_intarray[i]
 			<< ",num_tria:" << p_intarray[i+1] << ")";
 		}
 		PL_DBGOS << std::endl;
@@ -1020,7 +1026,7 @@ POLYLIB_STAT
 				// 	 for (int ii=0;ii<total_tria_num*3*3;++ii){
 				// 	   PL_DBGOSH << ii<< " " << p_triaarray[ii]<<std::endl;
 				//}
-				// #endif	   
+				// #endif
 			}
 		} else  if(sizeof(PL_REAL)==8){
 			if (MPI_Irecv( p_triaarray, total_tria_num*3*3, MPI_DOUBLE, (*procs_itr)->m_rank,
@@ -1054,7 +1060,7 @@ POLYLIB_STAT
 			PL_DBGOSH << "receive finish waiting ...2" << std::endl;
 
 #endif
-		} 
+		}
 
 #ifdef DEBUG
 		PL_DBGOSH << "receive p_triaarray" << std::endl;
@@ -1120,7 +1126,7 @@ POLYLIB_STAT
 				PL_DBGOSH << pos_tria+8 << " " << p_triaarray[pos_tria+8] <<std::endl;
 				PL_DBGOSH << &tria_vec << std::endl;
 #endif //DEBUG
-				// add vertex first 
+				// add vertex first
 				// vertex compaction performed later.
 
 				Vertex* vertex_ptr[3];
@@ -1146,7 +1152,7 @@ POLYLIB_STAT
 
 #ifdef DEBUG
 				PL_DBGOSH << "adding trinagles to tria_vec."<<std::endl;
-#endif	   
+#endif
 				pos_id++;
 				pos_exid++;
 				pos_tria+=9;
@@ -1222,7 +1228,7 @@ POLYLIB_STAT
 
 	// 自PE領域外ポリゴン情報を消去
 	if( erase_outbounded_polygons() != PLSTAT_OK ) {
-		PL_ERROSH << "[ERROR]MPIPolylib::migrate():erace_outbounded_polygons() failed." << std::endl; 
+		PL_ERROSH << "[ERROR]MPIPolylib::migrate():erace_outbounded_polygons() failed." << std::endl;
 	}
 
 	// 後始末 2010.08.24
@@ -1266,7 +1272,7 @@ unsigned int MPIPolylib::used_memory_size()
 	// 自PE担当領域情報
 	size += sizeof(ParallelInfo);
 	size += m_myproc.m_exclusion_map.size() * (sizeof(int)+sizeof(std::vector<int>));
-	for (ex = m_myproc.m_exclusion_map.begin(); 
+	for (ex = m_myproc.m_exclusion_map.begin();
 		ex != m_myproc.m_exclusion_map.end(); ex++) {
 			size += ex->second.size() * sizeof(int);
 	}
@@ -1276,7 +1282,7 @@ unsigned int MPIPolylib::used_memory_size()
 	for (pi = m_other_procs.begin(); pi != m_other_procs.end(); pi++) {
 		size += sizeof(ParallelInfo);
 		size += (*pi)->m_exclusion_map.size() * (sizeof(int)+sizeof(std::vector<int>));
-		for (ex = (*pi)->m_exclusion_map.begin(); 
+		for (ex = (*pi)->m_exclusion_map.begin();
 			ex != (*pi)->m_exclusion_map.end(); ex++) {
 				size += ex->second.size() * sizeof(int);
 		}
@@ -1451,7 +1457,7 @@ POLYLIB_STAT
 #ifdef DEBUG
 		PL_DBGOSH << "sending polygons rank:0->rank:" << (*proc_itr)->m_rank << " ";
 		for( i=0; i< send_num_trias.size(); i+=2 ) {
-			PL_DBGOS << "(gid:" << send_num_trias[i] 
+			PL_DBGOS << "(gid:" << send_num_trias[i]
 			<< ",num_tria:" << send_num_trias[i+1] << ")";
 		}
 		PL_DBGOS << std::endl;
@@ -1878,7 +1884,7 @@ POLYLIB_STAT
 	// グループIDとグループ毎三角形数の対をrank0から受信
 	// グループ情報は配信済みなので、グループ数は予め分かっている
 	int *p_intarray = new int[ this->m_pg_list.size() * 2 ];
-	if (MPI_Recv( p_intarray, this->m_pg_list.size() * 2, MPI_INT, 0, 
+	if (MPI_Recv( p_intarray, this->m_pg_list.size() * 2, MPI_INT, 0,
 		MPITAG_NUM_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 			PL_ERROSH << "[ERROR]MPIPolylib::receive_polygons_from_rank0()"
 				<< ":MPI_Recv,MPITAG_NUM_TRIAS faild." << std::endl;
@@ -1888,7 +1894,7 @@ POLYLIB_STAT
 	PL_DBGOSH << "    pintarray:(";
 	for( i=0; i< this->m_pg_list.size()*2; i++ ) {
 		PL_DBGOS << p_intarray[i] << ",";
-	} 
+	}
 	PL_DBGOS << ")" << std::endl;
 #endif
 
@@ -1902,7 +1908,7 @@ POLYLIB_STAT
 #endif
 	// 三角形IDリストをrank0から受信
 	int *p_idarray = new int[ total_tria_num ];
-	if (MPI_Recv( p_idarray,  total_tria_num, MPI_INT, 0, 
+	if (MPI_Recv( p_idarray,  total_tria_num, MPI_INT, 0,
 		MPITAG_TRIA_IDS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 			PL_ERROSH << "[ERROR]MPIPolylib::receive_polygons_from_rank0()"
 				<< ":MPI_Recv,MPITAG_TRIA_IDS faild." << std::endl;
@@ -1918,7 +1924,7 @@ POLYLIB_STAT
 
 	// 三角形のユーザ定義IDリストをrank0から受信
 	int *p_exidarray = new int[ total_tria_num ];
-	if (MPI_Recv( p_exidarray,  total_tria_num, MPI_INT, 0, 
+	if (MPI_Recv( p_exidarray,  total_tria_num, MPI_INT, 0,
 		MPITAG_TRIA_EXIDS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 			PL_ERROSH << "[ERROR]MPIPolylib::receive_polygons_from_rank0()"
 				<< ":MPI_Recv,MPITAG_TRIA_EXIDS faild." << std::endl;
@@ -1937,7 +1943,7 @@ POLYLIB_STAT
 
 	if(sizeof(PL_REAL)==4){
 		//PL_DBGOSH << "MPIPolylib::"<<__func__<<" float"<<std::endl;
-		if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, 0, 
+		if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, 0,
 			MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 				PL_ERROSH << "[ERROR]MPIPolylib::receive_polygons_from_rank0()"
 					<< ":MPI_Recv,MPITAG_TRIAS faild." << std::endl;
@@ -1945,7 +1951,7 @@ POLYLIB_STAT
 		}
 	} else  if(sizeof(PL_REAL)==8){
 		//PL_DBGOSH << "MPIPolylib::"<<__func__<<" double 1"<<std::endl;
-		if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, 0, 
+		if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, 0,
 			MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 
 				PL_ERROSH << "[ERROR]MPIPolylib::receive_polygons_from_rank0()"
@@ -2064,10 +2070,10 @@ POLYLIB_STAT
 			// グループIDとグループ毎三角形数の対を受信
 			// グループ情報は全rank共通なので、グループ数は予め分かっている
 			int *p_intarray = new int[ this->m_pg_list.size() * 2 ];
-			if (MPI_Recv( p_intarray, this->m_pg_list.size() * 2, MPI_INT, rank, 
+			if (MPI_Recv( p_intarray, this->m_pg_list.size() * 2, MPI_INT, rank,
 				MPITAG_NUM_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
-						<< ":MPI_Recv,MPITAG_NUM_TRIAS faild.:rank=" << rank 
+						<< ":MPI_Recv,MPITAG_NUM_TRIAS faild.:rank=" << rank
 						<< std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
@@ -2085,10 +2091,10 @@ POLYLIB_STAT
 
 			// 三角形IDリストを受信
 			int *p_idarray = new int[ total_tria_num ];
-			if (MPI_Recv( p_idarray,  total_tria_num, MPI_INT, rank, 
+			if (MPI_Recv( p_idarray,  total_tria_num, MPI_INT, rank,
 				MPITAG_TRIA_IDS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
-						<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank 
+						<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank
 						<< std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
@@ -2098,10 +2104,10 @@ POLYLIB_STAT
 
 			// 三角形のユーザ定義IDリストを受信
 			int *p_exidarray = new int[ total_tria_num ];
-			if (MPI_Recv( p_exidarray,  total_tria_num, MPI_INT, rank, 
+			if (MPI_Recv( p_exidarray,  total_tria_num, MPI_INT, rank,
 				MPITAG_TRIA_EXIDS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
-						<< ":MPI_Recv,MPITAG_TRIA_EXIDS faild.:rank=" << rank 
+						<< ":MPI_Recv,MPITAG_TRIA_EXIDS faild.:rank=" << rank
 						<< std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
@@ -2113,24 +2119,24 @@ POLYLIB_STAT
 			PL_REAL *p_triaarray = new PL_REAL[ total_tria_num * 3 * 3 ];
 
 			if(sizeof(PL_REAL)==4){
-				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, rank, 
+				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, rank,
 					MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
-							<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank 
+							<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
 			} else if(sizeof(PL_REAL)==8){
-				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, rank, 
+				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, rank,
 					MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS)  {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
-							<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank 
+							<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
 			} else {
 				PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons()"
-					<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank 
+					<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank
 					<< std::endl;
 				return PLSTAT_MPI_ERROR;
 
@@ -2180,7 +2186,7 @@ POLYLIB_STAT
 
 				//ポリゴングループに三角形リストを追加
 				if( p_pg->add_triangles( p_triaarray, p_idarray, p_exidarray, n_start_tri,n_start_id,n_start_exid,num_trias ) != PLSTAT_OK ) {
-					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons():p_pg->add() failed. returns:" 
+					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons():p_pg->add() failed. returns:"
 						<< PolylibStat2::String(ret) << std::endl;
 					return ret;
 
@@ -2266,10 +2272,10 @@ POLYLIB_STAT
 			// グループIDとグループ毎三角形数の対を受信
 			// グループ情報は全rank共通なので、グループ数は予め分かっている
 			int *p_intarray = new int[ this->m_pg_list.size() * 2 ];
-			if (MPI_Recv( p_intarray, this->m_pg_list.size() * 2, MPI_INT, rank, 
+			if (MPI_Recv( p_intarray, this->m_pg_list.size() * 2, MPI_INT, rank,
 				MPITAG_NUM_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-						<< ":MPI_Recv,MPITAG_NUM_TRIAS faild.:rank=" << rank 
+						<< ":MPI_Recv,MPITAG_NUM_TRIAS faild.:rank=" << rank
 						<< std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
@@ -2291,10 +2297,10 @@ POLYLIB_STAT
 
 			// 三角形IDリストを受信
 			int *p_idarray = new int[ total_tria_num ];
-			if (MPI_Recv( p_idarray,  total_tria_num, MPI_INT, rank, 
+			if (MPI_Recv( p_idarray,  total_tria_num, MPI_INT, rank,
 				MPITAG_TRIA_IDS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-						<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank 
+						<< ":MPI_Recv,MPITAG_TRIA_IDS faild.:rank=" << rank
 						<< std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
@@ -2306,10 +2312,10 @@ POLYLIB_STAT
 
 			// 三角形のユーザ定義IDリストを受信
 			int *p_exidarray = new int[ total_tria_num ];
-			if (MPI_Recv( p_exidarray,  total_tria_num, MPI_INT, rank, 
+			if (MPI_Recv( p_exidarray,  total_tria_num, MPI_INT, rank,
 				MPITAG_TRIA_EXIDS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-						<< ":MPI_Recv,MPITAG_TRIA_EXIDS faild.:rank=" << rank 
+						<< ":MPI_Recv,MPITAG_TRIA_EXIDS faild.:rank=" << rank
 						<< std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
@@ -2329,24 +2335,24 @@ POLYLIB_STAT
 #endif
 
 			if(sizeof(PL_REAL)==4){
-				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, rank, 
+				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_FLOAT, rank,
 					MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-							<< ":MPI_Recv,MPITAG_TRIAS faild.:rank=" << rank 
+							<< ":MPI_Recv,MPITAG_TRIAS faild.:rank=" << rank
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
 			} else if(sizeof(PL_REAL)==8){
-				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, rank, 
+				if (MPI_Recv( p_triaarray, total_tria_num * 3 * 3, MPI_DOUBLE, rank,
 					MPITAG_TRIAS, m_mycomm, &mpi_stat ) != MPI_SUCCESS)  {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-							<< ":MPI_Recv,MPITAG_TRIAS faild.:rank=" << rank 
+							<< ":MPI_Recv,MPITAG_TRIAS faild.:rank=" << rank
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
 			} else {
 				PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-					<< ":MPI_Recv,MPITAG_TRIAS faild.:rank=" << rank 
+					<< ":MPI_Recv,MPITAG_TRIAS faild.:rank=" << rank
 					<< std::endl;
 				return PLSTAT_MPI_ERROR;
 
@@ -2357,7 +2363,7 @@ POLYLIB_STAT
 			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIAS. " << std::endl;
 #endif
 
-			// DVertex 
+			// DVertex
 			//ndata,nvectorを受信
 			int *p_ndata_array = new int[ this->m_pg_list.size() * 2 ];
 
@@ -2365,15 +2371,15 @@ POLYLIB_STAT
 
 #ifdef DEBUG
 			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. before" << std::endl;
-			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. size " 
+			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. size "
 				<< this->m_pg_list.size() * 2 << std::endl;
 #endif
 
 
-			if (MPI_Recv( p_ndata_array, this->m_pg_list.size() * 2 , MPI_INT, rank, 
+			if (MPI_Recv( p_ndata_array, this->m_pg_list.size() * 2 , MPI_INT, rank,
 				MPITAG_TRIA_NDATA, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 					PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-						<< ":MPI_Recv,MPITAG_TRIA_NDATA faild.:rank=" << rank 
+						<< ":MPI_Recv,MPITAG_TRIA_NDATA faild.:rank=" << rank
 						<< std::endl;
 					return PLSTAT_MPI_ERROR;
 			}
@@ -2381,10 +2387,10 @@ POLYLIB_STAT
 
 #ifdef DEBUG
 			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. " << std::endl;
-			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. p_ndata_array[0] " << p_ndata_array[0] << std::endl;	
+			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. p_ndata_array[0] " << p_ndata_array[0] << std::endl;
 			PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. p_ndata_array[1] " << p_ndata_array[1] << std::endl;
-			//	PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. p_ndata_array[2] " << p_ndata_array[2] << std::endl;	
-			//	PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. p_ndata_array[3] " << p_ndata_array[3] << std::endl;	
+			//	PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. p_ndata_array[2] " << p_ndata_array[2] << std::endl;
+			//	PL_DBGOSH << "MPIPolylib::gather_polygons_vtk() MPITAG_TRIA_NDATA. p_ndata_array[3] " << p_ndata_array[3] << std::endl;
 #endif
 
 
@@ -2422,24 +2428,24 @@ POLYLIB_STAT
 #endif
 
 			if(sizeof(PL_REAL)==4){
-				if (MPI_Recv( p_tria_scalar_array, total_tria_nscalar, MPI_FLOAT, rank, 
+				if (MPI_Recv( p_tria_scalar_array, total_tria_nscalar, MPI_FLOAT, rank,
 					MPITAG_TRIA_SCALAR, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-							<< ":MPI_Recv,MPITAG_TRIA_SCALAR faild.:rank=" << rank 
+							<< ":MPI_Recv,MPITAG_TRIA_SCALAR faild.:rank=" << rank
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
 			} else if(sizeof(PL_REAL)==8){
-				if (MPI_Recv( p_tria_scalar_array, total_tria_nscalar, MPI_DOUBLE, rank, 
+				if (MPI_Recv( p_tria_scalar_array, total_tria_nscalar, MPI_DOUBLE, rank,
 					MPITAG_TRIA_SCALAR, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-							<< ":MPI_Recv,MPITAG_TRIA_SCALAR faild.:rank=" << rank 
+							<< ":MPI_Recv,MPITAG_TRIA_SCALAR faild.:rank=" << rank
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
 			} else {
 				PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-					<< ":MPI_Recv,MPITAG_TRIA_SCALAR faild.:rank=" << rank 
+					<< ":MPI_Recv,MPITAG_TRIA_SCALAR faild.:rank=" << rank
 					<< std::endl;
 				return PLSTAT_MPI_ERROR;
 
@@ -2461,24 +2467,24 @@ POLYLIB_STAT
 
 
 			if(sizeof(PL_REAL)==4){
-				if (MPI_Recv( p_tria_vector_array, total_tria_nvector, MPI_FLOAT, rank, 
+				if (MPI_Recv( p_tria_vector_array, total_tria_nvector, MPI_FLOAT, rank,
 					MPITAG_TRIA_VECTOR, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-							<< ":MPI_Recv,MPITAG_TRIA_VECTOR faild.:rank=" << rank 
+							<< ":MPI_Recv,MPITAG_TRIA_VECTOR faild.:rank=" << rank
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
 			} else if(sizeof(PL_REAL)==8){
-				if (MPI_Recv( p_tria_vector_array, total_tria_nvector, MPI_DOUBLE, rank, 
+				if (MPI_Recv( p_tria_vector_array, total_tria_nvector, MPI_DOUBLE, rank,
 					MPITAG_TRIA_VECTOR, m_mycomm, &mpi_stat ) != MPI_SUCCESS) {
 						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-							<< ":MPI_Recv,MPITAG_TRIA_VECTOR faild.:rank=" << rank 
+							<< ":MPI_Recv,MPITAG_TRIA_VECTOR faild.:rank=" << rank
 							<< std::endl;
 						return PLSTAT_MPI_ERROR;
 				}
 			} else {
 				PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk()"
-					<< ":MPI_Recv,MPITAG_TRIA_VECTOR faild.:rank=" << rank 
+					<< ":MPI_Recv,MPITAG_TRIA_VECTOR faild.:rank=" << rank
 					<< std::endl;
 				return PLSTAT_MPI_ERROR;
 
@@ -2534,7 +2540,7 @@ POLYLIB_STAT
 
 				//ポリゴングループに三角形リストを追加
 				// if( p_pg->init( p_triaarray, p_idarray, n_start_tri,n_start_id,num_trias ) != PLSTAT_OK ) {
-				//   PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk():p_pg->add() failed. returns:" 
+				//   PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk():p_pg->add() failed. returns:"
 				// 	    << PolylibStat2::String(ret) << std::endl;
 				// 	return ret;
 				// }
@@ -2553,7 +2559,7 @@ POLYLIB_STAT
 				if( p_pg->add_dvertex( p_triaarray, p_idarray, p_exidarray, p_tria_scalar_array ,p_tria_vector_array,
 					n_start_tri,n_start_id,n_start_exid,n_start_scalar,n_start_vector,
 					num_trias,num_scalar,num_vector ) != PLSTAT_OK ) {
-						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk():p_pg->add() failed. returns:" 
+						PL_ERROSH << "[ERROR]MPIPolylib::gather_polygons_vtk():p_pg->add() failed. returns:"
 							<< PolylibStat2::String(ret) << std::endl;
 						return ret;
 				}
@@ -2677,7 +2683,7 @@ POLYLIB_STAT
 #ifdef DEBUG
 		PL_DBGOSH << "sending polygons rank:" << m_myrank << " -> rank:0 ";
 		for( i=0; i< send_num_trias.size(); i+=2 ) {
-			PL_DBGOS << "(gid:" << send_num_trias[i] 
+			PL_DBGOS << "(gid:" << send_num_trias[i]
 			<< ",num_tria:" << send_num_trias[i+1] << ")";
 		}
 		PL_DBGOS << std::endl;
@@ -2821,7 +2827,7 @@ POLYLIB_STAT
 				pack_tria_scalar_data(&send_tria_scalar, p_trias );
 
 				//vector data
-				pack_tria_vector_data(&send_tria_vector, p_trias );	  
+				pack_tria_vector_data(&send_tria_vector, p_trias );
 				// search結果の後始末
 				if( p_trias ) delete p_trias;
 				p_trias = NULL;
@@ -2867,7 +2873,7 @@ POLYLIB_STAT
 #ifdef DEBUG
 		PL_DBGOSH << "sending polygons rank:" << m_myrank << " -> rank:0 ";
 		for( i=0; i< send_num_trias.size(); i+=2 ) {
-			PL_DBGOS << "(gid:" << send_num_trias[i] 
+			PL_DBGOS << "(gid:" << send_num_trias[i]
 			<< ",num_tria:" << send_num_trias[i+1] << ")";
 		}
 		PL_DBGOS << std::endl;
@@ -2915,7 +2921,7 @@ POLYLIB_STAT
 		//nscalar and nvector
 		if (MPI_Send( p_send_tria_ndata_array,
 			send_tria_ndata.size(),
-			MPI_INT, 0, 
+			MPI_INT, 0,
 			MPITAG_TRIA_NDATA, m_mycomm ) != MPI_SUCCESS) {
 				PL_ERROSH << "[ERROR]MPIPolylib::send_polygons_to_rank0_vtk()"
 					<< ":MPI_Send,MPITAG_TRIAS faild." << std::endl;
@@ -3030,8 +3036,8 @@ POLYLIB_STAT
 	MPIPolylib::load(
 	std::string config_filename
 	)
-{ 
-	return PLSTAT_NG; 
+{
+	return PLSTAT_NG;
 }
 
 
@@ -3046,8 +3052,8 @@ POLYLIB_STAT
 	MPIPolylib::save(
 	std::string *p_config_filename
 	)
-{ 
-	return PLSTAT_NG; 
+{
+	return PLSTAT_NG;
 }
 
 ///
@@ -3055,9 +3061,8 @@ POLYLIB_STAT
 /// @return 自PE領域情報
 ///
 ParallelInfo MPIPolylib::get_myproc()
-{ 
-	return m_myproc; 
+{
+	return m_myproc;
 }
 
 } //namespace PolylibNS
-

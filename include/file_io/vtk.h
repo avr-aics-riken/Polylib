@@ -1,13 +1,18 @@
-// -*- Mode: c++ -*- 
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_vtk_h
@@ -29,7 +34,7 @@
 
 #include "file_io/stl.h"
 
-#if HAVE_STRING_H 
+#if HAVE_STRING_H
 #include <string.h>
 #else
 // write some code here
@@ -37,9 +42,9 @@
 
 namespace PolylibNS {
 
-/// 
+///
 /// VertexList, tri_listにから vtkアスキー形式に出力する。
-/// 
+///
 ///
 ///  @param[in] vertex_list 頂点リストの領域。
 ///  @param[in] tri_list　三角形ポリゴンリストの領域。
@@ -50,12 +55,12 @@ namespace PolylibNS {
 
 
 POLYLIB_STAT vtk_a_save(
-	VertexList* vertex_list, 
+	VertexList* vertex_list,
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname
 	);
 
-/// 
+///
 /// VertexList, tri_listにから vtkバイナリ形式に出力する。
 ///
 ///  @param[in] vertex_list 頂点リストの領域。
@@ -64,11 +69,11 @@ POLYLIB_STAT vtk_a_save(
 ///
 ///  PL_REAL は、頂点データの実数型
 ///  DT は、頂点データに付随するスカラーデータの型
-///  
+///
 
 
 POLYLIB_STAT vtk_b_save(
-	VertexList* vertex_list, 
+	VertexList* vertex_list,
 	std::vector<PrivateTriangle*> *tri_list,
 	std::string fname
 	);

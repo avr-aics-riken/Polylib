@@ -1,13 +1,18 @@
-// -*- Mode:c++ -*-
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_dvertex_h
@@ -29,9 +34,9 @@ namespace PolylibNS{
 ////////////////////////////////////////////////////////////////////////////
 ///
 /// クラス:DVertex
-///   polygon の頂点クラス。 
+///   polygon の頂点クラス。
 ///   Vertex   クラスを継承　任意の実数型のスカラーデータを保持できる。
-/// 
+///
 ///
 ////////////////////////////////////////////////////////////////////////////
 
@@ -113,11 +118,11 @@ public:
 
 
 	~DVertex(){
-		if(m_scalar!=NULL){ 
+		if(m_scalar!=NULL){
 			delete[] m_scalar;
 			m_scalar=NULL;
 		}
-		if(m_vector!=NULL){ 
+		if(m_vector!=NULL){
 			for(int i=0;i<DVM_ptr->nvector();++i){
 				delete (*m_vector)[i];
 			}
@@ -168,7 +173,7 @@ public:
 
 
 	void set_vector(const int i, const Vec3<PL_REAL> vec){
-		// PL_DBGOSH << " "<< i<< " " << vec << " " 
+		// PL_DBGOSH << " "<< i<< " " << vec << " "
 		// 		<< DVM_ptr->nvector() <<std::endl;
 
 		if(i>=DVM_ptr->nvector()){
@@ -196,7 +201,7 @@ public:
 		}
 	}
 
-	DVertexManager* DVM(){return DVM_ptr;}  
+	DVertexManager* DVM(){return DVM_ptr;}
 
 };
 

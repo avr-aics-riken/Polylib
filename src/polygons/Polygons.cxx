@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #include "polygons/Polygons.h"
@@ -63,7 +69,7 @@ POLYLIB_STAT Polygons::prepare_DVertex(int nscalar,int nvector){
 
 //
 /// DVertex 追加作成用
-/// 
+///
 /// @param[in] v 頂点座標（３点）
 ///  @return    polygonへのpointer
 ///
@@ -84,7 +90,7 @@ DVertexTriangle* Polygons::add_DVertex_Triangle(Vec3<PL_REAL>* v){
 
 //
 /// DVertex 追加作成後の重複頂点削除
-/// 
+///
 ///
 
 void Polygons::finalize_DVertex(){
@@ -131,9 +137,9 @@ void Polygons::print_vertex(){
 		//	  std::cout << __func__ << " begin"<<std::endl;
 		Vertex test=*((*vl_ptr)[i]);
 		//	  std::cout << __func__ << " begin"<<std::endl;
-		PL_DBGOS << __func__ <<" VertexList "<<i 
-			<< " "<<test[AXIS_X] 
-		<< " "<<test[AXIS_Y] 
+		PL_DBGOS << __func__ <<" VertexList "<<i
+			<< " "<<test[AXIS_X]
+		<< " "<<test[AXIS_Y]
 		<< " "<<test[AXIS_Z] <<std::endl;;
 	}
 

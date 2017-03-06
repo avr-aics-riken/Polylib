@@ -1,13 +1,18 @@
-/* -- Mode: c++ --*/
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #include "file_io/triangle_id.h"
@@ -23,7 +28,7 @@ namespace PolylibNS {
 // 変更:ポリゴンIDのバイナリ入力対応 2010.10.19
 
 POLYLIB_STAT load_id(
-	std::vector<PrivateTriangle*>* tri_list, 
+	std::vector<PrivateTriangle*>* tri_list,
 	std::string fname,
 	ID_FORMAT id_format
 	) {
@@ -68,13 +73,13 @@ POLYLIB_STAT load_id(
 
 		// ポリゴン数とIDファイルの行数が一致しているか?
 		if (itr != tri_list->end()) {
-			PL_ERROSH << "[ERROR]triangle_id::load_id():ID number is short:" 
+			PL_ERROSH << "[ERROR]triangle_id::load_id():ID number is short:"
 				<< fname << std::endl;
 			return PLSTAT_STL_IO_ERROR;
 		}
 
 		if (!is.eof() && is.fail()) {
-			PL_ERROSH << "[ERROR]triangle_id:load_id():Error in loading:" 
+			PL_ERROSH << "[ERROR]triangle_id:load_id():Error in loading:"
 				<< fname << std::endl;
 			return PLSTAT_STL_IO_ERROR;
 		}
@@ -86,7 +91,7 @@ POLYLIB_STAT load_id(
 // 変更:ポリゴンIDのバイナリ出力対応 2010.10.19
 
 POLYLIB_STAT save_id(
-	std::vector<PrivateTriangle*>	*tri_list, 
+	std::vector<PrivateTriangle*>	*tri_list,
 	std::string 				fname,
 	ID_FORMAT			id_format
 	) {
@@ -114,7 +119,7 @@ POLYLIB_STAT save_id(
 		}
 
 		if (!os.eof() && os.fail()) {
-			PL_ERROSH << "[ERROR]triangle_id:save_id():Error in saving:" 
+			PL_ERROSH << "[ERROR]triangle_id:save_id():Error in saving:"
 				<< fname << std::endl;
 			return PLSTAT_STL_IO_ERROR;
 		}
@@ -127,5 +132,3 @@ POLYLIB_STAT save_id(
 
 
 } //namespace PolylibNS
-
-

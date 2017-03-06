@@ -1,0 +1,5 @@
+Polylib{
+	cube{
+		filepath="data/cube.obj"
+	}
+} // end of Polylib

@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_polygons_h
@@ -208,7 +214,7 @@ public:
 
 	///
 	/// Polygonsクラスで保持する三角形ポリゴンの総数を返す。
-	/// 
+	///
 	///  @return 三角形ポリゴンの総数。
 	///
 	virtual int triangles_num() = 0;
@@ -224,7 +230,7 @@ public:
 	///  @attention オーバーロードメソッドあり。
 	///
 	virtual const std::vector<PrivateTriangle*>* search(
-		BBox	*bbox, 
+		BBox	*bbox,
 		bool	every
 		) const = 0;
 
@@ -239,8 +245,8 @@ public:
 	///  @attention オーバーロードメソッドあり。
 	///
 	virtual POLYLIB_STAT search(
-		BBox							*bbox, 
-		bool							every, 
+		BBox							*bbox,
+		bool							every,
 		std::vector<PrivateTriangle*>	*tri_list
 		) const = 0;
 
@@ -255,7 +261,7 @@ public:
 	///  @attention オーバーロードメソッドあり。
 	///
 	virtual const std::vector<PrivateTriangle*>* linear_search(
-		BBox	*bbox, 
+		BBox	*bbox,
 		bool	every
 		) const = 0;
 
@@ -270,8 +276,8 @@ public:
 	///  @attention オーバーロードメソッドあり。
 	///
 	virtual POLYLIB_STAT linear_search(
-		BBox							*bbox, 
-		bool							every, 
+		BBox							*bbox,
+		bool							every,
 		std::vector<PrivateTriangle*>	*tri_list
 		) const = 0;
 
@@ -310,7 +316,7 @@ public:
 
 	//
 	/// DVertex 追加作成用
-	/// 
+	///
 	/// @param[in] v 頂点座標（３点）
 	///  @return    polygonへのpointer
 	///
@@ -319,7 +325,7 @@ public:
 
 	//
 	/// DVertex 追加作成後の重複頂点削除
-	/// 
+	///
 	///
 
 	virtual void finalize_DVertex();

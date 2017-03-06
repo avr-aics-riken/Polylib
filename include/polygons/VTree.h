@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #ifndef polylib_vtree_h
@@ -44,8 +50,8 @@ public:
 	/// @param[in] tri_list	木構造の元になるポリゴンのリスト。
 	///
 	VTree(
-		int			max_elem, 
-		const BBox			bbox, 
+		int			max_elem,
+		const BBox			bbox,
 		std::vector<PrivateTriangle*>	*tri_list
 		);
 
@@ -70,7 +76,7 @@ public:
 	///  @attention	オーバーロードメソッドあり。
 
 	std::vector<PrivateTriangle*>* search(
-		BBox	*bbox, 
+		BBox	*bbox,
 		bool	every
 		) const;
 
@@ -85,8 +91,8 @@ public:
 	///  @attention	オーバーロードメソッドあり。
 	///
 	POLYLIB_STAT search(
-		BBox *bbox, 
-		bool	every, 
+		BBox *bbox,
+		bool	every,
 		std::vector<PrivateTriangle*>	*tri_list
 		) const;
 
@@ -108,7 +114,7 @@ public:
 	///  @return    検索されたポリゴン
 	///
 	const PrivateTriangle* search_nearest_recursive(
-		VNode       *vn, 
+		VNode       *vn,
 		const Vec3<PL_REAL>&    pos
 		) const;
 
@@ -128,8 +134,8 @@ private:
 	///  @param[in,out]	vnode	検索結果。
 	///
 	void traverse(
-		VNode		*vn, 
-		VElement	*elm, 
+		VNode		*vn,
+		VElement	*elm,
 		VNode		**vnode
 		) const;
 
@@ -143,9 +149,9 @@ private:
 	///  @param[in,out]	vlist	検索結果配列へのポインタ。
 	///
 	void search_recursive(
-		VNode					*vn, 
-		const BBox				&bbox, 
-		bool					every, 
+		VNode					*vn,
+		const BBox				&bbox,
+		bool					every,
 		std::vector<VElement*>	*vlist
 		) const;
 
@@ -158,8 +164,8 @@ private:
 	///  @return	POLYLIB_STATで定義される値が返る。
 	///
 	POLYLIB_STAT create(
-		int					max_elem, 
-		const BBox				bbox, 
+		int					max_elem,
+		const BBox				bbox,
 		std::vector<PrivateTriangle*>	*tri_list
 		);
 
@@ -171,8 +177,8 @@ private:
 	///  @param[out] poly_cnt	ポリゴン数。
 	///
 	void node_count(
-		VNode	*vnode, 
-		unsigned int	*node_cnt, 
+		VNode	*vnode,
+		unsigned int	*node_cnt,
 		unsigned int	*poly_cnt
 		);
 
@@ -193,4 +199,3 @@ private:
 }
 
 #endif  // vtree_h
-

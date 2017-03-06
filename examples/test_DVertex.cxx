@@ -1,13 +1,20 @@
 /*
- * Polylib - Polygon Management Library
- *
- * Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
- * All rights reserved.
- *
- * Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
- * All rights reserved.
- *
- */
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
+*/
+
 #include <string>
 #include <typeinfo>
 #include <iostream>
@@ -16,8 +23,6 @@
 using namespace std;
 using namespace PolylibNS;
 
-#define PL_REAL double
-//#define PL_REAL float
 int main(){
 
   cout<< "test 0" << endl;
@@ -50,7 +55,7 @@ int main(){
 
   pl_instance->show_group_hierarchy();
   pgname="DV/byhand";
-  Vec3 vlist[3];
+  Vec3<PL_REAL> vlist[3];
 
   for (int itri=0;itri<2;itri++){
     if(itri==0){

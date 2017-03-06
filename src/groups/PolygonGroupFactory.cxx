@@ -1,12 +1,18 @@
 /*
-* Polylib - Polygon Management Library
-*
-* Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
-* All rights reserved.
-*
-* Copyright (c) 2012-2015 Advanced Institute for Computational Science, RIKEN.
-* All rights reserved.
-*
+###################################################################################
+#
+# Polylib - Polygon Management Library
+#
+# Copyright (c) 2010-2011 VCAD System Research Program, RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
+# All rights reserved.
+#
+# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# All rights reserved.
+#
+###################################################################################
 */
 
 #include "groups/PolygonGroupFactory.h"
@@ -17,14 +23,14 @@ namespace PolylibNS {
 ///
 /// コンストラクタ。
 ///
-PolygonGroupFactory::PolygonGroupFactory() 
+PolygonGroupFactory::PolygonGroupFactory()
 {
 }
 
 ///
 /// デストラクタ。
 ///
-PolygonGroupFactory::~PolygonGroupFactory() 
+PolygonGroupFactory::~PolygonGroupFactory()
 {
 }
 
@@ -35,11 +41,11 @@ PolygonGroupFactory::~PolygonGroupFactory()
 ///  @return	作成に失敗した場合はNULLが返る。
 ///
 //	virtual PolygonGroup* create_instance(std::string class_name) {
-PolygonGroup* PolygonGroupFactory::create_instance(std::string class_name,PL_REAL tolerance) 
+PolygonGroup* PolygonGroupFactory::create_instance(std::string class_name,PL_REAL tolerance)
 {
 
 #ifdef DEBUG
-	PL_DBGOSH << "PolygonGroup<T>::create_instance class_name " 
+	PL_DBGOSH << "PolygonGroup<T>::create_instance class_name "
 		<<class_name<<std::endl;
 #endif
 	if (class_name == PolygonGroup::get_class_name()) {
@@ -53,4 +59,3 @@ PolygonGroup* PolygonGroupFactory::create_instance(std::string class_name,PL_REA
 }
 
 } //namespace PolylibNS
-
