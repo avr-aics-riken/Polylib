@@ -3,6 +3,11 @@
 ## REVISION HISTORY
 
 ---
+- 2017-03-07  Version 3.6.4
+  - add fx100 entry
+
+
+---
 - 2017-03-04  Version 3.6.3
   - test gcc >> test_DVertex.cpp faied.
   - Tested.

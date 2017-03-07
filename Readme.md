@@ -19,17 +19,16 @@ Polylib is a C++ class library to keep and to manage polygon data, and has follo
 ## INGREDIENTS
 
 ChangeLog.md   History of development
-COPYING        Copyright
-INSTALL        Description of how to configure
-LICENSE        License of Polylib
-NEWS           Release note
+CMakeLists.txt Makefile of cmake
+License.txt    License of Polylib
 Readme.md      This document
+cmake/         cmake modules
 doc/           Documents
+examples/      Example sources
 include/       Header files
 src/           Source files
-examples/      Example sources
-m4/            for libtools
-Makefile_hand  Makefile for special target
+
+
 
 
 
@@ -82,18 +81,23 @@ The default compiler options are described in `cmake/CompilerOptionSelector.cmak
 ### INTEL/GNU compiler
 
 ~~~
-$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${HOME}/TextParser ..
+$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${PL_HOME}/TextParser ..
 ~~~
 
 
-### FUJITSU compiler / FX on login nodes (Cross compilation)
+### FUJITSU compiler / FX10, FX100, K on login nodes (Cross compilation)
 
 ~~~
-$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_fx10.cmake -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${HOME}/TextParser ..
+$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_fx10.cmake -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${PL_HOME}/TextParser ..
+
+$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_fx100.cmake -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${PL_HOME}/TextParser ..
+
+$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_K.cmake -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${PL_HOME}/TextParser ..
 ~~~
 
 
 ##### Note
+- On Fujitsu machines(fx10, K, fx100), confirm appropriate directrory path for compiler environment.
 - Before building, execute following command for clean. `$ make distclean`
 
 
