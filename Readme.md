@@ -81,18 +81,18 @@ The default compiler options are described in `cmake/CompilerOptionSelector.cmak
 ### INTEL/GNU compiler
 
 ~~~
-$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${PL_HOME}/TextParser ..
+$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -Dreal_type=float -Dwith_MPI=yes -Dwith_example=yes -Dwith_TP=${PL_HOME}/TextParser ..
 ~~~
 
 
 ### FUJITSU compiler / FX10, FX100, K on login nodes (Cross compilation)
 
 ~~~
-$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_fx10.cmake -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${PL_HOME}/TextParser ..
+$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_fx10.cmake -Dreal_type=float -Dwith_MPI=yes -Dwith_example=yes -Dwith_TP=${PL_HOME}/TextParser ..
 
-$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_fx100.cmake -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${PL_HOME}/TextParser ..
+$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_fx100.cmake -Dreal_type=float -Dwith_MPI=yes -Dwith_example=yes -Dwith_TP=${PL_HOME}/TextParser ..
 
-$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_K.cmake -Dwith_MPI=yes -Dwith_example=yes -Dreal_type=float -Dwith_TP=${PL_HOME}/TextParser ..
+$ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain_K.cmake -Dreal_type=float -Dwith_MPI=yes -Dwith_example=yes -Dwith_TP=${PL_HOME}/TextParser ..
 ~~~
 
 

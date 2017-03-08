@@ -98,9 +98,33 @@ endmacro()
 
 
 macro(precision)
-  if(real_type STREQUAL "float")
-  else()
+  if(real_type STREQUAL "OFF")
+  # nothing, default is float
+  set(real_type "float")
+
+  elseif(real_type STREQUAL "float")
+  # nothing
+
+  elseif(real_type STREQUAL "double")
     ADD_DEFINITIONS(-D_REAL_IS_DOUBLE_)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_REAL_IS_DOUBLE_")
+
+    if(CMAKE_Fortran_COMPILER MATCHES ".*frtpx$")
+      set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -CcdRR8")
+
+    elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+      set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fdefault-real-8")
+
+    elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
+      set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -r8")
+
+    elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "PGI")
+
+    endif()
+
+  else() # neither 'float' nor 'double'
+    message("@@@@@@@@@@@")
+    message("FATAL ERROR : Invalid floating type : ${real_type}")
+    message("@@@@@@@@@@@")
   ENDIF()
 endmacro()

@@ -38,7 +38,7 @@ cmake_minimum_required(VERSION 2.6)
 # Build options
 #######
 
-option (real_type "Type of floating point" "float")
+option (real_type "Type of floating point" "OFF")
 option (with_MPI "Enable MPI" "ON")
 option (with_example "Compiling examples" "OFF")
 
@@ -62,8 +62,8 @@ set (CMAKE_INSTALL_PREFIX "${INSTALL_DIR}")
 
 
 #######
-set(PROJECT_VERSION "3.6.4")
-set(LIB_REVISION "20170307_2230")
+set(PROJECT_VERSION "3.6.5")
+set(LIB_REVISION "20170308_2100")
 #######
 
 
@@ -84,7 +84,6 @@ include(${PROJECT_SOURCE_DIR}/cmake/poly_package.cmake)
 
 AddOptimizeOption()
 
-# Real type
 precision()
 
 
@@ -101,9 +100,9 @@ message( STATUS "CMAKE_CXX_COMPILER: "             ${CMAKE_CXX_COMPILER})
 message( STATUS "CMAKE_CXX_FLAGS: "                ${CMAKE_CXX_FLAGS})
 
 message(" ")
-message( STATUS "Type of floating point: "         ${real_type})
-message( STATUS "MPI support: "                    ${with_MPI})
-message( STATUS "Example: "                        ${with_example})
+message( STATUS "Type of floating point : "    ${real_type})
+message( STATUS "MPI support            : "    ${with_MPI})
+message( STATUS "Example                : "    ${with_example})
 message(" ")
 
 if(CMAKE_CXX_COMPILER MATCHES ".*FCCpx$")

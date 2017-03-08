@@ -3,6 +3,11 @@
 ## REVISION HISTORY
 
 ---
+- 2017-03-08  Version 3.6.5
+  - modify implementation of 'real_type'
+
+
+---
 - 2017-03-07  Version 3.6.4
   - add fx100 entry
 
