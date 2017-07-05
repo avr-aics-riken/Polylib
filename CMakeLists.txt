@@ -62,8 +62,8 @@ set (CMAKE_INSTALL_PREFIX "${INSTALL_DIR}")
 
 
 #######
-set(PROJECT_VERSION "3.6.6")
-set(LIB_REVISION "20170706_0830")
+set(PROJECT_VERSION "3.6.7")
+set(LIB_REVISION "20170706_0900")
 #######
 
 
@@ -102,6 +102,7 @@ message( STATUS "CMAKE_CXX_FLAGS: "                ${CMAKE_CXX_FLAGS})
 message(" ")
 message( STATUS "Type of floating point : "    ${real_type})
 message( STATUS "MPI support            : "    ${with_MPI})
+message( STATUS "TextParser support     : "    ${with_TP})
 message( STATUS "Example                : "    ${with_example})
 message(" ")
 
@@ -152,9 +153,6 @@ ENDIF()
 
 
 add_definitions(-DHAVE_CONFIG_H)
-
-message("TextParser : ${TP_DIR}")
-message(" ")
 
 
 #######
