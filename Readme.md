@@ -37,6 +37,7 @@ src/           Source files
 ### Build
 
 ~~~
+$ export CC=c_compiler CXX=c++_compiler F90=fortran_compiler FC=fortran_compiler
 $ export PL_HOME=/hogehoge
 $ mkdir BUILD
 $ cd BUILD
