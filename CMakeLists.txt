@@ -62,8 +62,8 @@ set (CMAKE_INSTALL_PREFIX "${INSTALL_DIR}")
 
 
 #######
-set(PROJECT_VERSION "3.6.7")
-set(LIB_REVISION "20170706_0900")
+set(PROJECT_VERSION "3.6.8")
+set(LIB_REVISION "20170825_1300")
 #######
 
 
@@ -122,20 +122,26 @@ else()
 endif()
 
 
+if(USE_F_TCS STREQUAL "YES")
+else()
+  if(with_MPI)
+    include(FindMPI)
+
+    if(MPI_CXX_FOUND)
+      message("MPI-CXX-CMP  : ${MPI_CXX_COMPILER}")
+      message("MPI-CXX-FLAGS: ${MPI_CXX_COMPILE_FLAGS}")
+      message("MPI-CXX-INC  : ${MPI_CXX_INCLUDE_PATH}")
+      message("MPI-LNK-FLAGS: ${MPI_CXX_LINK_FLAGS}")
+      message("MPI-LIBS     : ${MPI_CXX_LIBRARIES}")
+    endif(MPI_CXX_FOUND)
+  endif()
+endif()
+
+
 message(" ")
 message("PROJECT : Polylib " ${PROJECT_VERSION} " : " ${LIB_REVISION})
 message(" ")
 
-
-
-#######
-# include PATH
-#######
-
-include_directories(
-    ${PROJECT_SOURCE_DIR}/src
-    ${PROJECT_SOURCE_DIR}/include
-)
 
 
 #######
@@ -152,8 +158,6 @@ ELSE()
 ENDIF()
 
 
-add_definitions(-DHAVE_CONFIG_H)
-
 
 #######
 # Example
@@ -165,24 +169,6 @@ if (with_example)
 else()
   message("Code test is skipped")
 endif()
-
-
-
-#######
-# Check header files
-#######
-
-include(CheckIncludeFiles)
-
-CHECK_INCLUDE_FILES(inttypes.h HAVE_INTTYPES_H)
-CHECK_INCLUDE_FILES(memory.h HAVE_MEMORY_H)
-CHECK_INCLUDE_FILES(stdint.h HAVE_STDINT_H)
-CHECK_INCLUDE_FILES(stdlib.h HAVE_STDLIB_H)
-CHECK_INCLUDE_FILES(strings.h HAVE_STRINGS_H)
-CHECK_INCLUDE_FILES(string.h HAVE_STRING_H)
-CHECK_INCLUDE_FILES(sys/stat.h HAVE_SYS_STAT_H)
-CHECK_INCLUDE_FILES(sys/types.h HAVE_SYS_TYPES_H)
-CHECK_INCLUDE_FILES(unistd.h HAVE_UNISTD_H)
 
 
 
@@ -203,7 +189,6 @@ endif()
 # configure files
 #######
 
-configure_file( config.h.in.cmake config.h )
 configure_file( include/polyVersion.h.in ${PROJECT_BINARY_DIR}/include/polyVersion.h @ONLY)
 
 
@@ -214,6 +199,7 @@ configure_file( include/polyVersion.h.in ${PROJECT_BINARY_DIR}/include/polyVersi
 install(FILES  ChangeLog.md
                Readme.md
                License.txt
+               ${PROJECT_BINARY_DIR}/CMakeCache.txt
         DESTINATION share)
 
 

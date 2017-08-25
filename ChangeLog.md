@@ -3,6 +3,11 @@
 ## REVISION HISTORY
 
 ---
+- 2017-08-25  Version 3.6.8
+  - intel_F_TCS
+
+
+---
 - 2017-07-06  Version 3.6.7
   - display "TextParser support"
 

@@ -15,7 +15,6 @@
 
 # polyVersion.hはPROJECT_BINARY_DIR
 include_directories(
-       ${PROJECT_BINARY_DIR}    # config.h
        ${PROJECT_BINARY_DIR}/include
        ${PROJECT_SOURCE_DIR}/include
        ${TP_INC}
