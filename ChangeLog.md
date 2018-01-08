@@ -3,6 +3,12 @@
 ## REVISION HISTORY
 
 ---
+- 2018-01-08  Version 3.7.0
+  - change copyright year
+  - build by PGI
+
+  
+---
 - 2017-08-25  Version 3.6.8
   - intel_F_TCS
 

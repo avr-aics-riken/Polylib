@@ -79,7 +79,7 @@ The default compiler options are described in `cmake/CompilerOptionSelector.cmak
 
 ## Configure Examples
 
-### INTEL/GNU compiler
+### INTEL/GNU/PGI compiler
 
 ~~~
 $ cmake -DINSTALL_DIR=${PL_HOME}/Polylib -Dreal_type=float -Dwith_MPI=yes -Dwith_example=yes -Dwith_TP=${PL_HOME}/TextParser ..

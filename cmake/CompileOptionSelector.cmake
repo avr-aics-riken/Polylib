@@ -8,7 +8,7 @@
 # Copyright (c) 2012-2015 Advanced Institute for Computational Science (AICS), RIKEN.
 # All rights reserved.
 #
-# Copyright (c) 2016-2017 Research Institute for Information Technology (RIIT), Kyushu University.
+# Copyright (c) 2016-2018 Research Institute for Information Technology (RIIT), Kyushu University.
 # All rights reserved.
 #
 ###################################################################################
@@ -42,26 +42,12 @@ macro (AddOptimizeOption)
     set(CMAKE_Fortran_FLAGS "-O3 -qopt-report=3")
 
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "PGI")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fastsse")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fastsse")
-    set(CMAKE_Fortran_FLAGS "-O3")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fastsse -Mipa=fast,inline -O4 -Minfo=all")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fastsse -Mipa=fast,inline -O4 -Minfo=all")
+    set(CMAKE_Fortran_FLAGS "-fastsse -Mipa=fast,inline -O4 -Minfo=all")
 
   else()
     message("using default option")
-  endif()
-endmacro()
-
-macro (AddSSE)
-  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse3")
-    else()
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
-    endif()
-  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -xHost")
-  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "PGI")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fastsse")
   endif()
 endmacro()
 
@@ -127,7 +113,7 @@ macro(precision)
       set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -r8")
 
     elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "PGI")
-
+      set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -r8")
     endif()
 
   else() # neither 'float' nor 'double'
