@@ -3,11 +3,17 @@
 ## REVISION HISTORY
 
 ---
+- 2018-09-24 Version 3.7.1
+  - CMP0012
+  - CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_NO_WARNINGS TRUE
+
+
+---
 - 2018-01-08  Version 3.7.0
   - change copyright year
   - build by PGI
 
-  
+
 ---
 - 2017-08-25  Version 3.6.8
   - intel_F_TCS
